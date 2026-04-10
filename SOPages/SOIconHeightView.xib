@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SOIconHeightPageController">
+            <connections>
+                <outlet property="heightSlider" destination="bz0-0b-zjW" id="ily-uh-OPQ"/>
+                <outlet property="heightTextField" destination="uZ5-8N-QiO" id="aSy-Up-kW4"/>
+                <outlet property="view" destination="c22-O7-iKe" id="Vdz-zw-YYy"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <box fixedFrame="YES" title="Settings" translatesAutoresizingMaskIntoConstraints="NO" id="97Q-MO-LTx">
+                    <rect key="frame" x="20" y="20" width="706" height="426"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <view key="contentView" id="Anc-FY-xGP">
+                        <rect key="frame" x="0.0" y="0.0" width="706" height="412"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <box fixedFrame="YES" title="Icon Height Multiplier" translatesAutoresizingMaskIntoConstraints="NO" id="fHO-nq-rJf">
+                                <rect key="frame" x="20" y="278" width="666" height="114"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="Cfu-JN-b1e">
+                                    <rect key="frame" x="0.0" y="0.0" width="666" height="102"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7cq-2n-e2Q">
+                                            <rect key="frame" x="18" y="45" width="630" height="37"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" selectable="YES" id="Zrg-cX-MLv">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">Set a multiplier percentage that Dock icon/Tiles will use as the distance between their origin Y and the Dock origin Y. This will change how high from the bottom of the Dock the icons will sit.</string>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uZ5-8N-QiO">
+                                            <rect key="frame" x="20" y="20" width="56" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="0%" drawsBackground="YES" id="uf1-c3-Oqh">
+                                                <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="3b9-lw-MHV"/>
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <action selector="heightModifierPercentageChanged:" target="-2" id="gEc-p4-5K1"/>
+                                            </connections>
+                                        </textField>
+                                        <slider verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bz0-0b-zjW">
+                                            <rect key="frame" x="96" y="20" width="550" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <sliderCell key="cell" continuous="YES" alignment="left" minValue="-2" maxValue="2" tickMarkPosition="below" numberOfTickMarks="33" allowsTickMarkValuesOnly="YES" sliderType="linear" id="L21-g7-Vhw">
+                                                <font key="font" metaFont="cellTitle"/>
+                                            </sliderCell>
+                                            <connections>
+                                                <action selector="heightModifierPercentageChanged:" target="-2" id="a1G-7b-Eyd"/>
+                                            </connections>
+                                        </slider>
+                                    </subviews>
+                                </view>
+                            </box>
+                        </subviews>
+                    </view>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+    </objects>
+</document>

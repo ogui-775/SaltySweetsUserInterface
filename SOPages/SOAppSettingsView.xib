@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SOAppSettingsPageController">
+            <connections>
+                <outlet property="appAuthorNameField" destination="fkz-KN-Psc" id="r9B-PQ-zJ9"/>
+                <outlet property="keyStatusImageView" destination="F5g-SJ-dHj" id="X36-f8-98k"/>
+                <outlet property="keyStatusTextLabel" destination="lKn-mG-Kfg" id="i7A-b8-101"/>
+                <outlet property="openFinderToThemesButton" destination="zTr-zk-ukh" id="0ij-lM-bXg"/>
+                <outlet property="view" destination="c22-O7-iKe" id="tsO-Xy-nxb"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <box title="General" titlePosition="aboveTop" translatesAutoresizingMaskIntoConstraints="NO" id="UgB-74-mU5">
+                    <rect key="frame" x="20" y="20" width="492" height="426"/>
+                    <view key="contentView" id="VL0-Ry-JR5">
+                        <rect key="frame" x="0.0" y="0.0" width="492" height="412"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <box fixedFrame="YES" title="My Author Info" translatesAutoresizingMaskIntoConstraints="NO" id="zei-bD-7Me">
+                                <rect key="frame" x="20" y="197" width="452" height="195"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="ibL-I3-H3D">
+                                    <rect key="frame" x="0.0" y="0.0" width="452" height="183"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <box fixedFrame="YES" title="Name" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-q5-28L">
+                                            <rect key="frame" x="20" y="91" width="412" height="72"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                            <view key="contentView" id="9wO-PB-giW">
+                                                <rect key="frame" x="0.0" y="0.0" width="412" height="60"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" contentType="name" translatesAutoresizingMaskIntoConstraints="NO" id="fkz-KN-Psc">
+                                                        <rect key="frame" x="20" y="20" width="338" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="Enter the author name you'll create themes as..." drawsBackground="YES" usesSingleLineMode="YES" id="eH4-l4-TFK">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <allowedInputSourceLocales>
+                                                                <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                            </allowedInputSourceLocales>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fO-Ls-Ray">
+                                                        <rect key="frame" x="366" y="20" width="28" height="19"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="checkmark" catalog="system" imagePosition="only" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="SQP-lm-nST">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="cellTitle"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="authorNameWasSet:" target="-2" id="nS5-ZV-XqH"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </view>
+                                        </box>
+                                        <box fixedFrame="YES" title="Dock Theme Signing" titlePosition="aboveTop" translatesAutoresizingMaskIntoConstraints="NO" id="hIL-2F-52N">
+                                            <rect key="frame" x="20" y="20" width="412" height="63"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                            <view key="contentView" id="bGt-IK-K9N">
+                                                <rect key="frame" x="0.0" y="0.0" width="412" height="51"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="OWc-0b-ocb">
+                                                        <rect key="frame" x="226" y="16" width="150" height="19"/>
+                                                        <buttonCell key="cell" type="inline" title="Generate Signing Keys" bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GDT-Uf-3WI">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="smallSystemBold"/>
+                                                        </buttonCell>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="150" id="Ml3-xi-F1P"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="generateSigningKeys:" target="-2" id="IEH-tX-Tym"/>
+                                                        </connections>
+                                                    </button>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5g-SJ-dHj">
+                                                        <rect key="frame" x="20" y="11" width="30" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusAvailable" id="PaK-8n-Ps5"/>
+                                                    </imageView>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lKn-mG-Kfg">
+                                                        <rect key="frame" x="58" y="18" width="173" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Keys detected" id="c8W-a1-n8E">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="OWc-0b-ocb" firstAttribute="centerY" secondItem="bGt-IK-K9N" secondAttribute="centerY" id="GMs-pf-Zw5"/>
+                                                    <constraint firstItem="OWc-0b-ocb" firstAttribute="centerX" secondItem="bGt-IK-K9N" secondAttribute="trailing" constant="-111" id="LFy-iT-CUc"/>
+                                                    <constraint firstItem="OWc-0b-ocb" firstAttribute="top" secondItem="bGt-IK-K9N" secondAttribute="top" constant="16" id="hjP-AY-XWt"/>
+                                                </constraints>
+                                            </view>
+                                        </box>
+                                    </subviews>
+                                </view>
+                            </box>
+                        </subviews>
+                    </view>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box title="Utility" titlePosition="aboveTop" translatesAutoresizingMaskIntoConstraints="NO" id="53u-gG-2GB">
+                    <rect key="frame" x="520" y="20" width="206" height="426"/>
+                    <view key="contentView" id="QYS-rL-X1z">
+                        <rect key="frame" x="0.0" y="0.0" width="206" height="412"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zTr-zk-ukh">
+                                <rect key="frame" x="18" y="374" width="171" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title="Open Dock Theme Directory..." bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DzK-dE-HX5">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openThemesDirectory:" target="-2" id="BaK-4i-0WJ"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SQz-7c-QIs">
+                                <rect key="frame" x="18" y="348" width="171" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title="Open Icons Directory..." bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vK7-Te-DX9">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openIconsDirectory:" target="-2" id="O0t-1P-5pC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="53u-gG-2GB" firstAttribute="baseline" secondItem="UgB-74-mU5" secondAttribute="baseline" id="2im-w6-fcK"/>
+                <constraint firstItem="53u-gG-2GB" firstAttribute="top" secondItem="UgB-74-mU5" secondAttribute="top" id="G6d-YF-0V1"/>
+                <constraint firstItem="UgB-74-mU5" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" symbolic="YES" id="GSf-XS-nYl"/>
+                <constraint firstItem="53u-gG-2GB" firstAttribute="leading" secondItem="UgB-74-mU5" secondAttribute="trailing" constant="8" symbolic="YES" id="V7B-yb-P0U"/>
+                <constraint firstItem="UgB-74-mU5" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="XK1-bf-ixY"/>
+                <constraint firstAttribute="bottom" secondItem="UgB-74-mU5" secondAttribute="bottom" constant="20" symbolic="YES" id="Z1A-Gw-PpB"/>
+                <constraint firstAttribute="trailing" secondItem="53u-gG-2GB" secondAttribute="trailing" constant="20" symbolic="YES" id="tmg-ke-ymV"/>
+                <constraint firstAttribute="trailing" secondItem="UgB-74-mU5" secondAttribute="trailing" constant="234" id="xP0-kR-n3P"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSStatusAvailable" width="16" height="16"/>
+        <image name="checkmark" catalog="system" width="14" height="13"/>
+    </resources>
+</document>

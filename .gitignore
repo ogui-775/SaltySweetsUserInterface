@@ -1,0 +1,29 @@
+# Xcode
+.DS_Store
+DerivedData/
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode1v3
+*.xcodeproj/*.mode2v3
+*.xcodeproj/*.perspectivev3
+*.xcodeproj/xcuserdata/*
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcuserdata/*.xcuserdatad
+*.xcworkspace/xcuserdata/*.xcuserdatad/
+*.xcscmbindings
+*.xcuserdata
+*.moved-aside
+Build/
+build/
+**/*.pbxitems
+!default.pbxitems
+!project.pbxproj
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# Cocoapods
+Pods/
+
+# Carthage
+Carthage/
