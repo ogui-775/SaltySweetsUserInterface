@@ -24,8 +24,10 @@
                 [nonIconChanges addObject:c];
         }
         
-        if (nonIconChanges.count == 0)
+        if (nonIconChanges.count == 0){
             completion(YES);
+            return;
+        }
         
         [self.confirmSheet supplyChanges:nonIconChanges];
 
@@ -266,9 +268,9 @@
                              changes:(NSArray<SOChange *> *)changeArray
                           completion:(void (^)(BOOL))completion{
     NSWindow * parentWindow = NSApp.mainWindow;
-        
+    
     self.confirmSheet =
-        [[SOChangeConfirmSheetController alloc] init];
+    [[SOChangeConfirmSheetController alloc] init];
     [self.confirmSheet window];
     
     NSMutableArray<SOChange *> * iconChanges = [NSMutableArray new];
@@ -278,10 +280,12 @@
     }
     
     [self.confirmSheet supplyChanges:iconChanges];
-
-    if (iconChanges.count == 0)
-        completion(YES);
     
+    if (iconChanges.count == 0){
+        completion(YES);
+        return;
+    }
+
     [parentWindow beginSheet:self.confirmSheet.window
            completionHandler:^(NSModalResponse returnCode){
         
@@ -394,7 +398,6 @@
         return NO;
     
     NSString * baseDir = [AppDelegate iconsDir];
-    NSString * path = change.plistKey->key;
     
     return [fm createFileAtPath:[baseDir stringByAppendingPathComponent:change.resourceFilename]
                        contents:change.resourceData

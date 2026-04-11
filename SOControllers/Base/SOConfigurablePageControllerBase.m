@@ -189,8 +189,6 @@
     if (!self.baselineState) return;
     
     if (resource){
-        id baselineValue = [self getBaselineForEncodedKey:key];
-        
         SOChange * change = [SOChange iconResourceChangeWithEncodedKey:key
                                                                   data:resource
                                                               filename:name

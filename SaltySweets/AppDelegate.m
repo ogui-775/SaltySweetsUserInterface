@@ -13,6 +13,7 @@ static NSString * bundleDir = nil;
 static NSString * iconsDir = nil;
 static NSString * iconsSettingsPath = nil;
 static NSString * cryptoDir = nil;
+static NSString * iconServerLaunchAgentPlistPath = nil;
 
 @implementation AppDelegate
 
@@ -134,9 +135,15 @@ static NSString * cryptoDir = nil;
 
 + (void)initializePathsIfNeeded {
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString * appSupport =
+    dispatch_once(&onceToken,
+ ^{
+        NSString *appSupport =
             NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+                                                NSUserDomainMask,
+                                                YES).firstObject;
+        
+        NSString *library =
+            NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,
                                                 NSUserDomainMask,
                                                 YES).firstObject;
 
@@ -146,6 +153,8 @@ static NSString * cryptoDir = nil;
         iconsDir = [dir stringByAppendingPathComponent:@"Icons"];
         cryptoDir = [dir stringByAppendingPathComponent:@"Cryptographic Keys"];
         iconsSettingsPath = [iconsDir stringByAppendingPathComponent:@"iconsettings.plist"];
+        iconServerLaunchAgentPlistPath = [[library stringByAppendingPathComponent:@"LaunchAgents"]
+                                          stringByAppendingPathComponent:@"com.saltysoft.icon-server.plist"];
 
         NSFileManager *fm = [NSFileManager defaultManager];
         NSError *error = nil;
@@ -195,9 +204,31 @@ static NSString * cryptoDir = nil;
                 kSOIconsSystemDict.key : kSOIconsSystemDict.defaultValue,
                 kSOIconTrashFull.key : kSOIconTrashFull.defaultValue,
                 kSOIconTrashEmpty.key : kSOIconTrashEmpty.defaultValue,
-                kSOIconsDecoratedFolderDict.key : kSOIconsDecoratedFolderDict.defaultValue
+                kSOIconsDecoratedFolderDict.key : kSOIconsDecoratedFolderDict.defaultValue,
+                kSOIconsExtensionDict.key : kSOIconsExtensionDict.defaultValue
             };
             [defaultIconsSettings writeToFile:iconsSettingsPath atomically:YES];
+        }
+        
+        if (![fm fileExistsAtPath:iconServerLaunchAgentPlistPath]){
+            if (![fm fileExistsAtPath:[iconServerLaunchAgentPlistPath stringByDeletingLastPathComponent]]){
+                [fm createDirectoryAtPath:[iconServerLaunchAgentPlistPath stringByDeletingLastPathComponent]
+              withIntermediateDirectories:YES
+                               attributes:nil
+                                    error:&error];
+            }
+            NSURL *launchAgentPlist = [[NSBundle mainBundle] URLForResource:@"com.saltysoft.icon-server"
+                                                              withExtension:@"plist"];
+            
+            NSData *plistData = [NSPropertyListSerialization
+                                 dataWithPropertyList:[NSDictionary dictionaryWithContentsOfURL:launchAgentPlist]
+                                               format:NSPropertyListXMLFormat_v1_0
+                                              options:NSPropertyListWriteStreamError
+                                                error:nil];
+            
+            [fm createFileAtPath:iconServerLaunchAgentPlistPath
+                        contents:plistData
+                      attributes:nil];
         }
     });
 }
