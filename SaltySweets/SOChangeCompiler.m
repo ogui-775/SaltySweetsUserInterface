@@ -17,7 +17,17 @@
         self.confirmSheet =
             [[SOChangeConfirmSheetController alloc] init];
         [self.confirmSheet window];
-        [self.confirmSheet supplyChanges:changeArray];
+        
+        NSMutableArray<SOChange *> * nonIconChanges = [NSMutableArray new];
+        for (SOChange * c in changeArray){
+            if (!c.iconChange)
+                [nonIconChanges addObject:c];
+        }
+        
+        if (nonIconChanges.count == 0)
+            completion(YES);
+        
+        [self.confirmSheet supplyChanges:nonIconChanges];
 
         [parentWindow beginSheet:self.confirmSheet.window
                completionHandler:^(NSModalResponse returnCode) {
@@ -29,8 +39,8 @@
                 return;
             }
 
-            NSMutableDictionary *settingsPlist = [NSMutableDictionary new];
-            NSMutableDictionary *resourcePlist = [NSMutableDictionary new];
+            NSMutableDictionary * settingsPlist = [NSMutableDictionary new];
+            NSMutableDictionary * resourcePlist = [NSMutableDictionary new];
 
             // Populate baseline values
             for (NSString *key in baseline) {
@@ -46,10 +56,12 @@
 
                 if (!encodedKey) continue;
 
-                NSMutableDictionary * targetDict =
-                (encodedKey->destinationFlags == SODestinationTheme)
-                ? settingsPlist
-                : resourcePlist;
+                NSMutableDictionary * targetDict = nil;
+                
+                if (encodedKey->destinationFlags == SODestinationTheme)
+                    targetDict = settingsPlist;
+                else if (encodedKey->destinationFlags != SODestinationIcons)
+                    targetDict = resourcePlist;
 
                 targetDict[key] = baseline[key];
             }
@@ -102,7 +114,7 @@
             [self.class purgeFilesIfNeeded:purgeCollection];
 
             for (SOChange * change in newChangeArray) {
-                if (change.resourceData) {
+                if (change.resourceData && !change.iconChange) {
                     [self.class writeFileFromChange:change toBundle:themeBundle];
                 }
             }
@@ -184,6 +196,7 @@
             purgeCollector:(NSMutableArray<NSString *> *)purgeFileRelativePathCollection{
     
     NSString * rootKey;
+    
     for (SOChange * change in changes){
         rootKey = change.plistKey->key;
         NSMutableDictionary * sub = dict[rootKey];
@@ -249,6 +262,146 @@
     }
 }
 
+- (void)updateIconFolderWithBaseline:(NSDictionary *)baseline
+                             changes:(NSArray<SOChange *> *)changeArray
+                          completion:(void (^)(BOOL))completion{
+    NSFileManager * fm = [NSFileManager defaultManager];
+    NSWindow * parentWindow = NSApp.mainWindow;
+        
+    self.confirmSheet =
+        [[SOChangeConfirmSheetController alloc] init];
+    [self.confirmSheet window];
+    
+    NSMutableArray<SOChange *> * iconChanges = [NSMutableArray new];
+    for (SOChange * c in changeArray){
+        if (c.iconChange)
+            [iconChanges addObject:c];
+    }
+    
+    [self.confirmSheet supplyChanges:iconChanges];
+
+    if (iconChanges.count == 0)
+        completion(YES);
+    
+    [parentWindow beginSheet:self.confirmSheet.window
+           completionHandler:^(NSModalResponse returnCode){
+        
+        NSArray * newChangeArray = self.confirmSheet.internalChangeArray;
+        
+        NSMutableDictionary * resourcePlist = [NSMutableDictionary new];
+        
+        if (returnCode != NSModalResponseOK) {
+            completion(NO);
+            return;
+        }
+        
+        for (NSString * key in baseline) {
+
+            const SOEncodedKey * encodedKey = NULL;
+
+            for (NSUInteger i = 0; i < kSOIconAllKeysCount; i++) {
+                if ([kSOIconAllKeys[i].key isEqualToString:key]) {
+                    encodedKey = &kSOIconAllKeys[i];
+                    break;
+                }
+            }
+
+            if (!encodedKey) continue;
+
+            resourcePlist[key] = baseline[key];
+        }
+        
+        NSMutableArray<NSString *> * purgeCollection = [NSMutableArray new];
+        
+        [self.class populateIconDictionary:resourcePlist
+                               withChanges:iconChanges
+                           purgeCollection:purgeCollection];
+        
+        NSError * error = nil;
+        
+        NSURL * themePlistURL =
+            [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:@"iconsettings.plist"]];
+        
+        [resourcePlist writeToURL:themePlistURL error:&error];
+        if (error){
+            NSLog(@"%@", error);
+            completion(NO);
+            return;
+        }
+        
+        [self.class purgeIconsIfNeeded:purgeCollection];
+        
+        BOOL success = YES;
+        
+        for (SOChange * change in newChangeArray){
+            if (change.resourceData && change.iconChange){
+                [self.class writeIconFromChange:change];
+            }
+        }
+        
+        completion(success);
+    }];
+}
+
++ (void)populateIconDictionary:(NSMutableDictionary *)dict
+                   withChanges:(NSArray<SOChange *> *)changes
+               purgeCollection:(NSMutableArray<NSString *> *)purgeCollection{
+    for (SOChange * change in changes){
+        if (!change.plistKeyPath){
+            NSString * baselineValue = [dict objectForKey:change.plistKey->key];
+            
+            if (change.plistValue)
+                [dict setObject:change.plistValue forKey:change.plistKey->key];
+            else
+                [dict removeObjectForKey:change.plistKey->key];
+            
+            if (baselineValue)
+                [purgeCollection addObject:baselineValue];
+            
+            continue;
+        }
+        
+        NSMutableDictionary * rootDict = [dict objectForKey:change.plistKey->key];
+        NSMutableDictionary * sub = rootDict[change.plistKeyPath->components[0]];
+        
+        if (!rootDict)
+            continue;
+        
+        for (int i = 0; i < change.plistKeyPath->components.count - 1; i++){
+            sub = [sub objectForKey:change.plistKeyPath->components[i]];
+        }
+        
+        if (!sub)
+            continue;
+        
+        NSString * baselineValue = [sub objectForKey:change.plistKeyPath->components.lastObject];
+        
+        if (change.resourceFilename)
+            [dict setObject:change.resourceFilename forKey:change.plistKeyPath->components.lastObject];
+        else
+            [dict removeObjectForKey:change.plistKeyPath->components.lastObject];
+        
+        if (baselineValue)
+            [purgeCollection addObject:baselineValue];
+        
+        continue;
+    }
+}
+
++ (BOOL)writeIconFromChange:(SOChange *)change{
+    NSFileManager * fm = [NSFileManager defaultManager];
+    
+    if (!change.resourceData)
+        return NO;
+    
+    NSString * baseDir = [AppDelegate iconsDir];
+    NSString * path = change.plistKey->key;
+    
+    return [fm createFileAtPath:[baseDir stringByAppendingPathComponent:change.resourceFilename]
+                       contents:change.resourceData
+                     attributes:nil];
+}
+
 + (BOOL)writeFileFromChange:(SOChange *)change toBundle:(NSBundle *)bundle{
     NSFileManager * fm = [NSFileManager defaultManager];
     
@@ -292,5 +445,19 @@
     }
     
     [purgeFileRelativePathCollection removeAllObjects];
+}
+
++ (void)purgeIconsIfNeeded:(NSMutableArray<NSString *> *)purgeIconPathCollection{
+    if (purgeIconPathCollection.count == 0)
+        return;
+    
+    NSFileManager * fm = [NSFileManager defaultManager];
+    NSString * iconPath = [AppDelegate iconsDir];
+    
+    for (NSString * filename in purgeIconPathCollection){
+        [fm removeItemAtPath:[iconPath stringByAppendingPathComponent:filename] error:nil];
+    }
+    
+    [purgeIconPathCollection removeAllObjects];
 }
 @end

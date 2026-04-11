@@ -13,4 +13,6 @@
 + (NSBundle *)currentThemeBundle;
 + (void)setAppSetAuthorName:(NSString *)name;
 + (NSString *)appSetAuthorName;
++ (BOOL)iconServerLogging;
++ (void)setIconServerLogging:(BOOL)logging;
 @end

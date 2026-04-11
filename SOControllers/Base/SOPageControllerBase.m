@@ -5,7 +5,7 @@
 @implementation SOPageControllerBase
 - (instancetype)init {
     NSString *nibName = [[self className] stringByReplacingOccurrencesOfString:@"PageController"
-                                                                   withString:@"View"];
+                                                                    withString:@"View"];
     return [super initWithNibName:nibName bundle:nil];
 }
 @end

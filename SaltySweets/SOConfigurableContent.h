@@ -15,6 +15,7 @@ FOUNDATION_EXPORT SOChangeType const kSOChangeTypeResource;
 typedef NSString * SOChangeResourceType NS_TYPED_EXTENSIBLE_ENUM;
 FOUNDATION_EXPORT SOChangeResourceType const kSOChangeResourceTypeNSImage;
 FOUNDATION_EXPORT SOChangeResourceType const kSOChangeResourceTypeAIFF;
+FOUNDATION_EXPORT SOChangeResourceType const kSOChangeResourceNSData;
 
 #pragma mark - Support baseline update directly
 FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
@@ -37,6 +38,9 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
 @property (nonatomic, copy) NSString * resourceFilename;
 @property (nonatomic) CGFloat resourceContentScale;
 @property (nonatomic, copy) NSString * sha256;
+
+// Icon marker
+@property (assign) BOOL iconChange;
 
 + (instancetype)plistChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
                                     value:(id)value
@@ -62,6 +66,20 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
                                             note:(NSString *)note
                                             hash:(NSString *)hash;
 
++ (instancetype)iconPlistChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
+                                        value:(id)value
+                                         note:(NSString *)note;
+
++ (instancetype)iconResourceChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
+                                            data:(NSData *)data
+                                        filename:(NSString *)filename
+                                            note:(NSString *)note;
+
++ (instancetype)iconResourceChangeWithEncodedKeypath:(const SOEncodedKeyPath *)encodedKey
+                                                data:(NSData *)data
+                                            filename:(NSString *)filename
+                                                note:(NSString *)note;
+
 @end
 
 #pragma mark - Configurable content
@@ -81,12 +99,4 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
 @property (nonatomic, strong) NSMapTable<id<SOConfigurableContent>, NSArray<SOChange *> *> * pendingChangesCache;
 
 - (void)contentDidChangeState:(id<SOConfigurableContent>)content;
-@end
-
-#pragma mark - Configurable content validation
-@interface SOConfigurableContentValidation : NSObject
-@property (nonatomic, strong) id<SOConfigurableContent> originPage;
-@property (nonatomic, assign) BOOL                      overrideable;
-@property (nonatomic, assign) unsigned int              severity;
-@property (nonatomic, assign) NSString *                message;
 @end

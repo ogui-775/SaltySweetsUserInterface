@@ -25,7 +25,7 @@
                               resource:(id)resource
                                   type:(SOChangeResourceType)type
                               filename:(NSString *)name
-                                  note:(NSString *)note;;
+                                  note:(NSString *)note;
 
 - (void)setPendingResourceChangeForKey:(const SOEncodedKey *)key
                               resource:(id)resource
@@ -46,6 +46,15 @@
                               filename:(NSString *)name
                                   note:(NSString *)note
                           contentScale:(CGFloat)scale;
+
+- (void)setPendingIconResourceChangeForKey:(const SOEncodedKey *)key
+                                  resource:(NSData *)resource
+                                  filename:(NSString *)name
+                                      note:(NSString *)note;
+
+- (void)setPendingIconChangeForKey:(const SOEncodedKey *)key
+                             value:(id)value
+                              note:(NSString *)note;
 
 - (id)getBaselineForEncodedKey:(const SOEncodedKey *)key;
 

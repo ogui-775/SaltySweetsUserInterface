@@ -160,6 +160,50 @@
     [self setPendingResourceChangeForKeypath:key resource:resource type:type filename:name note:note contentScale:1.0];
 }
 
+- (void)setPendingIconChangeForKey:(const SOEncodedKey *)key
+                             value:(id)value
+                              note:(NSString *)note{
+    if (!self.baselineState) return;
+    
+    id baselineValue = [self getBaselineForEncodedKey:key];
+
+    if ((baselineValue == nil && value != nil) || (baselineValue != nil && ![baselineValue isEqual:value])) {
+        // value differs, add/update change
+        SOChange * change = [SOChange iconPlistChangeWithEncodedKey:key
+                                                              value:value
+                                                               note:note];
+        
+        [self setChangeObject:change forEncodedKey:key];
+    } else {
+        // value same as baseline, remove change
+        [self setChangeObject:nil forEncodedKey:key];
+    }
+
+    [self.changeDelegate contentDidChangeState:self];
+}
+
+- (void)setPendingIconResourceChangeForKey:(const SOEncodedKey *)key
+                                  resource:(NSData *)resource
+                                  filename:(NSString *)name
+                                      note:(NSString *)note {
+    if (!self.baselineState) return;
+    
+    if (resource){
+        id baselineValue = [self getBaselineForEncodedKey:key];
+        
+        SOChange * change = [SOChange iconResourceChangeWithEncodedKey:key
+                                                                  data:resource
+                                                              filename:name
+                                                                  note:note];
+        
+        [self setChangeObject:change forEncodedKey:key];
+    } else {
+        [self setChangeObject:nil forEncodedKey:key];
+    }
+    
+    [self.changeDelegate contentDidChangeState:self];
+}
+
 - (NSData *)getDataOfResource:(id)resource
                         typed:(SOChangeResourceType)type{
     if (!resource)

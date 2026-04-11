@@ -46,6 +46,18 @@
             }
         }
     }
+    
+    NSMutableDictionary * iconsPlist =
+        [NSMutableDictionary dictionaryWithContentsOfFile:[[AppDelegate iconsDir]
+                           stringByAppendingPathComponent:@"iconsettings.plist"]];
+    
+    if (iconsPlist){
+        for (int i = 0; i < kSOIconAllKeysCount; i++){
+            SOEncodedKey key = kSOIconAllKeys[i];
+            NSString * keyName = key.key;
+            nonfinal[keyName] = iconsPlist[keyName] ?: key.defaultValue;
+        }
+    }
 
     return [nonfinal mutableCopy];
 }

@@ -19,7 +19,7 @@
 
 - (IBAction)heightModifierPercentageChanged:(NSControl *)sender{
     if (sender.floatValue < -2)
-        sender.floatValue = -21;
+        sender.floatValue = -2;
     
     if (sender.floatValue > 2)
         sender.floatValue = 2;

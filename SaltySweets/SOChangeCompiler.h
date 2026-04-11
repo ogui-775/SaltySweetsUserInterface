@@ -20,4 +20,7 @@
                                asUpdate:(BOOL)update
                              completion:(void (^)(BOOL success))completion;
 
+- (void)updateIconFolderWithBaseline:(NSDictionary *)baseline
+                             changes:(NSArray<SOChange *> *)changeArray
+                          completion:(void (^)(BOOL success))completion;
 @end

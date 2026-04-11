@@ -111,4 +111,45 @@ NSString * SONotificationBaseClassUpdateBaseline = @"SONotificationBaseClassUpda
     if (_plistKeyPath)
         free((void *)_plistKeyPath);
 }
+
++ (instancetype)iconResourceChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
+                                            data:(NSData *)data
+                                        filename:(NSString *)filename
+                                            note:(NSString *)note {
+    SOChange * change = [SOChange resourceChangeWithEncodedKey:encodedKey
+                                                          data:data
+                                                      filename:filename
+                                                  contentScale:0
+                                                   contentType:kSOChangeResourceNSData
+                                                          note:note
+                                                          hash:@""];
+    change.iconChange = YES;
+    return change;
+}
+
++ (instancetype)iconResourceChangeWithEncodedKeypath:(const SOEncodedKeyPath *)encodedKey
+                                                data:(NSData *)data
+                                            filename:(NSString *)filename
+                                                note:(NSString *)note {
+    SOChange * change = [SOChange resourceChangeWithEncodedKeyPath:encodedKey
+                                                              data:data
+                                                          filename:filename
+                                                      contentScale:0
+                                                       contentType:kSOChangeResourceNSData
+                                                              note:note
+                                                              hash:@""];
+    change.iconChange = YES;
+    return change;
+}
+
++ (instancetype)iconPlistChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
+                                        value:(id)value
+                                         note:(NSString *)note {
+    SOChange * change = [SOChange plistChangeWithEncodedKey:encodedKey
+                                                      value:value
+                                                       note:note];
+    change.iconChange = YES;
+    return change;
+}
+
 @end
