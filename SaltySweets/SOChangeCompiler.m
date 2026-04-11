@@ -265,7 +265,6 @@
 - (void)updateIconFolderWithBaseline:(NSDictionary *)baseline
                              changes:(NSArray<SOChange *> *)changeArray
                           completion:(void (^)(BOOL))completion{
-    NSFileManager * fm = [NSFileManager defaultManager];
     NSWindow * parentWindow = NSApp.mainWindow;
         
     self.confirmSheet =

@@ -82,6 +82,28 @@
     return;
 }
 
+- (IBAction)killFinder:(id)sender{
+    system("killall Finder");
+    return;
+}
+
+- (IBAction)killIconServer:(id)sender{
+    system("killall icon-server");
+    return;
+}
+
+- (IBAction)clearCaches:(id)sender{
+    NSString * script = @"do shell script \"find /private/var/folders/ -name com.apple.dock.iconcache -delete; find /private/var/folders/ -name com.apple.iconservices -delete; rm -r /Library/Caches/com.apple.iconservices.store\" with administrator privileges";
+    
+    NSDictionary * error = nil;
+    NSAppleScript * as = [[NSAppleScript alloc] initWithSource:script];
+    [as executeAndReturnError:&error];
+
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}
+
 + (NSDictionary *)baselineFromEncodedKey:(SOEncodedKey)key {
     NSMutableDictionary * dict = [NSMutableDictionary new];
 

@@ -11,6 +11,7 @@ SOChangeType const kSOChangeTypeResource = @"resource";
 
 SOChangeResourceType const kSOChangeResourceTypeNSImage = @"nsimage";
 SOChangeResourceType const kSOChangeResourceTypeAIFF    = @"aiff";
+SOChangeResourceType const kSOChangeResourceNSData      = @"nsdata";
 
 #pragma mark - Dictionary keys
 

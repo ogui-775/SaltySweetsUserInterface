@@ -99,12 +99,21 @@
                             <menuItem isSeparatorItem="YES" id="ShB-Aa-I3v"/>
                             <menuItem title="Restart Icon Server" secondaryImage="restart" catalog="system" id="hrH-tw-cEu">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="killIconServer:" target="qvk-NZ-xfX" id="ZrS-9Y-E2g"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Restart Finder" secondaryImage="finder" catalog="system" id="Ojc-Hc-ki2">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="killFinder:" target="qvk-NZ-xfX" id="jHk-a7-gpM"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Clear Icon Caches" secondaryImage="NSTouchBarDeleteTemplate" id="tjM-1x-ICH">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="clearCaches:" target="qvk-NZ-xfX" id="X8f-10-rel"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="a0Z-My-tzF"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
