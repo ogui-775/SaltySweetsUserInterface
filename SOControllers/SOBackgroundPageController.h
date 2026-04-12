@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, SODraggingGuide) {
     SODraggingGuideBottom
 };
 
-@interface SOBackgroundPageController : SOConfigurablePageControllerBase
+@interface SOBackgroundPageController : SOConfigurablePageControllerBase <NSTextFieldDelegate>
 @property (nonatomic, strong) SOScaleImageManager * scaleMgr;
 
 //Mixed
@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, SODraggingGuide) {
 @property (nonatomic, strong) IBOutlet NSButton * rightFlipButton;
 @property (nonatomic, strong) IBOutlet NSButton * leftRotateButton;
 @property (nonatomic, strong) IBOutlet NSButton * rightRotateButton;
+@property (nonatomic, strong) IBOutlet NSTextField * blurRadiusTextbox;
 //Group
 @property (nonatomic, strong) IBOutlet NSTextField * contentsCenterX;
 @property (nonatomic, strong) IBOutlet NSTextField * contentsCenterY;

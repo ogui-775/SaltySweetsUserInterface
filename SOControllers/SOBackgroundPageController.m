@@ -158,6 +158,8 @@
     [self.backgroundLayer setContentsScaling:tiling];
     if ([tiling isEqualToString:@"repeat"])
         self.backgroundTiling.state = NSControlStateValueOn;
+    
+    self.blurRadiusTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockBackgroundBlurRadius] doubleValue];
 }
 
 - (IBAction)actionOnWell:(NSImageView *)sender{
@@ -423,6 +425,7 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
 
 - (void)mouseDown:(NSEvent *)event {
     CGPoint p = [self.backgroundLayer convertPoint:event.locationInWindow fromLayer:nil];
+    [self.view.window makeFirstResponder:nil];
 
     if (CGRectContainsPoint(self.lLabel.frame, p))
         self.draggingGuide = SODraggingGuideLeft;
@@ -541,4 +544,15 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
     self.contentsCenterWidth.stringValue = [NSString stringWithFormat:@"W: %f", r.size.width];
     self.contentsCenterHeight.stringValue = [NSString stringWithFormat:@"H: %f", r.size.height];
 }
+
+- (IBAction)blurRadiusDidChange:(NSTextField *)sender{
+    if (sender.doubleValue < 0)
+        sender.doubleValue = 0;
+    
+    [self setPendingChangeForKey:&kSODockBackgroundBlurRadius
+                           value:@(sender.doubleValue)
+                            note:[NSString stringWithFormat:@"Set background blur radius to %f",
+                                  sender.doubleValue]];
+}
+
 @end
