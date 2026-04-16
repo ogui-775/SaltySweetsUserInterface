@@ -52,9 +52,10 @@
                                   filename:(NSString *)name
                                       note:(NSString *)note;
 
-- (void)setPendingIconChangeForKey:(const SOEncodedKey *)key
-                             value:(id)value
-                              note:(NSString *)note;
+- (void)setPendingIconResourceChangeForKeypath:(const SOEncodedKeyPath *)key
+                                      resource:(id)resource
+                                      filename:(NSString *)name
+                                          note:(NSString *)note;
 
 - (id)getBaselineForEncodedKey:(const SOEncodedKey *)key;
 

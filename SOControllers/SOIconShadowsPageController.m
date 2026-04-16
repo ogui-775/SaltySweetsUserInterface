@@ -53,7 +53,7 @@ const SOEncodedKeyPath tHeight = {
     
     [self setPendingChangeForKeypath:&tHeight
                                value:@(newHeight)
-                                note:[NSString stringWithFormat:@"Set tile shadow height to %f", newHeight]];
+                                note:[NSString stringWithFormat:@"Set tile shadow Y to %f", newHeight]];
 }
 
 - (IBAction)widthChanged:(NSControl *)sender{
@@ -65,7 +65,7 @@ const SOEncodedKeyPath tHeight = {
     
     [self setPendingChangeForKeypath:&tWidth
                                value:@(newWidth)
-                                note:[NSString stringWithFormat:@"Set tile shadow width to %f", newWidth]];
+                                note:[NSString stringWithFormat:@"Set tile shadow X to %f", newWidth]];
 }
 
 - (IBAction)radiusChanged:(NSControl *)sender{

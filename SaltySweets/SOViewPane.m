@@ -110,5 +110,32 @@ static SOViewPane * _instance = nil;
         self.applyButton.enabled = NO;
 
     }];
+    
+    [compiler updateIconFolderWithBaseline:baseline
+                                   changes:changesFlat
+                                completion:^(BOOL success) {
+        if (!success)
+            return;
+
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:SONotificationBaseClassUpdateBaseline
+                          object:self];
+
+        for (id<SOConfigurableContent> page in self.childViewControllers) {
+
+            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                [page refreshOrLoadBaseline];
+
+            if ([page respondsToSelector:@selector(purgePendingChanges)])
+                [page purgePendingChanges];
+        }
+
+        [self.pendingChangesCache removeAllObjects];
+
+        [[[AppDelegate appIconServerConnection] remoteObjectProxy]
+                                requestGlobalSettingsInvalidation];
+        
+        self.applyButton.enabled = NO;
+    }];
 }
 @end

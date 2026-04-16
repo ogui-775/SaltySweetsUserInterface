@@ -14,6 +14,8 @@ static NSString * iconsDir = nil;
 static NSString * iconsSettingsPath = nil;
 static NSString * cryptoDir = nil;
 
+static __strong NSXPCConnection * iconServerConnection = nil;
+
 @implementation AppDelegate
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification{
@@ -21,7 +23,17 @@ static NSString * cryptoDir = nil;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    iconServerConnection = [[NSXPCConnection alloc] initWithMachServiceName:@"com.saltysoft.icon-server"
+                                                                    options:0];
+    iconServerConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(SOIconServerXPCProtocol)];
+    
+    NSXPCInterface * localInterface =
+        [NSXPCInterface interfaceWithProtocol:@protocol(SOIconClientXPCProtocol)];
+    
+    iconServerConnection.exportedInterface = localInterface;
+    iconServerConnection.exportedObject = self;
 
+    [iconServerConnection resume];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -34,6 +46,18 @@ static NSString * cryptoDir = nil;
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return YES;
+}
+
+//XPC sharing
++ (NSXPCConnection *)appIconServerConnection{
+    if (iconServerConnection)
+        return iconServerConnection;
+    
+    return nil;
+}
+
+- (void)asyncClearCachedSettings{
+    return; //No-op
 }
 
 //Loader
@@ -132,17 +156,27 @@ static NSString * cryptoDir = nil;
     return settings[@"kSODockUsername"] ?: @"";
 }
 
++ (NSArray *)applicationFolderPaths{
+    NSMutableArray * applicationsFolders =
+        [[NSDictionary dictionaryWithContentsOfFile:settingsPath] objectForKey:@"kSOIconsFolderPaths"];
+    
+    return applicationsFolders ?: @[];
+}
+
++ (void)setApplicationFolderPaths:(NSArray *)paths{
+    NSMutableDictionary * settings =
+        [NSMutableDictionary dictionaryWithContentsOfFile:settingsPath];
+    
+    [settings setObject:paths forKey:@"kSOIconsFolderPaths"];
+    [settings writeToFile:settingsPath atomically:YES];
+}
+
 + (void)initializePathsIfNeeded {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken,
  ^{
         NSString *appSupport =
             NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
-                                                NSUserDomainMask,
-                                                YES).firstObject;
-        
-        NSString *library =
-            NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,
                                                 NSUserDomainMask,
                                                 YES).firstObject;
 
@@ -184,13 +218,45 @@ static NSString * cryptoDir = nil;
                                 error:&error];
         }
 
+        NSDictionary * defaultSettings = @{
+            @"kSODockCurrentThemeBundle" : @"",
+            @"kSODockUsername" : @"",
+            kSOIconServerLogging.key : kSOIconServerLogging.defaultValue,
+            @"kSOIconsFolderPaths" : @[
+                @"~/Applications/",
+                @"/System/Applications/",
+                @"/Applications/",
+                @"/System/Library/CoreServices/"
+            ]
+        };
+
         if (![fm fileExistsAtPath:settingsPath]) {
-            NSDictionary *defaultSettings = @{
-                   @"kSODockCurrentThemeBundle" : @"",
-                             @"kSODockUsername" : @"",
-                       kSOIconServerLogging.key : kSOIconServerLogging.defaultValue
-            };
             [defaultSettings writeToFile:settingsPath atomically:YES];
+        } else {
+            NSMutableDictionary * loadedSettings =
+                [NSMutableDictionary dictionaryWithContentsOfFile:settingsPath];
+        
+            if (!loadedSettings) {
+                loadedSettings = [defaultSettings mutableCopy];
+                [loadedSettings writeToFile:settingsPath atomically:YES];
+                return;
+            }
+            
+            BOOL didModify = NO;
+            
+            for (id key in defaultSettings) {
+                id defaultValue = defaultSettings[key];
+                id loadedValue  = loadedSettings[key];
+                
+                if (!loadedValue) {
+                    loadedSettings[key] = defaultValue;
+                    didModify = YES;
+                }
+            }
+            
+            if (didModify) {
+                [loadedSettings writeToFile:settingsPath atomically:YES];
+            }
         }
         
         if (![fm fileExistsAtPath:iconsSettingsPath]){

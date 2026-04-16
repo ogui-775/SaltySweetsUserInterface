@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -76,16 +76,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="666" height="102"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <slider verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlT-cO-hjJ">
-                                            <rect key="frame" x="98" y="15" width="550" height="28"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-20" maxValue="20" tickMarkPosition="below" numberOfTickMarks="17" allowsTickMarkValuesOnly="YES" sliderType="linear" id="nuy-yU-Sff">
-                                                <font key="font" metaFont="cellTitle"/>
-                                            </sliderCell>
-                                            <connections>
-                                                <action selector="setOriginModifier:" target="-2" id="Y2T-Us-G3q"/>
-                                            </connections>
-                                        </slider>
                                         <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZKW-hS-HeN">
                                             <rect key="frame" x="20" y="20" width="56" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -104,11 +94,21 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" selectable="YES" id="mwb-X7-HFy">
                                                 <font key="font" metaFont="smallSystem"/>
-                                                <string key="title">Set the modifier that the Dock should have for its bottom origin point. A value of -10 positions the Dock to rest at the bottom of the screen, for example. Values &gt; 10 may clip screen content and misalign window reflections.</string>
+                                                <string key="title">Set the modifier that the Dock should have for its bottom origin point. A value of -10 positions the Dock to rest at the bottom of the screen, for example.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <slider verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlT-cO-hjJ">
+                                            <rect key="frame" x="96" y="20" width="550" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-10" maxValue="10" tickMarkPosition="below" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="nuy-yU-Sff">
+                                                <font key="font" metaFont="cellTitle"/>
+                                            </sliderCell>
+                                            <connections>
+                                                <action selector="setOriginModifier:" target="-2" id="Y2T-Us-G3q"/>
+                                            </connections>
+                                        </slider>
                                     </subviews>
                                 </view>
                             </box>

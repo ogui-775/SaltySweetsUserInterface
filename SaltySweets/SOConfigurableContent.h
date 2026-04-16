@@ -66,10 +66,6 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
                                             note:(NSString *)note
                                             hash:(NSString *)hash;
 
-+ (instancetype)iconPlistChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
-                                        value:(id)value
-                                         note:(NSString *)note;
-
 + (instancetype)iconResourceChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
                                             data:(NSData *)data
                                         filename:(NSString *)filename

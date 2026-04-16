@@ -365,28 +365,20 @@
         }
         
         NSMutableDictionary * rootDict = [dict objectForKey:change.plistKey->key];
-        NSMutableDictionary * sub = rootDict[change.plistKeyPath->components[0]];
         
         if (!rootDict)
             continue;
         
-        for (int i = 0; i < change.plistKeyPath->components.count - 1; i++){
-            sub = [sub objectForKey:change.plistKeyPath->components[i]];
-        }
-        
-        if (!sub)
-            continue;
-        
-        NSString * baselineValue = [sub objectForKey:change.plistKeyPath->components.lastObject];
+        NSString * baselineValue = [rootDict objectForKey:change.plistKeyPath->components.lastObject];
         
         if (change.resourceFilename)
-            [dict setObject:change.resourceFilename forKey:change.plistKeyPath->components.lastObject];
+            [rootDict setObject:change.resourceFilename forKey:change.plistKeyPath->components.lastObject];
         else
-            [dict removeObjectForKey:change.plistKeyPath->components.lastObject];
+            [rootDict removeObjectForKey:change.plistKeyPath->components.lastObject];
         
         if (baselineValue)
             [purgeCollection addObject:baselineValue];
-        
+
         continue;
     }
 }

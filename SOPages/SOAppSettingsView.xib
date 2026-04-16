@@ -126,7 +126,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="inline" title="Open Dock Theme Directory..." bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DzK-dE-HX5">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="systemBold" size="9"/>
+                                    <font key="font" metaFont="miniSystemBold"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="openThemesDirectory:" target="-2" id="BaK-4i-0WJ"/>
