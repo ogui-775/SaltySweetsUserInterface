@@ -109,7 +109,6 @@ static SOViewPane * _instance = nil;
         [self.pendingChangesCache removeAllObjects];
 
         self.applyButton.enabled = NO;
-
     }];
     
     [iconCompiler updateIconFolderWithBaseline:baseline
@@ -137,6 +136,8 @@ static SOViewPane * _instance = nil;
                                 requestGlobalSettingsInvalidation];
         
         self.applyButton.enabled = NO;
+        
+        [AppDelegate clearAllUndoManagers];
     }];
 }
 @end

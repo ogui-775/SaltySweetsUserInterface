@@ -23,8 +23,10 @@
 }
 
 - (void)refreshOrLoadBaseline{
-    self.applicationFolderPaths = [NSMutableArray arrayWithArray:[AppDelegate applicationFolderPaths]];
-    [self.appsCollection reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.applicationFolderPaths = [NSMutableArray arrayWithArray:[AppDelegate applicationFolderPaths]];
+        [self.appsCollection reloadData];
+    });
 }
 
 - (void)mouseDown:(NSEvent *)event{
@@ -153,6 +155,11 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 }
 
 - (IBAction)imageViewDidGetAltered:(SOAppItemImageView *)sender{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [AppDelegate registerUndoManagerForClear:self.undoManager withController:self];
+    });
+    
     NSString * bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
     const SOEncodedKeyPath tBundlePath = {
         .rootKey = &kSOIconsBundleDict,
@@ -180,11 +187,12 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
         
         [sender setIsPendingReplace:YES];
     } else {
-        if (![self getBaselineForEncodedKeypath:&tBundlePath]){
+        id baseline = [self getBaselineForEncodedKeypath:&tBundlePath];
+        if (!baseline){
             sender.image = sender.originalSetImage;
             return;
         }
-        
+
         [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController * controller){
             [sender setImage:sender.originalSetImage];
             [sender setIsReplaced:YES];

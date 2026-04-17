@@ -13,6 +13,7 @@ static NSString * bundleDir = nil;
 static NSString * iconsDir = nil;
 static NSString * iconsSettingsPath = nil;
 static NSString * cryptoDir = nil;
+static NSMapTable * undoManagerPotholder = nil;
 
 static __strong NSXPCConnection * iconServerConnection = nil;
 
@@ -34,6 +35,8 @@ static __strong NSXPCConnection * iconServerConnection = nil;
     iconServerConnection.exportedObject = self;
 
     [iconServerConnection resume];
+    
+    undoManagerPotholder = [NSMapTable weakToWeakObjectsMapTable];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -46,6 +49,22 @@ static __strong NSXPCConnection * iconServerConnection = nil;
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return YES;
+}
+
++ (void)registerUndoManagerForClear:(NSUndoManager *)undoManager
+                     withController:(NSViewController *)controller{
+    @synchronized(self){
+        [undoManagerPotholder setObject:undoManager forKey:controller];
+    }
+}
+
++ (void)clearAllUndoManagers{
+    @synchronized (self) {
+        for (NSViewController * vc in undoManagerPotholder){
+            NSUndoManager * weakUndoer = [undoManagerPotholder objectForKey:vc];
+            [weakUndoer removeAllActions];
+        }
+    }
 }
 
 //XPC sharing

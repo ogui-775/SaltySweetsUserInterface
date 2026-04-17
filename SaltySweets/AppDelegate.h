@@ -21,4 +21,6 @@
 + (NSArray *)applicationFolderPaths;
 + (void)setApplicationFolderPaths:(NSArray *)paths;
 + (NSXPCConnection *)appIconServerConnection;
++ (void)registerUndoManagerForClear:(NSUndoManager *)undoManager withController:(NSViewController *)controller;
++ (void)clearAllUndoManagers;
 @end
