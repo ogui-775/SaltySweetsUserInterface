@@ -1,4 +1,5 @@
 #import <Carbon/Carbon.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "../Base/SOPageControllerBase.h"
 #import "../Base/SOConfigurablePageControllerBase.h"
@@ -22,7 +23,12 @@
 @end
 
 @interface SOAppItemImageView : NSImageView
+- (void)ensureGlowLayer;
+@property (assign) BOOL isPendingReplace;
+@property (assign) BOOL isPendingRemove;
+@property (assign) BOOL isReplaced;
 @property (strong) NSURL * draggedFileURL;
 @property (weak) SOAppItem * parentItem;
 @property (strong) NSImage * originalSetImage;
+@property (strong) CALayer * glowShadowLayer;
 @end

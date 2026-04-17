@@ -108,12 +108,14 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 
     NSCollectionViewItem * item =
         [collectionView makeItemWithIdentifier:@"AppItem" forIndexPath:indexPath];
-
+    
     NSUInteger index = indexPath.item;
     NSBundle * bundleForView = self.currentFolderApps[index];
 
     item.textField.stringValue = [[bundleForView.bundlePath lastPathComponent] stringByDeletingPathExtension];
-    
+
+    [(SOAppItemImageView *)item.imageView ensureGlowLayer];
+
     NSString * baseline = nil;
     
     if (bundleForView.bundleIdentifier) {
@@ -128,6 +130,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     if (baseline){
         item.imageView.image =
             [[NSImage alloc] initWithContentsOfFile:[[AppDelegate iconsDir] stringByAppendingPathComponent:baseline]];
+        [(SOAppItemImageView *)item.imageView setIsReplaced:YES];
     } else {
         item.imageView.image =
             [[NSWorkspace sharedWorkspace] iconForFile:bundleForView.bundlePath];
@@ -150,13 +153,23 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 }
 
 - (IBAction)imageViewDidGetAltered:(SOAppItemImageView *)sender{
+    NSString * bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
+    const SOEncodedKeyPath tBundlePath = {
+        .rootKey = &kSOIconsBundleDict,
+        .components = @[bundleId]
+    };
+    
     if (sender.image){
-        NSString * bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
-        
-        const SOEncodedKeyPath tBundlePath = {
-            .rootKey = &kSOIconsBundleDict,
-            .components = @[bundleId]
-        };
+        [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController * controller){
+            [sender setImage:sender.originalSetImage];
+            if ([self getBaselineForEncodedKeypath:&tBundlePath])
+                [sender setIsReplaced:YES];
+            else
+                [sender setIsReplaced:NO];
+            [self.pendingChangeArray removeObject:self.pendingChangeArray.lastObject];
+            [self.changeDelegate contentDidChangeState:self];
+        }];
+        [self.undoManager setActionName:[NSString stringWithFormat:@"%@ Set Icon", bundleId]];
         
         [self setPendingIconResourceChangeForKeypath:&tBundlePath
                                             resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
@@ -164,24 +177,28 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
                                                 note:[NSString stringWithFormat:@"Set icon for %@ to %@",
                                                       bundleId,
                                                       sender.draggedFileURL.lastPathComponent]];
+        
+        [sender setIsPendingReplace:YES];
     } else {
-        NSString * bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
-        
-        const SOEncodedKeyPath tBundlePath = {
-            .rootKey = &kSOIconsBundleDict,
-            .components = @[bundleId]
-        };
-        
         if (![self getBaselineForEncodedKeypath:&tBundlePath]){
             sender.image = sender.originalSetImage;
             return;
         }
+        
+        [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController * controller){
+            [sender setImage:sender.originalSetImage];
+            [sender setIsReplaced:YES];
+            [self.pendingChangeArray removeObject:self.pendingChangeArray.lastObject];
+            [self.changeDelegate contentDidChangeState:self];
+        }];
+        [self.undoManager setActionName:[NSString stringWithFormat:@"%@ Clear Icon", bundleId]];
         
         [self setPendingIconResourceChangeForKeypath:&tBundlePath
                                             resource:nil
                                             filename:nil
                                                 note:[NSString stringWithFormat:@"Cleared icon for %@",
                                                       bundleId]];
+        [sender setIsPendingRemove:YES];
     }
 }
 
@@ -194,18 +211,21 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     }
     
     [self.view.window beginSheet:self.folderSheetController.window
-               completionHandler:^(NSModalResponse returnCode) {
+               completionHandler:^void(NSModalResponse returnCode){
         self.applicationFolderPaths = self.folderSheetController.listContents;
         
         [AppDelegate setApplicationFolderPaths:self.applicationFolderPaths];
         
         [self.folderComboBox reloadData];
-        if ([self.folderComboBox indexOfSelectedItem] > self.applicationFolderPaths.count - 1){
-            [self.folderComboBox selectItemAtIndex:self.applicationFolderPaths.count - 1];
+        NSInteger idx = [self.folderComboBox indexOfSelectedItem];
+        NSInteger count = [self.applicationFolderPaths count];
+        if (idx > (count - 1)){
+            [self.folderComboBox selectItemAtIndex:count];
             [self folderSelectionDidChange:self.folderComboBox];
         }
 
         [self.appsCollection reloadData];
+        return;
     }];
 }
 
@@ -234,11 +254,66 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     [self.view addSubview:textField];
 }
 
+- (void)prepareForReuse{
+    [super prepareForReuse];
+    [self.imageView prepareForReuse];
+}
 @end
 
 @implementation SOAppItemImageView
+
+@synthesize isReplaced = _isReplaced;
+@synthesize isPendingRemove = _isPendingRemove;
+@synthesize isPendingReplace = _isPendingReplace;
+
 - (void)awakeFromNib{
     [self registerForDraggedTypes:@[NSPasteboardTypeURL]];
+}
+
+- (void)ensureGlowLayer {
+    if (self.glowShadowLayer) return;
+
+    self.wantsLayer = YES;
+
+    self.glowShadowLayer = [CALayer layer];
+    self.glowShadowLayer.masksToBounds = NO;
+    self.glowShadowLayer.shadowOffset = CGSizeZero;
+    self.glowShadowLayer.shadowRadius = 6;
+    self.glowShadowLayer.backgroundColor = NSColor.clearColor.CGColor;
+
+    [self.layer addSublayer:self.glowShadowLayer];
+}
+
+- (void)layout {
+    [super layout];
+
+    if (!self.glowShadowLayer) return;
+
+    CGFloat cornerRadius = 5.0;
+    CGRect bounds = self.bounds;
+
+    self.glowShadowLayer.frame = bounds;
+
+    CGPathRef shadowPath = CGPathCreateWithRoundedRect(bounds, cornerRadius, cornerRadius, nil);
+    self.glowShadowLayer.shadowPath = shadowPath;
+    CGPathRelease(shadowPath);
+
+    CAShapeLayer * glowMask = [CAShapeLayer layer];
+    glowMask.frame = bounds;
+    glowMask.fillRule = kCAFillRuleEvenOdd;
+
+    CGMutablePathRef maskPath = CGPathCreateMutable();
+    CGRect outerRect = CGRectInset(bounds, -30, -30);
+    CGPathAddRect(maskPath, nil, outerRect);
+
+    CGPathRef innerPath = CGPathCreateWithRoundedRect(bounds, cornerRadius, cornerRadius, nil);
+    CGPathAddPath(maskPath, nil, innerPath);
+
+    glowMask.path = maskPath;
+    self.glowShadowLayer.mask = glowMask;
+
+    CGPathRelease(innerPath);
+    CGPathRelease(maskPath);
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
@@ -252,4 +327,73 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     
     return [super performDragOperation:sender];
 }
+
+- (BOOL)isReplaced{
+    return _isReplaced;
+}
+
+- (void)setIsReplaced:(BOOL)isReplaced{
+    _isReplaced = isReplaced;
+    
+    if (isReplaced){
+        _isPendingRemove = NO;
+        _isPendingReplace = NO;
+    } else {
+        self.glowShadowLayer.shadowOpacity = 0;
+    }
+    
+    if (!self.glowShadowLayer || !isReplaced)
+        return;
+    
+    self.glowShadowLayer.shadowOpacity = 0.7;
+    self.glowShadowLayer.shadowColor = NSColor.greenColor.CGColor;
+}
+
+- (BOOL)isPendingRemove{
+    return _isPendingRemove;
+}
+
+- (void)setIsPendingRemove:(BOOL)isPendingRemove{
+    _isPendingRemove = isPendingRemove;
+    
+    if (isPendingRemove){
+        _isReplaced = NO;
+        _isPendingReplace = NO;
+    }
+    
+    if (!self.glowShadowLayer)
+        return;
+    
+    self.glowShadowLayer.shadowOpacity = 0.7;
+    self.glowShadowLayer.shadowColor = NSColor.redColor.CGColor;
+}
+
+- (BOOL)isPendingReplace{
+    return _isPendingReplace;
+}
+
+- (void)setIsPendingReplace:(BOOL)isPendingReplace{
+    _isPendingReplace = isPendingReplace;
+    
+    if (isPendingReplace){
+        _isReplaced = NO;
+        _isPendingRemove = NO;
+    }
+    
+    if (!self.glowShadowLayer)
+        return;
+    
+    self.glowShadowLayer.shadowOpacity = 0.7;
+    self.glowShadowLayer.shadowColor = NSColor.orangeColor.CGColor;
+}
+
+- (void)prepareForReuse {
+    _isReplaced = NO;
+    _isPendingRemove = NO;
+    _isPendingReplace = NO;
+
+    self.glowShadowLayer.shadowOpacity = 0;
+    self.glowShadowLayer.shadowColor = nil;
+}
+
 @end

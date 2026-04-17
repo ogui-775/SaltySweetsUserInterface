@@ -44,7 +44,7 @@
 }
 
 - (IBAction)swapTheme:(id)sender{
-    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    NSOpenPanel * panel = [NSOpenPanel openPanel];
     panel.allowedContentTypes = @[UTTypeBundle];
     panel.allowsMultipleSelection = NO;
     panel.directoryURL = [NSURL fileURLWithPath:[AppDelegate bundleDir]];

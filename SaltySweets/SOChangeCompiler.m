@@ -25,7 +25,7 @@
         }
         
         if (nonIconChanges.count == 0){
-            completion(YES);
+            completion(NO);
             return;
         }
         
@@ -282,7 +282,7 @@
     [self.confirmSheet supplyChanges:iconChanges];
     
     if (iconChanges.count == 0){
-        completion(YES);
+        completion(NO);
         return;
     }
 

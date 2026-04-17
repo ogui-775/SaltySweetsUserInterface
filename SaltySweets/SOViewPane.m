@@ -80,6 +80,7 @@ static SOViewPane * _instance = nil;
     }
 
     SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
+    SOChangeCompiler * iconCompiler = [[SOChangeCompiler alloc] init];
 
     BOOL isUpdate = ![[AppDelegate currentThemeBundleName]
                         isEqualToString:kSODockResourceNotProvided];
@@ -111,9 +112,9 @@ static SOViewPane * _instance = nil;
 
     }];
     
-    [compiler updateIconFolderWithBaseline:baseline
-                                   changes:changesFlat
-                                completion:^(BOOL success) {
+    [iconCompiler updateIconFolderWithBaseline:baseline
+                                       changes:changesFlat
+                                    completion:^(BOOL success) {
         if (!success)
             return;
 
