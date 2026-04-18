@@ -284,8 +284,6 @@ static __strong NSXPCConnection * iconServerConnection = nil;
                 kSOIconsBundleDict.key : kSOIconsBundleDict.defaultValue,
                 kSOIconsFolderDict.key : kSOIconsFolderDict.defaultValue,
                 kSOIconsSystemDict.key : kSOIconsSystemDict.defaultValue,
-                kSOIconTrashFull.key : kSOIconTrashFull.defaultValue,
-                kSOIconTrashEmpty.key : kSOIconTrashEmpty.defaultValue,
                 kSOIconsDecoratedFolderDict.key : kSOIconsDecoratedFolderDict.defaultValue,
                 kSOIconsExtensionDict.key : kSOIconsExtensionDict.defaultValue
             };

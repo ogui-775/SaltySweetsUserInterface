@@ -316,19 +316,25 @@
 }
 
 - (NSImage *)loadImageForEncodedKeypath:(const SOEncodedKeyPath *)path{
-    NSString * hash = [self getBaselineForEncodedKeypath:path];
-    NSString * relativePath = [self getRelativePathForHash:hash];
-    if (![hash isEqualToString:kSODockResourceNotProvided] &&
-        ![relativePath isEqualToString:kSODockResourceNotProvided]){
-        NSBundle * themeBundle = [AppDelegate currentThemeBundle];
+    if (!(path->rootKey->destinationFlags == SODestinationIcons)){
+        NSString * hash = [self getBaselineForEncodedKeypath:path];
+        NSString * relativePath = [self getRelativePathForHash:hash];
+        if (![hash isEqualToString:kSODockResourceNotProvided] &&
+            ![relativePath isEqualToString:kSODockResourceNotProvided]){
+            NSBundle * themeBundle = [AppDelegate currentThemeBundle];
 
-        NSURL * path = [[themeBundle resourceURL] URLByAppendingPathComponent:relativePath];
-        if (!path)
+            NSURL * path = [[themeBundle resourceURL] URLByAppendingPathComponent:relativePath];
+            if (!path)
+                return nil;
+
+            return [[NSImage alloc] initWithContentsOfURL:path];
+        } else {
             return nil;
-
-        return [[NSImage alloc] initWithContentsOfURL:path];
+        }
     } else {
-        return nil;
+        NSString * baseline = [self getBaselineForEncodedKeypath:path];
+        NSURL * urlForPath = [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:baseline]];
+        return [[NSImage alloc] initWithContentsOfURL:urlForPath];
     }
 }
 

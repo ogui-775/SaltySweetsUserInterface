@@ -274,10 +274,6 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 @synthesize isPendingRemove = _isPendingRemove;
 @synthesize isPendingReplace = _isPendingReplace;
 
-- (void)awakeFromNib{
-    [self registerForDraggedTypes:@[NSPasteboardTypeURL]];
-}
-
 - (void)ensureGlowLayer {
     if (self.glowShadowLayer) return;
 
@@ -322,18 +318,6 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 
     CGPathRelease(innerPath);
     CGPathRelease(maskPath);
-}
-
-- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
-    NSPasteboard * pBoard = [sender draggingPasteboard];
-    
-    if ([[pBoard types] containsObject:NSPasteboardTypeFileURL]) {
-        id files = [pBoard propertyListForType:NSPasteboardTypeFileURL];
-        NSURL * fileURL = [NSURL URLWithString:[files isKindOfClass:NSArray.class] ? [files firstObject] : (NSString *)files];
-        [self setDraggedFileURL:fileURL];
-    }
-    
-    return [super performDragOperation:sender];
 }
 
 - (BOOL)isReplaced{

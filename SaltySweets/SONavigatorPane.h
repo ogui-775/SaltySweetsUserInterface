@@ -19,6 +19,7 @@
 #import "../SOControllers/SOReflectionsPageController.h"
 
 #import "../SOControllers/IconReplacement/SOIconReplacementPageController.h"
+#import "../SOControllers/IconReplacement/SOFolderReplacementPageController.h"
 
 @interface SONavigatorPane : NSObject <NSToolbarDelegate, NSSplitViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 @property (strong) IBOutlet NSSplitView * contentSplitView;

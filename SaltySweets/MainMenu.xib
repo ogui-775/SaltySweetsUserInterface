@@ -222,7 +222,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="383" y="293" width="952" height="509"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1710" height="1073"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
             <value key="minSize" type="size" width="952" height="509"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="952" height="509"/>
@@ -251,7 +251,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="466"/>
                                         <clipView key="contentView" focusRingType="none" id="mAH-qC-dSL">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="466"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="dJR-2v-vNe">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="466"/>
@@ -315,7 +315,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="g1u-6c-yVp">
                                             <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view translatesAutoresizingMaskIntoConstraints="NO" id="PWQ-Za-AOp">
                                                     <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>

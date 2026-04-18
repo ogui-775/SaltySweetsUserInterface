@@ -27,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		185522872F565A3300972E92 /* SharedKeys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedKeys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18B0B6B52F9330D10089D498 /* SharedToolkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedToolkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BC57462F2EA9D80075DC08 /* SaltySweets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaltySweets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -64,6 +65,11 @@
 			path = SOControllers;
 			sourceTree = "<group>";
 		};
+		18B0B6D42F9338550089D498 /* ext */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ext;
+			sourceTree = "<group>";
+		};
 		18BC57482F2EA9D80075DC08 /* SaltySweets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -94,6 +100,7 @@
 		185522862F565A3200972E92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18B0B6B52F9330D10089D498 /* SharedToolkit.framework */,
 				185522872F565A3300972E92 /* SharedKeys.framework */,
 			);
 			name = Frameworks;
@@ -102,6 +109,7 @@
 		18BC573D2F2EA9D80075DC08 = {
 			isa = PBXGroup;
 			children = (
+				18B0B6D42F9338550089D498 /* ext */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
 				1803A4612F36EBA8006EC28C /* SOControllers */,
 				1803A4582F36E017006EC28C /* SOPages */,
@@ -138,6 +146,7 @@
 			fileSystemSynchronizedGroups = (
 				1803A4582F36E017006EC28C /* SOPages */,
 				1803A4612F36EBA8006EC28C /* SOControllers */,
+				18B0B6D42F9338550089D498 /* ext */,
 				18BC57482F2EA9D80075DC08 /* SaltySweets */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
 			);

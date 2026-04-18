@@ -4,6 +4,7 @@
 #import "../Base/SOPageControllerBase.h"
 #import "../Base/SOConfigurablePageControllerBase.h"
 #import "../../SOSheets/SOListEditorSheetController.h"
+#import "../Base/SODragAwareImageView.h"
 
 @interface SOIconReplacementPageController : SOConfigurablePageControllerBase <NSCollectionViewDelegate, NSCollectionViewDataSource,
                                                                                 NSComboBoxDataSource, NSComboBoxDelegate>
@@ -22,12 +23,11 @@
 @property (weak) SOConfigurablePageControllerBase * parentConfigurableController;
 @end
 
-@interface SOAppItemImageView : NSImageView
+@interface SOAppItemImageView : SODragAwareImageView
 - (void)ensureGlowLayer;
 @property (assign) BOOL isPendingReplace;
 @property (assign) BOOL isPendingRemove;
 @property (assign) BOOL isReplaced;
-@property (strong) NSURL * draggedFileURL;
 @property (weak) SOAppItem * parentItem;
 @property (strong) NSImage * originalSetImage;
 @property (strong) CALayer * glowShadowLayer;
