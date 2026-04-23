@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		182B34602F94697F00821A61 /* brotli in Frameworks */ = {isa = PBXBuildFile; productRef = 182B345F2F94697F00821A61 /* brotli */; };
+		182B34622F94697F00821A61 /* hwy in Frameworks */ = {isa = PBXBuildFile; productRef = 182B34612F94697F00821A61 /* hwy */; };
+		182B34642F94697F00821A61 /* lcms in Frameworks */ = {isa = PBXBuildFile; productRef = 182B34632F94697F00821A61 /* lcms */; };
+		182B34662F94697F00821A61 /* libjxl in Frameworks */ = {isa = PBXBuildFile; productRef = 182B34652F94697F00821A61 /* libjxl */; };
 		185522892F565A5B00972E92 /* SharedKeys.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185522872F565A3300972E92 /* SharedKeys.framework */; };
 		1855228A2F565A5B00972E92 /* SharedKeys.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 185522872F565A3300972E92 /* SharedKeys.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		188350992F953D4E00C2D6EC /* SharedBundles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188350982F953D4E00C2D6EC /* SharedBundles.framework */; };
+		1883509A2F953D5300C2D6EC /* SharedBundles.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 188350982F953D4E00C2D6EC /* SharedBundles.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -18,6 +24,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				1883509A2F953D5300C2D6EC /* SharedBundles.framework in Embed Frameworks */,
 				1855228A2F565A5B00972E92 /* SharedKeys.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -27,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		185522872F565A3300972E92 /* SharedKeys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedKeys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		188350982F953D4E00C2D6EC /* SharedBundles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedBundles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B0B6B52F9330D10089D498 /* SharedToolkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedToolkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BC57462F2EA9D80075DC08 /* SaltySweets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaltySweets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -70,6 +78,11 @@
 			path = ext;
 			sourceTree = "<group>";
 		};
+		18B0B6DD2F9406770089D498 /* SOAuxWinds */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SOAuxWinds;
+			sourceTree = "<group>";
+		};
 		18BC57482F2EA9D80075DC08 /* SaltySweets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -90,7 +103,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188350992F953D4E00C2D6EC /* SharedBundles.framework in Frameworks */,
+				182B34662F94697F00821A61 /* libjxl in Frameworks */,
+				182B34622F94697F00821A61 /* hwy in Frameworks */,
+				182B34602F94697F00821A61 /* brotli in Frameworks */,
 				185522892F565A5B00972E92 /* SharedKeys.framework in Frameworks */,
+				182B34642F94697F00821A61 /* lcms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +118,7 @@
 		185522862F565A3200972E92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				188350982F953D4E00C2D6EC /* SharedBundles.framework */,
 				18B0B6B52F9330D10089D498 /* SharedToolkit.framework */,
 				185522872F565A3300972E92 /* SharedKeys.framework */,
 			);
@@ -109,6 +128,7 @@
 		18BC573D2F2EA9D80075DC08 = {
 			isa = PBXGroup;
 			children = (
+				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
 				18B0B6D42F9338550089D498 /* ext */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
 				1803A4612F36EBA8006EC28C /* SOControllers */,
@@ -147,11 +167,16 @@
 				1803A4582F36E017006EC28C /* SOPages */,
 				1803A4612F36EBA8006EC28C /* SOControllers */,
 				18B0B6D42F9338550089D498 /* ext */,
+				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
 				18BC57482F2EA9D80075DC08 /* SaltySweets */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
 			);
 			name = SaltySweets;
 			packageProductDependencies = (
+				182B345F2F94697F00821A61 /* brotli */,
+				182B34612F94697F00821A61 /* hwy */,
+				182B34632F94697F00821A61 /* lcms */,
+				182B34652F94697F00821A61 /* libjxl */,
 			);
 			productName = SODockThemer;
 			productReference = 18BC57462F2EA9D80075DC08 /* SaltySweets.app */;
@@ -181,6 +206,9 @@
 			);
 			mainGroup = 18BC573D2F2EA9D80075DC08;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				182B345E2F94697F00821A61 /* XCRemoteSwiftPackageReference "libjxl-Xcode" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 18BC57472F2EA9D80075DC08 /* Products */;
 			projectDirPath = "";
@@ -422,6 +450,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		182B345E2F94697F00821A61 /* XCRemoteSwiftPackageReference "libjxl-Xcode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/libjxl-Xcode";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		182B345F2F94697F00821A61 /* brotli */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 182B345E2F94697F00821A61 /* XCRemoteSwiftPackageReference "libjxl-Xcode" */;
+			productName = brotli;
+		};
+		182B34612F94697F00821A61 /* hwy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 182B345E2F94697F00821A61 /* XCRemoteSwiftPackageReference "libjxl-Xcode" */;
+			productName = hwy;
+		};
+		182B34632F94697F00821A61 /* lcms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 182B345E2F94697F00821A61 /* XCRemoteSwiftPackageReference "libjxl-Xcode" */;
+			productName = lcms;
+		};
+		182B34652F94697F00821A61 /* libjxl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 182B345E2F94697F00821A61 /* XCRemoteSwiftPackageReference "libjxl-Xcode" */;
+			productName = libjxl;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 18BC573E2F2EA9D80075DC08 /* Project object */;
 }

@@ -10,36 +10,40 @@
 + (SONSWindowAuxContextSicon *)siconViewerContextWithURL:(NSURL *)url{
     return [[SONSWindowAuxContextSicon alloc] initWithURL:url];
 }
+
++ (SONSWindowAuxContextSiconCreation *)siconCreationContext{
+    return [[SONSWindowAuxContextSiconCreation alloc] init];
+}
 @end
 
 @implementation SONSWindowAuxContextSicon
 - (instancetype)initWithURL:(NSURL *)url{
     if (self = [super init]){
-        self.loadedSicon = url;
-        
-        NSBundle * siconBundle =
-            [NSBundle bundleWithURL:url];
+        SOSiconBundle *siconBundle =
+            [SOSiconBundle bundleWithURL:url];
         
         if (!siconBundle)
             return nil;
         
-        self.loadedSiconInfo =
-            [siconBundle infoDictionary];
+        self.loadedSicon = siconBundle;
         
-        if (!self.loadedSiconInfo)
+        NSData *siconData = [self.loadedSicon blobData];
+        
+        if (!siconData)
             return nil;
         
-        NSURL * resourceManifestURL =
-            [siconBundle URLForResource:@"manifest" withExtension:@"plist"];
+        self.loadedSiconBlob = siconData;
         
-        self.loadedSiconManifest =
-            [NSDictionary dictionaryWithContentsOfURL:resourceManifestURL];
-        
-        if (!self.loadedSiconManifest)
-            return nil;
-        
-        self.loadedSiconImageCount =
-            [[self.loadedSiconManifest objectForKey:kSOSiconImageCount.key] unsignedIntValue];
+        self.loadedSiconImageCount = [self.loadedSicon imageCount];
+    }
+    return self;
+}
+@end
+
+@implementation SONSWindowAuxContextSiconCreation
+- (instancetype)init{
+    if (self = [super init]){
+
     }
     return self;
 }

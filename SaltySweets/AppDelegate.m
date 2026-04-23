@@ -4,6 +4,7 @@
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow * window;
+@property (strong) NSMutableDictionary<NSURL *, SONSWindowAuxController *> * urlToAuxController;
 @end
 
 static NSString * appSupport = nil;
@@ -11,7 +12,6 @@ static NSString * dir = nil;
 static NSString * settingsPath = nil;
 static NSString * bundleDir = nil;
 static NSString * iconsDir = nil;
-static NSString * iconsSettingsPath = nil;
 static NSString * cryptoDir = nil;
 static NSMapTable * undoManagerPotholder = nil;
 
@@ -19,8 +19,44 @@ static __strong NSXPCConnection * iconServerConnection = nil;
 
 @implementation AppDelegate
 
+- (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
+    if (!self.urlToAuxController)
+        self.urlToAuxController = [NSMutableDictionary dictionary];
+    
+    for (NSURL * url in urls){
+        if ([[url pathExtension] isEqualToString:@"sicon"]){
+            SONSWindowAuxController * controller = nil;
+            if (![self.urlToAuxController objectForKey:url])
+                controller = [[SONSWindowAuxController alloc] initControllerForSiconContextWithURL:url];
+            
+            if (controller)
+                [self.urlToAuxController setObject:controller forKey:url];
+            
+            if ([self.urlToAuxController objectForKey:url]){
+                controller = [self.urlToAuxController objectForKey:url];
+                [controller.window makeKeyAndOrderFront:nil];
+            }
+        }
+    }
+}
+
 - (void)applicationWillFinishLaunching:(NSNotification *)notification{
 
+}
+
+static NSDictionary<NSString *, NSValue *> *KeyStrToEncoded(void){
+    return @{
+        kSOSicon16x.key   : [NSValue valueWithPointer:&kSOSicon16x],
+        kSOSicon16x2x.key : [NSValue valueWithPointer:&kSOSicon16x2x],
+        kSOSicon32x.key   : [NSValue valueWithPointer:&kSOSicon32x],
+        kSOSicon32x2x.key : [NSValue valueWithPointer:&kSOSicon32x2x],
+        kSOSicon128x.key  : [NSValue valueWithPointer:&kSOSicon128x],
+        kSOSicon128x2x.key: [NSValue valueWithPointer:&kSOSicon128x2x],
+        kSOSicon256x.key  : [NSValue valueWithPointer:&kSOSicon256x],
+        kSOSicon256x2x.key: [NSValue valueWithPointer:&kSOSicon256x2x],
+        kSOSicon512x.key  : [NSValue valueWithPointer:&kSOSicon512x],
+        kSOSicon512x2x.key: [NSValue valueWithPointer:&kSOSicon512x2x]
+    };
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -37,6 +73,33 @@ static __strong NSXPCConnection * iconServerConnection = nil;
     [iconServerConnection resume];
     
     undoManagerPotholder = [NSMapTable weakToWeakObjectsMapTable];
+    
+    NSMutableArray<SOSiconEntry *> *defTestArray = [NSMutableArray array];
+    NSArray<NSImage *> *testData = @[
+        [NSImage imageNamed:@"NXBreak"],
+        [NSImage imageNamed:@"NSTruthClose"],
+        [NSImage imageNamed:@"NSTruthCloseH"],
+        [NSImage imageNamed:@"AppIcon"],
+        [[NSWorkspace sharedWorkspace] iconForContentType:[UTType typeWithIdentifier:@"public.folder"]]
+    ];
+    
+    for (int i = 0; i < 5; i++){
+        SOSiconEntry *entry = [[SOSiconEntry alloc] init];
+        NSImage *imageData = testData[i];
+        SOSiconDef *def = [[SOSiconDef alloc] init];
+        def.filename = imageData.name;
+        def.size = imageData.size;
+        def.isRetina = YES;
+        def.encodedKey = i == 0 ? &kSOSicon16x2x : i == 1 ? &kSOSicon32x2x : i == 2 ? &kSOSicon128x2x : i == 3 ? &kSOSicon256x2x : i == 4 ? &kSOSicon512x2x : nil;
+        def.variantKey = &kSOSiconLight;
+        
+        entry.def = def;
+        entry.imageData = imageData.TIFFRepresentation;
+        [defTestArray addObject:entry];
+    }
+    SOSiconBundle * templateBundle = [SOSiconBundle bundleWithURL:[[AppDelegate currentIconThemeBundle] URLForResource:@"Template" withExtension:@"sicon"]];
+    
+    [templateBundle writeBlobArrayToDisk:defTestArray];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -49,6 +112,41 @@ static __strong NSXPCConnection * iconServerConnection = nil;
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return YES;
+}
+
++ (NSString *)currentIconPackBundleName{
+    NSFileManager * fm = [NSFileManager defaultManager];
+    
+    if (!settingsPath)
+        [self.class initializePathsIfNeeded];
+    
+    NSDictionary * settings =
+        [NSDictionary dictionaryWithContentsOfFile:settingsPath];
+
+    if (![settings isKindOfClass:[NSDictionary class]]) {
+        return @"";
+    }
+
+    NSString * bundleName = settings[@"kSOIconsCurrentPack"] ?: @"";
+    
+    if (![bundleName isEqualToString:kSODockResourceNotProvided] &&
+        [fm fileExistsAtPath:[iconsDir stringByAppendingPathComponent:bundleName]]){
+        return bundleName;
+    } else {
+        return @"";
+    }
+}
+
++ (void)setCurrentIconPackBundleName:(NSString *)bundle{
+    if (!settingsPath)
+        [self.class initializePathsIfNeeded];
+    
+    NSMutableDictionary *settings =
+        [NSMutableDictionary dictionaryWithContentsOfFile:settingsPath];
+    
+    settings[@"kSOIconsCurrentPack"] = bundle;
+    
+    [settings writeToFile:settingsPath atomically:NO];
 }
 
 + (void)registerUndoManagerForClear:(NSUndoManager *)undoManager
@@ -155,8 +253,12 @@ static __strong NSXPCConnection * iconServerConnection = nil;
     return [[[NSDictionary dictionaryWithContentsOfFile:settingsPath] valueForKey:kSOIconServerLogging.key] boolValue];
 }
 
-+ (NSBundle *)currentThemeBundle{
-    return [NSBundle bundleWithPath:[bundleDir stringByAppendingPathComponent:[self.class currentThemeBundleName]]];
++ (SODockThemeBundle *)currentDockThemeBundle{
+    return [SODockThemeBundle bundleWithPath:[bundleDir stringByAppendingPathComponent:[self.class currentThemeBundleName]]];
+}
+
++ (SOSiconPackBundle *)currentIconThemeBundle{
+    return [SOSiconPackBundle bundleWithPath:[iconsDir stringByAppendingPathComponent:[self.class currentIconPackBundleName]]];
 }
 
 + (void)setAppSetAuthorName:(NSString *)appSetAuthorName{
@@ -204,7 +306,6 @@ static __strong NSXPCConnection * iconServerConnection = nil;
         bundleDir = [dir stringByAppendingPathComponent:@"Themes"];
         iconsDir = [dir stringByAppendingPathComponent:@"Icons"];
         cryptoDir = [dir stringByAppendingPathComponent:@"Cryptographic Keys"];
-        iconsSettingsPath = [iconsDir stringByAppendingPathComponent:@"iconsettings.plist"];
 
         NSFileManager *fm = [NSFileManager defaultManager];
         NSError *error = nil;
@@ -246,7 +347,8 @@ static __strong NSXPCConnection * iconServerConnection = nil;
                 @"/System/Applications/",
                 @"/Applications/",
                 @"/System/Library/CoreServices/"
-            ]
+            ],
+            @"kSOIconsCurrentPack" : @""
         };
 
         if (![fm fileExistsAtPath:settingsPath]) {
@@ -276,18 +378,6 @@ static __strong NSXPCConnection * iconServerConnection = nil;
             if (didModify) {
                 [loadedSettings writeToFile:settingsPath atomically:YES];
             }
-        }
-        
-        if (![fm fileExistsAtPath:iconsSettingsPath]){
-            NSDictionary * defaultIconsSettings = @{
-                kSOIconsSidebarDict.key : kSOIconsSidebarDict.defaultValue,
-                kSOIconsBundleDict.key : kSOIconsBundleDict.defaultValue,
-                kSOIconsFolderDict.key : kSOIconsFolderDict.defaultValue,
-                kSOIconsSystemDict.key : kSOIconsSystemDict.defaultValue,
-                kSOIconsDecoratedFolderDict.key : kSOIconsDecoratedFolderDict.defaultValue,
-                kSOIconsExtensionDict.key : kSOIconsExtensionDict.defaultValue
-            };
-            [defaultIconsSettings writeToFile:iconsSettingsPath atomically:YES];
         }
     });
 }

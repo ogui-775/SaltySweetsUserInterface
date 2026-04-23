@@ -11,8 +11,12 @@
                                             YES).firstObject;
     
     NSString * dir = [appSupport stringByAppendingPathComponent:@"SaltySweets"];
-    NSString * iconsDir = [dir stringByAppendingPathComponent:@"Icons"];
-    return [iconsDir stringByAppendingPathComponent:@"iconsettings.plist"];
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[dir stringByAppendingPathComponent:@"appsettings.plist"]];
+    NSString *currentIconPack = [settings objectForKey:@"kSOIconsCurrentPack"];
+    NSString *iconsBaseDir = [dir stringByAppendingPathComponent:@"Icons"];
+    NSString *iconsDir = [iconsBaseDir stringByAppendingFormat:@"/%@/Contents/Resources/", currentIconPack];
+    NSString *settingsPath = [iconsDir stringByAppendingPathComponent:@"iconsettings.plist"];
+    return settingsPath;
 }
 
 + (NSString *)createCompositeWithArray:(NSArray<NSString *> *)strings baseSize:(CGSize)baseSize{

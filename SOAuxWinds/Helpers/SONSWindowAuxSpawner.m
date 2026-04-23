@@ -26,4 +26,28 @@
     
     return wind;
 }
+
++ (SONSWindowAux *)spawnAuxWindowForSiconCreation{
+    SONSWindowAuxContextSiconCreation * ctx = [SONSWindowAuxContextSiconCreation siconCreationContext];
+    
+    if (!ctx)
+        return nil;
+    
+    SONSWindowAux * wind = [[SONSWindowAux alloc] initWithContentRect:CGRectMake(CGRectGetMidX(NSScreen.mainScreen.frame) - 500,
+                                                                                 CGRectGetMidY(NSScreen.mainScreen.frame) - 1000,
+                                                                                 1000,
+                                                                                 2000)
+                                                            styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskClosable
+                                                              backing:NSBackingStoreBuffered
+                                                                defer:NO
+                                                              context:ctx];
+    
+    if (!wind)
+        return nil;
+    
+    [wind setContentMinSize:CGSizeMake(1000, 2000)];
+    [wind makeKeyAndOrderFront:nil];
+    
+    return wind;
+}
 @end

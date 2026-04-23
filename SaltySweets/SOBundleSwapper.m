@@ -23,11 +23,10 @@
         }
     }
     
-    [compiler generateThemeBundleWithBaseline:[nonfinal mutableCopy]
-                                      changes:@[]
-                                     asUpdate:NO
-                                   completion:^(BOOL success) {
-
+    [compiler generateBundleWithBaseline:[nonfinal mutableCopy]
+                                 changes:@[]
+                            shortCircuit:kSODockShort
+                              completion:^(SOHandlerCompletionCodes completionCode) {
         [[NSNotificationCenter defaultCenter]
             postNotificationName:SONotificationBaseClassUpdateBaseline
                           object:self];
@@ -118,4 +117,71 @@
     }
 }
 
+- (IBAction)createNewIconPack:(id)sender{
+    SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
+    
+    NSMutableDictionary * nonfinal = [NSMutableDictionary new];
+
+    for (int i = 0; i < kSOIconAllKeysCount; i++){
+        SOEncodedKey key = kSOIconAllKeys[i];
+        NSString * keyName = key.key;
+
+        if (key.valueEncoding == SOValueEncodingNSDictionary){
+            nonfinal[keyName] = [self.class baselineFromEncodedKey:key];
+        } else {
+            nonfinal[keyName] = key.defaultValue;
+        }
+    }
+    
+    [compiler generateBundleWithBaseline:[nonfinal mutableCopy]
+                                 changes:@[]
+                            shortCircuit:kSOIconShort
+                              completion:^(SOHandlerCompletionCodes completionCode) {
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:SONotificationBaseClassUpdateBaseline
+                          object:self];
+        
+        for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+
+            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                [page refreshOrLoadBaseline];
+
+            if ([page respondsToSelector:@selector(purgePendingChanges)])
+                [page purgePendingChanges];
+        }
+    }];
+}
+
+- (IBAction)swapIconPack:(id)sender{
+    NSOpenPanel * panel = [NSOpenPanel openPanel];
+    panel.allowedContentTypes = @[[UTType typeWithIdentifier:@"com.saltysoft.siconpack"]];
+    panel.allowsMultipleSelection = NO;
+    panel.directoryURL = [NSURL fileURLWithPath:[AppDelegate iconsDir]];
+    panel.canCreateDirectories = NO;
+
+    [panel beginSheetModalForWindow:[SOViewPane defaultInstance].view.window
+                  completionHandler:^(NSModalResponse result) {
+
+        if (result != NSModalResponseOK)
+            return;
+
+        NSURL * fileURL = panel.URL;
+        NSString * fileName = [fileURL lastPathComponent];
+        
+        [AppDelegate setCurrentIconPackBundleName:fileName];
+        
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:SONotificationBaseClassUpdateBaseline
+                          object:self];
+        
+        for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+
+            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                [page refreshOrLoadBaseline];
+
+            if ([page respondsToSelector:@selector(purgePendingChanges)])
+                [page purgePendingChanges];
+        }
+    }];
+}
 @end

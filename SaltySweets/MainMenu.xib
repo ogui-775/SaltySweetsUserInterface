@@ -97,6 +97,19 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="ShB-Aa-I3v"/>
+                            <menuItem title="New Icon Pack" secondaryImage="plus" catalog="system" keyEquivalent="n" id="c4u-cL-L7q">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="createNewIconPack:" target="qvk-NZ-xfX" id="0Ve-pQ-zX5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Open Icon Pack..." secondaryImage="folder" catalog="system" keyEquivalent="o" id="2Nz-iC-NBE">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="swapIconPack:" target="qvk-NZ-xfX" id="ohE-8O-h1i"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zeG-Rw-u5D"/>
                             <menuItem title="Restart Icon Server" secondaryImage="restart" catalog="system" id="hrH-tw-cEu">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -415,6 +428,7 @@
         <image name="folder" catalog="system" width="18" height="14"/>
         <image name="gear" catalog="system" width="17" height="16"/>
         <image name="house" catalog="system" width="19" height="16"/>
+        <image name="plus" catalog="system" width="14" height="13"/>
         <image name="restart" catalog="system" width="12" height="13"/>
         <image name="sidebar.left" catalog="system" width="18" height="14"/>
     </resources>

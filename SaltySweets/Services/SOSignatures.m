@@ -64,6 +64,7 @@
     
     if (err_ns){
         NSLog(@"%@", err_ns);
+        [SOErrorAlert runModalTerminatingError:err_ns.localizedDescription];
         return NO;
     }
     

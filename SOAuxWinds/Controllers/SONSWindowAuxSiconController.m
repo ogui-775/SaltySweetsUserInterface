@@ -15,21 +15,17 @@
     [self.interiorCollectionView registerClass:[SOSiconCollectionViewItem class]
                          forItemWithIdentifier:@"SiconItem"];
     
-    self.flatImageArray = [NSMutableArray array];
-    NSDictionary * imageDict = self.context.loadedSiconManifest[kSOSiconImages.key];
+    self.imageDict = [NSMutableDictionary dictionary];
+    self.bundle = self.context.loadedSicon;
     
-    for (NSString * key in imageDict){
-        NSDictionary * subDict = imageDict[key];
+    [self.bundle enumerateDescriptorsWithBlock:^(const SOSiconDescriptor *desc, NSUInteger index) {
+        SOSiconObj *obj = [[SOSiconObj alloc] init];
+        obj.desc = desc;
+        obj.image = [self.bundle CGImageForIndex:index];
         
-        if (![[subDict objectForKey:kSOSiconDark.key] isEqualToString:@""])
-            [self.flatImageArray addObject:[subDict objectForKey:kSOSiconDark.key]];
-        if (![[subDict objectForKey:kSOSiconLight.key] isEqualToString:@""])
-            [self.flatImageArray addObject:[subDict objectForKey:kSOSiconLight.key]];
-        if (![[subDict objectForKey:kSOSiconSelected.key] isEqualToString:@""])
-            [self.flatImageArray addObject:[subDict objectForKey:kSOSiconSelected.key]];
-    }
+        [self.imageDict setObject:obj forKey:@(index)];
+    }];
     
-    self.bundle = [NSBundle bundleWithURL:self.context.loadedSicon];
     [self.interiorCollectionView reloadData];
     [self.interiorCollectionView setSelectionIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
@@ -39,20 +35,23 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath{
-    SOSiconCollectionViewItem * item =
+    SOSiconCollectionViewItem *item =
         [collectionView makeItemWithIdentifier:@"SiconItem" forIndexPath:indexPath];
     
     item.parentController = self;
     NSUInteger idx = indexPath.item;
-    NSURL * urlForImage = [self.bundle URLForImageResource:self.flatImageArray[idx]];
-    NSData * dataForImage = [NSData dataWithContentsOfURL:urlForImage];
-    item.imageView.image = [[NSImage alloc] initWithData:dataForImage];
-    item.descriptor = [NSString stringWithFormat:@"%lu - %@ - %ix%i - %lukb",
+    
+    CGImageRef interiorImg = [self.imageDict objectForKey:@(idx)].image;
+    const SOSiconDescriptor *desc = [self.imageDict objectForKey:@(idx)].desc;
+    
+    item.imageView.image = [[NSImage alloc] initWithCGImage:interiorImg size:CGSizeZero];
+    CGImageRelease(interiorImg);
+    
+    item.descriptor = [NSString stringWithFormat:@"%lu - %ix%i - %lukb",
                        (unsigned long)idx,
-                       urlForImage.lastPathComponent,
                        (int)item.imageView.image.size.width,
                        (int)item.imageView.image.size.height,
-                       (unsigned long)(dataForImage.length/1024)];
+                       (unsigned long)(desc->dataLength/1024)];
     
     return item;
 }

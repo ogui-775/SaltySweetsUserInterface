@@ -19,4 +19,9 @@
     
     return [super performDragOperation:sender];
 }
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session
+sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+    return NSDragOperationMove;
+}
 @end

@@ -131,7 +131,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     
     if (baseline){
         item.imageView.image =
-            [[NSImage alloc] initWithContentsOfFile:[[AppDelegate iconsDir] stringByAppendingPathComponent:baseline]];
+            [[NSImage alloc] initWithData:[[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil]];
         [(SOAppItemImageView *)item.imageView setIsReplaced:YES];
     } else {
         item.imageView.image =

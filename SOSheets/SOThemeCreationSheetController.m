@@ -4,9 +4,17 @@
 
 @implementation SOThemeCreationSheetController
 
-- (instancetype)init{
-    self = [super initWithWindowNibName:@"SOThemeCreationSheet"];
+- (instancetype)initWithCreationType:(NSString *)type{
+    if (self = [super initWithWindowNibName:@"SOThemeCreationSheet"]){
+        self.type = type;
+    }
     return self;
+}
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    
+    self.typeBox.stringValue = [NSString stringWithFormat:@"Create new %@", self.type];
 }
 
 - (IBAction)createThemeClicked:(id)sender {

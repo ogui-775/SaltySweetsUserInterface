@@ -303,7 +303,7 @@
     NSString * relativePath = [self getRelativePathForHash:hash];
     if (![hash isEqualToString:kSODockResourceNotProvided] &&
         ![relativePath isEqualToString:kSODockResourceNotProvided]){
-        NSBundle * themeBundle = [AppDelegate currentThemeBundle];
+        NSBundle * themeBundle = [AppDelegate currentDockThemeBundle];
 
         NSURL * path = [[themeBundle resourceURL] URLByAppendingPathComponent:relativePath];
         if (!path)
@@ -316,12 +316,12 @@
 }
 
 - (NSImage *)loadImageForEncodedKeypath:(const SOEncodedKeyPath *)path{
-    if (!(path->rootKey->destinationFlags == SODestinationIcons)){
+    if (path->rootKey->destinationFlags != SODestinationIcons){
         NSString * hash = [self getBaselineForEncodedKeypath:path];
         NSString * relativePath = [self getRelativePathForHash:hash];
         if (![hash isEqualToString:kSODockResourceNotProvided] &&
             ![relativePath isEqualToString:kSODockResourceNotProvided]){
-            NSBundle * themeBundle = [AppDelegate currentThemeBundle];
+            NSBundle * themeBundle = [AppDelegate currentDockThemeBundle];
 
             NSURL * path = [[themeBundle resourceURL] URLByAppendingPathComponent:relativePath];
             if (!path)
@@ -333,8 +333,8 @@
         }
     } else {
         NSString * baseline = [self getBaselineForEncodedKeypath:path];
-        NSURL * urlForPath = [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:baseline]];
-        return [[NSImage alloc] initWithContentsOfURL:urlForPath];
+        NSData * imgData = [[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil];
+        return [[NSImage alloc] initWithData:imgData];
     }
 }
 

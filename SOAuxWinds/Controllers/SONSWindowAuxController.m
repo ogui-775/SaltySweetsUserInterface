@@ -9,7 +9,7 @@
         if (self.window){
             SONSWindowAuxContextSicon * ctx = (SONSWindowAuxContextSicon *)[(SONSWindowAux *)self.window auxiliaryContext];
             self.window.contentViewController = [[SONSWindowAuxSiconController alloc] initWithNibName:@"SONSWindowAuxSiconView" bundle:nil context:ctx];
-            self.window.title = [ctx.loadedSicon lastPathComponent];
+            self.window.title = [ctx.loadedSicon.bundleURL lastPathComponent];
             self.window.titlebarAppearsTransparent = YES;
             CGRect windowBounds = CGRectMake(0,
                                              0,

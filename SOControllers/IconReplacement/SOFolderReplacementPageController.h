@@ -33,3 +33,5 @@
 @property (weak) UTType * assignedType;
 @property (weak) SOFolderReplacementPageController * parentConfigurableController;
 @end
+
+@interface SOSwitchExt : NSSwitch @end

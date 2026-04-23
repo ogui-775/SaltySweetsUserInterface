@@ -7,6 +7,7 @@
 
 @interface SOWelcomePageController : SOConfigurablePageControllerBase
 @property (strong, nonatomic) IBOutlet NSTextField * currentThemeDisplay;
+@property (strong, nonatomic) IBOutlet NSTextField * currentIconPackDisplay;
 @property (strong, nonatomic) IBOutlet NSTextField * currentApplicationVersionDisplay;
 @property (strong, nonatomic) IBOutlet NSTextField * currentThemeAuthorNameDisplay;
 @property (strong, nonatomic) IBOutlet NSTextField * currentThemeAuthorFingerprintDisplay;

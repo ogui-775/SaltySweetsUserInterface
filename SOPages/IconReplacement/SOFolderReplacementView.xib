@@ -43,7 +43,7 @@
                                     <subviews>
                                         <collectionView selectable="YES" allowsEmptySelection="NO" id="DFc-3X-xD2">
                                             <rect key="frame" x="0.0" y="0.0" width="664" height="158"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" scrollDirection="horizontal" id="4bC-Nu-uiH">
                                                 <size key="itemSize" width="70" height="70"/>
                                             </collectionViewFlowLayout>
@@ -113,7 +113,7 @@
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-1L-n9h">
                                 <rect key="frame" x="331" y="168" width="45" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="UTType" id="w9a-dS-O7y">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -121,7 +121,7 @@
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kT4-5j-ahu">
                                 <rect key="frame" x="39" y="168" width="105" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Displayed" id="0Qd-8E-IQ2">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -132,12 +132,12 @@
                                     <constraint firstAttribute="width" constant="100" id="m2n-Hu-Vfr"/>
                                 </constraints>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Displayed" id="Tk7-yF-T3G">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <switch focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" refusesFirstResponder="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="lqB-PP-Zgz">
+                            <switch focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" refusesFirstResponder="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="lqB-PP-Zgz" customClass="SOSwitchExt">
                                 <rect key="frame" x="20" y="368" width="54" height="24"/>
                                 <connections>
                                     <action selector="fullVariantSwitchWasFlipped:" target="-2" id="OCx-p9-MBI"/>
@@ -170,7 +170,7 @@
                                     <constraint firstAttribute="width" constant="161" id="BLQ-JU-UfR"/>
                                 </constraints>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scroll horizontally to reveal all." id="no6-Y5-iFY">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

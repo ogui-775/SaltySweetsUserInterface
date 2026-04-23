@@ -2,6 +2,6 @@
 
 #import <AppKit/AppKit.h>
 
-@interface SODragAwareImageView : NSImageView
+@interface SODragAwareImageView : NSImageView <NSDraggingSource>
 @property (strong) NSURL * draggedFileURL;
 @end

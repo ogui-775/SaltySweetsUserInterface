@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="createButton" destination="apq-fA-56O" id="O86-W3-1fk"/>
                 <outlet property="nameBox" destination="ANI-C6-GJj" id="lXG-dQ-VmV"/>
+                <outlet property="typeBox" destination="tdB-v5-FMy" id="lYF-va-GLM"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="xIW-lT-Cd2"/>
             </connections>
         </customObject>
@@ -23,9 +24,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="228" height="155"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tdB-v5-FMy">
-                        <rect key="frame" x="18" y="119" width="121" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Create New Theme" id="ndY-Tm-wmJ">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tdB-v5-FMy">
+                        <rect key="frame" x="18" y="119" width="192" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="VOID" id="ndY-Tm-wmJ">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

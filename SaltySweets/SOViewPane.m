@@ -80,41 +80,12 @@ static SOViewPane * _instance = nil;
     }
 
     SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
-    SOChangeCompiler * iconCompiler = [[SOChangeCompiler alloc] init];
-
-    BOOL isUpdate = ![[AppDelegate currentThemeBundleName]
-                        isEqualToString:kSODockResourceNotProvided];
-
-    [compiler generateThemeBundleWithBaseline:baseline
-                                      changes:changesFlat
-                                     asUpdate:isUpdate
-                                   completion:^(BOOL success) {
-
-        if (!success)
-            return;
-
-        [[NSNotificationCenter defaultCenter]
-            postNotificationName:SONotificationBaseClassUpdateBaseline
-                          object:self];
-
-        for (id<SOConfigurableContent> page in self.childViewControllers) {
-
-            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                [page refreshOrLoadBaseline];
-
-            if ([page respondsToSelector:@selector(purgePendingChanges)])
-                [page purgePendingChanges];
-        }
-
-        [self.pendingChangesCache removeAllObjects];
-
-        self.applyButton.enabled = NO;
-    }];
     
-    [iconCompiler updateIconFolderWithBaseline:baseline
-                                       changes:changesFlat
-                                    completion:^(BOOL success) {
-        if (!success)
+    [compiler generateBundleWithBaseline:baseline
+                                 changes:changesFlat
+                            shortCircuit:kSONoShort
+                              completion:^(SOHandlerCompletionCodes completionCode) {
+        if (completionCode == kSOAbort || completionCode == kSOErrorResult)
             return;
 
         [[NSNotificationCenter defaultCenter]
@@ -122,10 +93,14 @@ static SOViewPane * _instance = nil;
                           object:self];
 
         for (id<SOConfigurableContent> page in self.childViewControllers) {
-
             if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
                 [page refreshOrLoadBaseline];
+        }
+        
+        if (completionCode == kSONoChange)
+            return;
 
+        for (id<SOConfigurableContent> page in self.childViewControllers) {
             if ([page respondsToSelector:@selector(purgePendingChanges)])
                 [page purgePendingChanges];
         }

@@ -63,11 +63,14 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 }
 
 - (IBAction)compositeButtonWasPressed:(NSButton *)sender{
+    BOOL hasAtLeast1024 = NO;
     
 }
 
 - (IBAction)fullVariantSwitchWasFlipped:(NSSwitch *)sender{
+    NSIndexSet * selection = self.folderScrollerCollection.selectionIndexes;
     [self.folderScrollerCollection reloadData];
+    [self.folderScrollerCollection setSelectionIndexes:selection];
     [self.folderPaperSegmented setSelectedSegment:0];
     [self folderPaperSegmentedWasSwitched:self.folderPaperSegmented];
     BOOL variant = sender.state == NSControlStateValueOn;
@@ -291,4 +294,8 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     else
         [self.view.layer setBackgroundColor:NSColor.clearColor.CGColor];
 }
+@end
+
+@implementation SOSwitchExt
+
 @end

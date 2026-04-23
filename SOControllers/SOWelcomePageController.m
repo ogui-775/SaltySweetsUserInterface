@@ -13,6 +13,7 @@
 }
 
 - (void)refreshOrLoadBaseline{
+    self.currentIconPackDisplay.stringValue = [[AppDelegate currentIconPackBundleName] stringByReplacingOccurrencesOfString:@".siconpack" withString:@""];
     self.currentThemeDisplay.stringValue = [[AppDelegate currentThemeBundleName] stringByReplacingOccurrencesOfString:@".bundle" withString:@""];
     self.currentThemeAuthorNameDisplay.stringValue = [self getBaselineForEncodedKey:&kSODockThemePlainAuthorName];
     
@@ -20,7 +21,7 @@
     
     if (![currentTheme isEqualToString:@""]){
         
-        NSBundle * currentThemeBundle = [AppDelegate currentThemeBundle];
+        NSBundle * currentThemeBundle = [AppDelegate currentDockThemeBundle];
         
         BOOL verified = [SOSignatures verifyThemeAuthorship:currentThemeBundle];
         
@@ -33,7 +34,6 @@
         self.currentThemeAuthorFingerprintDisplay.stringValue = [SOSignatures themeAuthorFingerprint:currentThemeBundle] ?: @"";
         
     } else {
-        
         self.currentThemeStatusImageView.image = [NSImage imageNamed:@"NSStatusPartiallyAvailable"];
         self.currentThemeStatusTextLabel.stringValue = @"Theme is unsigned/no theme loaded";
     }

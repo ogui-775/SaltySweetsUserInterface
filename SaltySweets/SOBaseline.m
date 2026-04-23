@@ -24,13 +24,9 @@
         }
     } else {
         NSMutableDictionary * themePlist =
-            [NSMutableDictionary dictionaryWithContentsOfURL:[[AppDelegate currentThemeBundle]
-                                                              URLForResource:@"theme.plist"
-                                                               withExtension:@""]];
+            [[AppDelegate currentDockThemeBundle] themePlist];
         NSMutableDictionary * resourceBom =
-            [NSMutableDictionary dictionaryWithContentsOfURL:[[AppDelegate currentThemeBundle]
-                                                              URLForResource:@"resourcebom.plist"
-                                                               withExtension:@""]];
+            [[AppDelegate currentDockThemeBundle] resourceBomPlist];
         
         if (!themePlist || !resourceBom)
             [SOBaseline bailout];
@@ -47,15 +43,31 @@
         }
     }
     
-    NSMutableDictionary * iconsPlist =
-        [NSMutableDictionary dictionaryWithContentsOfFile:[[AppDelegate iconsDir]
-                           stringByAppendingPathComponent:@"iconsettings.plist"]];
+    NSString * currentIconPack = [AppDelegate currentIconPackBundleName];
     
-    if (iconsPlist){
+    if ([currentIconPack isEqualToString:kSODockResourceNotProvided]){
         for (int i = 0; i < kSOIconAllKeysCount; i++){
             SOEncodedKey key = kSOIconAllKeys[i];
             NSString * keyName = key.key;
-            nonfinal[keyName] = iconsPlist[keyName] ?: key.defaultValue;
+
+            if (key.valueEncoding == SOValueEncodingNSDictionary){
+                nonfinal[keyName] = [self baselineFromEncodedKey:key];
+            } else {
+                nonfinal[keyName] = key.defaultValue;
+            }
+        }
+    } else {
+        NSMutableDictionary * iconSettingsPlist =
+            [[AppDelegate currentIconThemeBundle] iconSettingsPlist];
+
+        if (!iconSettingsPlist)
+            [SOBaseline bailout];
+
+        for (int i = 0; i < kSOIconAllKeysCount; i++){
+            SOEncodedKey key = kSOIconAllKeys[i];
+            NSString * keyName = key.key;
+            
+            nonfinal[keyName] = iconSettingsPlist[keyName] ?: key.defaultValue;
         }
     }
 

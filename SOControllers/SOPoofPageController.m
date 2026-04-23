@@ -48,7 +48,7 @@
                       accessibilityDescription:nil];
         self.filePathDisplay.stringValue = [[self getBaselineForEncodedKey:&kSODockPoofSoundAsset] stringValue];
         self.playButton.enabled = YES;
-        self.playButton.sound = [[NSSound alloc] initWithContentsOfFile:[[AppDelegate currentThemeBundle]
+        self.playButton.sound = [[NSSound alloc] initWithContentsOfFile:[[AppDelegate currentDockThemeBundle]
                                                                          pathForResource:@"poof_sound.aiff"
                                                                          ofType:nil
                                                                          inDirectory:kSODockPoofSoundAsset.key]
