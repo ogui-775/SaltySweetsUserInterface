@@ -16,6 +16,8 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="openSiconMenuItem" destination="c1U-FE-0iB" id="a5R-1u-lQp"/>
+                <outlet property="theNewSiconMenuItem" destination="Wj3-my-gdP" id="xwN-5I-dAv"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -191,6 +193,31 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Sicon" id="42h-kQ-Tcg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" id="bDF-T4-XHD">
+                        <items>
+                            <menuItem title="Studio" secondaryImage="NSIconViewTemplate" id="V9I-xP-xoL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="siconStudioMenuWasClicked:" target="Voe-Tx-rLC" id="dEn-fl-rKO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="New Sicon..." secondaryImage="plus" catalog="system" enabled="NO" id="Wj3-my-gdP" userLabel="New Sicon">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="newSiconWasClicked:" target="Voe-Tx-rLC" id="owj-kl-Jwg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Open Sicon..." secondaryImage="folder" catalog="system" enabled="NO" id="c1U-FE-0iB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openSiconWasClicked:" target="Voe-Tx-rLC" id="VCB-ob-C1u"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Window" id="aUF-d1-5bR">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
@@ -207,6 +234,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
+                            <menuItem isSeparatorItem="YES" id="fgo-p0-eSd"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

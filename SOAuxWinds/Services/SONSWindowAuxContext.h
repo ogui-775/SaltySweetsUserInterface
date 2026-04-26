@@ -19,5 +19,5 @@
 @end
 
 @interface SONSWindowAuxContextSiconCreation : SONSWindowAuxContext
-
+@property (strong) SOSiconBundle *loadedSicon;
 @end

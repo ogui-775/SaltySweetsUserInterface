@@ -117,8 +117,6 @@ NSString * const pageControllerClass  = @"pageControllerClass";
     return @[
         @{image:@"house", text:@"Welcome",
           pageControllerClass:SOWelcomePageController.class},
-        @{image:@"dot.scope.display", text:@"Retina Display",
-          pageControllerClass:SORetinaDisplayPageController.class},
         @{image:@"long.text.page.and.pencil", text:@"Attributions",
           pageControllerClass:SOAttributionsPageController.class},
         @{image:@"book.and.wrench", text:@"Documentation"},

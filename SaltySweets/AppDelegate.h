@@ -8,8 +8,11 @@
 #import "../../icon-server/icon-server/SOIconServerXPCProtocol.h"
 #import "../../icon-server/icon-server/SOIconClientXPCProtocol.h"
 #import "../SOAuxWinds/Controllers/SONSWindowAuxController.h"
+#import "../SOAuxWinds/Controllers/SONSWindowAuxSiconCreationController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, SOIconClientXPCProtocol>
+@property (strong) IBOutlet NSWindow * window;
+
 + (NSString *)currentThemeBundleName;
 + (void)setCurrentThemeBundleName:(NSString *)bundle;
 + (NSString *)currentIconPackBundleName;
@@ -28,4 +31,5 @@
 + (NSXPCConnection *)appIconServerConnection;
 + (void)registerUndoManagerForClear:(NSUndoManager *)undoManager withController:(NSViewController *)controller;
 + (void)clearAllUndoManagers;
++ (instancetype)sharedInstance;
 @end

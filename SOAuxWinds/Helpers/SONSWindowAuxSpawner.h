@@ -4,6 +4,7 @@
 
 #import "../Services/SONSWindowAux.h"
 #import "../Services/SONSWindowAuxContext.h"
+#import "../../SaltySweets/AppDelegate.h"
 
 @interface SONSWindowAuxSpawner : NSObject
 + (SONSWindowAux *)spawnAuxWindowForSiconWithURL:(NSURL *)url;

@@ -13,7 +13,7 @@
                                                                                  CGRectGetMidY(NSScreen.mainScreen.frame) - 250,
                                                                                  250,
                                                                                  500)
-                                                            styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable
+                                                            styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable
                                                               backing:NSBackingStoreBuffered
                                                                 defer:NO
                                                               context:ctx];
@@ -34,9 +34,9 @@
         return nil;
     
     SONSWindowAux * wind = [[SONSWindowAux alloc] initWithContentRect:CGRectMake(CGRectGetMidX(NSScreen.mainScreen.frame) - 500,
-                                                                                 CGRectGetMidY(NSScreen.mainScreen.frame) - 1000,
+                                                                                 CGRectGetMidY(NSScreen.mainScreen.frame) - 300,
                                                                                  1000,
-                                                                                 2000)
+                                                                                 600)
                                                             styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskClosable
                                                               backing:NSBackingStoreBuffered
                                                                 defer:NO
@@ -45,7 +45,7 @@
     if (!wind)
         return nil;
     
-    [wind setContentMinSize:CGSizeMake(1000, 2000)];
+    [wind setContentMinSize:CGSizeMake(1000, 600)];
     [wind makeKeyAndOrderFront:nil];
     
     return wind;

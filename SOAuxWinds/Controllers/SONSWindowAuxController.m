@@ -25,4 +25,16 @@
     }
     return self;
 }
+
+- (instancetype)initControllerForSiconCreationContext{
+    if (self = [super init]){
+        self.window = [SONSWindowAuxSpawner spawnAuxWindowForSiconCreation];
+        if (self.window){
+            SONSWindowAuxContextSiconCreation *ctx = (SONSWindowAuxContextSiconCreation *)[(SONSWindowAux *)self.window auxiliaryContext];
+            self.window.contentViewController = [[SONSWindowAuxSiconCreationController alloc] initWithNibName:@"SONSWindowAuxSiconCreationView" bundle:nil context:ctx];
+            self.window.title = @"Sicon Studio";
+        }
+    }
+    return self;
+}
 @end

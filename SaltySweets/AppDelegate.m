@@ -2,9 +2,12 @@
 
 #import "AppDelegate.h"
 
+static __strong AppDelegate *_instance;
+
 @interface AppDelegate ()
-@property (strong) IBOutlet NSWindow * window;
 @property (strong) NSMutableDictionary<NSURL *, SONSWindowAuxController *> * urlToAuxController;
+@property (strong) SONSWindowAuxController *creationStudioController;
+@property (strong) IBOutlet NSMenu *mainMenu;
 @end
 
 static NSString * appSupport = nil;
@@ -41,22 +44,7 @@ static __strong NSXPCConnection * iconServerConnection = nil;
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification{
-
-}
-
-static NSDictionary<NSString *, NSValue *> *KeyStrToEncoded(void){
-    return @{
-        kSOSicon16x.key   : [NSValue valueWithPointer:&kSOSicon16x],
-        kSOSicon16x2x.key : [NSValue valueWithPointer:&kSOSicon16x2x],
-        kSOSicon32x.key   : [NSValue valueWithPointer:&kSOSicon32x],
-        kSOSicon32x2x.key : [NSValue valueWithPointer:&kSOSicon32x2x],
-        kSOSicon128x.key  : [NSValue valueWithPointer:&kSOSicon128x],
-        kSOSicon128x2x.key: [NSValue valueWithPointer:&kSOSicon128x2x],
-        kSOSicon256x.key  : [NSValue valueWithPointer:&kSOSicon256x],
-        kSOSicon256x2x.key: [NSValue valueWithPointer:&kSOSicon256x2x],
-        kSOSicon512x.key  : [NSValue valueWithPointer:&kSOSicon512x],
-        kSOSicon512x2x.key: [NSValue valueWithPointer:&kSOSicon512x2x]
-    };
+    _instance = self;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -90,7 +78,7 @@ static NSDictionary<NSString *, NSValue *> *KeyStrToEncoded(void){
         def.filename = imageData.name;
         def.size = imageData.size;
         def.isRetina = YES;
-        def.encodedKey = i == 0 ? &kSOSicon16x2x : i == 1 ? &kSOSicon32x2x : i == 2 ? &kSOSicon128x2x : i == 3 ? &kSOSicon256x2x : i == 4 ? &kSOSicon512x2x : nil;
+        //def.encodedKey = i == 0 ? &kSOSicon16x2x : i == 1 ? &kSOSicon32x2x : i == 2 ? &kSOSicon128x2x : i == 3 ? &kSOSicon256x2x : i == 4 ? &kSOSicon512x2x : nil;
         def.variantKey = &kSOSiconLight;
         
         entry.def = def;
@@ -100,6 +88,10 @@ static NSDictionary<NSString *, NSValue *> *KeyStrToEncoded(void){
     SOSiconBundle * templateBundle = [SOSiconBundle bundleWithURL:[[AppDelegate currentIconThemeBundle] URLForResource:@"Template" withExtension:@"sicon"]];
     
     [templateBundle writeBlobArrayToDisk:defTestArray];
+}
+
++ (instancetype)sharedInstance{
+    return _instance;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -112,6 +104,33 @@ static NSDictionary<NSString *, NSValue *> *KeyStrToEncoded(void){
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return YES;
+}
+
+- (IBAction)siconStudioMenuWasClicked:(NSMenuItem *)sender{
+    if (!self.creationStudioController)
+        self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
+    
+
+    [self.creationStudioController.window makeKeyAndOrderFront:nil];
+}
+
+- (IBAction)newSiconWasClicked:(id)sender{
+    if (!self.creationStudioController)
+        self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
+    
+    [self.creationStudioController.window makeKeyAndOrderFront:nil];
+    
+    [(SONSWindowAuxSiconCreationController *)self.creationStudioController.contentViewController newSiconWasClicked:sender];
+}
+
+- (IBAction)openSiconWasClicked:(id)sender{
+    if (!self.creationStudioController)
+        self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
+    
+
+    [self.creationStudioController.window makeKeyAndOrderFront:nil];
+    
+    [(SONSWindowAuxSiconCreationController *)self.creationStudioController.contentViewController openSiconWasClicked:sender];
 }
 
 + (NSString *)currentIconPackBundleName{

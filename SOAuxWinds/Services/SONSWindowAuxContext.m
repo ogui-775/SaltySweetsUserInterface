@@ -43,7 +43,7 @@
 @implementation SONSWindowAuxContextSiconCreation
 - (instancetype)init{
     if (self = [super init]){
-
+        self.loadedSicon = nil;
     }
     return self;
 }
