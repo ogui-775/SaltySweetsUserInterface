@@ -130,8 +130,21 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     }
     
     if (baseline){
+        if ([[baseline pathExtension] isEqualToString:@"sicon"]){
+            SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:[[[AppDelegate currentIconThemeBundle] resourceURL] URLByAppendingPathComponent:baseline]];
+            CGImageRef img = [bundle CGImageForSize:CGSizeMake(128, 128)
+                                           isRetina:self.view.window.backingScaleFactor > 1 ? YES : NO
+                                             isDark:[NSApp.effectiveAppearance.name containsString:@"Dark"]
+                                         isSelected:NO];
+            
+            if (img){
+                item.imageView.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
+                CGImageRelease(img);
+            }
+        } else
         item.imageView.image =
             [[NSImage alloc] initWithData:[[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil]];
+        
         [(SOAppItemImageView *)item.imageView setIsReplaced:YES];
     } else {
         item.imageView.image =
@@ -167,6 +180,13 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     };
     
     if (sender.image){
+        if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
+            SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:sender.draggedFileURL];
+            CGImageRef img = [bundle CGImageForIndex:0];
+            sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
+            CGImageRelease(img);
+        }
+        
         [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController * controller){
             [sender setImage:sender.originalSetImage];
             if ([self getBaselineForEncodedKeypath:&tBundlePath])
@@ -273,6 +293,11 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 @synthesize isReplaced = _isReplaced;
 @synthesize isPendingRemove = _isPendingRemove;
 @synthesize isPendingReplace = _isPendingReplace;
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    
+}
 
 - (void)ensureGlowLayer {
     if (self.glowShadowLayer) return;
@@ -387,5 +412,4 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     self.glowShadowLayer.shadowOpacity = 0;
     self.glowShadowLayer.shadowColor = nil;
 }
-
 @end

@@ -96,6 +96,7 @@
     
     NSDictionary * error = nil;
     NSAppleScript * as = [[NSAppleScript alloc] initWithSource:script];
+    
     [as executeAndReturnError:&error];
 
     if (error) {

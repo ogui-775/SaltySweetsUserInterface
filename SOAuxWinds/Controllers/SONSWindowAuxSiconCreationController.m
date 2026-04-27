@@ -233,58 +233,92 @@ typedef enum : NSUInteger {
         alert.messageText = @"You must set a name for the new icon before compiling.";
         [alert addButtonWithTitle:@"OK"];
         [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-            return;
         }];
+        return;
     }
     
     BOOL compressToJXL = self.applyJXLSwitch.state == NSControlStateValueOn;
-    
+
     NSMutableArray<SOSiconEntry *> *entryArray = [NSMutableArray array];
     
-    for (SOCreationHolder *holder in self.keyToCreationHolder.allValues){
-        BOOL eligibleForJXL = ![[[holder.originalFileURL lastPathComponent] pathExtension] isEqualToString:@"jxl"];
-        
-        NSData *data = nil;
-        SOSiconEntry *entry = [SOSiconEntry new];
-        SOSiconDef   *def   = [SOSiconDef new];
-        
-        if (eligibleForJXL && compressToJXL){
-            NSData *imageData = [NSData dataWithContentsOfURL:holder.originalFileURL];
+    NSOperationQueue *opQueue =
+        [[NSOperationQueue alloc] init];
+    opQueue.maxConcurrentOperationCount = 2;
+    
+    SOProgressSheetController *progress =
+        [[SOProgressSheetController alloc] initWithWindowNibName:@"SOProgressSheet"];
+    [self.view.window beginSheet:progress.window
+               completionHandler:nil];
+    
+    [opQueue addOperationWithBlock:^{
+        opQueue.progress.totalUnitCount = self.keyToCreationHolder.allValues.count;
+        for (SOCreationHolder *holder in self.keyToCreationHolder.allValues){
+            BOOL eligibleForJXL = ![[[holder.originalFileURL lastPathComponent] pathExtension] isEqualToString:@"jxl"];
             
-            if (!imageData)
+            opQueue.progress.fileURL = holder.originalFileURL;
+            dispatch_async(dispatch_get_main_queue(),
+                   ^{
+                progress.progressBar.maxValue = opQueue.progress.totalUnitCount;
+                static dispatch_once_t onceToken;
+                dispatch_once(&onceToken, ^{
+                    [progress.progressLabel setFrame:progress.progressLabel.frame];
+                });
+                [progress.progressLabel  animateFieldToShow:[NSString stringWithFormat:@"Writing %@...",
+                                                      holder.originalFileURL.lastPathComponent]];
+            });
+            
+            NSData *data = nil;
+            SOSiconEntry *entry = [SOSiconEntry new];
+            SOSiconDef   *def   = [SOSiconDef new];
+            
+            if (eligibleForJXL && compressToJXL){
+                NSData *imageData = [NSData dataWithContentsOfURL:holder.originalFileURL];
+                
+                if (!imageData)
+                    continue;
+                
+                data = [SOJXLEncoder encodeImageDataToJXL:imageData error:nil];
+                def.isJXL = YES;
+            } else {
+                data = [NSData dataWithContentsOfURL:holder.originalFileURL];
+            }
+            
+            if (!data)
                 continue;
             
-            data = [SOJXLEncoder encodeImageDataToJXL:imageData error:nil];
-            def.isJXL = YES;
-        } else {
-            data = [NSData dataWithContentsOfURL:holder.originalFileURL];
+            def.size = holder.displayImage.size;
+            def.filename = holder.originalFileURL.lastPathComponent;
+            NSArray *components = [holder.key componentsSeparatedByString:@"|"];
+            def.isRetina = [components[1] isEqualToString:@"1"] ? NO : YES;
+            def.variantKey = [components[0] isEqualToString:@"0"] ? &kSOSiconLight : [components[0] isEqualToString:@"1"] ? &kSOSiconDark : &kSOSiconSelected;
+            
+            entry.def = def;
+            entry.imageData = data;
+            
+            [entryArray addObject:entry];
+            
+            opQueue.progress.completedUnitCount++;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                progress.progressBar.doubleValue += 1;
+                progress.previewImage.image = [[NSImage alloc] initWithData:data];
+            });
         }
-        
-        if (!data)
-            continue;
-        
-        def.size = holder.displayImage.size;
-        def.filename = holder.originalFileURL.lastPathComponent;
-        NSArray *components = [holder.key componentsSeparatedByString:@"|"];
-        def.isRetina = [components[1] isEqualToString:@"1"] ? NO : YES;
-        def.variantKey = [components[0] isEqualToString:@"0"] ? &kSOSiconLight : [components[0] isEqualToString:@"1"] ? &kSOSiconDark : &kSOSiconSelected;
-        
-        entry.def = def;
-        entry.imageData = data;
-        
-        [entryArray addObject:entry];
-    }
+    }];
     
-    NSURL *newURL = [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:filename]];
-    NSFileManager *fm = [NSFileManager defaultManager];
-    
-    [fm copyItemAtURL:[[NSBundle mainBundle] URLForResource:@"Template" withExtension:@"sicon"]
-                toURL:newURL
-                error:nil];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [opQueue addBarrierBlock:^{
+        NSURL *newURL = [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:filename]];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        
+        [fm copyItemAtURL:[[NSBundle mainBundle] URLForResource:@"Template" withExtension:@"sicon"]
+                    toURL:newURL
+                    error:nil];
+        
         SOSiconBundle *newIcon = [SOSiconBundle bundleWithURL:newURL];
         [newIcon writeBlobArrayToDisk:entryArray];
-    });
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.view.window endSheet:progress.window];
+        });
+    }];
 }
 @end

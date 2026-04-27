@@ -14,11 +14,11 @@
                 <outlet property="darkVariantWell" destination="NAh-mi-Uba" id="7JD-fp-gCR"/>
                 <outlet property="fileDetailTable" destination="Vs9-x0-5zv" id="RCz-sJ-CID"/>
                 <outlet property="lightFilesize" destination="iv6-1H-iTz" id="Je0-b8-HjR"/>
-                <outlet property="lightWell" destination="2ye-6G-hSI" id="Cw1-sx-LFB"/>
+                <outlet property="lightWell" destination="BHe-2z-7v9" id="VIc-za-ogM"/>
                 <outlet property="nameField" destination="c0P-HZ-sxb" id="7Do-W6-ing"/>
                 <outlet property="scaleSelector" destination="ZL2-St-x6W" id="e1s-m1-ULB"/>
                 <outlet property="selectedVariantFilesize" destination="Zvy-wN-A1C" id="L91-6a-9vH"/>
-                <outlet property="selectedVariantWell" destination="BHe-2z-7v9" id="En1-cb-le2"/>
+                <outlet property="selectedVariantWell" destination="2ye-6G-hSI" id="4CU-MZ-Drz"/>
                 <outlet property="sizeSelector" destination="IJP-fS-Hoe" id="TcU-ej-Nek"/>
                 <outlet property="view" destination="c22-O7-iKe" id="dtk-pv-4pw"/>
             </connections>

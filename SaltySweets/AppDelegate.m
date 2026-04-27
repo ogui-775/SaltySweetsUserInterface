@@ -61,33 +61,6 @@ static __strong NSXPCConnection * iconServerConnection = nil;
     [iconServerConnection resume];
     
     undoManagerPotholder = [NSMapTable weakToWeakObjectsMapTable];
-    
-    NSMutableArray<SOSiconEntry *> *defTestArray = [NSMutableArray array];
-    NSArray<NSImage *> *testData = @[
-        [NSImage imageNamed:@"NXBreak"],
-        [NSImage imageNamed:@"NSTruthClose"],
-        [NSImage imageNamed:@"NSTruthCloseH"],
-        [NSImage imageNamed:@"AppIcon"],
-        [[NSWorkspace sharedWorkspace] iconForContentType:[UTType typeWithIdentifier:@"public.folder"]]
-    ];
-    
-    for (int i = 0; i < 5; i++){
-        SOSiconEntry *entry = [[SOSiconEntry alloc] init];
-        NSImage *imageData = testData[i];
-        SOSiconDef *def = [[SOSiconDef alloc] init];
-        def.filename = imageData.name;
-        def.size = imageData.size;
-        def.isRetina = YES;
-        //def.encodedKey = i == 0 ? &kSOSicon16x2x : i == 1 ? &kSOSicon32x2x : i == 2 ? &kSOSicon128x2x : i == 3 ? &kSOSicon256x2x : i == 4 ? &kSOSicon512x2x : nil;
-        def.variantKey = &kSOSiconLight;
-        
-        entry.def = def;
-        entry.imageData = imageData.TIFFRepresentation;
-        [defTestArray addObject:entry];
-    }
-    SOSiconBundle * templateBundle = [SOSiconBundle bundleWithURL:[[AppDelegate currentIconThemeBundle] URLForResource:@"Template" withExtension:@"sicon"]];
-    
-    [templateBundle writeBlobArrayToDisk:defTestArray];
 }
 
 + (instancetype)sharedInstance{

@@ -20,10 +20,20 @@
 }
 
 + (NSString *)createCompositeWithArray:(NSArray<NSString *> *)strings baseSize:(CGSize)baseSize{
-    NSString * sizeAppend = [NSString stringWithFormat:@"%fx%f", baseSize.width, baseSize.height];
-    strings = [strings arrayByAddingObject:sizeAppend];
+    NSMutableArray<NSString *> *mutArray = [strings mutableCopy];
     
-    return [strings componentsJoinedByString:@"|"];
+    NSString * sizeAppend = [NSString stringWithFormat:@"%fx%f", baseSize.width, baseSize.height];
+    mutArray = [[strings arrayByAddingObject:sizeAppend] mutableCopy];
+    
+    [mutArray enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * stop) {
+        if ([[obj pathExtension] isEqualToString:@"sicon"]){
+            if ([NSApp.effectiveAppearance.name containsString:@"Dark"]){
+                mutArray[idx] = [NSString stringWithFormat:@"dark_%@", obj];
+            }
+        }
+    }];
+    
+    return [mutArray componentsJoinedByString:@"|"];
 }
 
 + (CGImageRef)copyImageForComposite:(NSString *)key connection:(NSXPCConnection *)xpc_connection{

@@ -3,25 +3,35 @@
 #import "SODragAwareImageView.h"
 
 @implementation SODragAwareImageView
-- (void)awakeFromNib{
+- (void)awakeFromNib {
     [super awakeFromNib];
-    [self registerForDraggedTypes:@[NSPasteboardTypeURL]];
+    [self registerForDraggedTypes:@[NSPasteboardTypeFileURL, @"com.saltysoft.sicon"]];
 }
 
-- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
-    NSPasteboard * pBoard = [sender draggingPasteboard];
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    NSPasteboard *pboard = [sender draggingPasteboard];
     
-    if ([[pBoard types] containsObject:NSPasteboardTypeFileURL]) {
-        id files = [pBoard propertyListForType:NSPasteboardTypeFileURL];
-        NSURL * fileURL = [NSURL URLWithString:[files isKindOfClass:NSArray.class] ? [files firstObject] : (NSString *)files];
+    if ([[pboard types] containsObject:@"com.saltysoft.sicon"] ||
+        [[pboard types] containsObject:NSPasteboardTypeFileURL]) {
+        return NSDragOperationCopy;
+    }
+    
+    return [super draggingEntered:sender];
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender {
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    
+    NSURL *fileURL = [NSURL URLFromPasteboard:pboard];
+    
+    if (fileURL) {
         [self setDraggedFileURL:fileURL];
+        if ([[fileURL pathExtension] isEqualToString:@"sicon"])
+            [NSApp sendAction:self.action to:self.target from:self];
     }
     
     return [super performDragOperation:sender];
 }
 
-- (NSDragOperation)draggingSession:(NSDraggingSession *)session
-sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
-    return NSDragOperationMove;
-}
 @end

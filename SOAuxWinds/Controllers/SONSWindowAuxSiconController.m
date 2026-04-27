@@ -47,11 +47,13 @@
     item.imageView.image = [[NSImage alloc] initWithCGImage:interiorImg size:CGSizeZero];
     CGImageRelease(interiorImg);
     
-    item.descriptor = [NSString stringWithFormat:@"%lu - %ix%i - %lukb",
+    item.descriptor = [NSString stringWithFormat:@"%lu - %ix%i - %lukb%@ - %@",
                        (unsigned long)idx,
                        (int)item.imageView.image.size.width,
                        (int)item.imageView.image.size.height,
-                       (unsigned long)(desc->dataLength/1024)];
+                       (unsigned long)(desc->dataLength/1024),
+                       desc->flags & SOSIconFlagJXL ? @" (JXL)" : @"",
+                       desc->flags & SOSIconFlagRetina ? @"Retina" : @"Standard"];
     
     return item;
 }

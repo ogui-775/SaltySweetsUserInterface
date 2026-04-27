@@ -8,6 +8,7 @@
 #import "../../SOControllers/Base/SODragAwareImageView.h"
 #import "../Helpers/SOJXLEncoder.h"
 #import "../../SaltySweets/AppDelegate.h"
+#import "../../SOSheets/SOProgressSheetController.h"
 
 @class SOCreationHolder;
 

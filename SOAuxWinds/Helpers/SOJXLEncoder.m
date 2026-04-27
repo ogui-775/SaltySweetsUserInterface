@@ -6,7 +6,7 @@
 
 + (NSData *)encodeImageDataToJXL:(NSData *)inputData error:(NSError **)error {
     if (!inputData) return nil;
-    
+
     CGImageSourceRef src = CGImageSourceCreateWithData((__bridge CFDataRef)inputData, NULL);
     if (!src) {
         if (error) *error = [NSError errorWithDomain:@"SOJXLEncoder"
@@ -33,8 +33,9 @@
     size_t bufferSize  = height * bytesPerRow;
 
     uint8_t *pixels = malloc(bufferSize);
+    memset(pixels, 0, bufferSize);
 
-    CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceRGB();
 
     CGContextRef ctx = CGBitmapContextCreate(
         pixels,
@@ -64,7 +65,6 @@
     JxlEncoderFrameSettingsSetOption(frameSettings,
         JXL_ENC_FRAME_SETTING_EFFORT, 7);
     
-    //JxlEncoderSetFrameDistance(frameSettings, 1.0f);
     JxlEncoderSetFrameLossless(frameSettings, JXL_TRUE);
     
     JxlPixelFormat pixelFormat = {
@@ -95,6 +95,10 @@
         JxlEncoderDestroy(encoder);
         return nil;
     }
+    
+    JxlColorEncoding colorEncoding;
+    JxlColorEncodingSetToSRGB(&colorEncoding, JXL_FALSE);
+    JxlEncoderSetColorEncoding(encoder, &colorEncoding);
     
     if (JxlEncoderAddImageFrame(frameSettings,
                                &pixelFormat,
