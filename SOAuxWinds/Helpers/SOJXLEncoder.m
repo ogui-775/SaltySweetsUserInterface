@@ -44,7 +44,10 @@
         8,
         bytesPerRow,
         cs,
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
         kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big
+#pragma cland diagnostic pop
     );
 
     CGColorSpaceRelease(cs);

@@ -10,7 +10,6 @@
                 <outlet property="backFlapWell" destination="4u0-xe-yzX" id="2fz-mN-QRA"/>
                 <outlet property="backFlapWellAdditionalLabel" destination="kT4-5j-ahu" id="dNF-BY-UKq"/>
                 <outlet property="backFlapWellLabel" destination="6Ag-i4-aJn" id="Vvd-n4-Uu1"/>
-                <outlet property="compositeButton" destination="dN0-yx-iSx" id="tuM-ua-ZcG"/>
                 <outlet property="currentFolderTypeLabel" destination="bWM-1L-n9h" id="Zel-b1-X7E"/>
                 <outlet property="folderPaperSegmented" destination="DFg-U2-QyT" id="LFS-m8-cD3"/>
                 <outlet property="folderScrollerCollection" destination="DFc-3X-xD2" id="p20-iH-R9V"/>
@@ -175,19 +174,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dN0-yx-iSx">
-                                <rect key="frame" x="301" y="136" width="104" height="24"/>
-                                <buttonCell key="cell" type="push" title="Composite" bezelStyle="rounded" image="square.stack" catalog="system" imagePosition="left" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ptN-82-MJN">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="104" id="7oA-3E-MzD"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="compositeButtonWasPressed:" target="-2" id="Q1n-6a-aDp"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="kT4-5j-ahu" firstAttribute="top" secondItem="bWM-1L-n9h" secondAttribute="top" id="16M-pL-oYg"/>
@@ -210,13 +196,11 @@
                             <constraint firstItem="lqB-PP-Zgz" firstAttribute="top" secondItem="xs0-a0-CKF" secondAttribute="top" constant="20" symbolic="YES" id="St4-pC-kYA"/>
                             <constraint firstItem="lqB-PP-Zgz" firstAttribute="centerY" secondItem="RZd-5o-bA3" secondAttribute="centerY" id="TGV-V9-RfU"/>
                             <constraint firstItem="6Ag-i4-aJn" firstAttribute="top" secondItem="xs0-a0-CKF" secondAttribute="top" constant="56" id="TOC-b5-5Fr"/>
-                            <constraint firstItem="dN0-yx-iSx" firstAttribute="top" secondItem="bWM-1L-n9h" secondAttribute="bottom" constant="8" symbolic="YES" id="Wfj-eB-lLo"/>
                             <constraint firstItem="iGn-pK-zVn" firstAttribute="top" secondItem="ug3-EV-NQd" secondAttribute="bottom" constant="1" id="XF0-Vx-NrZ"/>
                             <constraint firstItem="Vje-w8-1SM" firstAttribute="centerX" secondItem="bWM-1L-n9h" secondAttribute="centerX" id="aEy-zK-jls"/>
                             <constraint firstItem="bWM-1L-n9h" firstAttribute="centerX" secondItem="ug3-EV-NQd" secondAttribute="centerX" id="bPY-f4-Ki2"/>
                             <constraint firstItem="6Ag-i4-aJn" firstAttribute="centerX" secondItem="4u0-xe-yzX" secondAttribute="centerX" id="e0u-Z8-ldN"/>
                             <constraint firstItem="kT4-5j-ahu" firstAttribute="baseline" secondItem="bWM-1L-n9h" secondAttribute="firstBaseline" id="g40-NM-vlF"/>
-                            <constraint firstItem="dN0-yx-iSx" firstAttribute="leading" secondItem="DFg-U2-QyT" secondAttribute="leading" id="ixF-iZ-WOD"/>
                             <constraint firstItem="Vje-w8-1SM" firstAttribute="top" secondItem="7vG-cZ-Csj" secondAttribute="top" id="jRu-JN-9Ab"/>
                             <constraint firstAttribute="trailing" secondItem="7vG-cZ-Csj" secondAttribute="trailing" constant="20" symbolic="YES" id="k1I-P1-9sU"/>
                             <constraint firstItem="Vje-w8-1SM" firstAttribute="baseline" secondItem="7vG-cZ-Csj" secondAttribute="baseline" id="l7J-80-7qO"/>
@@ -242,7 +226,4 @@
             <point key="canvasLocation" x="139" y="154"/>
         </customView>
     </objects>
-    <resources>
-        <image name="square.stack" catalog="system" width="15" height="18"/>
-    </resources>
 </document>

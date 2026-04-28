@@ -26,7 +26,6 @@
 @property (assign) unsigned int currentDataOffset;
 
 @property (strong) IBOutlet NSTextField *nameField;
-@property (strong) IBOutlet NSTableView *fileDetailTable;
 @property (strong) IBOutlet NSButton *compileButton;
 @property (strong) NSMutableDictionary *loadedSiconDataDict;
 @property (strong) IBOutlet NSSwitch *applyJXLSwitch;

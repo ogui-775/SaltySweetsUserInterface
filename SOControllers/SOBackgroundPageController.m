@@ -287,8 +287,11 @@
     size_t width  = CGImageGetWidth(cgImage);
     size_t height = CGImageGetHeight(cgImage);
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
     CGBitmapInfo bitmapInfo =
         kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast;
+#pragma clang diagnostic pop
     CGContextRef ctx = CGBitmapContextCreate(
         NULL,
         width,
@@ -351,8 +354,11 @@
     size_t height = CGImageGetHeight(cgImage);
     size_t rotatedWidth = height;
     size_t rotatedHeight = width;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
     CGBitmapInfo bitmapInfo =
         kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast;
+#pragma clang diagnostic pop
     CGContextRef ctx = CGBitmapContextCreate(
         NULL,
         rotatedWidth,

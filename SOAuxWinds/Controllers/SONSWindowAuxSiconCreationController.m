@@ -59,8 +59,6 @@ typedef enum : NSUInteger {
     for (NSTextField *f in @[self.darkVariantFilesize, self.lightFilesize, self.selectedVariantFilesize]){
         f.font = [NSFont fontWithName:@"Helvetica" size:10];
     }
-
-    [self.fileDetailTable reloadData];
     
     [self updateWells];
 }
@@ -161,7 +159,8 @@ typedef enum : NSUInteger {
     self.lightFilesize.stringValue = @"";
     self.selectedVariantFilesize.stringValue = @"";
     [self.keyToCreationHolder removeAllObjects];
-    [self.fileDetailTable reloadData];
+    for (NSImageView *well in @[self.lightWell, self.darkVariantWell, self.selectedVariantWell])
+        well.image = nil;
 }
 
 - (IBAction)openSiconWasClicked:(NSMenuItem *)sender{
@@ -179,10 +178,16 @@ typedef enum : NSUInteger {
     holder.displayImage = well.image;
     holder.originalFileURL = well.draggedFileURL;
     
-    if (well.image)
+    if (well.image){
+        [self willChangeValueForKey:@"keyToCreationHolder"];
         [self.keyToCreationHolder setObject:holder forKey:key];
-    else if (!well.image && [self.keyToCreationHolder objectForKey:key])
+        [self didChangeValueForKey:@"keyToCreationHolder"];
+    }
+    else if (!well.image && [self.keyToCreationHolder objectForKey:key]){
+        [self willChangeValueForKey:@"keyToCreationHolder"];
         [self.keyToCreationHolder removeObjectForKey:key];
+        [self didChangeValueForKey:@"keyToCreationHolder"];
+    }
     
     [self updateWells];
 }
@@ -221,7 +226,6 @@ typedef enum : NSUInteger {
                              [formatter stringFromByteCount:(value != nil ? (long)value.unsignedLongValue : 0)]];
         
         [SOCreationHolder setDictionaryToLatest:self.loadedSiconDataDict fromCreationHolder:self.keyToCreationHolder];
-        [self.fileDetailTable reloadData];
     }
 }
 

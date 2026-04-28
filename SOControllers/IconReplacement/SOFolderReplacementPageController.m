@@ -23,9 +23,15 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
                            forItemWithIdentifier:@"FolderItem"];
     
     self.currentFolderTypes = [NSMutableArray array];
-    UTType * folderType = [UTType typeWithIdentifier:@"public.folder"];
+    UTType *folderType = [UTType typeWithIdentifier:@"public.folder"];
+    UTType *smartType = [UTType typeWithIdentifier:@"com.apple.finder.smart-folder"];
+    UTType *paperType = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.paper-sheet"];
+    UTType *frontType = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.front-flap"];
+    UTType *backType  = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.back-flap"];
+    UTType *decoration = [UTType typeWithIdentifier:@"com.apple.icon-decoration"];
     [UTType _enumerateAllDeclaredTypesUsingBlock:^(UTType * type) {
-        if ([type conformsToType:folderType]){
+        if ([type conformsToType:folderType] || [type conformsToType:smartType] || [type conformsToType:paperType] ||
+            [type conformsToType:frontType]  || [type conformsToType:backType] || [type conformsToType:decoration]){
             [self.currentFolderTypes addObject:type];
         }
     }];
@@ -39,7 +45,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 }
 
 - (void)refreshOrLoadBaseline{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.folderScrollerCollection reloadData];
     });
 }
@@ -59,12 +65,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     self.frontFlapWellAdditionalLabel.hidden = hidden;
     self.backFlapWellAdditionalLabel.hidden = hidden;
     self.folderPaperSegmented.enabled = !hidden;
-    self.compositeButton.hidden = hidden;
-}
 
-- (IBAction)compositeButtonWasPressed:(NSButton *)sender{
-    BOOL hasAtLeast1024 = NO;
-    
 }
 
 - (IBAction)fullVariantSwitchWasFlipped:(NSSwitch *)sender{
@@ -82,17 +83,15 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     NSUInteger index = sender.indexOfSelectedItem;
     BOOL fullVariant = self.fullVariantSwitch.state == NSControlStateValueOn;
     if (index == 0){
-        self.compositeButton.enabled = NO;
         self.folderWell.tag = 0;
         self.currentFolderTypeLabel.stringValue = self.currentDisplayedType.identifier;
         self.folderWell.image = [self imageForVariant:fullVariant UTI:self.currentDisplayedType.identifier] ?:
                                 [[NSWorkspace sharedWorkspace] iconForContentType:self.currentDisplayedType];
     } else {
         self.folderWell.tag = 1;
-        self.compositeButton.enabled = YES;
         NSImage * paperCustom = [self paperForUTI:self.currentDisplayedType.identifier];
         if (!paperCustom){
-            self.currentFolderTypeLabel.stringValue = @"Using Default";
+            self.currentFolderTypeLabel.stringValue = @"Using icon-package version";
             const SOEncodedKeyPath tDefaultPaper = {
                 .rootKey = &kSOIconsFolderDict,
                 .components = @[@"com.apple.icon-package.folder.paper-sheet"]
@@ -107,6 +106,13 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 
 - (IBAction)actionOnFlapWell:(SODragAwareImageView *)sender{
     BOOL isFrontFlap = sender.tag == 1;
+    
+    if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
+        SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:sender.draggedFileURL];
+        CGImageRef img = [bundle CGImageForIndex:0];
+        sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
+        CGImageRelease(img);
+    }
     
     NSString * composite = self.currentDisplayedType.identifier;
     composite = isFrontFlap ? [composite stringByAppendingString:@".front-flap"] :
@@ -139,6 +145,13 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     BOOL isFullVariant = self.fullVariantSwitch.state == NSControlStateValueOn;
     NSString * composite = self.currentDisplayedType.identifier;
     
+    if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
+        SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:sender.draggedFileURL];
+        CGImageRef img = [bundle CGImageForIndex:0];
+        sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
+        CGImageRelease(img);
+    }
+    
     if (isPaperSheet)
         composite = [composite stringByAppendingString:@".paper-sheet"];
     else if (isFullVariant && !isPaperSheet)
@@ -149,6 +162,11 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
         .components = @[composite]
     };
     
+    const SOEncodedKeyPath tSystem = {
+        .rootKey = &kSOIconsDecoratedFolderDict,
+        .components = @[[composite stringByReplacingOccurrencesOfString:@"." withString:@"/"].lastPathComponent]
+    };
+    
     [self.undoManager registerUndoWithTarget:self
                                      handler:^void(SOFolderReplacementPageController * undoSender){
         sender.image = [self loadImageForEncodedKeypath:&tFolder] ?: [[NSWorkspace sharedWorkspace] iconForContentType:self.currentDisplayedType];
@@ -156,6 +174,16 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
         [self.changeDelegate contentDidChangeState:self];
     }];
     [self.undoManager setActionName:[NSString stringWithFormat:@"Set %@", isPaperSheet ? @"Paper" : @"Folder"]];
+    
+    if ([self.currentDisplayedType.identifier containsString:@"icon-decoration"]){
+        [self setPendingIconResourceChangeForKeypath:&tSystem
+                                            resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
+                                            filename:[sender.draggedFileURL lastPathComponent]
+                                                note:[NSString stringWithFormat:@"Set %@ to %@",
+                                                      composite,
+                                                      sender.draggedFileURL.lastPathComponent]];
+        return;
+    }
     
     [self setPendingIconResourceChangeForKeypath:&tFolder
                                         resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
@@ -222,7 +250,8 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     [self.folderPaperSegmented setSelectedSegment:0];
     [self folderPaperSegmentedWasSwitched:self.folderPaperSegmented];
     
-    if ([sender.assignedType.identifier containsString:@"trash"])
+    if ([sender.assignedType.identifier containsString:@"trash"] || [sender.assignedType.identifier containsString:@"com.apple.icon-package"] ||
+        [sender.assignedType.identifier containsString:@"com.apple.icon-decoration"])
         [self setFlapsHidden:YES];
     else
         [self setFlapsHidden:NO];
@@ -249,14 +278,14 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     
     if (!self.backFlapWell.image){
         self.backFlapWell.image = [self loadImageForEncodedKeypath:&tDefaultBackFlap];
-        [self.backFlapWellAdditionalLabel setStringValue:@"Using Default"];
+        [self.backFlapWellAdditionalLabel setStringValue:@"Using icon-package version"];
     } else {
         [self.backFlapWellAdditionalLabel setStringValue:@"Using Custom"];
     }
     
     if (!self.frontFlapWell.image){
         self.frontFlapWell.image = [self loadImageForEncodedKeypath:&tDefaultFrontFlap];
-        [self.frontFlapWellAdditionalLabel setStringValue:@"Using Default"];
+        [self.frontFlapWellAdditionalLabel setStringValue:@"Using icon-package version"];
     } else {
         [self.frontFlapWellAdditionalLabel setStringValue:@"Using Custom"];
     }

@@ -20,7 +20,6 @@
 @property (strong) IBOutlet NSSwitch * fullVariantSwitch;
 @property (strong) IBOutlet NSTextField * fullVariantSwitchLabel;
 @property (strong) IBOutlet NSSegmentedControl * folderPaperSegmented;
-@property (strong) IBOutlet NSButton * compositeButton;
 
 - (void)selectedFolderDidChange:(SOFolderItem *)sender;
 @end

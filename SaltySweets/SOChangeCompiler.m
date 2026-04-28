@@ -113,7 +113,7 @@
             }
 
             [[NSWorkspace sharedWorkspace]
-                setIcon:[NSImage imageNamed:@"NXBreak"]
+                setIcon:[NSImage imageNamed:@"siconpack_icon"]
                 forFile:newThemeURL.path
                 options:0];
             
