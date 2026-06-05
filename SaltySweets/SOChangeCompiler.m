@@ -4,7 +4,7 @@
 
 @implementation SOChangeCompiler
 
-- (void)generateBundleWithBaseline:(NSDictionary *)baseline
+- (void)generateBundleWithBaseline:(NSMutableDictionary *)baseline
                            changes:(NSArray<SOChange *> *)changes
                       shortCircuit:(SOShortCircuit)shortCir
                         completion:(void (^)(SOHandlerCompletionCodes))completion
@@ -459,6 +459,7 @@
 + (void)populateIconDictionary:(NSMutableDictionary *)dict
                    withChanges:(NSArray<SOChange *> *)changes
                purgeCollection:(NSMutableArray<NSString *> *)purgeCollection{
+
     for (SOChange * change in changes){
         if (!change.plistKeyPath){
             NSString * baselineValue = [dict objectForKey:change.plistKey->key];
@@ -507,7 +508,7 @@
                 countOfBaseline++;
         }];
         
-        if (baselineValue && countOfBaseline < 2)
+        if (baselineValue && countOfBaseline < 1)
             [purgeCollection addObject:baselineValue];
 
         continue;

@@ -81,7 +81,7 @@ static SOViewPane * _instance = nil;
 
     SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
     
-    [compiler generateBundleWithBaseline:baseline
+    [compiler generateBundleWithBaseline:[baseline mutableCopy]
                                  changes:changesFlat
                             shortCircuit:kSONoShort
                               completion:^(SOHandlerCompletionCodes completionCode) {

@@ -266,7 +266,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
             <value key="minSize" type="size" width="952" height="509"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="952" height="509"/>
+                <rect key="frame" x="0.0" y="0.0" width="952" height="502"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="a9X-OD-6fd">
@@ -281,21 +281,21 @@
                         </connections>
                     </button>
                     <splitView dividerStyle="thin" vertical="YES" id="t21-bE-7nj">
-                        <rect key="frame" x="0.0" y="43" width="952" height="466"/>
+                        <rect key="frame" x="0.0" y="43" width="952" height="459"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView focusRingType="none" id="6EO-GU-Blv">
-                                <rect key="frame" x="0.0" y="0.0" width="205" height="466"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="205" height="459"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkB-Yy-oUX">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="466"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="459"/>
                                         <clipView key="contentView" focusRingType="none" id="mAH-qC-dSL">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="466"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="459"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="dJR-2v-vNe">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="466"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="459"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="8"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -348,18 +348,18 @@
                                 </constraints>
                             </customView>
                             <customView fixedFrame="YES" id="KUN-Hn-jVs">
-                                <rect key="frame" x="206" y="0.0" width="746" height="466"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <rect key="frame" x="206" y="0.0" width="746" height="459"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="1Fq-V2-7hQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="746" height="459"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="g1u-6c-yVp">
-                                            <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="746" height="459"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view translatesAutoresizingMaskIntoConstraints="NO" id="PWQ-Za-AOp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="459"/>
                                                 </view>
                                             </subviews>
                                             <constraints>

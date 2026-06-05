@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>Icon Bundle</string>
+			<string>Sicon</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
@@ -30,14 +30,12 @@
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
-			<key>LSTypeIsPackage</key>
-			<true/>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.package</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Icon Bundle</string>
+			<string>Sicon</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.saltysoft.sicon</string>
 			<key>UTTypeTagSpecification</key>
