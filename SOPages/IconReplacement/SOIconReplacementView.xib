@@ -65,7 +65,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="706" height="33"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <comboBox focusRingType="none" verticalHuggingPriority="750" id="VvY-wI-pKX">
+                            <comboBox verticalHuggingPriority="750" id="VvY-wI-pKX">
                                 <rect key="frame" x="20" y="4" width="199" height="24"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <comboBoxCell key="cell" controlSize="small" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" title="Folder" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="4" id="g1x-QC-EXF">
@@ -93,8 +93,8 @@
                                     <action selector="folderEditWasPressed:" target="-2" id="gU0-zz-m0P"/>
                                 </connections>
                             </button>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-MS-xIX">
-                                <rect key="frame" x="252" y="-7" width="202" height="35"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-MS-xIX">
+                                <rect key="frame" x="225" y="0.0" width="335" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="center" title="Drag icon into App tile to replace. Select and press delete to remove." id="bhd-JB-7sc">
                                     <font key="font" metaFont="smallSystem"/>

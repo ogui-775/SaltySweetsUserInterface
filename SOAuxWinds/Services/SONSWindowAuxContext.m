@@ -20,7 +20,7 @@
 - (instancetype)initWithURL:(NSURL *)url{
     if (self = [super init]){
         SOSiconBundle *siconBundle =
-            [SOSiconBundle bundleWithURL:url];
+            [[SOSiconBundle alloc] initWithURL:url];
         
         if (!siconBundle)
             return nil;

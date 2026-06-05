@@ -311,14 +311,9 @@ typedef enum : NSUInteger {
     
     [opQueue addBarrierBlock:^{
         NSURL *newURL = [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:filename]];
-        NSFileManager *fm = [NSFileManager defaultManager];
         
-        [fm copyItemAtURL:[[NSBundle mainBundle] URLForResource:@"Template" withExtension:@"sicon"]
-                    toURL:newURL
-                    error:nil];
-        
-        SOSiconBundle *newIcon = [SOSiconBundle bundleWithURL:newURL];
-        [newIcon writeBlobArrayToDisk:entryArray];
+        SOSiconBundle *newIcon = [[SOSiconBundle alloc] init];
+        [newIcon writeBlobArrayToDisk:entryArray atURL:newURL];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self.view.window endSheet:progress.window];

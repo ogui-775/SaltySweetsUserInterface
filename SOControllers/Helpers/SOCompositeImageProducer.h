@@ -2,7 +2,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "../../ext/SOSharedIOSurfaceUtils.h"
+#import <SharedClasses/SharedClasses.h>
 
 #import "../../SaltySweets/AppDelegate.h"
 

@@ -3,6 +3,7 @@
 #import <AppKit/AppKit.h>
 #import <SharedKeys/SharedKeys.h>
 #import <SharedBundles/SharedBundles.h>
+#import <SharedClasses/SharedClasses.h>
 
 @class SONSWindowAuxContextSicon;
 @class SONSWindowAuxContextSiconCreation;

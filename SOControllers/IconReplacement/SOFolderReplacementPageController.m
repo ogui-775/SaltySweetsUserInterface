@@ -23,15 +23,24 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
                            forItemWithIdentifier:@"FolderItem"];
     
     self.currentFolderTypes = [NSMutableArray array];
+    
+    if (@available(macOS 26, *)){
+        UTType *paperType = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.paper-sheet"];
+        UTType *frontType = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.front-flap"];
+        UTType *backType  = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.back-flap"];
+        [UTType _enumerateAllDeclaredTypesUsingBlock:^(UTType *type) {
+            if ([type conformsToType:paperType] || [type conformsToType:frontType]  || [type conformsToType:backType]){
+                [self.currentFolderTypes addObject:type];
+            }
+        }];
+    }
+    
     UTType *folderType = [UTType typeWithIdentifier:@"public.folder"];
     UTType *smartType = [UTType typeWithIdentifier:@"com.apple.finder.smart-folder"];
-    UTType *paperType = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.paper-sheet"];
-    UTType *frontType = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.front-flap"];
-    UTType *backType  = [UTType typeWithIdentifier:@"com.apple.icon-package.folder.back-flap"];
     UTType *decoration = [UTType typeWithIdentifier:@"com.apple.icon-decoration"];
+    
     [UTType _enumerateAllDeclaredTypesUsingBlock:^(UTType * type) {
-        if ([type conformsToType:folderType] || [type conformsToType:smartType] || [type conformsToType:paperType] ||
-            [type conformsToType:frontType]  || [type conformsToType:backType] || [type conformsToType:decoration]){
+        if ([type conformsToType:folderType] || [type conformsToType:smartType] || [type conformsToType:decoration]){
             [self.currentFolderTypes addObject:type];
         }
     }];
@@ -48,6 +57,10 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.folderScrollerCollection reloadData];
     });
+}
+
+- (void)mouseDown:(NSEvent *)event{
+    [self.view.window makeFirstResponder:nil];
 }
 
 - (void)setFlapsHidden:(BOOL)hidden{
@@ -108,7 +121,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     BOOL isFrontFlap = sender.tag == 1;
     
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:sender.draggedFileURL];
+        SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
         CGImageRef img = [bundle CGImageForIndex:0];
         sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
         CGImageRelease(img);
@@ -146,7 +159,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     NSString * composite = self.currentDisplayedType.identifier;
     
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:sender.draggedFileURL];
+        SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
         CGImageRef img = [bundle CGImageForIndex:0];
         sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
         CGImageRelease(img);
@@ -295,10 +308,10 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 
 @implementation SOFolderItem
 - (void)loadView{
-    self.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    self.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
     self.view.wantsLayer = YES;
     
-    NSTextField * textField = [[NSTextField alloc] initWithFrame:CGRectMake(0, 10, 70, 15)];
+    NSTextField * textField = [[NSTextField alloc] initWithFrame:CGRectMake(0, 0, 60, 15)];
     textField.drawsBackground = NO;
     textField.editable = NO;
     textField.bezeled = NO;
@@ -306,7 +319,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     textField.alignment = NSTextAlignmentCenter;
     self.textField = textField;
     
-    SODragAwareImageView * imageView = [[SODragAwareImageView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
+    SODragAwareImageView * imageView = [[SODragAwareImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
     imageView.editable = NO;
     self.imageView = imageView;
     [self.view addSubview:self.textField];

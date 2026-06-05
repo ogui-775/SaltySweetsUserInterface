@@ -4,6 +4,7 @@
 
 #import <AppKit/AppKit.h>
 #import <SharedBundles/SharedBundles.h>
+#import <SharedClasses/SharedClasses.h>
 
 #import "../Services/SONSWindowAuxContext.h"
 

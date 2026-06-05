@@ -131,7 +131,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     
     if (baseline){
         if ([[baseline pathExtension] isEqualToString:@"sicon"]){
-            SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:[[[AppDelegate currentIconThemeBundle] resourceURL] URLByAppendingPathComponent:baseline]];
+            SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:[[[AppDelegate currentIconThemeBundle] resourceURL] URLByAppendingPathComponent:baseline]];
             CGImageRef img = [bundle CGImageForSize:CGSizeMake(128, 128)
                                            isRetina:self.view.window.backingScaleFactor > 1 ? YES : NO
                                              isDark:[NSApp.effectiveAppearance.name containsString:@"Dark"]
@@ -180,12 +180,18 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     };
     
     if (sender.image){
+        NSError *error = nil;
+        NSData *resourceData = nil;
+        
         if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-            SOSiconBundle *bundle = [SOSiconBundle bundleWithURL:sender.draggedFileURL];
+            SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
             CGImageRef img = [bundle CGImageForIndex:0];
             sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
             CGImageRelease(img);
         }
+            resourceData = [NSData dataWithContentsOfURL:sender.draggedFileURL
+                                                 options:NSDataReadingUncached
+                                                   error:&error];
         
         [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController * controller){
             [sender setImage:sender.originalSetImage];
@@ -198,8 +204,12 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
         }];
         [self.undoManager setActionName:[NSString stringWithFormat:@"%@ Set Icon", bundleId]];
         
+        if (error){
+            return;
+        }
+        
         [self setPendingIconResourceChangeForKeypath:&tBundlePath
-                                            resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
+                                            resource:resourceData
                                             filename:[sender.draggedFileURL lastPathComponent]
                                                 note:[NSString stringWithFormat:@"Set icon for %@ to %@",
                                                       bundleId,
