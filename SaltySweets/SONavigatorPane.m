@@ -152,7 +152,8 @@ NSString * const pageControllerClass  = @"pageControllerClass";
           pageControllerClass:SOIconReplacementPageController.class},
         @{image:@"folder", text:@"Folder Icons",
           pageControllerClass:SOFolderReplacementPageController.class},
-        @{image:@"filemenu.and.pointer.arrow", text:@"System Icons"}
+        @{image:@"filemenu.and.pointer.arrow", text:@"System Icons",
+          pageControllerClass:SOSystemIconReplacementPageController.class}
     ];
 }
 @end

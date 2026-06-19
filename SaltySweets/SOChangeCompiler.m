@@ -95,12 +95,12 @@
             }
 
             NSFileManager *fm = [NSFileManager defaultManager];
-            NSString * newName = [self.iconThemeCreateSheet.nameBox.stringValue stringByAppendingString:@".siconpack"];
+            NSString *newName = [self.iconThemeCreateSheet.nameBox.stringValue stringByAppendingString:@".siconpack"];
             [AppDelegate setCurrentIconPackBundleName:newName];
 
-            NSError * error = nil;
+            NSError *error = nil;
             
-            NSURL * newThemeURL =
+            NSURL *newThemeURL =
                 [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:newName]];
 
             [fm copyItemAtURL:

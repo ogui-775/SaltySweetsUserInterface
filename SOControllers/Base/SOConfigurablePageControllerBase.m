@@ -333,8 +333,29 @@
         }
     } else {
         NSString * baseline = [self getBaselineForEncodedKeypath:path];
-        NSData * imgData = [[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil];
-        return [[NSImage alloc] initWithData:imgData];
+        
+        if (![[baseline pathExtension] isEqualToString:@"sicon"]){
+            NSData * imgData = [[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil];
+            return [[NSImage alloc] initWithData:imgData];
+        }
+
+        NSURL *siconURL = [[AppDelegate currentIconThemeBundle] URLForResource:baseline
+                                                                 withExtension:@""];
+        
+        SOSiconBundle *sicon = [[SOSiconBundle alloc] initWithURL:siconURL];
+        
+        if (!sicon)
+            return nil;
+        
+        CGImageRef cgImg = [sicon CGImageForIndex:0];
+        
+        if (!cgImg)
+            return nil;
+        
+        NSImage *nsImg = [[NSImage alloc] initWithCGImage:cgImg size:CGSizeMake(CGImageGetWidth(cgImg), CGImageGetHeight(cgImg))];
+        
+        CGImageRelease(cgImg);
+        return nsImg;
     }
 }
 
