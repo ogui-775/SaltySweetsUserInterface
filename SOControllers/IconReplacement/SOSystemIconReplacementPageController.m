@@ -106,11 +106,15 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     if (!sender.image){
         NSString *currentSetStr = [self.currentExtensions objectForKey:str];
         NSImage  *currentSetImg = [self.loadedImages objectForKey:str];
+        NSString *currentSetRow = [self selectedRowString];
         [self.undoManager registerUndoWithTarget:self
                                          handler:^(SOSystemIconReplacementPageController *c){
             [self.currentExtensions setObject:currentSetStr forKey:str];
             [self.loadedImages setObject:currentSetImg forKey:str];
-            [self.imageView setImage:currentSetImg];
+            
+            if ([currentSetRow isEqualToString:[self selectedRowString]])
+                [self.imageView setImage:currentSetImg];
+            
             [self.pendingChangeArray removeLastObject];
             [self.changeDelegate contentDidChangeState:self];
         }];
@@ -136,12 +140,16 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     NSString *currentSetStr = [self.currentExtensions objectForKey:str];
     NSImage  *currentSetImg = [self.loadedImages objectForKey:str];
     NSString *newFilename   = [sender draggedFileURL].lastPathComponent;
+    NSString *currentSetRow = [self selectedRowString];
     
     [self.undoManager registerUndoWithTarget:self
                                      handler:^(SOSystemIconReplacementPageController *c){
         [self.currentExtensions setObject:currentSetStr forKey:str];
         [self.loadedImages setObject:currentSetImg forKey:str];
-        [self.imageView setImage:currentSetImg];
+        
+        if ([currentSetRow isEqualToString:[self selectedRowString]])
+            [self.imageView setImage:currentSetImg];
+        
         [self.pendingChangeArray removeLastObject];
         [self.changeDelegate contentDidChangeState:self];
     }];
