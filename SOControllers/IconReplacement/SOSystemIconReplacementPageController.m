@@ -69,6 +69,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         if (returnCode != NSModalResponseOK)
             return;
         
+        for (NSUInteger idx = 0; idx < [self.listEditor.listContents count]; idx++){
+            NSString *str = self.listEditor.listContents[idx];
+            
+            self.listEditor
+                .listContents[idx] = [str stringByReplacingOccurrencesOfString:@"." withString:@""];
+        }
+        
         NSSet *newList = [NSSet setWithArray:self.listEditor.listContents];
         NSSet *oldList = [NSSet setWithArray:[self.currentExtensions allKeys]];
         
