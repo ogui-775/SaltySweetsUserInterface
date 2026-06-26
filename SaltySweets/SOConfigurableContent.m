@@ -6,6 +6,7 @@
 
 SOChangeType const kSOChangeTypePlist    = @"plist";
 SOChangeType const kSOChangeTypeResource = @"resource";
+SOChangeType const kSOChangeTypeKeyRename= @"keyName";
 
 #pragma mark - Resource types
 
@@ -30,6 +31,14 @@ NSString * SONotificationBaseClassUpdateBaseline = @"SONotificationBaseClassUpda
 @implementation SOChange
 
 #pragma mark - Plist changes
+
+- (instancetype)init{
+    self = [super init];
+    if (self){
+        self.tag = NSUIntegerMax;
+    }
+    return self;
+}
 
 + (instancetype)plistChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
                                     value:(id)value
@@ -140,6 +149,26 @@ NSString * SONotificationBaseClassUpdateBaseline = @"SONotificationBaseClassUpda
                                                               note:note
                                                               hash:@""];
     change.iconChange = YES;
+    return change;
+}
+@end
+
+@implementation SOKeyChange
+
++ (instancetype)keyStringChangeWithEncodedKeypath:(const SOEncodedKeyPath *)encodedKey
+                                   replacementKey:(const SOEncodedKeyPath *)replacementKey
+                                 valueReplacement:(NSString *)newValue
+                                          lastTag:(NSUInteger)lastTag{
+    SOKeyChange *change = [SOKeyChange new];
+    const SOEncodedKeyPath *allocOrig = [change allocKeyPath:encodedKey];
+    const SOEncodedKeyPath *allocNew  = [change allocKeyPath:replacementKey];
+    change.tag = lastTag;
+    change.originalEncodedKeypath = allocOrig;
+    change.replacementEncodedKeypath = allocNew;
+    change.kVPairNewValueOrNil = newValue;
+    change.changeNote = [NSString stringWithFormat:@"Replaced key string %@ with %@",
+                         [allocOrig->components lastObject],
+                         [allocNew->components lastObject]];
     return change;
 }
 

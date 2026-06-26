@@ -292,8 +292,11 @@
     
     [self.class purgeFilesIfNeededWithRelativePaths:purgeCollection fromBundle:[AppDelegate currentIconThemeBundle]];
     
-    for (SOChange * change in changes){
-        if (change.resourceData && change.iconChange){
+    for (SOChange *change in changes){
+        if ([change isKindOfClass:SOKeyChange.class]){
+            
+        }
+        else if (change.resourceData && change.iconChange){
             [self.class writeFileFromChange:change toBundle:currentIconPackBundle];
         }
     }
@@ -461,6 +464,20 @@
                purgeCollection:(NSMutableArray<NSString *> *)purgeCollection{
 
     for (SOChange * change in changes){
+        if ([change isKindOfClass:SOKeyChange.class]){
+            SOKeyChange *keyChange = (SOKeyChange *)change;
+            
+            NSString *oldKey = [keyChange.originalEncodedKeypath->components lastObject];
+            NSString *newKey = [keyChange.replacementEncodedKeypath->components lastObject];
+            
+            NSMutableDictionary * rootDict = [dict objectForKey:keyChange.originalEncodedKeypath->rootKey->key];
+            
+            NSString *orig = [rootDict objectForKey:oldKey];
+            [rootDict removeObjectForKey:oldKey];
+            [rootDict setObject:orig forKey:newKey];
+            continue;
+        }
+        
         if (!change.plistKeyPath){
             NSString * baselineValue = [dict objectForKey:change.plistKey->key];
             
@@ -481,7 +498,7 @@
                     countOfBaseline++;
             }];
             
-            if (baselineValue && countOfBaseline < 2)
+            if (baselineValue && countOfBaseline < 1)
                 [purgeCollection addObject:baselineValue];
             
             continue;

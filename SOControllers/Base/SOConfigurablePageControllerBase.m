@@ -7,6 +7,7 @@
 @synthesize changeDelegate = _changeDelegate;
 @synthesize baselineState = _baselineState;
 @synthesize pendingChangeArray = _pendingChangeArray;
+@synthesize lastCreatedChangeTag = _lastCreatedChangeTag;
 
 - (void)awakeFromNib{
     [super awakeFromNib];
@@ -20,6 +21,13 @@
                                              selector:@selector(directiveUpdateToBaselineFromExternalNotification:)
                                                  name:SONotificationBaseClassUpdateBaseline
                                                object:nil];
+    
+    self.lastCreatedChangeTag = 0;
+    
+}
+
+- (void)incrementChangeTag{
+    _lastCreatedChangeTag++;
 }
 
 - (void)directiveUpdateToBaselineFromExternalNotification:(NSNotification *)aNotification{
@@ -186,7 +194,7 @@
                                           note:(NSString *)note {
     if (!self.baselineState) return;
     
-    NSString * baselineValue = [self getBaselineForEncodedKeypath:key];
+    NSString *baselineValue = [self getBaselineForEncodedKeypath:key];
     
     if ((baselineValue == nil && name) || ![baselineValue isEqualToString:name]) {
         SOChange * change = [SOChange iconResourceChangeWithEncodedKeypath:key
@@ -200,6 +208,50 @@
     }
     
     [self.changeDelegate contentDidChangeState:self];
+}
+
+- (NSUInteger)setPendingKeyStringChangeForKeypath:(const SOEncodedKeyPath *)key
+                           withReplacementKeypath:(const SOEncodedKeyPath *)replacementKey
+                      andOptionalValueReplacement:(NSString *)newBaselineValue{
+    SOKeyChange *keyChange = [SOKeyChange keyStringChangeWithEncodedKeypath:key
+                                                             replacementKey:replacementKey
+                                                           valueReplacement:newBaselineValue
+                                                                    lastTag:_lastCreatedChangeTag];
+    
+    [self eraseChangeWithTagIfPresent:_lastCreatedChangeTag - 1 ];
+    
+    [self.pendingChangeArray addObject:keyChange];
+    
+    NSUInteger thisChangeTag = _lastCreatedChangeTag;
+    
+    [self incrementChangeTag];
+    
+    [self.changeDelegate contentDidChangeState:self];
+    
+    return thisChangeTag;
+}
+
+- (BOOL)eraseChangeWithTagIfPresent:(NSUInteger)tag{
+    BOOL wasFoundAndErased = NO;
+    
+    NSMutableIndexSet *indicies = [NSMutableIndexSet indexSet];
+    
+    for (NSUInteger idx = 0; idx < [self.pendingChangeArray count]; idx++){
+        SOChange *change = [self.pendingChangeArray objectAtIndex:idx];
+        
+        if (change.tag == tag){
+            [indicies addIndex:idx];
+        }
+    }
+    
+    if ([indicies count] > 0){
+        [self.pendingChangeArray removeObjectsAtIndexes:indicies];
+        wasFoundAndErased = YES;
+    }
+    
+    [self.changeDelegate contentDidChangeState:self];
+    
+    return wasFoundAndErased;
 }
 
 - (NSData *)getDataOfResource:(id)resource
@@ -251,7 +303,6 @@
 
     return nil;
 }
-
 
 //Annoyance helpers
 - (id)getBaselineForEncodedKey:(const SOEncodedKey *)key{

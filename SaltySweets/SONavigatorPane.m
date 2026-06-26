@@ -154,7 +154,8 @@ NSString * const pageControllerClass  = @"pageControllerClass";
           pageControllerClass:SOFolderReplacementPageController.class},
         @{image:@"filemenu.and.pointer.arrow", text:@"Extension Icons",
           pageControllerClass:SOSystemIconReplacementPageController.class},
-        @{image:@"sidebar.left", text:@"Sidebar Icons"},
+        @{image:@"sidebar.left", text:@"Sidebar Icons",
+          pageControllerClass:SOSidebarIconReplacementPageController.class},
         @{image:@"gear.circle", text:@"System Settings Icons"},
         @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volume Icons"}
     ];

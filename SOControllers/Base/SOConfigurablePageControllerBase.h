@@ -57,6 +57,13 @@
                                       filename:(NSString *)name
                                           note:(NSString *)note;
 
+///Returns an unsigned integer used to track when multiple changes will be put into place using this method, to effectively remove the previous change tthat was termporarily placed for this data point.
+- (NSUInteger)setPendingKeyStringChangeForKeypath:(const SOEncodedKeyPath *)key
+                           withReplacementKeypath:(const SOEncodedKeyPath *)replacementKey
+                      andOptionalValueReplacement:(NSString *)newBaselineValue;
+
+- (BOOL)eraseChangeWithTagIfPresent:(NSUInteger)tag;
+
 - (id)getBaselineForEncodedKey:(const SOEncodedKey *)key;
 
 //- (void)setChangeObject:(SOChange *)change forEncodedKey:(const SOEncodedKey *)key;

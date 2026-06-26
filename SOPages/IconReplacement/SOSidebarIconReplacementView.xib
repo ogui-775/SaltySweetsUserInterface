@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SOSidebarIconReplacementPageController">
+            <connections>
+                <outlet property="imageView" destination="jEO-bx-gYc" id="IrE-sn-60N"/>
+                <outlet property="sidebarContainer" destination="45F-zS-XJn" id="qqc-Ks-NKw"/>
+                <outlet property="view" destination="c22-O7-iKe" id="fuz-4b-jqf"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <box fixedFrame="YES" title="Sidebar Icons" translatesAutoresizingMaskIntoConstraints="NO" id="m8T-dM-0uL">
+                    <rect key="frame" x="20" y="20" width="706" height="426"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <view key="contentView" id="DGA-6e-gwF">
+                        <rect key="frame" x="0.0" y="0.0" width="706" height="412"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KdD-Tk-DoL">
+                                <rect key="frame" x="20" y="48" width="221" height="344"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <clipView key="contentView" id="Kxj-hW-35Q">
+                                    <rect key="frame" x="1" y="1" width="219" height="342"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" id="45F-zS-XJn">
+                                            <rect key="frame" x="0.0" y="0.0" width="219" height="342"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <size key="intercellSpacing" width="3" height="12"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn identifier="col0" editable="NO" width="51" minWidth="40" maxWidth="1000" id="bKE-Z0-0cQ">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" identifier="c0" imageScaling="proportionallyUpOrDown" id="kvO-NN-2I4"/>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                </tableColumn>
+                                                <tableColumn identifier="col1" width="162" minWidth="40" maxWidth="1000" id="Wo2-hJ-cwa">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" identifier="c1" title="Text Cell" usesSingleLineMode="YES" id="ne7-eJ-KIY">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <action selector="tableViewWasClicked:" target="-2" id="Aj6-ni-AzQ"/>
+                                                <outlet property="dataSource" destination="-2" id="N8C-yl-Lk5"/>
+                                                <outlet property="delegate" destination="-2" id="ieQ-9u-iol"/>
+                                            </connections>
+                                        </tableView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="lCZ-am-45z">
+                                    <rect key="frame" x="1" y="326" width="219" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hvq-Rx-e2P">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dxk-Pb-PJ2">
+                                <rect key="frame" x="20" y="7" width="221" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="cyn-ir-fVa">
+                                    <rect key="frame" x="0.0" y="0.0" width="221" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ejs-la-uOw">
+                                            <rect key="frame" x="20" y="5" width="21" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EGy-xs-Iif">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="addLineWasPressed:" target="-2" id="xb7-Hz-GTD"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qzj-AB-rmH">
+                                            <rect key="frame" x="49" y="5" width="21" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ehA-Mu-jV6">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="removeLineWasPressed:" target="-2" id="ggS-Cs-bf1"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                            </box>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jEO-bx-gYc" customClass="SODragAwareImageView">
+                                <rect key="frame" x="411" y="132" width="148" height="148"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <imageCell key="cell" selectable="YES" editable="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="NrV-c3-XjA"/>
+                                <connections>
+                                    <action selector="imageWellWasInteractedWith:" target="-2" id="j1H-qh-IfT"/>
+                                </connections>
+                            </imageView>
+                        </subviews>
+                    </view>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
+    </resources>
+</document>

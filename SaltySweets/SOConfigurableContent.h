@@ -41,6 +41,7 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
 
 // Icon marker
 @property (assign) BOOL iconChange;
+@property (assign) NSUInteger tag;
 
 + (instancetype)plistChangeWithEncodedKey:(const SOEncodedKey *)encodedKey
                                     value:(id)value
@@ -76,6 +77,19 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
                                             filename:(NSString *)filename
                                                 note:(NSString *)note;
 
+- (const SOEncodedKeyPath *)allocKeyPath:(const SOEncodedKeyPath *)path;
+
+@end
+
+@interface SOKeyChange : SOChange
++ (instancetype)keyStringChangeWithEncodedKeypath:(const SOEncodedKeyPath *)encodedKey
+                                   replacementKey:(const SOEncodedKeyPath *)replacementKey
+                                 valueReplacement:(NSString *)newValue
+                                          lastTag:(NSUInteger)lastTag;
+
+@property (strong, nonatomic) NSString *kVPairNewValueOrNil;
+@property (assign) const SOEncodedKeyPath *originalEncodedKeypath;
+@property (assign) const SOEncodedKeyPath *replacementEncodedKeypath;
 @end
 
 #pragma mark - Configurable content
@@ -83,12 +97,14 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
 @property (nonatomic, strong) id<SOConfigurableContentDelegate> changeDelegate;
 @property (nonatomic, strong) NSDictionary * baselineState;
 @property (nonatomic, strong) NSMutableArray<SOChange *> * pendingChangeArray;
+@property (atomic, assign)    NSUInteger lastCreatedChangeTag;
 
 @optional
 - (NSArray<SOChange *> *)pendingChanges;
 - (BOOL)validateAndAppendResultTo:(NSMutableArray<SOConfigurableContentValidation *> *)validationResultArray;
 - (void)purgePendingChanges;
 - (void)refreshOrLoadBaseline;
+- (void)incrementChangeTag;
 @end
 
 @protocol SOConfigurableContentDelegate <NSObject>
