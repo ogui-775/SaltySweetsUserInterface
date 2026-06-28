@@ -8,4 +8,5 @@
 @interface SOSidebarIconReplacementPageController : SOConfigurablePageControllerBase <NSTableViewDelegate, NSTableViewDataSource, SOObservableDictionaryDelegate>
 @property (strong, nonatomic) IBOutlet NSTableView *sidebarContainer;
 @property (strong, nonatomic) IBOutlet SODragAwareImageView *imageView;
+@property (strong, nonatomic) IBOutlet NSTextField *labelView;
 @end

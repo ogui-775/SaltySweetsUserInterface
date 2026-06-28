@@ -103,7 +103,7 @@
                                 <rect key="frame" x="228" y="317" width="460" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" alignment="center" id="40u-1o-FHI">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <string key="title">After adding a file extension to the table on the left, place an image/ICNS/SICON/etc. in the well below and apply to override the system icon for the file extension. To remove, click the well and press backspace, then edit the extension list and remove the line item.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

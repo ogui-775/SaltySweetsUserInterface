@@ -105,7 +105,10 @@
 }
 
 - (IBAction)tableViewWasClicked:(NSTableView *)sender{
-    self.imageView.image = [[self.mutableDict objectForKey:@(sender.selectedRow)] displayImage];
+    SOSidebarItem *item = [self.mutableDict objectForKey:@(sender.selectedRow)];
+    
+    self.imageView.image = item.displayImage;
+    self.labelView.stringValue = [item.sourceFileURL lastPathComponent];
 }
 
 - (IBAction)addLineWasPressed:(NSButton *)sender{
@@ -171,6 +174,22 @@
     };
     
     if (!sender.image && !selectedItem.isUnsavedItem){
+        NSURL *originalSourceFileURL = selectedItem.sourceFileURL;
+        NSInteger currentRow = [self.sidebarContainer selectedRow];
+        NSImage *currentImage = selectedItem.displayImage;
+        
+        [self.undoManager registerUndoWithTarget:self handler:^(SOSidebarIconReplacementPageController *c){
+            if ([self.sidebarContainer selectedRow] == currentRow){
+                [self.imageView setImage:currentImage];
+            }
+            
+            [selectedItem setSourceFileURL:originalSourceFileURL];
+            [self.pendingChangeArray removeLastObject];
+            [self.changeDelegate contentDidChangeState:self];
+            [self.sidebarContainer reloadData];
+        }];
+        [self.undoManager setActionName:[NSString stringWithFormat:@"Remove %@", selectedItem.itemString]];
+        
         [self setPendingIconResourceChangeForKeypath:&tNewPath
                                             resource:nil
                                             filename:nil
@@ -181,12 +200,43 @@
         [self.sidebarContainer reloadData];
         return;
     } else if (!sender.image){
+        NSURL *originalSourceFileURL = selectedItem.sourceFileURL;
+        NSInteger currentRow = [self.sidebarContainer selectedRow];
+        NSImage *currentImage = selectedItem.displayImage;
+        
+        [self.undoManager registerUndoWithTarget:self handler:^(SOSidebarIconReplacementPageController *c){
+            if ([self.sidebarContainer selectedRow] == currentRow){
+                [self.imageView setImage:currentImage];
+            }
+            
+            [selectedItem setSourceFileURL:originalSourceFileURL];
+            [self.sidebarContainer reloadData];
+        }];
+        [self.undoManager setActionName:[NSString stringWithFormat:@"Remove %@", selectedItem.itemString]];
+        
         [selectedItem setSourceFileURL:nil];
         [self.sidebarContainer reloadData];
         return;
     }
     
+    NSURL *oldURL = selectedItem.sourceFileURL;
+    NSImage *oldImage = selectedItem.displayImage;
     [selectedItem setSourceFileURL:sender.draggedFileURL];
+    NSInteger currentRow = [self.sidebarContainer selectedRow];
+    
+    [self.undoManager registerUndoWithTarget:self handler:^(SOSidebarIconReplacementPageController *c){
+        if ([self.sidebarContainer selectedRow] == currentRow){
+            [self.imageView setImage:oldImage];
+        }
+        
+        [selectedItem setSourceFileURL:oldURL];
+        [self.pendingChangeArray removeLastObject];
+        [self.changeDelegate contentDidChangeState:self];
+        [self.sidebarContainer reloadData];
+    }];
+    [self.undoManager setActionName:[NSString stringWithFormat:@"Set %@", [oldURL lastPathComponent]]];
+    
+
     
     [self setPendingIconResourceChangeForKeypath:&tNewPath
                                         resource:[NSData dataWithContentsOfURL:selectedItem.sourceFileURL]
@@ -196,6 +246,8 @@
                                                   [selectedItem.sourceFileURL lastPathComponent]]];
     
     [self.sidebarContainer reloadData];
+    
+    self.labelView.stringValue = [selectedItem.sourceFileURL lastPathComponent];
     
 }
 

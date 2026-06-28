@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SOSidebarIconReplacementPageController">
             <connections>
                 <outlet property="imageView" destination="jEO-bx-gYc" id="IrE-sn-60N"/>
+                <outlet property="labelView" destination="wJK-eC-YtP" id="6Pn-HH-Xq3"/>
                 <outlet property="sidebarContainer" destination="45F-zS-XJn" id="qqc-Ks-NKw"/>
                 <outlet property="view" destination="c22-O7-iKe" id="fuz-4b-jqf"/>
             </connections>
@@ -110,14 +111,43 @@
                                     </subviews>
                                 </view>
                             </box>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jEO-bx-gYc" customClass="SODragAwareImageView">
-                                <rect key="frame" x="411" y="132" width="148" height="148"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <imageCell key="cell" selectable="YES" editable="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="NrV-c3-XjA"/>
-                                <connections>
-                                    <action selector="imageWellWasInteractedWith:" target="-2" id="j1H-qh-IfT"/>
-                                </connections>
-                            </imageView>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eUb-nZ-gJI">
+                                <rect key="frame" x="247" y="296" width="441" height="96"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" selectable="YES" id="4gX-yH-q6l">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">Add and remove entries with the plus and minus buttons. Double-click to edit a row. Name the entry either the exact name (case-sensitive) of the sidebar item to set an icon for, or, to replace all instances of a single SFSymbol, name the item "genericSymbol_" followed by the symbol name. Set the image by dragging into the image well, and remove by clicking and pressing erase.</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Leh-bj-b1A">
+                                <rect key="frame" x="300" y="95" width="370" height="193"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="Bwp-4c-fGO">
+                                    <rect key="frame" x="0.0" y="0.0" width="370" height="193"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wJK-eC-YtP">
+                                            <rect key="frame" x="25" y="11" width="320" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" id="JKs-m4-Lrq">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jEO-bx-gYc" customClass="SODragAwareImageView">
+                                            <rect key="frame" x="111" y="32" width="148" height="148"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" selectable="YES" editable="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="NrV-c3-XjA"/>
+                                            <connections>
+                                                <action selector="imageWellWasInteractedWith:" target="-2" id="j1H-qh-IfT"/>
+                                            </connections>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                            </box>
                         </subviews>
                     </view>
                     <font key="titleFont" metaFont="system"/>
