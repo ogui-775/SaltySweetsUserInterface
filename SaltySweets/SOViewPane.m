@@ -113,6 +113,8 @@ static SOViewPane * _instance = nil;
         self.applyButton.enabled = NO;
         
         [AppDelegate clearAllUndoManagers];
+        
+        notify_post("com.saltysoft.themeChanged");
     }];
 }
 @end

@@ -14,6 +14,14 @@
     self.allSettingsIcons = [NSSet setWithArray:(NSArray *)allSettingsIcons()];
     self.mutableDict = [[SOObservableDictionary alloc] initWithDelegate:self];
     
+    NSMutableSet<NSString *> *newGoldenGateGraphicIcons = [NSMutableSet set];
+    [UTType _enumerateAllDeclaredTypesUsingBlock:^(UTType *type) {
+        if ([type.identifier containsString:@"com.apple.graphic-icon"])
+            [newGoldenGateGraphicIcons addObject:type.identifier];
+    }];
+    
+    self.allSettingsIcons = [self.allSettingsIcons setByAddingObjectsFromSet:newGoldenGateGraphicIcons];
+    
     [self refreshOrLoadBaseline];
 }
 
@@ -32,7 +40,11 @@
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
-    return [self.allSettingsIcons.allObjects[row] stringByReplacingOccurrencesOfString:@"com.apple." withString:@""];
+    return [[self.allSettingsIcons.allObjects[row]
+             stringByReplacingOccurrencesOfString:@"com.apple."
+                                       withString:@""]
+                stringByReplacingOccurrencesOfString:@"graphic-icon."
+                                          withString:@""];
 }
 
 - (IBAction)tableViewWasClicked:(NSTableView *)sender{

@@ -17,7 +17,7 @@
     self.typeBox.stringValue = [NSString stringWithFormat:@"Create new %@", self.type];
 }
 
-- (IBAction)createThemeClicked:(id)sender {
+- (IBAction)createThemeClicked:(id)sender{
     [self.window.sheetParent endSheet:self.window
                             returnCode:NSModalResponseOK];
 }

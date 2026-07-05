@@ -44,7 +44,7 @@
 
 - (IBAction)swapTheme:(id)sender{
     NSOpenPanel * panel = [NSOpenPanel openPanel];
-    panel.allowedContentTypes = @[UTTypeBundle];
+    panel.allowedFileTypes = @[@"bundle"];
     panel.allowsMultipleSelection = NO;
     panel.directoryURL = [NSURL fileURLWithPath:[AppDelegate bundleDir]];
     panel.canCreateDirectories = NO;
@@ -102,6 +102,45 @@
     if (error) {
         NSLog(@"Error: %@", error);
     }
+}
+
+- (IBAction)unloadIconPack:(id)sender{
+    [AppDelegate setCurrentIconPackBundleName:@""];
+    
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:SONotificationBaseClassUpdateBaseline
+                      object:self];
+    
+    for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+
+        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+            [page refreshOrLoadBaseline];
+
+        if ([page respondsToSelector:@selector(purgePendingChanges)])
+            [page purgePendingChanges];
+    }
+    
+    system("killall Finder");
+    system("killall Dock");
+}
+
+- (IBAction)unloadDockTheme:(id)sender{
+    [AppDelegate setCurrentThemeBundleName:@""];
+    
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:SONotificationBaseClassUpdateBaseline
+                      object:self];
+    
+    for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+
+        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+            [page refreshOrLoadBaseline];
+
+        if ([page respondsToSelector:@selector(purgePendingChanges)])
+            [page purgePendingChanges];
+    }
+    
+    system("killall Dock");
 }
 
 + (NSDictionary *)baselineFromEncodedKey:(SOEncodedKey)key {

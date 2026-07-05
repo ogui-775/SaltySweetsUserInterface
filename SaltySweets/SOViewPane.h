@@ -1,5 +1,6 @@
 //Created by Salty on 2/6/26.
 #import <Cocoa/Cocoa.h>
+#import <notify.h>
 
 #import "SOConfigurableContent.h"
 #import "SOChangeCompiler.h"

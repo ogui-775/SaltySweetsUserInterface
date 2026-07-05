@@ -8,3 +8,7 @@
 @property (strong, nonatomic) IBOutlet NSTableView *table;
 @property (strong, nonatomic) IBOutlet SODragAwareImageView *imageWell;
 @end
+
+@interface UTType (Private)
++ (void)_enumerateAllDeclaredTypesUsingBlock:(void(^)(UTType * type))block;
+@end

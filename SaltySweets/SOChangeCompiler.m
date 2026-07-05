@@ -85,7 +85,7 @@
         return;
     }
 
-    if (!icon || shortCir == kSOIconShort) {
+    if (!icon || shortCir == kSOIconShort || ![[icon.bundlePath pathExtension] isEqualToString:@"siconpack"]) {
         self.iconThemeCreateSheet = [[SOThemeCreationSheetController alloc] initWithCreationType:@"Icon Pack"];
 
         [parentWindow beginSheet:self.iconThemeCreateSheet.window completionHandler:^(NSModalResponse returnCode) {
