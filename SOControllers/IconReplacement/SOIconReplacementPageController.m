@@ -184,10 +184,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
         NSData *resourceData = nil;
         
         if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-            SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
-            CGImageRef img = [bundle CGImageForIndex:0];
-            sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
-            CGImageRelease(img);
+            sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
         }
             resourceData = [NSData dataWithContentsOfURL:sender.draggedFileURL
                                                  options:NSDataReadingUncached

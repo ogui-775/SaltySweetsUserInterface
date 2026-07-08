@@ -23,6 +23,7 @@
 #import "../SOControllers/IconReplacement/SOSystemIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOSidebarIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOSystemSettingsIconReplacementPageController.h"
+#import "../SOControllers/IconReplacement/SOVolumeIconReplacementPageController.h"
 
 @interface SONavigatorPane : NSObject <NSToolbarDelegate, NSSplitViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 @property (strong) IBOutlet NSSplitView * contentSplitView;

@@ -9,6 +9,6 @@
 @property (strong, nonatomic) IBOutlet SODragAwareImageView *imageWell;
 @end
 
-@interface UTType (Private)
+@interface UTType (Private_B)
 + (void)_enumerateAllDeclaredTypesUsingBlock:(void(^)(UTType * type))block;
 @end

@@ -80,11 +80,7 @@
         return;
     
     if (!sender.image && [[itemURL pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *siconRef = [[SOSiconBundle alloc] initWithURL:itemURL];
-        CGImageRef cgImg = [siconRef CGImageForIndex:0];
-        NSImage *nsImg = [[NSImage alloc] initWithCGImage:cgImg size:CGSizeMake(0, 0)];
-        CGImageRelease(cgImg);
-        sender.image = nsImg;
+        sender.image = [SOSiconBundle NSImageOrNilForURL:itemURL];
     }
     
     const SOEncodedKeyPath tPrefKey = {

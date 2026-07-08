@@ -165,10 +165,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     [self.currentExtensions setObject:newFilename forKey:str];
     
     if ([[newFilename pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *sicon = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
-        CGImageRef img = [sicon CGImageForIndex:0];
-        sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
-        CGImageRelease(img);
+        sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
     }
     
     [self.loadedImages setObject:sender.image forKey:str];

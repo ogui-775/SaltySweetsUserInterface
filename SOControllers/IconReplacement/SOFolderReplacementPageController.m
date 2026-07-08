@@ -121,10 +121,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     BOOL isFrontFlap = sender.tag == 1;
     
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
-        CGImageRef img = [bundle CGImageForIndex:0];
-        sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
-        CGImageRelease(img);
+        sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
     }
     
     NSString * composite = self.currentDisplayedType.identifier;
@@ -159,10 +156,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     NSString * composite = self.currentDisplayedType.identifier;
     
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:sender.draggedFileURL];
-        CGImageRef img = [bundle CGImageForIndex:0];
-        sender.image = [[NSImage alloc] initWithCGImage:img size:CGSizeMake(0, 0)];
-        CGImageRelease(img);
+        sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
     }
     
     if (isPaperSheet)
