@@ -40,7 +40,12 @@
 
     [self.extensionTable reloadData];
     
-    self.imageView.image = [self.loadedImages objectForKey:[self selectedRowString]];
+    NSString *selected = [self selectedRowString];
+    
+    if (!selected)
+        return;
+    
+    self.imageView.image = [self.loadedImages objectForKey:selected];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
@@ -214,6 +219,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (NSString *)selectedRowString{
+    if ([[self.currentExtensions allKeys] count] < 1)
+        return nil;
+    
     NSArray<NSString *> *extensions = [[self.currentExtensions allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
     return extensions[[self.extensionTable selectedRow]];

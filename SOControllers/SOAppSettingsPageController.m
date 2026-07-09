@@ -21,7 +21,7 @@ static void releaseCallback(const void *info) {
     CFRelease(info);
 }
 
-- (void)awakeFromNib {
+- (void)awakeFromNib{
     [super awakeFromNib];
 
     [self refreshOrLoadBaseline];
