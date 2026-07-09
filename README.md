@@ -8,7 +8,7 @@ This macOS application lets you theme your Dock and replace system icons. It's a
 
 ## Requirements
 - macOS 10.15 or later (for best support, use Tahoe 26.4 or newer).
-- PluginPlayground (https://github.com/CoreBedtime/ammonia).
+- PluginPlayground (https://github.com/CoreBedtime/playground).
 
 ## License
 MIT License - see the [LICENSE](LICENSE) file for details.
