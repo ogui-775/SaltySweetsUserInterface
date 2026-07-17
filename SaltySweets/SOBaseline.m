@@ -43,7 +43,7 @@
         }
     }
     
-    NSString * currentIconPack = [[SOAtomicAccessPoint sharedInstance] currentIconPackBundleName];
+    NSString *currentIconPack = [[SOAtomicAccessPoint sharedInstance] currentIconPackBundleName];
     
     if ([currentIconPack isEqualToString:kSODockResourceNotProvided]){
         for (int i = 0; i < kSOIconAllKeysCount; i++){
@@ -57,7 +57,7 @@
             }
         }
     } else {
-        NSMutableDictionary * iconSettingsPlist =
+        NSMutableDictionary *iconSettingsPlist =
             [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] iconSettingsPlist];
 
         if (!iconSettingsPlist)

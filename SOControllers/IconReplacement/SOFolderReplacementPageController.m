@@ -142,6 +142,15 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     }];
     [self.undoManager setActionName:@"Set Flap"];
     
+    if (!sender.image){
+        [self setPendingIconResourceChangeForKeypath:&tFlap
+                                            resource:nil
+                                            filename:nil
+                                                note:[NSString stringWithFormat:@"Cleared %@",
+                                                      composite]];
+        return;
+    }
+    
     [self setPendingIconResourceChangeForKeypath:&tFlap
                                         resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
                                         filename:sender.draggedFileURL.lastPathComponent
@@ -183,12 +192,30 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     [self.undoManager setActionName:[NSString stringWithFormat:@"Set %@", isPaperSheet ? @"Paper" : @"Folder"]];
     
     if ([self.currentDisplayedType.identifier containsString:@"icon-decoration"]){
+        if (!sender.image){
+            [self setPendingIconResourceChangeForKeypath:&tSystem
+                                                resource:nil
+                                                filename:nil
+                                                    note:[NSString stringWithFormat:@"Cleared %@",
+                                                          composite]];
+            return;
+        }
+        
         [self setPendingIconResourceChangeForKeypath:&tSystem
                                             resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
                                             filename:[sender.draggedFileURL lastPathComponent]
                                                 note:[NSString stringWithFormat:@"Set %@ to %@",
                                                       composite,
                                                       sender.draggedFileURL.lastPathComponent]];
+        return;
+    }
+    
+    if (!sender.image){
+        [self setPendingIconResourceChangeForKeypath:&tFolder
+                                            resource:nil
+                                            filename:nil
+                                                note:[NSString stringWithFormat:@"Cleared %@",
+                                                      composite]];
         return;
     }
     

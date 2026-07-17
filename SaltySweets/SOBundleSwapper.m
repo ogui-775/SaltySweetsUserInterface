@@ -61,10 +61,10 @@
 }
 
 - (IBAction)clearCaches:(id)sender{
-    NSString * script = @"do shell script \"find /private/var/folders/ -name com.apple.dock.iconcache -delete; find /private/var/folders/ -name com.apple.iconservices -delete; rm -r /Library/Caches/com.apple.iconservices.store\" with administrator privileges";
+    NSString *script = @"do shell script \"find /private/var/folders/ -name com.apple.dock.iconcache -delete; find /private/var/folders/ -name com.apple.iconservices -delete; rm -r /Library/Caches/com.apple.iconservices.store\" with administrator privileges";
     
-    NSDictionary * error = nil;
-    NSAppleScript * as = [[NSAppleScript alloc] initWithSource:script];
+    NSDictionary *error = nil;
+    NSAppleScript *as = [[NSAppleScript alloc] initWithSource:script];
     
     [as executeAndReturnError:&error];
 
@@ -129,7 +129,6 @@
 - (IBAction)createNewIconPack:(id)sender{
     SOSimpleIconChangeCompiler *iconCompiler = [[SOSimpleIconChangeCompiler alloc] init];
     [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
-        return;
     }];
 }
 
