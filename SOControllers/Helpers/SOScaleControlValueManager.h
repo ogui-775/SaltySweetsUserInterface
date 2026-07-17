@@ -1,7 +1,7 @@
 //Created by Salty on 3/5/26.
 
 #import <AppKit/AppKit.h>
-#import "../../SaltySweets/SOConfigurableContent.h"
+#import "../../SaltySweets/Changes/SOConfigurableContent.h"
 #import "../Base/SOConfigurablePageControllerBase.h"
 
 @interface SOScaleControlValueManager : NSObject

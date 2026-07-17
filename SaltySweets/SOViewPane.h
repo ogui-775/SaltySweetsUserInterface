@@ -2,8 +2,10 @@
 #import <Cocoa/Cocoa.h>
 #import <notify.h>
 
-#import "SOConfigurableContent.h"
-#import "SOChangeCompiler.h"
+#import "Services/SOAtomicAccessPoint.h"
+#import "Changes/SOConfigurableContent.h"
+#import "Changes/SOSimpleIconChangeCompiler.h"
+#import "Changes/SOChangeCompiler.h"
 #import "../SOControllers/Base/SOPageControllerBase.h"
 #import "../../icon-server/icon-server/SOIconServerXPCProtocol.h"
 

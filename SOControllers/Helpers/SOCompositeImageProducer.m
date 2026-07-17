@@ -4,6 +4,6 @@
 
 @implementation SOCompositeImageProducer
 + (CGImageRef)requestIOSurfaceCompositeForCompositeKey:(NSString *)key{
-    return [SOSharedIOSurfaceUtils copyImageForComposite:key connection:[AppDelegate appIconServerConnection]];
+    return [SOSharedIOSurfaceUtils copyImageForComposite:key connection:[[SOAtomicAccessPoint sharedInstance] appIconServerConnection]];
 }
 @end

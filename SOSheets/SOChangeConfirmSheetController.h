@@ -1,7 +1,7 @@
 //Created by Salty on 2/20/26.
 
 #import <AppKit/AppKit.h>
-#import "../SaltySweets/SOConfigurableContent.h"
+#import "../SaltySweets/Changes/SOConfigurableContent.h"
 
 @interface SOChangeConfirmSheetController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource>
 @property (strong, nonatomic) IBOutlet NSTableView * changeTable;

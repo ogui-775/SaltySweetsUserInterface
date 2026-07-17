@@ -1,8 +1,8 @@
 //Created by Salty on 2/9/26.
 
 #import "SOPoofPageController.h"
-#import "../SaltySweets/SOChangeCompiler.h"
-#import "../SaltySweets/SOConfigurableContent.h"
+#import "../SaltySweets/Changes/SOChangeCompiler.h"
+#import "../SaltySweets/Changes/SOConfigurableContent.h"
 
 @interface SOPoofPageController ()
 
@@ -48,7 +48,7 @@
                       accessibilityDescription:nil];
         self.filePathDisplay.stringValue = [[self getBaselineForEncodedKey:&kSODockPoofSoundAsset] stringValue];
         self.playButton.enabled = YES;
-        self.playButton.sound = [[NSSound alloc] initWithContentsOfFile:[[AppDelegate currentDockThemeBundle]
+        self.playButton.sound = [[NSSound alloc] initWithContentsOfFile:[[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle]
                                                                          pathForResource:@"poof_sound.aiff"
                                                                          ofType:nil
                                                                          inDirectory:kSODockPoofSoundAsset.key]

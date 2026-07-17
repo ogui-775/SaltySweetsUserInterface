@@ -310,7 +310,7 @@ typedef enum : NSUInteger {
     }];
     
     [opQueue addBarrierBlock:^{
-        NSURL *newURL = [NSURL fileURLWithPath:[[AppDelegate iconsDir] stringByAppendingPathComponent:filename]];
+        NSURL *newURL = [NSURL fileURLWithPath:[[[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory] stringByAppendingPathComponent:filename]];
         
         SOSiconBundle *newIcon = [[SOSiconBundle alloc] init];
         [newIcon writeBlobArrayToDisk:entryArray atURL:newURL];

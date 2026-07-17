@@ -2,7 +2,7 @@
 
 #import "Base/SOPageControllerBase.h"
 #import "Base/SOConfigurablePageControllerBase.h"
-#import "../SaltySweets/SOConfigurableContent.h"
+#import "../SaltySweets/Changes/SOConfigurableContent.h"
 #import <SharedKeys/SOSharedKeys.h>
 
 @interface SOPoofPageController : SOConfigurablePageControllerBase

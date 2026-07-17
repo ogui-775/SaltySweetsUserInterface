@@ -6,7 +6,7 @@
 
 + (NSDictionary *)retriveOrCreateBaseline{
     NSMutableDictionary * nonfinal = [NSMutableDictionary new];
-    NSString * currentThemeBundle = [AppDelegate currentThemeBundleName];
+    NSString * currentThemeBundle = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundleName];
 
     if ([currentThemeBundle isEqualToString:kSODockResourceNotProvided]){
         for (int i = 0; i < kSODockAllKeysCount; i++){
@@ -24,9 +24,9 @@
         }
     } else {
         NSMutableDictionary * themePlist =
-            [[AppDelegate currentDockThemeBundle] themePlist];
+            [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] themePlist];
         NSMutableDictionary * resourceBom =
-            [[AppDelegate currentDockThemeBundle] resourceBomPlist];
+        [   [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] resourceBomPlist];
         
         if (!themePlist || !resourceBom)
             [SOBaseline bailout];
@@ -43,7 +43,7 @@
         }
     }
     
-    NSString * currentIconPack = [AppDelegate currentIconPackBundleName];
+    NSString * currentIconPack = [[SOAtomicAccessPoint sharedInstance] currentIconPackBundleName];
     
     if ([currentIconPack isEqualToString:kSODockResourceNotProvided]){
         for (int i = 0; i < kSOIconAllKeysCount; i++){
@@ -58,7 +58,7 @@
         }
     } else {
         NSMutableDictionary * iconSettingsPlist =
-            [[AppDelegate currentIconThemeBundle] iconSettingsPlist];
+            [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] iconSettingsPlist];
 
         if (!iconSettingsPlist)
             [SOBaseline bailout];
@@ -97,7 +97,7 @@
         alert.buttons[0].keyEquivalent = @"\r";
         NSModalResponse response = [alert runModal];
         if (response == NSAlertFirstButtonReturn) {
-            [AppDelegate setCurrentThemeBundleName:@""];
+            [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:@""];
             [[NSApplication sharedApplication] terminate:self];
         }
     });

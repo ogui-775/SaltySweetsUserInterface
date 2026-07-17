@@ -3,10 +3,10 @@
 #import <AppKit/AppKit.h>
 
 #import "SOPageControllerBase.h"
-#import "../../SaltySweets/SOConfigurableContent.h"
+#import "../../SaltySweets/Changes/SOConfigurableContent.h"
 #import "../../SaltySweets/SOSHA256.h"
 #import "../../SaltySweets/SOBaseline.h"
-#import "../../SaltySweets/SOChangeCompiler.h"
+#import "../../SaltySweets/Changes/SOChangeCompiler.h"
 
 @interface SOConfigurablePageControllerBase : SOPageControllerBase <SOConfigurableContent>
 - (void)setPendingChangeForKey:(const SOEncodedKey *)key

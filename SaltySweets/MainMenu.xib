@@ -16,8 +16,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
-                <outlet property="openSiconMenuItem" destination="c1U-FE-0iB" id="a5R-1u-lQp"/>
-                <outlet property="theNewSiconMenuItem" destination="Wj3-my-gdP" id="xwN-5I-dAv"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -215,18 +213,6 @@
                                     <action selector="siconStudioMenuWasClicked:" target="Voe-Tx-rLC" id="dEn-fl-rKO"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New Sicon..." secondaryImage="plus" catalog="system" enabled="NO" id="Wj3-my-gdP" userLabel="New Sicon">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="newSiconWasClicked:" target="Voe-Tx-rLC" id="owj-kl-Jwg"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Open Sicon..." secondaryImage="folder" catalog="system" enabled="NO" id="c1U-FE-0iB">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="openSiconWasClicked:" target="Voe-Tx-rLC" id="VCB-ob-C1u"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -272,7 +258,7 @@
             <point key="canvasLocation" x="106" y="-44"/>
         </menu>
         <window title="SaltySweets" separatorStyle="line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="expanded" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="383" y="293" width="952" height="509"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
@@ -343,7 +329,7 @@
                                             </subviews>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="5Lf-DR-bEZ">
-                                            <rect key="frame" x="0.0" y="455" width="200" height="16"/>
+                                            <rect key="frame" x="0.0" y="442" width="200" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="mq2-Di-qAH">
@@ -405,40 +391,30 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="A03E77ED-C5D6-4B96-B2C1-E2B915112DB3" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="UB3-Yv-dOO">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="A30AFE96-44BA-4D28-867C-B390BB8B94DC" explicitItemIdentifier="0" label="" paletteLabel="" tag="-1" image="sidebar.left" catalog="system" bordered="YES" id="Xto-qm-aHX">
-                        <size key="minSize" width="30" height="25"/>
-                        <size key="maxSize" width="30" height="25"/>
+                    <toolbarItem implicitItemIdentifier="A30AFE96-44BA-4D28-867C-B390BB8B94DC" explicitItemIdentifier="0" label="" paletteLabel="" tag="-1" image="sidebar.left" catalog="system" bordered="YES" sizingBehavior="auto" id="Xto-qm-aHX">
                         <connections>
                             <action selector="setMenuPage:" target="oka-dI-nh6" id="C08-UB-ncf"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="gGQ-H6-MZd"/>
-                    <toolbarItem implicitItemIdentifier="F3EF9E2B-9D2A-42AF-A0D3-D478A270BCB1" explicitItemIdentifier="1" label="Home" paletteLabel="Home" tag="-1" image="house" catalog="system" selectable="YES" id="1Sh-pB-ycJ">
-                        <size key="minSize" width="31" height="25"/>
-                        <size key="maxSize" width="31" height="25"/>
+                    <toolbarItem implicitItemIdentifier="F3EF9E2B-9D2A-42AF-A0D3-D478A270BCB1" explicitItemIdentifier="1" label="Home" paletteLabel="Home" tag="-1" image="house" catalog="system" sizingBehavior="auto" selectable="YES" id="1Sh-pB-ycJ">
                         <connections>
                             <action selector="setMenuPage:" target="oka-dI-nh6" id="dHh-Cq-Ncn"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="953287A1-F877-4EB4-9563-AF0A36AB503B" explicitItemIdentifier="2" label="Dock" paletteLabel="Dock" tag="-1" selectable="YES" id="CpV-xj-zMz">
+                    <toolbarItem implicitItemIdentifier="953287A1-F877-4EB4-9563-AF0A36AB503B" explicitItemIdentifier="2" label="Dock" paletteLabel="Dock" tag="-1" sizingBehavior="auto" selectable="YES" id="CpV-xj-zMz">
                         <imageReference key="image" image="dock.rectangle" catalog="system" symbolScale="default" variableValue="0.0"/>
-                        <size key="minSize" width="30" height="25"/>
-                        <size key="maxSize" width="30" height="25"/>
                         <connections>
                             <action selector="setMenuPage:" target="oka-dI-nh6" id="Mlv-tR-ExK"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="31BABC44-FAF3-4BE6-9F4C-DA808B5AE0CB" explicitItemIdentifier="3" label="Icons" paletteLabel="Icons" tag="-1" image="NSIconViewTemplate" selectable="YES" id="Kw8-de-Jz5">
-                        <size key="minSize" width="33" height="25"/>
-                        <size key="maxSize" width="33" height="25"/>
+                    <toolbarItem implicitItemIdentifier="31BABC44-FAF3-4BE6-9F4C-DA808B5AE0CB" explicitItemIdentifier="3" label="Icons" paletteLabel="Icons" tag="-1" image="NSIconViewTemplate" sizingBehavior="auto" selectable="YES" id="Kw8-de-Jz5">
                         <connections>
                             <action selector="setMenuPage:" target="oka-dI-nh6" id="ZgY-jh-51v"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="6FF32F3B-3910-4CAD-8682-33C31E82A29D" explicitItemIdentifier="4" label="Misc." paletteLabel="Misc." tag="-1" selectable="YES" id="HRd-Cd-zlX">
+                    <toolbarItem implicitItemIdentifier="6FF32F3B-3910-4CAD-8682-33C31E82A29D" explicitItemIdentifier="4" label="Misc." paletteLabel="Misc." tag="-1" sizingBehavior="auto" selectable="YES" id="HRd-Cd-zlX">
                         <imageReference key="image" image="gear" catalog="system" symbolScale="default" variableValue="0.0"/>
-                        <size key="minSize" width="29" height="25"/>
-                        <size key="maxSize" width="29" height="25"/>
                         <connections>
                             <action selector="setMenuPage:" target="oka-dI-nh6" id="Z9Y-yn-v0y"/>
                         </connections>
@@ -456,7 +432,7 @@
                     <outlet property="delegate" destination="oka-dI-nh6" id="yeE-8T-qa1"/>
                 </connections>
             </toolbar>
-            <point key="canvasLocation" x="428" y="474.5"/>
+            <point key="canvasLocation" x="428" y="474"/>
         </window>
     </objects>
     <resources>

@@ -23,8 +23,10 @@
 }
 
 - (void)refreshOrLoadBaseline{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.applicationFolderPaths = [NSMutableArray arrayWithArray:[AppDelegate applicationFolderPaths]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+ dispatch_get_main_queue(),
+                   ^{
+        self.applicationFolderPaths = [NSMutableArray arrayWithArray:[[SOAtomicAccessPoint sharedInstance] applicationFolderPaths]];
         [self.appsCollection reloadData];
     });
 }
@@ -131,7 +133,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     
     if (baseline){
         if ([[baseline pathExtension] isEqualToString:@"sicon"]){
-            SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:[[[AppDelegate currentIconThemeBundle] resourceURL] URLByAppendingPathComponent:baseline]];
+            SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:[[[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] resourceURL] URLByAppendingPathComponent:baseline]];
             CGImageRef img = [bundle CGImageForSize:CGSizeMake(128, 128)
                                            isRetina:self.view.window.backingScaleFactor > 1 ? YES : NO
                                              isDark:[NSApp.effectiveAppearance.name containsString:@"Dark"]
@@ -143,7 +145,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
             }
         } else
         item.imageView.image =
-            [[NSImage alloc] initWithData:[[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil]];
+            [[NSImage alloc] initWithData:[[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] dataForFileNamed:baseline withError:nil]];
         
         [(SOAppItemImageView *)item.imageView setIsReplaced:YES];
     } else {
@@ -169,8 +171,9 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 
 - (IBAction)imageViewDidGetAltered:(SOAppItemImageView *)sender{
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [AppDelegate registerUndoManagerForClear:self.undoManager withController:self];
+    dispatch_once(&onceToken,
+ ^{
+        [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
     });
     
     NSString * bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
@@ -249,7 +252,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
                completionHandler:^void(NSModalResponse returnCode){
         self.applicationFolderPaths = self.folderSheetController.listContents;
         
-        [AppDelegate setApplicationFolderPaths:self.applicationFolderPaths];
+        [[SOAtomicAccessPoint sharedInstance] setApplicationFolderPaths:self.applicationFolderPaths];
         
         [self.folderComboBox reloadData];
         NSInteger idx = [self.folderComboBox indexOfSelectedItem];

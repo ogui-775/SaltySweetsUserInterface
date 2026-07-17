@@ -79,6 +79,9 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
 
 - (const SOEncodedKeyPath *)allocKeyPath:(const SOEncodedKeyPath *)path;
 
++ (instancetype)iconPlistChangeWithEncodedKeypath:(const SOEncodedKeyPath *)encodedKeypath
+                                            value:(id)value
+                                             note:(NSString *)note;
 @end
 
 @interface SOKeyChange : SOChange

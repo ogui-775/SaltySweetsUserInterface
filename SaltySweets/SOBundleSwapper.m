@@ -23,6 +23,7 @@
         }
     }
     
+    /*
     [compiler generateBundleWithBaseline:[nonfinal mutableCopy]
                                  changes:@[]
                             shortCircuit:kSODockShort
@@ -40,13 +41,14 @@
                 [page purgePendingChanges];
         }
     }];
+     */
 }
 
 - (IBAction)swapTheme:(id)sender{
     NSOpenPanel * panel = [NSOpenPanel openPanel];
     panel.allowedFileTypes = @[@"bundle"];
     panel.allowsMultipleSelection = NO;
-    panel.directoryURL = [NSURL fileURLWithPath:[AppDelegate bundleDir]];
+    panel.directoryURL = [NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] dockThemeBundleDirectory]];
     panel.canCreateDirectories = NO;
 
     [panel beginSheetModalForWindow:[SOViewPane defaultInstance].view.window
@@ -58,7 +60,7 @@
         NSURL * fileURL = panel.URL;
         NSString * fileName = [fileURL lastPathComponent];
         
-        [AppDelegate setCurrentThemeBundleName:fileName];
+        [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:fileName];
         
         [[NSNotificationCenter defaultCenter]
             postNotificationName:SONotificationBaseClassUpdateBaseline
@@ -105,7 +107,7 @@
 }
 
 - (IBAction)unloadIconPack:(id)sender{
-    [AppDelegate setCurrentIconPackBundleName:@""];
+    [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:@""];
     
     [[NSNotificationCenter defaultCenter]
         postNotificationName:SONotificationBaseClassUpdateBaseline
@@ -125,7 +127,7 @@
 }
 
 - (IBAction)unloadDockTheme:(id)sender{
-    [AppDelegate setCurrentThemeBundleName:@""];
+    [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:@""];
     
     [[NSNotificationCenter defaultCenter]
         postNotificationName:SONotificationBaseClassUpdateBaseline
@@ -158,37 +160,9 @@
 }
 
 - (IBAction)createNewIconPack:(id)sender{
-    SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
-    
-    NSMutableDictionary * nonfinal = [NSMutableDictionary new];
-
-    for (int i = 0; i < kSOIconAllKeysCount; i++){
-        SOEncodedKey key = kSOIconAllKeys[i];
-        NSString * keyName = key.key;
-
-        if (key.valueEncoding == SOValueEncodingNSDictionary){
-            nonfinal[keyName] = [self.class baselineFromEncodedKey:key];
-        } else {
-            nonfinal[keyName] = key.defaultValue;
-        }
-    }
-    
-    [compiler generateBundleWithBaseline:[nonfinal mutableCopy]
-                                 changes:@[]
-                            shortCircuit:kSOIconShort
-                              completion:^(SOHandlerCompletionCodes completionCode) {
-        [[NSNotificationCenter defaultCenter]
-            postNotificationName:SONotificationBaseClassUpdateBaseline
-                          object:self];
-        
-        for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
-
-            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                [page refreshOrLoadBaseline];
-
-            if ([page respondsToSelector:@selector(purgePendingChanges)])
-                [page purgePendingChanges];
-        }
+    SOSimpleIconChangeCompiler *iconCompiler = [[SOSimpleIconChangeCompiler alloc] init];
+    [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
+        return;
     }];
 }
 
@@ -196,7 +170,7 @@
     NSOpenPanel * panel = [NSOpenPanel openPanel];
     panel.allowedContentTypes = @[[UTType typeWithIdentifier:@"com.saltysoft.siconpack"]];
     panel.allowsMultipleSelection = NO;
-    panel.directoryURL = [NSURL fileURLWithPath:[AppDelegate iconsDir]];
+    panel.directoryURL = [NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory]];
     panel.canCreateDirectories = NO;
 
     [panel beginSheetModalForWindow:[SOViewPane defaultInstance].view.window
@@ -208,7 +182,7 @@
         NSURL * fileURL = panel.URL;
         NSString * fileName = [fileURL lastPathComponent];
         
-        [AppDelegate setCurrentIconPackBundleName:fileName];
+        [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:fileName];
         
         [[NSNotificationCenter defaultCenter]
             postNotificationName:SONotificationBaseClassUpdateBaseline

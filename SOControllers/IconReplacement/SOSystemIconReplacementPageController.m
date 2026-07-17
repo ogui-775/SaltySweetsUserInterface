@@ -15,7 +15,7 @@
     self.currentExtensions = [[SOObservableDictionary alloc] initWithDelegate:self];
     self.loadedImages = [NSMutableDictionary dictionary];
     
-    [AppDelegate registerUndoManagerForClear:self.undoManager withController:self];
+    [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
     
     [self refreshOrLoadBaseline];
 }

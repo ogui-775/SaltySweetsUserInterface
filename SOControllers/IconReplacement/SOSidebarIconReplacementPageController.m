@@ -64,7 +64,7 @@
 - (void)awakeFromNib{
     [super awakeFromNib];
     
-    [AppDelegate registerUndoManagerForClear:self.undoManager withController:self];
+    [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
     self.mutableDict = [[SOObservableDictionary alloc] initWithDelegate:self];
     self.baselineKeys = [NSMutableArray array];
     
@@ -80,7 +80,7 @@
     
     for (NSUInteger idx = 0; idx < [self.baselineKeys count]; idx++){
         NSString *key = self.baselineKeys[idx];
-        NSURL *itemUrl = [[[AppDelegate currentIconThemeBundle] resourceURL] URLByAppendingPathComponent:freshDict[key]];
+        NSURL *itemUrl = [[[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] resourceURL] URLByAppendingPathComponent:freshDict[key]];
         
         SOSidebarItem *item = [[SOSidebarItem alloc] initWithURL:itemUrl isNew:NO];
         [item setItemString:key];

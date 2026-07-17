@@ -1,6 +1,8 @@
 //Created by Salty on 2/11/26.
 
 #import <Cocoa/Cocoa.h>
+#import <SharedKeys/SharedKeys.h>
+
 #import "AppDelegate.h"
 
 @interface SOBaseline : NSObject

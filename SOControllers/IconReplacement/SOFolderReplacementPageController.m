@@ -47,7 +47,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     
     [self refreshOrLoadBaseline];
     [self.folderScrollerCollection setSelectionIndexes:[NSIndexSet indexSetWithIndex:0]];
-    [AppDelegate registerUndoManagerForClear:self.undoManager withController:self];
+    [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
     
     if (!@available(macOS 26, *))
         [self setFlapsHidden:YES];

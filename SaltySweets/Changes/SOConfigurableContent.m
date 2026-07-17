@@ -151,6 +151,16 @@ NSString * SONotificationBaseClassUpdateBaseline = @"SONotificationBaseClassUpda
     change.iconChange = YES;
     return change;
 }
+
++ (instancetype)iconPlistChangeWithEncodedKeypath:(const SOEncodedKeyPath *)encodedKeypath
+                                            value:(id)value
+                                             note:(NSString *)note{
+    SOChange *change = [SOChange plistChangeWithEncodedKeyPath:encodedKeypath
+                                                         value:value
+                                                          note:note];
+    change.iconChange = YES;
+    return change;
+}
 @end
 
 @implementation SOKeyChange

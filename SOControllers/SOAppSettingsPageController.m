@@ -32,7 +32,7 @@ static void releaseCallback(const void *info) {
         context.info = (__bridge_retained void *)self;
         context.release = releaseCallback;
 
-        NSArray * paths = @[[AppDelegate cryptoKeyDir]];
+        NSArray * paths = @[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory]];
 
         self.keyDirMonitorStream =
             FSEventStreamCreate(kCFAllocatorDefault,
@@ -50,22 +50,22 @@ static void releaseCallback(const void *info) {
 }
 
 - (void)refreshOrLoadBaseline{
-    self.appAuthorNameField.stringValue = [AppDelegate appSetAuthorName];
+    self.appAuthorNameField.stringValue = [[SOAtomicAccessPoint sharedInstance] appSetAuthorName];
     self.keyStatusImageView.image       = [SOSignatures authoringKeypairExists] ? [NSImage imageNamed:@"NSStatusAvailable"] :
                                                                                   [NSImage imageNamed:@"NSStatusUnavailable"];
     self.keyStatusTextLabel.stringValue = [SOSignatures authoringKeypairExists] ? @"Keys detected" : @"Keys not detected";
 }
 
 - (IBAction)openThemesDirectory:(id)sender{
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:[AppDelegate bundleDir]]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] dockThemeBundleDirectory]]];
 }
 
 - (IBAction)openIconsDirectory:(id)sender{
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:[AppDelegate iconsDir]]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory]]];
 }
 
 - (IBAction)authorNameWasSet:(NSButton *)sender{
-    [AppDelegate setAppSetAuthorName:self.appAuthorNameField.stringValue];
+    [[SOAtomicAccessPoint sharedInstance] setAppSetAuthorName:self.appAuthorNameField.stringValue];
 }
 
 - (IBAction)generateSigningKeys:(id)sender{

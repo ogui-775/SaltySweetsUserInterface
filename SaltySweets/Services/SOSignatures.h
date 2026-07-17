@@ -4,7 +4,8 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import <Security/Security.h>
 
-#import "../AppDelegate.h"
+#import "SOAtomicAccessPoint.h"
+#import "SOErrorAlert.h"
 
 @interface SOSignatures : NSObject
 + (BOOL)verifyThemeAuthorship:(NSBundle *)bundle;

@@ -354,7 +354,7 @@
     NSString * relativePath = [self getRelativePathForHash:hash];
     if (![hash isEqualToString:kSODockResourceNotProvided] &&
         ![relativePath isEqualToString:kSODockResourceNotProvided]){
-        NSBundle * themeBundle = [AppDelegate currentDockThemeBundle];
+        NSBundle * themeBundle = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle];
 
         NSURL * path = [[themeBundle resourceURL] URLByAppendingPathComponent:relativePath];
         if (!path)
@@ -372,7 +372,7 @@
         NSString * relativePath = [self getRelativePathForHash:hash];
         if (![hash isEqualToString:kSODockResourceNotProvided] &&
             ![relativePath isEqualToString:kSODockResourceNotProvided]){
-            NSBundle * themeBundle = [AppDelegate currentDockThemeBundle];
+            NSBundle * themeBundle = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle];
 
             NSURL * path = [[themeBundle resourceURL] URLByAppendingPathComponent:relativePath];
             if (!path)
@@ -386,11 +386,11 @@
         NSString * baseline = [self getBaselineForEncodedKeypath:path];
         
         if (![[baseline pathExtension] isEqualToString:@"sicon"]){
-            NSData * imgData = [[AppDelegate currentIconThemeBundle] dataForFileNamed:baseline withError:nil];
+            NSData * imgData = [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] dataForFileNamed:baseline withError:nil];
             return [[NSImage alloc] initWithData:imgData];
         }
 
-        NSURL *siconURL = [[AppDelegate currentIconThemeBundle] URLForResource:baseline
+        NSURL *siconURL = [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] URLForResource:baseline
                                                                  withExtension:@""];
         
         SOSiconBundle *sicon = [[SOSiconBundle alloc] initWithURL:siconURL];

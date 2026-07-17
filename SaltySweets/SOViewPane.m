@@ -10,6 +10,9 @@ static SOViewPane * _instance = nil;
 
 @property (nonatomic, strong) NSViewController * currentPage;
 @property (nonatomic, strong) IBOutlet NSScrollView * internalScrollView;
+
+@property (atomic, assign) BOOL containsDockChanges;
+@property (atomic, assign) BOOL containsIconChanges;
 @end
 
 @implementation SOViewPane
@@ -72,22 +75,59 @@ static SOViewPane * _instance = nil;
     id baseline = nil;
 
     for (id<SOConfigurableContent> page in self.pendingChangesCache) {
-        NSArray<SOChange *> * changes = [self.pendingChangesCache objectForKey:page];
-        if (changes.count > 0) {
-            [changesFlat addObjectsFromArray:changes];
-            baseline = page.baselineState;
+        NSArray<SOChange *> *changes = [self.pendingChangesCache objectForKey:page];
+        
+        for (SOChange *change in changes){
+            [changesFlat addObject:change];
+            
+            if (change.iconChange)
+                self.containsIconChanges = YES;
+            else
+                self.containsDockChanges = YES;
         }
+        baseline = page.baselineState;
     }
-
-    SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
     
-    [compiler generateBundleWithBaseline:[baseline mutableCopy]
-                                 changes:changesFlat
-                            shortCircuit:kSONoShort
-                              completion:^(SOHandlerCompletionCodes completionCode) {
-        if (completionCode == kSOAbort || completionCode == kSOErrorResult)
-            return;
+    NSOperationQueue *opQueue = [[NSOperationQueue alloc] init];
+    opQueue.name = @"Master_Queue";
+    opQueue.maxConcurrentOperationCount = 1;
+    
+    if (self.containsIconChanges){
+        [opQueue addOperationWithBlock:^{
+            SOSimpleIconChangeCompiler *iconCompiler = [[SOSimpleIconChangeCompiler alloc] init];
+            
+            if (![[SOAtomicAccessPoint sharedInstance] currentIconPackBundle]){
+                [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
+                    if (!success)
+                        return;
+                    
+                    [iconCompiler overwriteCurrentPackWithChanges:changesFlat
+                                                         baseline:[baseline mutableCopy]
+                                                completionHandler:^(BOOL success) {
+                    }];
+                }];
+            } else {
+                [iconCompiler overwriteCurrentPackWithChanges:changesFlat
+                                                     baseline:[baseline mutableCopy]
+                                            completionHandler:^(BOOL success) {
+                }];
+            }
+        }];
+    }
+    
+    if (self.containsDockChanges){
+        [opQueue addOperationWithBlock:^{
+            
+        }];
+    }
+    
+    [opQueue addBarrierBlock:^{
+        [self completionAction];
+    }];
+}
 
+- (void)completionAction{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter]
             postNotificationName:SONotificationBaseClassUpdateBaseline
                           object:self];
@@ -96,9 +136,6 @@ static SOViewPane * _instance = nil;
             if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
                 [page refreshOrLoadBaseline];
         }
-        
-        if (completionCode == kSONoChange)
-            return;
 
         for (id<SOConfigurableContent> page in self.childViewControllers) {
             if ([page respondsToSelector:@selector(purgePendingChanges)])
@@ -107,14 +144,14 @@ static SOViewPane * _instance = nil;
 
         [self.pendingChangesCache removeAllObjects];
 
-        [[[AppDelegate appIconServerConnection] remoteObjectProxy]
+        [[[[SOAtomicAccessPoint sharedInstance] appIconServerConnection] remoteObjectProxy]
                                 requestGlobalSettingsInvalidation];
         
         self.applyButton.enabled = NO;
         
-        [AppDelegate clearAllUndoManagers];
+        [[SOAtomicAccessPoint sharedInstance] clearAllUndoManagers];
         
         notify_post("com.saltysoft.themeChanged");
-    }];
+    });
 }
 @end

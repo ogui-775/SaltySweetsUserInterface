@@ -12,7 +12,7 @@
     CFErrorRef error     = NULL;
     
     
-    NSData * privateKeyData =[NSData dataWithContentsOfFile:[[AppDelegate cryptoKeyDir] stringByAppendingPathComponent:@"privatekey.rsa"]];
+    NSData * privateKeyData =[NSData dataWithContentsOfFile:[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] stringByAppendingPathComponent:@"privatekey.rsa"]];
     
     if (!privateKeyData)
         return NO;
@@ -58,7 +58,7 @@
               attributes:nil];
     
     if (![fm fileExistsAtPath:[[bundle resourcePath] stringByAppendingPathComponent:@"publickey.txt"]])
-        wrote = [fm copyItemAtPath:[[AppDelegate cryptoKeyDir] stringByAppendingPathComponent:@"publickey.txt"]
+        wrote = [fm copyItemAtPath:[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] stringByAppendingPathComponent:@"publickey.txt"]
                     toPath:[[bundle resourcePath] stringByAppendingPathComponent:@"publickey.txt"]
                      error:&err_ns];
     
@@ -122,7 +122,7 @@
 + (BOOL)authoringKeypairExists{
     NSFileManager * fm = [NSFileManager defaultManager];
 
-    NSArray<NSString *> * dirContent = [fm contentsOfDirectoryAtPath:[AppDelegate cryptoKeyDir] error:nil];
+    NSArray<NSString *> * dirContent = [fm contentsOfDirectoryAtPath:[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] error:nil];
     
     NSIndexSet * idxs = [dirContent indexesOfObjectsPassingTest:^BOOL(NSString * obj, NSUInteger idx, BOOL * stop) {
         return [obj containsString:@"key"];
@@ -145,7 +145,7 @@
         return;
     }
     
-    NSString * authorName = [AppDelegate appSetAuthorName];
+    NSString * authorName = [[SOAtomicAccessPoint sharedInstance] appSetAuthorName];
     
     if (!authorName || [authorName isEqualToString:@""]){
         NSAlert * alert = [[NSAlert alloc] init];
@@ -185,11 +185,11 @@
     NSData * privateData = (NSData *)CFBridgingRelease(SecKeyCopyExternalRepresentation(privateKey, NULL));
     NSData * publicData  = (NSData *)CFBridgingRelease(SecKeyCopyExternalRepresentation(publicKey,  NULL));
     
-    [fm createFileAtPath:[[AppDelegate cryptoKeyDir] stringByAppendingPathComponent:@"privatekey.rsa"]
+    [fm createFileAtPath:[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] stringByAppendingPathComponent:@"privatekey.rsa"]
                 contents:privateData
               attributes:nil];
     
-    [fm createFileAtPath:[[AppDelegate cryptoKeyDir] stringByAppendingPathComponent:@"publickey.txt"]
+    [fm createFileAtPath:[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] stringByAppendingPathComponent:@"publickey.txt"]
                 contents:publicData
               attributes:nil];
     

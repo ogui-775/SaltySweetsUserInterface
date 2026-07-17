@@ -3,6 +3,7 @@
 #import "Base/SOConfigurablePageControllerBase.h"
 
 #import "../SaltySweets/Services/SOSignatures.h"
+#import "../SaltySweets/Services/SOAtomicAccessPoint.h"
 
 @interface SOAppSettingsPageController : SOConfigurablePageControllerBase
 @property (strong, nonatomic) IBOutlet NSButton * openFinderToThemesButton;
