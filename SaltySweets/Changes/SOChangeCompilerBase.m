@@ -169,8 +169,7 @@
 
 - (void)listChangesToDockBundle:(SODockThemeBundle *)bundle
                         changes:(NSArray<SOChange *> *)changes
-                     completion:(void (^)(NSModalResponse))completion{
-    NSWindow * parentWindow = NSApp.mainWindow;
+                     completion:(void (^)(NSModalResponse response, NSArray<SOChange *> *approvedChanges))completion{
     self.dockThemeConfirmSheet = [[SOChangeConfirmSheetController alloc] init];
     [self.dockThemeConfirmSheet window];
     
@@ -182,28 +181,21 @@
     }
     
     if (dockChanges.count < 1){
-        completion(NSModalResponseOK);
+        completion(NSModalResponseOK, nil);
         return;
     }
     
     [self.dockThemeConfirmSheet supplyChanges:dockChanges];
-    
-    [parentWindow beginSheet:self.dockThemeConfirmSheet.window
-           completionHandler:^(NSModalResponse returnCode) {
+
+    [NSApp.mainWindow beginSheet:self.dockThemeConfirmSheet.window
+               completionHandler:^(NSModalResponse returnCode) {
 
         if (returnCode != NSModalResponseOK) {
-            completion(returnCode);
+            completion(returnCode, nil);
             return;
         }
-
-        NSArray *approved = self.dockThemeConfirmSheet.internalChangeArray;
-
-        /*
-        [self applyDockChanges:approved
-                     toBundle:bundle
-                   completion:^(BOOL success) {
-            completion(success ? NSModalResponseOK : NSModalResponseAbort);
-        }];*/
+        
+        completion(returnCode, self.dockThemeConfirmSheet.internalChangeArray);
     }];
 }
 
@@ -252,7 +244,7 @@
 
     NSError * error = nil;
     
-    SODockThemeBundle * themeBundle = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle];
+    SODockThemeBundle *themeBundle = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle];
 
     [themeBundle writeToThemePlist:settingsPlist
                          withError:&error];
@@ -260,7 +252,7 @@
     if (error) {
         NSLog(@"Theme plist write error: %@", error);
         [SOErrorAlert runModalTerminatingError:error.localizedDescription];
-        //completion(kSOErrorResult);
+        completion(NO);
         return;
     }
 
@@ -270,7 +262,7 @@
     if (error) {
         NSLog(@"Resource plist write error: %@", error);
         [SOErrorAlert runModalTerminatingError:error.localizedDescription];
-       // completion(kSOErrorResult);
+        completion(NO);
         return;
     }
 
@@ -363,5 +355,18 @@
             [dict setObject:change.plistValue forKey:change.plistKey->key];
         }
     }
+}
+
+- (NSMutableDictionary *)recursivelyBuildDictionary:(const SOEncodedKey)encodedKeyWithDict{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (NSUInteger i = 0; i < encodedKeyWithDict.dictionaryKeyCount; i++){
+        const SOEncodedKey key = encodedKeyWithDict.dictionaryKeys[i];
+        if (key.dictionaryKeyCount > 0)
+            [dict setObject:[self recursivelyBuildDictionary:key] forKey:key.key];
+        else
+            [dict setObject:key.defaultValue forKey:key.key];
+    }
+    
+    return dict;
 }
 @end

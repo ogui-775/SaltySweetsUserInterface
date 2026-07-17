@@ -5,7 +5,7 @@
 #import "Services/SOAtomicAccessPoint.h"
 #import "Changes/SOConfigurableContent.h"
 #import "Changes/SOSimpleIconChangeCompiler.h"
-#import "Changes/SOChangeCompiler.h"
+#import "Changes/SOSimpleDockChangeCompiler.h"
 #import "../SOControllers/Base/SOPageControllerBase.h"
 #import "../../icon-server/icon-server/SOIconServerXPCProtocol.h"
 

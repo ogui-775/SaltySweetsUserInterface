@@ -14,10 +14,18 @@
 - (NSString *)describeChange:(SOChange *)change;
 - (void)purgeFilesIfNeededWithRelativePaths:(NSMutableArray<NSString *> *)purgeFileRelativePathCollection fromBundle:(SONSBundle *)bundle;
 - (BOOL)writeFileFromChange:(SOChange *)change toBundle:(SONSBundle *)bundle;
+- (void)applyDockChanges:(NSArray<SOChange *> *)changes
+                toBundle:(SODockThemeBundle *)bundle
+            withBaseline:(NSMutableDictionary *)baseline
+              completion:(void (^)(BOOL))completion;
 - (void)populateIconDictionary:(NSMutableDictionary *)dict
                     withChange:(SOChange *)change
                purgeCollection:(NSMutableArray<NSString *> *)purgeCollection;
 - (void)listChangesToIconBundle:(SOSiconPackBundle *)bundle
                         changes:(NSArray<SOChange *> *)changes
-                     completion:(void (^)(NSModalResponse reponse, NSArray<SOChange *> *approvedChanges))completion;
+                     completion:(void (^)(NSModalResponse response, NSArray<SOChange *> *approvedChanges))completion;
+- (void)listChangesToDockBundle:(SODockThemeBundle *)bundle
+                        changes:(NSArray<SOChange *> *)changes
+                     completion:(void (^)(NSModalResponse response, NSArray<SOChange *> *approvedChanges))completion;
+- (NSMutableDictionary *)recursivelyBuildDictionary:(const SOEncodedKey)encodedKeyWithDict;
 @end

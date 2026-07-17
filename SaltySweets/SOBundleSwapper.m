@@ -5,43 +5,10 @@
 @implementation SOBundleSwapper
 
 - (IBAction)createNewTheme:(id)sender{
-    SOChangeCompiler * compiler = [[SOChangeCompiler alloc] init];
+    SOSimpleDockChangeCompiler *compiler = [[SOSimpleDockChangeCompiler alloc] init];
     
-    NSMutableDictionary * nonfinal = [NSMutableDictionary new];
-
-    for (int i = 0; i < kSODockAllKeysCount; i++){
-        SOEncodedKey key = kSODockAllKeys[i];
-        NSString * keyName = key.key;
-
-        if (key.valueEncoding == SOValueEncodingNSDictionary &&
-            ![key.key isEqualToString:kSODockResourceHashToFilename.key]) {
-            nonfinal[keyName] = [self.class baselineFromEncodedKey:key];
-        } else if (key.key == kSODockResourceHashToFilename.key) {
-            nonfinal[keyName] = [NSMutableDictionary new];
-        } else {
-            nonfinal[keyName] = key.defaultValue;
-        }
-    }
-    
-    /*
-    [compiler generateBundleWithBaseline:[nonfinal mutableCopy]
-                                 changes:@[]
-                            shortCircuit:kSODockShort
-                              completion:^(SOHandlerCompletionCodes completionCode) {
-        [[NSNotificationCenter defaultCenter]
-            postNotificationName:SONotificationBaseClassUpdateBaseline
-                          object:self];
-        
-        for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
-
-            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                [page refreshOrLoadBaseline];
-
-            if ([page respondsToSelector:@selector(purgePendingChanges)])
-                [page purgePendingChanges];
-        }
+    [compiler createNewThemeWithCompletionHandler:^(BOOL success) {
     }];
-     */
 }
 
 - (IBAction)swapTheme:(id)sender{

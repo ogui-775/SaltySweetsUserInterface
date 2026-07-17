@@ -1,7 +1,6 @@
 //Created by Salty on 2/9/26.
 
 #import "SOPoofPageController.h"
-#import "../SaltySweets/Changes/SOChangeCompiler.h"
 #import "../SaltySweets/Changes/SOConfigurableContent.h"
 
 @interface SOPoofPageController ()

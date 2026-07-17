@@ -6,7 +6,6 @@
 #import "../../SaltySweets/Changes/SOConfigurableContent.h"
 #import "../../SaltySweets/SOSHA256.h"
 #import "../../SaltySweets/SOBaseline.h"
-#import "../../SaltySweets/Changes/SOChangeCompiler.h"
 
 @interface SOConfigurablePageControllerBase : SOPageControllerBase <SOConfigurableContent>
 - (void)setPendingChangeForKey:(const SOEncodedKey *)key

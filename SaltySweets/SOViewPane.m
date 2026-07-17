@@ -88,70 +88,84 @@ static SOViewPane * _instance = nil;
         baseline = page.baselineState;
     }
     
-    NSOperationQueue *opQueue = [[NSOperationQueue alloc] init];
-    opQueue.name = @"Master_Queue";
-    opQueue.maxConcurrentOperationCount = 1;
+    dispatch_group_t group = dispatch_group_create();
     
     if (self.containsIconChanges){
-        [opQueue addOperationWithBlock:^{
-            SOSimpleIconChangeCompiler *iconCompiler = [[SOSimpleIconChangeCompiler alloc] init];
-            
-            if (![[SOAtomicAccessPoint sharedInstance] currentIconPackBundle]){
-                [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
-                    if (!success)
-                        return;
-                    
-                    [iconCompiler overwriteCurrentPackWithChanges:changesFlat
-                                                         baseline:[baseline mutableCopy]
-                                                completionHandler:^(BOOL success) {
-                    }];
-                }];
-            } else {
+        dispatch_group_enter(group);
+        SOSimpleIconChangeCompiler *iconCompiler = [[SOSimpleIconChangeCompiler alloc] init];
+        
+        if (![[SOAtomicAccessPoint sharedInstance] currentIconPackBundle]){
+            [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
+                if (!success)
+                    return;
+                
                 [iconCompiler overwriteCurrentPackWithChanges:changesFlat
                                                      baseline:[baseline mutableCopy]
                                             completionHandler:^(BOOL success) {
+                    dispatch_group_leave(group);
                 }];
-            }
-        }];
+            }];
+        } else {
+            [iconCompiler overwriteCurrentPackWithChanges:changesFlat
+                                                 baseline:[baseline mutableCopy]
+                                        completionHandler:^(BOOL success) {
+                dispatch_group_leave(group);
+            }];
+        }
     }
     
     if (self.containsDockChanges){
-        [opQueue addOperationWithBlock:^{
-            
-        }];
+        dispatch_group_enter(group);
+        SOSimpleDockChangeCompiler *dockCompiler = [[SOSimpleDockChangeCompiler alloc] init];
+        if (![[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle]){
+            [dockCompiler createNewThemeWithCompletionHandler:^(BOOL success) {
+                if (!success)
+                    return;
+                
+                [dockCompiler overwriteCurrentThemeWithChanges:changesFlat
+                                                      baseline:[baseline mutableCopy]
+                                             completionHandler:^(BOOL success) {
+                    dispatch_group_leave(group);
+                }];
+            }];
+        } else {
+            [dockCompiler overwriteCurrentThemeWithChanges:changesFlat
+                                                  baseline:[baseline mutableCopy]
+                                         completionHandler:^(BOOL success) {
+                dispatch_group_leave(group);
+            }];
+        }
     }
     
-    [opQueue addBarrierBlock:^{
+    dispatch_notify(group, dispatch_get_main_queue(), ^{
         [self completionAction];
-    }];
+    });
 }
 
 - (void)completionAction{
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter]
-            postNotificationName:SONotificationBaseClassUpdateBaseline
-                          object:self];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:SONotificationBaseClassUpdateBaseline
+                      object:self];
 
-        for (id<SOConfigurableContent> page in self.childViewControllers) {
-            if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                [page refreshOrLoadBaseline];
-        }
+    for (id<SOConfigurableContent> page in self.childViewControllers) {
+        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+            [page refreshOrLoadBaseline];
+    }
 
-        for (id<SOConfigurableContent> page in self.childViewControllers) {
-            if ([page respondsToSelector:@selector(purgePendingChanges)])
-                [page purgePendingChanges];
-        }
+    for (id<SOConfigurableContent> page in self.childViewControllers) {
+        if ([page respondsToSelector:@selector(purgePendingChanges)])
+            [page purgePendingChanges];
+    }
 
-        [self.pendingChangesCache removeAllObjects];
+    [self.pendingChangesCache removeAllObjects];
 
-        [[[[SOAtomicAccessPoint sharedInstance] appIconServerConnection] remoteObjectProxy]
-                                requestGlobalSettingsInvalidation];
-        
-        self.applyButton.enabled = NO;
-        
-        [[SOAtomicAccessPoint sharedInstance] clearAllUndoManagers];
-        
-        notify_post("com.saltysoft.themeChanged");
-    });
+    [[[[SOAtomicAccessPoint sharedInstance] appIconServerConnection] remoteObjectProxy]
+                            requestGlobalSettingsInvalidation];
+    
+    self.applyButton.enabled = NO;
+    
+    [[SOAtomicAccessPoint sharedInstance] clearAllUndoManagers];
+    
+    notify_post("com.saltysoft.themeChanged");
 }
 @end

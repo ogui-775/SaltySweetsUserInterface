@@ -187,7 +187,11 @@
         if (!key.key)
             continue;
         
-        [freshBaseline addEntriesFromDictionary:@{ key.key : key.defaultValue }];
+        if (key.valueEncoding == SOValueEncodingNSDictionary && key.dictionaryKeyCount > 0){
+            [freshBaseline addEntriesFromDictionary:@{ key.key : [self recursivelyBuildDictionary:key]}];
+        }
+        else
+            [freshBaseline addEntriesFromDictionary:@{ key.key : key.defaultValue }];
     }
     
     if (freshBaseline.count < kSOIconAllKeysCount)

@@ -249,4 +249,8 @@ static SOAtomicAccessPoint *_instance = nil;
         }
     });
 }
+
+- (void)asyncClearCachedSettings{
+    
+}
 @end
