@@ -46,6 +46,8 @@
     [self.previewView.hourSettingImageView setTarget:self];
     [self.previewView.minsSettingImageView setTarget:self];
     
+    [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
+    
     [self refreshOrLoadBaseline];
 }
 
@@ -71,7 +73,9 @@
     }];
     NSImage *minsImage = [self loadImageForEncodedKeypath:&minsKey];
     
-    [self.previewView.clockLayer setFace:faceImage hour:newHourImage mins:minsImage];
+    [self.previewView.clockLayer setFace:faceImage
+                                    hour:newHourImage
+                                    mins:minsImage];
 }
 
 - (IBAction)radioWasPressed:(NSButton *)sender{
@@ -99,7 +103,16 @@
     if (!sender.image)
         return;
     
-    [[self layerForViewWithLight] setContents:sender.image];
+    CALayer *currentLitLayer = [self layerForViewWithLight];
+    NSImage *currentContents = currentLitLayer.contents;
+    
+    [self.undoManager registerUndoWithTarget:self
+                                     handler:^(SOClockDockTileReplacementPageController *s){
+        [currentLitLayer setContents:currentContents];
+    }];
+    [self.undoManager setActionName:@"Set Image"];
+    
+    [currentLitLayer setContents:sender.image];
     
     [self.previewView setNeedsDisplay:YES];
     [self.previewView.clockLayer setNeedsDisplay];
