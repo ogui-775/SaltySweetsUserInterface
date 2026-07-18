@@ -24,6 +24,7 @@
 #import "../SOControllers/IconReplacement/SOSidebarIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOSystemSettingsIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOVolumeIconReplacementPageController.h"
+#import "../SOControllers/IconReplacement/SOClockDockTileReplacementPageController.h"
 
 @interface SONavigatorPane : NSObject <NSToolbarDelegate, NSSplitViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 @property (strong) IBOutlet NSSplitView * contentSplitView;

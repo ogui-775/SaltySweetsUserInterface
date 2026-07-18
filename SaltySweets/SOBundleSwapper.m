@@ -161,6 +161,8 @@
 
             if ([page respondsToSelector:@selector(purgePendingChanges)])
                 [page purgePendingChanges];
+            
+            [(id<SOConfigurableContentDelegate>)[SOViewPane defaultInstance] contentDidChangeState:page];
         }
     }];
 }

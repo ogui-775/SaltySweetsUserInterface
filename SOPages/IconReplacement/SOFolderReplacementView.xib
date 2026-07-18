@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25084" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25084"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -90,7 +90,7 @@
                                     <action selector="actionOnFlapWell:" target="-2" id="6FK-d9-n1q"/>
                                 </connections>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Ag-i4-aJn">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Ag-i4-aJn">
                                 <rect key="frame" x="60" y="340" width="62" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="58" id="bjQ-Sa-eff"/>
@@ -101,7 +101,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WKo-vp-vj1">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WKo-vp-vj1">
                                 <rect key="frame" x="585" y="340" width="66" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="62" id="3b2-DR-hAQ"/>
@@ -112,7 +112,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-1L-n9h">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-1L-n9h">
                                 <rect key="frame" x="282" y="169" width="146" height="13"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="UTType" usesSingleLineMode="YES" id="w9a-dS-O7y">
                                     <font key="font" metaFont="system" size="10"/>
@@ -120,7 +120,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kT4-5j-ahu">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kT4-5j-ahu">
                                 <rect key="frame" x="18" y="169" width="146" height="13"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Displayed" usesSingleLineMode="YES" id="0Qd-8E-IQ2">
                                     <font key="font" metaFont="system" size="10"/>
@@ -128,7 +128,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O4s-zl-DEe">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O4s-zl-DEe">
                                 <rect key="frame" x="545" y="169" width="146" height="13"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Displayed" usesSingleLineMode="YES" id="Tk7-yF-T3G">
                                     <font key="font" metaFont="system" size="10"/>
@@ -142,7 +142,7 @@
                                     <action selector="fullVariantSwitchWasFlipped:" target="-2" id="OCx-p9-MBI"/>
                                 </connections>
                             </switch>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RZd-5o-bA3">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RZd-5o-bA3">
                                 <rect key="frame" x="82" y="372" width="72" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Full Variant" id="lYJ-Tk-e5t">
                                     <font key="font" metaFont="system"/>
@@ -151,7 +151,7 @@
                                 </textFieldCell>
                             </textField>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DFg-U2-QyT">
-                                <rect key="frame" x="303" y="340" width="104" height="24"/>
+                                <rect key="frame" x="303" y="340" width="103" height="24"/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="U7P-VL-ifv">
                                     <font key="font" metaFont="system"/>
                                     <segments>
@@ -163,7 +163,7 @@
                                     <action selector="folderPaperSegmentedWasSwitched:" target="-2" id="QtX-Wo-Y8s"/>
                                 </connections>
                             </segmentedControl>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8za-u4-hat">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8za-u4-hat">
                                 <rect key="frame" x="279" y="4" width="151" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll vertically to reveal all." id="yHw-pI-H5T">
                                     <font key="font" metaFont="smallSystem"/>

@@ -94,7 +94,8 @@ static SOViewPane * _instance = nil;
         dispatch_group_enter(group);
         SOSimpleIconChangeCompiler *iconCompiler = [[SOSimpleIconChangeCompiler alloc] init];
         
-        if (![[SOAtomicAccessPoint sharedInstance] currentIconPackBundle]){
+        SOSiconPackBundle *iconPack = [[SOAtomicAccessPoint sharedInstance] currentIconPackBundle];
+        if (!iconPack.bundleIdentifier){
             [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
                 if (!success)
                     return;
@@ -117,7 +118,9 @@ static SOViewPane * _instance = nil;
     if (self.containsDockChanges){
         dispatch_group_enter(group);
         SOSimpleDockChangeCompiler *dockCompiler = [[SOSimpleDockChangeCompiler alloc] init];
-        if (![[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle]){
+        
+        SODockThemeBundle *dockTheme = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle];
+        if (!dockTheme.bundleIdentifier){
             [dockCompiler createNewThemeWithCompletionHandler:^(BOOL success) {
                 if (!success)
                     return;
