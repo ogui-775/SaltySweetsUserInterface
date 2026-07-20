@@ -2,75 +2,120 @@
 
 #import "SONavigatorPane.h"
 
+@interface SONavigatorPane () <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@property (strong) NSVisualEffectView *headerVEV;
+@property (strong) NSArray *rootCategories;
+@property (strong) NSDictionary *menuDictionary;
+@end
+
 @implementation SONavigatorPane
 
 NSString * const image = @"image";
 NSString * const text  = @"text";
 NSString * const pageControllerClass  = @"pageControllerClass";
 
-- (void)awakeFromNib{
+- (void)awakeFromNib {
     self.controllerClassToInstance = [NSMutableDictionary new];
     
-    self.homeTabMenuItems = [self homeTableRowData];
-    self.dockTabMenuItems = [self dockTableRowData];
-    self.iconTabMenuItems = [self iconTableRowData];
+    self.rootCategories = @[@"Home", @"Dock", @"Icons"];
     
-    self.selectedSupermenu = self.homeTabMenuItems;
+    self.menuDictionary = @{
+        self.rootCategories[0] : [self homeTableRowData],
+        self.rootCategories[1] : [self dockTableRowData],
+        self.rootCategories[2] : [self iconTableRowData]
+    };
+    
+    self.submenuChooser.dataSource = self;
+    self.submenuChooser.delegate = self;
+    
+    [self.submenuChooser reloadData];
+    
+    for (id category in self.rootCategories) {
+        [self.submenuChooser expandItem:category];
+    }
     
     [self internalSetContentPane:nil withInitBypass:YES];
-    [self.menuChooser setSelectedItemIdentifier:@"1"];
-    [self.submenuChooser reloadData];
 }
 
-#pragma mark - Navigation table data population
+#pragma mark - NSOutlineViewDataSource Methods
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return [self.selectedSupermenu count];
-}
-
-- (id)tableView:(NSTableView *)tableView
-            objectValueForTableColumn:(NSTableColumn *)tableColumn
-            row:(NSInteger)row{
-    NSString * identifier = tableColumn.identifier;
-    
-    if ([identifier isEqualToString:@"ImageCol"]){
-        return [NSImage imageWithSystemSymbolName:[self.selectedSupermenu[row] valueForKey:image]
-                         accessibilityDescription:nil];
-    } else {
-        return [self.selectedSupermenu[row] valueForKey:text];
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
+    if (item == nil) {
+        return [self.rootCategories count];
     }
+    
+    if ([self.rootCategories containsObject:item]) {
+        NSArray *children = self.menuDictionary[item];
+        return [children count];
+    }
+    
+    return 0;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item {
+    if (item == nil) {
+        return self.rootCategories[index];
+    }
+    
+    if ([self.rootCategories containsObject:item]) {
+        NSArray *children = self.menuDictionary[item];
+        return children[index];
+    }
+    
+    return nil;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
+    return [self.rootCategories containsObject:item];
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
+    NSString *identifier = [tableColumn identifier];
+    if (![identifier isEqualToString:@"MainBits"]) {
+        return nil;
+    }
+    
+    if ([item isKindOfClass:[NSString class]]) {
+        return item;
+    }
+    
+    if ([item isKindOfClass:[NSDictionary class]]) {
+        return item[text];
+    }
+    
+    return nil;
+}
+
+#pragma mark - NSOutlineViewDelegate
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item {
+    return ![self.rootCategories containsObject:item];
 }
 
 #pragma mark - View routing
 
-- (IBAction)setContentPane:(NSTableView *)sender{
+- (IBAction)setContentPane:(NSOutlineView *)sender {
     [self internalSetContentPane:sender withInitBypass:NO];
 }
 
-- (void)internalSetContentPane:(NSTableView *)sender withInitBypass:(BOOL)bypass{
-    if (!bypass){
-        if (![self.selectedSupermenu[sender.selectedRow] valueForKey:pageControllerClass]){
-            return;
-        }
+- (void)internalSetContentPane:(NSOutlineView *)sender withInitBypass:(BOOL)bypass {
+    id selectedItem = nil;
+    
+    if (bypass) {
+        selectedItem = self.menuDictionary[@"Home"][0];
+    } else {
+        NSInteger row = self.submenuChooser.selectedRow;
+        if (row == -1) return;
+        selectedItem = [self.submenuChooser itemAtRow:row];
     }
     
-    long lastSelected = 0;
-    if (!sender) {
-        lastSelected = self.submenuChooser.selectedRow;
-    } else {
-        lastSelected = sender.selectedRow;
+    if (![selectedItem isKindOfClass:[NSDictionary class]] || ![selectedItem valueForKey:pageControllerClass]) {
+        return;
     }
-
     
-    Class cc;
-    if (bypass){
-        cc = [self.selectedSupermenu[0] valueForKey:pageControllerClass];
-    } else {
-        cc = [self.selectedSupermenu[lastSelected] valueForKey:pageControllerClass];
-    }
-
-    NSViewController * vc = self.controllerClassToInstance[[cc className]];
-    if (!vc){
+    Class cc = [selectedItem valueForKey:pageControllerClass];
+    NSViewController *vc = self.controllerClassToInstance[[cc className]];
+    if (!vc) {
         vc = [cc new];
         self.controllerClassToInstance[[cc className]] = vc;
     }
@@ -78,90 +123,39 @@ NSString * const pageControllerClass  = @"pageControllerClass";
     [self.viewPaneController requestPageChangeTo:vc];
 }
 
-- (IBAction)setMenuPage:(NSToolbarItem *)sender{
-    switch (sender.itemIdentifier.intValue) {
-        case 0:
-            if ([self.contentSplitView.subviews[1] frame].origin.x <= 10){
-                [CATransaction begin];
-                [[self.contentSplitView animator] setPosition:200 ofDividerAtIndex:0];
-                [self.contentSplitView.subviews[0] setHidden:NO];
-                [CATransaction commit];
-            } else {
-                [CATransaction begin];
-                [[self.contentSplitView animator] setPosition:0 ofDividerAtIndex:0];
-                [self.contentSplitView.subviews[0] setHidden:YES];
-                [CATransaction commit];
-            }
-            return;
-        case 1:
-            self.selectedSupermenu = self.homeTabMenuItems;
-            break;
-        case 2:
-            self.selectedSupermenu = self.dockTabMenuItems;
-            break;
-        case 3:
-            self.selectedSupermenu = self.iconTabMenuItems;
-            break;
-        default:
-            self.selectedSupermenu = self.homeTabMenuItems;
-            break;
-    }
-    
-    [self.submenuChooser reloadData];
-    [self internalSetContentPane:nil withInitBypass:NO];
-}
-
 #pragma mark - Menu data
 
 - (NSArray *)homeTableRowData{
     return @[
-        @{image:@"house", text:@"Welcome",
-          pageControllerClass:SOWelcomePageController.class},
-        @{image:@"long.text.page.and.pencil", text:@"Attributions",
-          pageControllerClass:SOAttributionsPageController.class},
-        @{image:@"book.and.wrench", text:@"Documentation"},
-        @{image:@"gear", text:@"App Settings",
-          pageControllerClass:SOAppSettingsPageController.class}
+        @{image:@"house", text:@"Welcome", pageControllerClass:SOWelcomePageController.class},
+        @{image:@"long.text.page.and.pencil", text:@"Attributions", pageControllerClass:SOAttributionsPageController.class},
+        @{image:@"book.and.wrench", text:@"Documentation"}, // Missing class will be safely ignored now
+        @{image:@"gear", text:@"App Settings", pageControllerClass:SOAppSettingsPageController.class}
     ];
 }
 
 - (NSArray *)dockTableRowData{
     return @[
-        @{image:@"smoke", text:@"Poof",
-          pageControllerClass:SOPoofPageController.class},
-        @{image:@"dock.rectangle", text:@"Dock Frame",
-          pageControllerClass:SODockPositionPageController.class},
-        @{image:@"square.fill.and.line.vertical.and.square.fill", text:@"Separators",
-          pageControllerClass:SOSeparatorsPageController.class},
-        @{image:@"photo.on.rectangle.angled", text:@"Background",
-          pageControllerClass:SOBackgroundPageController.class},
-        @{image:@"square.and.arrow.up", text:@"Icon Height",
-          pageControllerClass:SOIconHeightPageController.class},
-        @{image:@"app.shadow", text:@"Icon Shadows",
-          pageControllerClass:SOIconShadowsPageController.class},
-        @{image:@"arrowtriangle.up.fill", text:@"Indicators",
-          pageControllerClass:SOIndicatorsPageController.class},
-        @{image:@"macwindow.stack", text:@"Reflections",
-          pageControllerClass:SOReflectionsPageController.class}
+        @{image:@"smoke", text:@"Poof", pageControllerClass:SOPoofPageController.class},
+        @{image:@"dock.rectangle", text:@"Dock Frame", pageControllerClass:SODockPositionPageController.class},
+        @{image:@"square.fill.and.line.vertical.and.square.fill", text:@"Separators", pageControllerClass:SOSeparatorsPageController.class},
+        @{image:@"photo.on.rectangle.angled", text:@"Background", pageControllerClass:SOBackgroundPageController.class},
+        @{image:@"square.and.arrow.up", text:@"Icon Height", pageControllerClass:SOIconHeightPageController.class},
+        @{image:@"app.shadow", text:@"Icon Shadows", pageControllerClass:SOIconShadowsPageController.class},
+        @{image:@"arrowtriangle.up.fill", text:@"Indicators", pageControllerClass:SOIndicatorsPageController.class},
+        @{image:@"macwindow.stack", text:@"Reflections", pageControllerClass:SOReflectionsPageController.class}
     ];
 }
 
 - (NSArray *)iconTableRowData{
     return @[
-        @{image:@"app.translucent", text:@"App Icons",
-          pageControllerClass:SOIconReplacementPageController.class},
-        @{image:@"folder", text:@"Folder Icons",
-          pageControllerClass:SOFolderReplacementPageController.class},
-        @{image:@"filemenu.and.pointer.arrow", text:@"Extension Icons",
-          pageControllerClass:SOSystemIconReplacementPageController.class},
-        @{image:@"sidebar.left", text:@"Sidebar Icons",
-          pageControllerClass:SOSidebarIconReplacementPageController.class},
-        @{image:@"gear.circle", text:@"System Settings Icons",
-          pageControllerClass:SOSystemSettingsIconReplacementPageController.class},
-        @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volume Icons",
-          pageControllerClass:SOVolumeIconReplacementPageController.class},
-        @{image:@"clock.circle", text:@"Dock Clock Icon",
-          pageControllerClass:SOClockDockTileReplacementPageController.class}
+        @{image:@"app.translucent", text:@"App Icons", pageControllerClass:SOIconReplacementPageController.class},
+        @{image:@"folder", text:@"Folder Icons", pageControllerClass:SOFolderReplacementPageController.class},
+        @{image:@"filemenu.and.pointer.arrow", text:@"Extension Icons", pageControllerClass:SOSystemIconReplacementPageController.class},
+        @{image:@"sidebar.left", text:@"Sidebar Icons", pageControllerClass:SOSidebarIconReplacementPageController.class},
+        @{image:@"gear.circle", text:@"System Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class},
+        @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volume Icons", pageControllerClass:SOVolumeIconReplacementPageController.class},
+        @{image:@"clock.circle", text:@"Dock Clock Icon", pageControllerClass:SOClockDockTileReplacementPageController.class}
     ];
 }
 @end

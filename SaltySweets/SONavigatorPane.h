@@ -26,10 +26,9 @@
 #import "../SOControllers/IconReplacement/SOVolumeIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOClockDockTileReplacementPageController.h"
 
-@interface SONavigatorPane : NSObject <NSToolbarDelegate, NSSplitViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
+@interface SONavigatorPane : NSObject <NSToolbarDelegate, NSSplitViewDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource>
 @property (strong) IBOutlet NSSplitView * contentSplitView;
-@property (strong) IBOutlet NSTableView * submenuChooser;
-@property (strong) IBOutlet NSToolbar * menuChooser;
+@property (strong) IBOutlet NSOutlineView * submenuChooser;
 @property (assign) IBOutlet SOViewPane * viewPaneController;
 
 @property (strong) NSArray * selectedSupermenu;
@@ -40,6 +39,5 @@
 
 @property (nonatomic, strong) NSMutableDictionary * controllerClassToInstance;
 
-- (IBAction)setMenuPage:(id)sender;
 - (IBAction)setContentPane:(id)sender;
 @end

@@ -12,8 +12,10 @@
     
     [NSApp.mainWindow beginSheet:self.creationController.window
                completionHandler:^(NSModalResponse returnCode) {
-        if (returnCode != NSModalResponseOK)
+        if (returnCode != NSModalResponseOK){
+            completion(NO);
             return;
+        }
         
         NSString *newName = self.creationController.nameBox.stringValue;
         NSString *newThemePath = [[[SOAtomicAccessPoint sharedInstance] dockThemeBundleDirectory]

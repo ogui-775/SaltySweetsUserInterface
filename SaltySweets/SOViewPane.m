@@ -67,7 +67,7 @@ static SOViewPane * _instance = nil;
     self.applyButton.enabled = hasAnyChanges;
 }
 
-- (IBAction)doApplyAction:(NSButton *)sender{
+- (IBAction)doApplyAction:(id)sender{
     if (!self.applyButton.enabled)
         return;
 

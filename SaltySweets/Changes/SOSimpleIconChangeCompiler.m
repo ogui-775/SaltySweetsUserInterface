@@ -216,8 +216,10 @@
     
     [NSApp.mainWindow beginSheet:creationController.window
                completionHandler:^(NSModalResponse returnCode){
-        if (returnCode != NSModalResponseOK)
+        if (returnCode != NSModalResponseOK){
+            completion(NO);
             return;
+        }
         
         NSString *newName = creationController.nameBox.stringValue;
         NSString *newPackPath = [[[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory] stringByAppendingPathComponent:[newName stringByAppendingPathExtension:@"siconpack"]];

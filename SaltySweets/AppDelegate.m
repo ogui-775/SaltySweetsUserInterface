@@ -12,6 +12,9 @@ static __strong AppDelegate *_instance;
 
 @implementation AppDelegate
 
+- (void)applicationDidFinishLaunching:(NSNotification *)notification{
+}
+
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
     if (!self.urlToAuxController)
         self.urlToAuxController = [NSMutableDictionary dictionary];

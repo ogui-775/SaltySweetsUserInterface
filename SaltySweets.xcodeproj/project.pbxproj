@@ -122,6 +122,11 @@
 			path = SOSheets;
 			sourceTree = "<group>";
 		};
+		18FE4E57300EE07400531BB2 /* SOPopovers */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SOPopovers;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +172,7 @@
 		18BC573D2F2EA9D80075DC08 = {
 			isa = PBXGroup;
 			children = (
+				18FE4E57300EE07400531BB2 /* SOPopovers */,
 				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
 				1803A4612F36EBA8006EC28C /* SOControllers */,
@@ -233,6 +239,7 @@
 				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
 				18BC57482F2EA9D80075DC08 /* SaltySweets */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
+				18FE4E57300EE07400531BB2 /* SOPopovers */,
 			);
 			name = SaltySweets;
 			packageProductDependencies = (
@@ -259,7 +266,7 @@
 					};
 					18BC57452F2EA9D80075DC08 = {
 						CreatedOnToolsVersion = 26.2;
-						LastSwiftMigration = 2640;
+						LastSwiftMigration = 2700;
 					};
 				};
 			};
