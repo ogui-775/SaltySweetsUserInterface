@@ -15,6 +15,8 @@
 }
 
 - (IBAction)createNewWasPressed:(NSButton *)sender{
+    [self.importPopover close];
+    
     if (!self.createPopover.shown){
         self.createPopover = [[NSPopover alloc] init];
         
@@ -25,6 +27,23 @@
                                  preferredEdge:NSRectEdgeMinY];
     } else {
         [self.createPopover close];
+    }
+}
+
+- (IBAction)importWasPressed:(NSButton *)sender{
+    [self.createPopover close];
+    
+    if (!self.importPopover.shown){
+        self.importPopover = [[NSPopover alloc] init];
+        
+        self.importPopover.contentViewController = [[SOImportSSItemController alloc] initWithNibName:@"SOImportSSItemPopover"
+                                                                                              bundle:nil];
+        
+        [self.importPopover showRelativeToRect:CGRectZero
+                                        ofView:self.importButton
+                                 preferredEdge:NSRectEdgeMinY];
+    } else {
+        [self.importPopover close];
     }
 }
 @end

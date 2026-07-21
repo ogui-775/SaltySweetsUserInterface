@@ -11,7 +11,9 @@
     SOSimpleDockChangeCompiler *compiler = [[SOSimpleDockChangeCompiler alloc] init];
     
     [compiler createNewThemeWithCompletionHandler:^(BOOL success) {
-        [self.view.window close];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.view.window close];
+        });
     }];
 }
 
@@ -19,7 +21,9 @@
     SOSimpleIconChangeCompiler *compiler = [[SOSimpleIconChangeCompiler alloc] init];
     
     [compiler createNewPackWithCompletionHandler:^(BOOL success) {
-        [self.view.window close];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.view.window close];
+        });
     }];
 }
 @end

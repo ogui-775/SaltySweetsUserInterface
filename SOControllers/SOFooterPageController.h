@@ -2,10 +2,12 @@
 
 #import "Base/SOConfigurablePageControllerBase.h"
 #import "../SOPopovers/Controllers/SOCreateSSItemController.h"
+#import "../SOPopovers/Controllers/SOImportSSItemController.h"
 
 @interface SOFooterPageController : SOConfigurablePageControllerBase
 @property (weak) IBOutlet NSButton *createNewButton;
 @property (weak) IBOutlet NSButton *importButton;
 @property (weak) IBOutlet NSButton *applyButton;
-@property (strong) IBOutlet NSPopover *createPopover;
+@property (strong) NSPopover *createPopover;
+@property (strong) NSPopover *importPopover;
 @end
