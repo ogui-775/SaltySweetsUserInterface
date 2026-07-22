@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25084" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25084"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -64,7 +64,7 @@
                     </connections>
                 </segmentedControl>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pq6-gS-hsA">
-                    <rect key="frame" x="303" y="393" width="27" height="24"/>
+                    <rect key="frame" x="303" y="389" width="27" height="24"/>
                     <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="folder" catalog="system" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="u1V-z8-gkB">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -138,7 +138,7 @@
                     </connections>
                 </textField>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mfC-ay-rMX">
-                    <rect key="frame" x="342" y="54" width="65" height="24"/>
+                    <rect key="frame" x="342" y="54" width="64" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="2L5-OC-LYc">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -151,7 +151,7 @@
                     </connections>
                 </segmentedControl>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rrm-sK-xdy">
-                    <rect key="frame" x="432" y="58" width="85" height="16"/>
+                    <rect key="frame" x="431" y="58" width="85" height="16"/>
                     <buttonCell key="cell" type="check" title="Wireframe" bezelStyle="regularSquare" imagePosition="left" inset="2" id="CmO-VM-FwV">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -161,7 +161,7 @@
                     </connections>
                 </button>
                 <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N92-cc-5Vr">
-                    <rect key="frame" x="338" y="393" width="184" height="24"/>
+                    <rect key="frame" x="338" y="389" width="184" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="184" id="odO-fS-t4n"/>
                     </constraints>

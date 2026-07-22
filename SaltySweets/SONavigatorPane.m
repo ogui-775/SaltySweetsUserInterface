@@ -17,7 +17,7 @@ NSString * const pageControllerClass  = @"pageControllerClass";
 - (void)awakeFromNib {
     self.controllerClassToInstance = [NSMutableDictionary new];
     
-    self.rootCategories = @[@"Home", @"Dock", @"Icons"];
+    self.rootCategories = @[@"Home", @"Dock Themes", @"Icon Packs"];
     
     self.menuDictionary = @{
         self.rootCategories[0] : [self homeTableRowData],
@@ -129,7 +129,7 @@ NSString * const pageControllerClass  = @"pageControllerClass";
     return @[
         @{image:@"house", text:@"Welcome", pageControllerClass:SOWelcomePageController.class},
         @{image:@"long.text.page.and.pencil", text:@"Attributions", pageControllerClass:SOAttributionsPageController.class},
-        @{image:@"book.and.wrench", text:@"Documentation"}, // Missing class will be safely ignored now
+        @{image:@"book.and.wrench", text:@"Documentation"},
         @{image:@"gear", text:@"App Settings", pageControllerClass:SOAppSettingsPageController.class}
     ];
 }
@@ -149,13 +149,14 @@ NSString * const pageControllerClass  = @"pageControllerClass";
 
 - (NSArray *)iconTableRowData{
     return @[
-        @{image:@"app.translucent", text:@"App Icons", pageControllerClass:SOIconReplacementPageController.class},
-        @{image:@"folder", text:@"Folder Icons", pageControllerClass:SOFolderReplacementPageController.class},
-        @{image:@"filemenu.and.pointer.arrow", text:@"Extension Icons", pageControllerClass:SOSystemIconReplacementPageController.class},
-        @{image:@"sidebar.left", text:@"Sidebar Icons", pageControllerClass:SOSidebarIconReplacementPageController.class},
+        @{image:@"app.translucent", text:@"Apps", pageControllerClass:SOIconReplacementPageController.class},
+        @{image:@"folder", text:@"Folders", pageControllerClass:SOFolderReplacementPageController.class},
+        @{image:@"filemenu.and.pointer.arrow", text:@"File Extensions", pageControllerClass:SOSystemIconReplacementPageController.class},
+        @{image:@"sidebar.left", text:@"Sidebar", pageControllerClass:SOSidebarIconReplacementPageController.class},
         @{image:@"gear.circle", text:@"System Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class},
-        @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volume Icons", pageControllerClass:SOVolumeIconReplacementPageController.class},
-        @{image:@"clock.circle", text:@"Dock Clock Icon", pageControllerClass:SOClockDockTileReplacementPageController.class}
+        @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volumes", pageControllerClass:SOVolumeIconReplacementPageController.class},
+        @{image:@"clock.circle", text:@"Dock Clock", pageControllerClass:SOClockDockTileReplacementPageController.class},
+        @{image:@"calendar", text:@"Dock Calendar"}
     ];
 }
 @end

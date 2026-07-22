@@ -3,8 +3,8 @@
 #import "SOFolderReplacementPageController.h"
 
 @interface SOFolderReplacementPageController ()
-@property (strong) NSMutableArray<UTType *> * currentFolderTypes;
-@property (weak) UTType * currentDisplayedType;
+@property (strong) NSMutableArray<UTType *> *currentFolderTypes;
+@property (strong) UTType *currentDisplayedType;
 @end
 
 @implementation SOFolderReplacementPageController
@@ -54,9 +54,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 }
 
 - (void)refreshOrLoadBaseline{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.folderScrollerCollection reloadData];
-    });
+    [self.folderScrollerCollection reloadData];
 }
 
 - (void)mouseDown:(NSEvent *)event{
@@ -82,7 +80,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 }
 
 - (IBAction)fullVariantSwitchWasFlipped:(NSSwitch *)sender{
-    NSIndexSet * selection = self.folderScrollerCollection.selectionIndexes;
+    NSIndexSet *selection = self.folderScrollerCollection.selectionIndexes;
     [self.folderScrollerCollection reloadData];
     [self.folderScrollerCollection setSelectionIndexes:selection];
     [self.folderPaperSegmented setSelectedSegment:0];
@@ -162,7 +160,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 - (IBAction)actionOnFolderWell:(SODragAwareImageView *)sender{
     BOOL isPaperSheet  = sender.tag == 1;
     BOOL isFullVariant = self.fullVariantSwitch.state == NSControlStateValueOn;
-    NSString * composite = self.currentDisplayedType.identifier;
+    NSString *composite = self.currentDisplayedType.identifier;
     
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
         sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
@@ -246,18 +244,35 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
 }
 
 - (NSImage *)imageForVariant:(BOOL)full UTI:(NSString *)uti{
-    NSString * composite = full ? [uti stringByAppendingString:@".full"] : uti;
+    NSString *composite = full ? [uti stringByAppendingString:@".full"] : uti;
+    
+    if ([composite containsString:@"com.apple.icon-decoration"]){
+        NSString *pathConversion = [composite stringByReplacingOccurrencesOfString:@"." withString:@"/"];
+        pathConversion = [pathConversion lastPathComponent];
+        composite = pathConversion;
+    }
     
     const SOEncodedKeyPath tFolder = {
         .rootKey = &kSOIconsFolderDict,
         .components = @[composite]
     };
     
-    NSImage * ret = [self loadImageForEncodedKeypath:&tFolder];
+    NSImage *ret = [self loadImageForEncodedKeypath:&tFolder];
+    
+    if (!ret){
+        const SOEncodedKeyPath tDecor = {
+            .rootKey = &kSOIconsDecoratedFolderDict,
+            .components = @[composite]
+        };
+        
+        ret = [self loadImageForEncodedKeypath:&tDecor];
+    }
+    
     if (!ret)
         return nil;
     
     [ret setSize:CGSizeMake(32, 32)];
+    
     return ret;
 }
 
@@ -290,7 +305,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     else
         [self setFlapsHidden:NO];
     
-    self.currentFolderTypeLabel.stringValue = sender.assignedType.identifier;
+    self.currentFolderTypeLabel.stringValue = [sender.assignedType.identifier stringByReplacingOccurrencesOfString:@"com.apple." withString:@""];
     self.folderWell.image = sender.imageView.image;
     
     if (!@available(macOS 26, *))

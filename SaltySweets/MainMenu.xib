@@ -28,6 +28,7 @@
         </customObject>
         <customObject id="ctj-Kk-6V3" customClass="SOViewPane">
             <connections>
+                <outlet property="applyButton" destination="H1L-Si-eIu" id="Ald-9W-hbb"/>
                 <outlet property="internalScrollView" destination="1Fq-V2-7hQ" id="AcM-Sx-ekG"/>
                 <outlet property="view" destination="PWQ-Za-AOp" id="R70-y7-J5y"/>
             </connections>
@@ -35,10 +36,14 @@
         <customObject id="qvk-NZ-xfX" customClass="SOBundleSwapper"/>
         <customObject id="NYv-wg-nMD" customClass="SOFooterPageController">
             <connections>
-                <outlet property="applyButton" destination="H1L-Si-eIu" id="Vz5-8j-I9Y"/>
                 <outlet property="createNewButton" destination="zFb-fB-J5g" id="NMA-Km-Lfx"/>
                 <outlet property="importButton" destination="GHd-Xp-sBR" id="jul-H0-Jta"/>
                 <outlet property="view" destination="aG0-Jc-m2L" id="jRC-rl-3wS"/>
+            </connections>
+        </customObject>
+        <customObject id="lVn-2W-brw" customClass="SOHeaderPageController">
+            <connections>
+                <outlet property="view" destination="bhw-7d-G2g" id="Rg7-RI-fKi"/>
             </connections>
         </customObject>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
@@ -262,37 +267,37 @@
             </items>
             <point key="canvasLocation" x="106" y="-44"/>
         </menu>
-        <window title="SaltySweets" separatorStyle="line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" toolbarStyle="compact" id="QvC-M9-y7g">
+        <window title="SaltySweets" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" toolbarStyle="compact" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="383" y="293" width="952" height="509"/>
+            <rect key="contentRect" x="383" y="293" width="952" height="573"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
-            <value key="minSize" type="size" width="952" height="509"/>
+            <value key="minSize" type="size" width="952" height="573"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="952" height="509"/>
+                <rect key="frame" x="0.0" y="0.0" width="952" height="573"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <visualEffectView fixedFrame="YES" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="g9z-yo-gHn">
-                        <rect key="frame" x="0.0" y="0.0" width="206" height="544"/>
+                        <rect key="frame" x="0.0" y="0.0" width="206" height="607"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                     </visualEffectView>
                     <splitView dividerStyle="thin" vertical="YES" id="t21-bE-7nj">
-                        <rect key="frame" x="0.0" y="0.0" width="952" height="509"/>
+                        <rect key="frame" x="0.0" y="0.0" width="952" height="573"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView focusRingType="none" fixedFrame="YES" id="6EO-GU-Blv">
-                                <rect key="frame" x="0.0" y="0.0" width="205" height="509"/>
+                                <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="YiC-K7-TSI">
-                                        <rect key="frame" x="0.0" y="0.0" width="205" height="509"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="j6K-bL-cPj">
-                                            <rect key="frame" x="0.0" y="0.0" width="205" height="509"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" indentationPerLevel="16" autosaveExpandedItems="YES" outlineTableColumn="V7K-pX-pue" id="tJB-vC-E3O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="509"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -349,9 +354,13 @@
                                 </backgroundFilters>
                             </customView>
                             <customView fixedFrame="YES" id="KUN-Hn-jVs">
-                                <rect key="frame" x="206" y="0.0" width="746" height="509"/>
+                                <rect key="frame" x="206" y="0.0" width="746" height="573"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhw-7d-G2g">
+                                        <rect key="frame" x="0.0" y="505" width="746" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aG0-Jc-m2L">
                                         <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -363,6 +372,10 @@
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                                                <connections>
+                                                    <action selector="doApplyAction:" target="ctj-Kk-6V3" id="ys3-g8-ihn"/>
+                                                </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zFb-fB-J5g">
                                                 <rect key="frame" x="19" y="5" width="127" height="23"/>
@@ -371,6 +384,7 @@
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                                 <connections>
                                                     <action selector="createNewWasPressed:" target="NYv-wg-nMD" id="6Wc-uz-aEj"/>
                                                 </connections>
@@ -382,6 +396,7 @@
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                                 <connections>
                                                     <action selector="importWasPressed:" target="NYv-wg-nMD" id="mGL-Xg-1g8"/>
                                                 </connections>
@@ -389,14 +404,14 @@
                                         </subviews>
                                     </customView>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="1Fq-V2-7hQ">
-                                        <rect key="frame" x="0.0" y="34" width="746" height="475"/>
+                                        <rect key="frame" x="0.0" y="34" width="746" height="471"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="g1u-6c-yVp">
-                                            <rect key="frame" x="0.0" y="0.0" width="746" height="475"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="746" height="471"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view translatesAutoresizingMaskIntoConstraints="NO" id="PWQ-Za-AOp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="475"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="471"/>
                                                 </view>
                                             </subviews>
                                             <constraints>

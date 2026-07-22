@@ -7,7 +7,6 @@
 @interface SOFooterPageController : SOConfigurablePageControllerBase
 @property (weak) IBOutlet NSButton *createNewButton;
 @property (weak) IBOutlet NSButton *importButton;
-@property (weak) IBOutlet NSButton *applyButton;
 @property (strong) NSPopover *createPopover;
 @property (strong) NSPopover *importPopover;
 @end

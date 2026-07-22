@@ -115,7 +115,7 @@
                                 <rect key="frame" x="247" y="296" width="441" height="96"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" id="4gX-yH-q6l">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <string key="title">Add and remove entries with the plus and minus buttons. Double-click to edit a row. Name the entry either the exact name (case-sensitive) of the sidebar item to set an icon for, or, to replace all instances of a single SFSymbol, name the item "genericSymbol_" followed by the symbol name. Set the image by dragging into the image well, and remove by clicking and pressing erase.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
