@@ -4,15 +4,14 @@
 
 @implementation SOSignatures
 
-+ (BOOL)signThemeBundle:(NSBundle *)bundle{
++ (BOOL)signThemeBundle:(SODockThemeBundle *)bundle{
     if (![SOSignatures authoringKeypairExists])
         return NO;
     
-    NSFileManager * fm   = [NSFileManager defaultManager];
+    NSFileManager *fm    = [NSFileManager defaultManager];
     CFErrorRef error     = NULL;
     
-    
-    NSData * privateKeyData =[NSData dataWithContentsOfFile:[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] stringByAppendingPathComponent:@"privatekey.rsa"]];
+    NSData *privateKeyData =[NSData dataWithContentsOfFile:[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory] stringByAppendingPathComponent:@"privatekey.rsa"]];
     
     if (!privateKeyData)
         return NO;
@@ -27,14 +26,19 @@
     if (!privateKey)
         return NO;
     
-    NSDictionary * themePlist = [NSDictionary dictionaryWithContentsOfFile:[bundle pathForResource:@"theme.plist" ofType:@""]];
+    NSDictionary *themePlist = [bundle themePlist];
+    NSDictionary *resourcePlist = [bundle resourceBomPlist];
     
-    if (!themePlist){
+    if (!themePlist || !resourcePlist){
         CFRelease(privateKey);
         return NO;
     }
     
-    NSData * signedDataPay = [NSPropertyListSerialization dataWithPropertyList:themePlist
+    NSMutableDictionary *merge = [NSMutableDictionary dictionary];
+    [merge addEntriesFromDictionary:themePlist];
+    [merge addEntriesFromDictionary:resourcePlist];
+    
+    NSData *signedDataPay = [NSPropertyListSerialization dataWithPropertyList:merge
                                                                        format:NSPropertyListBinaryFormat_v1_0
                                                                       options:0
                                                                         error:NULL];
@@ -48,10 +52,10 @@
     if (!signatureData)
         return NO;
     
-    NSData * signatureData_ns = (NSData *)CFBridgingRelease(signatureData);
+    NSData *signatureData_ns = (NSData *)CFBridgingRelease(signatureData);
     
     BOOL wrote = NO;
-    NSError * err_ns = nil;
+    NSError *err_ns = nil;
     
     wrote = [fm createFileAtPath:[[bundle resourcePath] stringByAppendingPathComponent:@"signature.sec"]
                 contents:signatureData_ns
@@ -71,23 +75,29 @@
     return wrote;
 }
 
-+ (BOOL)verifyThemeAuthorship:(NSBundle *)bundle {
-    NSDictionary * themePlist = [NSDictionary dictionaryWithContentsOfFile:[bundle pathForResource:@"theme.plist" ofType:@""]];
-    if (!themePlist)
++ (BOOL)verifyThemeAuthorship:(SODockThemeBundle *)bundle {
+    NSDictionary *themePlist = [bundle themePlist];
+    NSDictionary *resourcePlist = [bundle resourceBomPlist];
+    
+    if (!themePlist || !resourcePlist)
         return NO;
 
-    NSData * signedDataPay = [NSPropertyListSerialization dataWithPropertyList:themePlist
+    NSMutableDictionary *merge = [NSMutableDictionary dictionary];
+    [merge addEntriesFromDictionary:themePlist];
+    [merge addEntriesFromDictionary:resourcePlist];
+    
+    NSData *signedDataPay = [NSPropertyListSerialization dataWithPropertyList:merge
                                                                        format:NSPropertyListBinaryFormat_v1_0
                                                                       options:0
                                                                         error:NULL];
     
-    NSString * resourceDir = bundle.resourcePath;
+    NSString *resourceDir = bundle.resourcePath;
 
-    NSString * pkeyPath = [resourceDir stringByAppendingPathComponent:@"publickey.txt"];
-    NSString * sigPath  = [resourceDir stringByAppendingPathComponent:@"signature.sec"];
+    NSString *pkeyPath = [resourceDir stringByAppendingPathComponent:@"publickey.txt"];
+    NSString *sigPath  = [resourceDir stringByAppendingPathComponent:@"signature.sec"];
     
-    NSData * publicKeyData = [NSData dataWithContentsOfFile:pkeyPath];
-    NSData * signatureData = [NSData dataWithContentsOfFile:sigPath];
+    NSData *publicKeyData = [NSData dataWithContentsOfFile:pkeyPath];
+    NSData *signatureData = [NSData dataWithContentsOfFile:sigPath];
     
     if (!publicKeyData || !signatureData)
         return NO;

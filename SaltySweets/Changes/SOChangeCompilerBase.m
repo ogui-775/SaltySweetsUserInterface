@@ -269,7 +269,7 @@
     [self purgeFilesIfNeededWithRelativePaths:purgeCollection
                                    fromBundle:themeBundle];
 
-    for (SOChange * change in changes) {
+    for (SOChange *change in changes) {
         if (change.resourceData && !change.iconChange) {
             [self writeFileFromChange:change
                              toBundle:themeBundle];
