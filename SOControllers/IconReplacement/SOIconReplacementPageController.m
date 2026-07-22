@@ -172,11 +172,12 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 - (IBAction)imageViewDidGetAltered:(SOAppItemImageView *)sender{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken,
- ^{
+    ^{
         [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
     });
     
-    NSString * bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
+    NSString *bundleId = [sender parentItem].assignedBundle.bundleIdentifier;
+    
     const SOEncodedKeyPath tBundlePath = {
         .rootKey = &kSOIconsBundleDict,
         .components = @[bundleId]
@@ -184,16 +185,17 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     
     if (sender.image){
         NSError *error = nil;
-        NSData *resourceData = nil;
+        NSData  *resourceData = nil;
         
         if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
             sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
         }
-            resourceData = [NSData dataWithContentsOfURL:sender.draggedFileURL
-                                                 options:NSDataReadingUncached
-                                                   error:&error];
         
-        [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController * controller){
+        resourceData = [NSData dataWithContentsOfURL:sender.draggedFileURL
+                                             options:NSDataReadingUncached
+                                               error:&error];
+        
+        [self.undoManager registerUndoWithTarget:self handler:^void(SOIconReplacementPageController *controller){
             [sender setImage:sender.originalSetImage];
             if ([self getBaselineForEncodedKeypath:&tBundlePath])
                 [sender setIsReplaced:YES];
@@ -217,9 +219,23 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
         
         [sender setIsPendingReplace:YES];
     } else {
+        
         id baseline = [self getBaselineForEncodedKeypath:&tBundlePath];
+        
         if (!baseline){
             sender.image = sender.originalSetImage;
+            
+            NSMutableSet<SOChange *> *changesForRemoval = [NSMutableSet set];
+            
+            for (SOChange *change in self.pendingChangeArray){
+                if ([change.plistKeyPath->components.firstObject isEqualToString:bundleId])
+                    [changesForRemoval addObject:change];
+            }
+            
+            [self.pendingChangeArray removeObjectsInArray:changesForRemoval.allObjects];
+            [self.changeDelegate contentDidChangeState:self];
+            [sender setIsReplaced:NO];
+            
             return;
         }
 
