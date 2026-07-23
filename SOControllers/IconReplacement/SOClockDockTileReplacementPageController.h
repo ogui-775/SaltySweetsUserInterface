@@ -1,5 +1,7 @@
 //Created by Salty on 7/17/26.
 
+#import <objc/runtime.h>
+
 #import "../Base/SOConfigurablePageControllerBase.h"
 
 @class SOClockDisplayView;
@@ -10,8 +12,6 @@
 @property (strong, nonatomic) IBOutlet NSButton *hourRadio;
 @property (strong, nonatomic) IBOutlet NSButton *minsRadio;
 @property (strong, nonatomic) IBOutlet NSButton *wireframeCheckbox;
-@property (strong, nonatomic) IBOutlet NSButton *zoomInButton;
-@property (strong, nonatomic) IBOutlet NSButton *zoomOutButton;
 @property (strong, nonatomic) IBOutlet NSButton *upButton;
 @property (strong, nonatomic) IBOutlet NSButton *downButton;
 @property (strong, nonatomic) IBOutlet NSButton *leftButton;

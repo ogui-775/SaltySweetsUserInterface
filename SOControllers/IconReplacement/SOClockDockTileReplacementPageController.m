@@ -7,10 +7,6 @@
 @property (strong) CALayer *faceImageLayer;
 @property (strong) CALayer *hourImageLayer;
 @property (strong) CALayer *minsImageLayer;
-
-@property (strong) NSURL *faceImageURL;
-@property (strong) NSURL *hourImageURL;
-@property (strong) NSURL *minsImageURL;
 @end
 
 @interface SOClockDisplayView : NSView
@@ -18,6 +14,8 @@
 @property (strong) SOClockDisplayLayer *clockLayer;
 @property (strong) SODragAwareImageView *imageView;
 @end
+
+const void *kSOAssociatedURL = &kSOAssociatedURL;
 
 @implementation SOClockDockTileReplacementPageController
 
@@ -83,13 +81,22 @@
         hourFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:hourFile];
     
     if (faceFile)
-        self.previewView.clockLayer.faceImageURL = [NSURL fileURLWithPath:faceFile];
+        objc_setAssociatedObject(self.previewView.clockLayer.faceImageLayer,
+                                 &kSOAssociatedURL,
+                                 [NSURL fileURLWithPath:faceFile],
+                                 OBJC_ASSOCIATION_RETAIN);
     
     if (minsFile)
-        self.previewView.clockLayer.minsImageURL = [NSURL fileURLWithPath:minsFile];
+        objc_setAssociatedObject(self.previewView.clockLayer.minsImageLayer,
+                                 &kSOAssociatedURL,
+                                 [NSURL fileURLWithPath:minsFile],
+                                 OBJC_ASSOCIATION_RETAIN);
     
     if (hourFile)
-        self.previewView.clockLayer.hourImageURL = [NSURL fileURLWithPath:hourFile];
+        objc_setAssociatedObject(self.previewView.clockLayer.hourImageLayer,
+                                 &kSOAssociatedURL,
+                                 [NSURL fileURLWithPath:hourFile],
+                                 OBJC_ASSOCIATION_RETAIN);
 }
 
 - (IBAction)radioWasPressed:(NSButton *)sender{
@@ -112,9 +119,16 @@
     CALayer *currentLitLayer = [self layerForViewWithLight];
     NSImage *currentContents = currentLitLayer.contents;
     
+    NSURL *litLayerURL = objc_getAssociatedObject(currentLitLayer,
+                                                  &kSOAssociatedURL);
+    
     [self.undoManager registerUndoWithTarget:self
                                      handler:^(SOClockDockTileReplacementPageController *s){
         [currentLitLayer setContents:currentContents];
+        objc_setAssociatedObject(currentLitLayer,
+                                 &kSOAssociatedURL,
+                                 litLayerURL,
+                                 OBJC_ASSOCIATION_RETAIN);
         [self.pendingChangeArray removeLastObject];
         [self.changeDelegate contentDidChangeState:self];
     }];
@@ -137,6 +151,11 @@
     [self.previewView setNeedsDisplay:YES];
     [self.previewView.clockLayer setNeedsDisplay];
     
+    objc_setAssociatedObject(currentLitLayer,
+                             &kSOAssociatedURL,
+                             [sender draggedFileURL],
+                             OBJC_ASSOCIATION_RETAIN);
+    
     sender.image = nil;
 }
 
@@ -146,10 +165,16 @@
     
     CALayer *currentLayer = [self layerForViewWithLight];
     NSImage *currentImage = [currentLayer contents];
+    NSURL *currentLayerURL = objc_getAssociatedObject(currentLayer,
+                                                      &kSOAssociatedURL);
     
     [self.undoManager registerUndoWithTarget:self
                                      handler:^(SOClockDockTileReplacementPageController *c){
         [currentLayer setContents:currentImage];
+        objc_setAssociatedObject(currentLayer,
+                                 &kSOAssociatedURL,
+                                 currentLayerURL,
+                                 OBJC_ASSOCIATION_RETAIN);
         [self.pendingChangeArray removeLastObject];
         [self.changeDelegate contentDidChangeState:self];
     }];
@@ -169,6 +194,11 @@
     
     [[self layerForViewWithLight] setContents:nil];
     [self.previewView.clockLayer setNeedsDisplay];
+    
+    objc_setAssociatedObject(currentLayer,
+                             &kSOAssociatedURL,
+                             nil,
+                             OBJC_ASSOCIATION_RETAIN);
 }
 
 - (CALayer *)layerForViewWithLight{
@@ -310,12 +340,77 @@
 }
 
 - (IBAction)saveGraphicsState:(NSButton *)sender{
+    NSURL *faceURL = objc_getAssociatedObject(self.previewView.clockLayer.faceImageLayer,
+                                              &kSOAssociatedURL);
+    NSURL *minsURL = objc_getAssociatedObject(self.previewView.clockLayer.minsImageLayer,
+                                              &kSOAssociatedURL);
+    NSURL *hourURL = objc_getAssociatedObject(self.previewView.clockLayer.hourImageLayer,
+                                              &kSOAssociatedURL);
     
+    NSImage *faceImage = self.previewView.clockLayer.faceImageLayer.contents;
+    NSImage *minsImage = self.previewView.clockLayer.minsImageLayer.contents;
+    NSImage *hourImage = self.previewView.clockLayer.hourImageLayer.contents;
+    
+    const SOEncodedKeyPath faceKey = [self faceKeypath];
+    
+    [self setPendingIconResourceChangeForKeypath:&faceKey
+                                        resource:faceImage
+                                        filename:[[[[faceURL lastPathComponent] stringByDeletingPathExtension]
+                                                   stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned                    long)faceURL.hash]]stringByAppendingPathExtension:@"png"]
+                                            note:@"Set clock.face as modified PNG"];
+    
+    const SOEncodedKeyPath minsKey = [self minsKeypath];
+    
+    [self setPendingIconResourceChangeForKeypath:&minsKey
+                                        resource:minsImage
+                                        filename:[[[[minsURL lastPathComponent] stringByDeletingPathExtension]
+                                                   stringByAppendingString:[NSString stringWithFormat:@"%lu",
+                                                                            (unsigned long)minsURL.hash]]stringByAppendingPathExtension:@"png"]
+                                            note:@"Set clock.minute as modified PNG"];
+
+    const SOEncodedKeyPath hourKey = [self hourKeypath];
+    
+    [self setPendingIconResourceChangeForKeypath:&hourKey
+                                        resource:hourImage
+                                        filename:[[[[hourURL lastPathComponent] stringByDeletingPathExtension]
+                                                   stringByAppendingString:[NSString stringWithFormat:@"%lu",
+                                                                            (unsigned long)hourURL.hash]]stringByAppendingPathExtension:@"png"]
+                                            note:@"Set clock.hour as modified PNG"];
 }
 
 - (IBAction)centerPointIsDesired:(NSButton *)sender{
     BOOL requested = [sender state] == NSControlStateValueOn;
     
+    if (!requested){
+        NSArray<CALayer *> * subs = self.previewView.clockLayer.minsImageLayer.sublayers;
+        for (CALayer *s in subs){
+            if ([s.name isEqualToString:@"centerPoint"])
+                [s setHidden:YES];
+        }
+    } else {
+        BOOL wasFound = NO;
+        NSArray<CALayer *> * subs = self.previewView.clockLayer.minsImageLayer.sublayers;
+        for (CALayer *s in subs){
+            if ([s.name isEqualToString:@"centerPoint"]){
+                [s setHidden:NO];
+                wasFound = YES;
+            }
+        }
+        
+        if (!wasFound){
+            CALayer *c = [CALayer layer];
+            [c setName:@"centerPoint"];
+            [c setBackgroundColor:NSColor.redColor.CGColor];
+            
+            CGRect bounds = self.previewView.clockLayer.bounds;
+            CGFloat x = CGRectGetMidX(bounds);
+            CGFloat y = CGRectGetMidY(bounds);
+            CGRect centerRect = CGRectMake(x, y, 0, 0);
+            [c setFrame:centerRect];
+            [c setBounds:CGRectMake(0, 0, 5, 5)];
+            [self.previewView.clockLayer.minsImageLayer addSublayer:c];
+        }
+    }
 }
 @end
 
