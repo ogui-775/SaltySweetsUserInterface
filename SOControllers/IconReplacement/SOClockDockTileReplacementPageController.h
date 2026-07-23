@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet NSButton *widthDecreaseButton;
 @property (strong, nonatomic) IBOutlet NSButton *heightIncreaseButton;
 @property (strong, nonatomic) IBOutlet NSButton *heightDecreaseButton;
+@property (strong, nonatomic) IBOutlet NSButton *clearImageButton;
 @property (strong, nonatomic) IBOutlet NSTextField *widthLabel;
 @property (strong, nonatomic) IBOutlet NSTextField *heightLabel;
 @end

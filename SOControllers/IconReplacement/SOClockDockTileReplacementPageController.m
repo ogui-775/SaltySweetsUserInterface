@@ -7,17 +7,16 @@
 @property (strong) CALayer *faceImageLayer;
 @property (strong) CALayer *hourImageLayer;
 @property (strong) CALayer *minsImageLayer;
+
+@property (strong) NSURL *faceImageURL;
+@property (strong) NSURL *hourImageURL;
+@property (strong) NSURL *minsImageURL;
 @end
 
 @interface SOClockDisplayView : NSView
-@property (weak) SODragAwareImageView *viewHasTheLight;
+@property (strong) NSString *trackedKey;
 @property (strong) SOClockDisplayLayer *clockLayer;
-@property (strong) SODragAwareImageView *faceSettingImageView;
-@property (strong) SODragAwareImageView *hourSettingImageView;
-@property (strong) SODragAwareImageView *minsSettingImageView;
-@end
-
-@interface SOClockDockTileReplacementPageController ()
+@property (strong) SODragAwareImageView *imageView;
 @end
 
 @implementation SOClockDockTileReplacementPageController
@@ -37,18 +36,14 @@
     
     [self.previewView.clockLayer setFrame:CGRectMake(x, y, 300, 300)];
     
-    self.previewView.viewHasTheLight = self.previewView.faceSettingImageView;
-    
-    [self.previewView.faceSettingImageView setAction:@selector(imageWellWasInteractedWith:)];
-    [self.previewView.hourSettingImageView setAction:@selector(imageWellWasInteractedWith:)];
-    [self.previewView.minsSettingImageView setAction:@selector(imageWellWasInteractedWith:)];
-    [self.previewView.faceSettingImageView setTarget:self];
-    [self.previewView.hourSettingImageView setTarget:self];
-    [self.previewView.minsSettingImageView setTarget:self];
+    [self.previewView.imageView setAction:@selector(imageWellWasInteractedWith:)];
+    [self.previewView.imageView setTarget:self];
     
     [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
     
     [self refreshOrLoadBaseline];
+    
+    self.previewView.trackedKey = @"clock.face";
 }
 
 - (void)refreshOrLoadBaseline{
@@ -76,23 +71,34 @@
     [self.previewView.clockLayer setFace:faceImage
                                     hour:newHourImage
                                     mins:minsImage];
+    
+    NSString *faceFile = [self getBaselineForEncodedKeypath:&faceKey];
+    if (faceFile)
+        faceFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:faceFile];
+    NSString *minsFile = [self getBaselineForEncodedKeypath:&minsKey];
+    if (minsFile)
+        minsFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:minsFile];
+    NSString *hourFile = [self getBaselineForEncodedKeypath:&hourKey];
+    if (hourFile)
+        hourFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:hourFile];
+    
+    if (faceFile)
+        self.previewView.clockLayer.faceImageURL = [NSURL fileURLWithPath:faceFile];
+    
+    if (minsFile)
+        self.previewView.clockLayer.minsImageURL = [NSURL fileURLWithPath:minsFile];
+    
+    if (hourFile)
+        self.previewView.clockLayer.hourImageURL = [NSURL fileURLWithPath:hourFile];
 }
 
 - (IBAction)radioWasPressed:(NSButton *)sender{
     if ([[sender identifier] isEqualToString:@"f"])
-        self.previewView.viewHasTheLight = self.previewView.faceSettingImageView;
+        self.previewView.trackedKey = @"clock.face";
     else if ([[sender identifier] isEqualToString:@"m"])
-        self.previewView.viewHasTheLight = self.previewView.minsSettingImageView;
+        self.previewView.trackedKey = @"clock.minute";
     else
-        self.previewView.viewHasTheLight = self.previewView.hourSettingImageView;
-    
-    for (SODragAwareImageView *v in @[self.previewView.faceSettingImageView, self.previewView.hourSettingImageView, self.previewView.minsSettingImageView]){
-        [v setEnabled:NO];
-        [v setEditable:NO];
-    }
-    
-    self.previewView.viewHasTheLight.enabled = YES;
-    self.previewView.viewHasTheLight.editable = YES;
+        self.previewView.trackedKey = @"clock.hour";
 }
 
 - (IBAction)imageWellWasInteractedWith:(SODragAwareImageView *)sender{
@@ -109,10 +115,24 @@
     [self.undoManager registerUndoWithTarget:self
                                      handler:^(SOClockDockTileReplacementPageController *s){
         [currentLitLayer setContents:currentContents];
+        [self.pendingChangeArray removeLastObject];
+        [self.changeDelegate contentDidChangeState:self];
     }];
     [self.undoManager setActionName:@"Set Image"];
     
     [currentLitLayer setContents:sender.image];
+    
+    const SOEncodedKeyPath tLayer = {
+        .rootKey = &kSOIconsDockTilePluginDict,
+        .components = @[self.previewView.trackedKey]
+    };
+    
+    [self setPendingIconResourceChangeForKeypath:&tLayer
+                                        resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
+                                        filename:[sender draggedFileURL].lastPathComponent
+                                            note:[NSString stringWithFormat:@"Set %@ to %@",
+                                                  self.previewView.trackedKey,
+                                                  [sender draggedFileURL].lastPathComponent]];
     
     [self.previewView setNeedsDisplay:YES];
     [self.previewView.clockLayer setNeedsDisplay];
@@ -120,14 +140,45 @@
     sender.image = nil;
 }
 
-- (CALayer *)layerForViewWithLight{
-    SODragAwareImageView *v = [self.previewView viewHasTheLight];
+- (IBAction)clearButtonWasPressed:(NSButton *)sender{
+    if (![self layerForViewWithLight].contents)
+        return;
     
-    if ([[v identifier] isEqualToString:@"face"])
+    CALayer *currentLayer = [self layerForViewWithLight];
+    NSImage *currentImage = [currentLayer contents];
+    
+    [self.undoManager registerUndoWithTarget:self
+                                     handler:^(SOClockDockTileReplacementPageController *c){
+        [currentLayer setContents:currentImage];
+        [self.pendingChangeArray removeLastObject];
+        [self.changeDelegate contentDidChangeState:self];
+    }];
+    [self.undoManager setActionName:@"Cleared Image"];
+    
+    const SOEncodedKeyPath tLayer = {
+        .rootKey = &kSOIconsDockTilePluginDict,
+        .components = @[self.previewView.trackedKey]
+    };
+    
+    if ([self getBaselineForEncodedKeypath:&tLayer])
+        [self setPendingIconResourceChangeForKeypath:&tLayer
+                                            resource:nil
+                                            filename:nil
+                                                note:[NSString stringWithFormat:@"Cleared image for %@",
+                                                      self.previewView.trackedKey]];
+    
+    [[self layerForViewWithLight] setContents:nil];
+    [self.previewView.clockLayer setNeedsDisplay];
+}
+
+- (CALayer *)layerForViewWithLight{
+    NSString *k = self.previewView.trackedKey;
+    
+    if ([k isEqualToString:@"clock.face"])
         return self.previewView.clockLayer.faceImageLayer;
-    else if ([[v identifier] isEqualToString:@"hour"])
+    else if ([k isEqualToString:@"clock.hour"])
         return self.previewView.clockLayer.hourImageLayer;
-    else if ([[v identifier] isEqualToString:@"mins"])
+    else if ([k isEqualToString:@"clock.minute"])
         return self.previewView.clockLayer.minsImageLayer;
     else
         return nil;
@@ -158,6 +209,113 @@
     };
     
     return faceKey;
+}
+
+#pragma mark - Image Editing
+
+- (IBAction)widthDidChange:(NSButton *)sender{
+    BOOL narrower = [sender.identifier isEqualToString:@"w-"];
+    CALayer *cLayer = [self layerForViewWithLight];
+    NSImage *cImage = [cLayer contents];
+    
+    if (!narrower){
+        NSImage *new = [NSImage imageWithSize:cImage.size
+                                      flipped:NO
+                               drawingHandler:^BOOL(NSRect dstRect) {
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width + 1, dstRect.size.height)];
+            return YES;
+        }];
+        [cLayer setContents:new];
+        return;
+    }
+    NSImage *new = [NSImage imageWithSize:cImage.size
+                                  flipped:NO
+                           drawingHandler:^BOOL(NSRect dstRect) {
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+        [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width - 1, dstRect.size.height)];
+        return YES;
+    }];
+    [cLayer setContents:new];
+}
+
+- (IBAction)heightDidChange:(NSButton *)sender{
+    BOOL shorter = [sender.identifier isEqualToString:@"h-"];
+    CALayer *cLayer = [self layerForViewWithLight];
+    NSImage *cImage = [cLayer contents];
+    
+    if (!shorter){
+        NSImage *new = [NSImage imageWithSize:cImage.size
+                                      flipped:NO
+                               drawingHandler:^BOOL(NSRect dstRect) {
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width, dstRect.size.height + 1)];
+            return YES;
+        }];
+        [cLayer setContents:new];
+        return;
+    }
+    NSImage *new = [NSImage imageWithSize:cImage.size
+                                  flipped:NO
+                           drawingHandler:^BOOL(NSRect dstRect) {
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+        [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width, dstRect.size.height - 1)];
+        return YES;
+    }];
+    [cLayer setContents:new];
+}
+
+- (IBAction)positionDidChange:(NSButton *)sender{
+    NSString *identifier = [sender identifier];
+    CALayer *cLayer = [self layerForViewWithLight];
+    NSImage *cImage = [cLayer contents];
+    
+    if ([identifier isEqualToString:@"w"]){
+        NSImage *new = [NSImage imageWithSize:cImage.size
+                                      flipped:NO
+                               drawingHandler:^BOOL(NSRect dstRect) {
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [cImage drawInRect:CGRectMake(0, 1, dstRect.size.width, dstRect.size.height)];
+            return YES;
+        }];
+        [cLayer setContents:new];
+    } else if ([identifier isEqualToString:@"a"]){
+        NSImage *new = [NSImage imageWithSize:cImage.size
+                                      flipped:NO
+                               drawingHandler:^BOOL(NSRect dstRect) {
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [cImage drawInRect:CGRectMake(-1, 0, dstRect.size.width, dstRect.size.height)];
+            return YES;
+        }];
+        [cLayer setContents:new];
+    } else if ([identifier isEqualToString:@"s"]){
+        NSImage *new = [NSImage imageWithSize:cImage.size
+                                      flipped:NO
+                               drawingHandler:^BOOL(NSRect dstRect) {
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [cImage drawInRect:CGRectMake(0, -1, dstRect.size.width, dstRect.size.height)];
+            return YES;
+        }];
+        [cLayer setContents:new];
+    } else if ([identifier isEqualToString:@"d"]){
+        NSImage *new = [NSImage imageWithSize:cImage.size
+                                      flipped:NO
+                               drawingHandler:^BOOL(NSRect dstRect) {
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [cImage drawInRect:CGRectMake(1, 0, dstRect.size.width, dstRect.size.height)];
+            return YES;
+        }];
+        [cLayer setContents:new];
+    }
+}
+
+- (IBAction)saveGraphicsState:(NSButton *)sender{
+    
+}
+
+- (IBAction)centerPointIsDesired:(NSButton *)sender{
+    BOOL requested = [sender state] == NSControlStateValueOn;
+    
 }
 @end
 
@@ -210,24 +368,9 @@
 @implementation SOClockDisplayView
 - (void)awakeFromNib{
     [super awakeFromNib];
-    self.faceSettingImageView = [[SODragAwareImageView alloc] initWithFrame:self.frame];
-    self.faceSettingImageView.identifier = @"face";
-    self.hourSettingImageView = [[SODragAwareImageView alloc] initWithFrame:self.frame];
-    self.hourSettingImageView.identifier = @"hour";
-    self.minsSettingImageView = [[SODragAwareImageView alloc] initWithFrame:self.frame];
-    self.minsSettingImageView.identifier = @"mins";
+    self.imageView = [[SODragAwareImageView alloc] initWithFrame:self.frame];
     
-    [self addSubview:self.faceSettingImageView];
-    [self addSubview:self.hourSettingImageView];
-    [self addSubview:self.minsSettingImageView];
-    
-    self.faceSettingImageView.editable = YES;
-    self.hourSettingImageView.editable = NO;
-    self.minsSettingImageView.editable = NO;
-    
-    self.faceSettingImageView.enabled = YES;
-    self.hourSettingImageView.enabled = NO;
-    self.minsSettingImageView.enabled = NO;
+    [self addSubview:self.imageView];
 }
 
 - (void)layout{

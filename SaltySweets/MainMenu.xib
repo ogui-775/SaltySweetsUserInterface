@@ -41,11 +41,7 @@
                 <outlet property="view" destination="aG0-Jc-m2L" id="jRC-rl-3wS"/>
             </connections>
         </customObject>
-        <customObject id="lVn-2W-brw" customClass="SOHeaderPageController">
-            <connections>
-                <outlet property="view" destination="bhw-7d-G2g" id="Rg7-RI-fKi"/>
-            </connections>
-        </customObject>
+        <customObject id="lVn-2W-brw" customClass="SOHeaderPageController"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="SaltySweets" id="1Xt-HY-uBw">
@@ -270,34 +266,34 @@
         <window title="SaltySweets" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" toolbarStyle="compact" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="383" y="293" width="952" height="573"/>
+            <rect key="contentRect" x="383" y="293" width="952" height="505"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
-            <value key="minSize" type="size" width="952" height="573"/>
+            <value key="minSize" type="size" width="952" height="505"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="952" height="573"/>
+                <rect key="frame" x="0.0" y="0.0" width="952" height="505"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <visualEffectView fixedFrame="YES" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="g9z-yo-gHn">
-                        <rect key="frame" x="0.0" y="0.0" width="206" height="607"/>
+                        <rect key="frame" x="0.0" y="0.0" width="206" height="539"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                     </visualEffectView>
                     <splitView dividerStyle="thin" vertical="YES" id="t21-bE-7nj">
-                        <rect key="frame" x="0.0" y="0.0" width="952" height="573"/>
+                        <rect key="frame" x="0.0" y="0.0" width="952" height="505"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView focusRingType="none" fixedFrame="YES" id="6EO-GU-Blv">
-                                <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
+                                <rect key="frame" x="0.0" y="0.0" width="205" height="505"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="YiC-K7-TSI">
-                                        <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="205" height="505"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="j6K-bL-cPj">
-                                            <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="205" height="505"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" indentationPerLevel="16" autosaveExpandedItems="YES" outlineTableColumn="V7K-pX-pue" id="tJB-vC-E3O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="573"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="505"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -354,13 +350,9 @@
                                 </backgroundFilters>
                             </customView>
                             <customView fixedFrame="YES" id="KUN-Hn-jVs">
-                                <rect key="frame" x="206" y="0.0" width="746" height="573"/>
+                                <rect key="frame" x="206" y="0.0" width="746" height="505"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhw-7d-G2g">
-                                        <rect key="frame" x="0.0" y="505" width="746" height="68"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                    </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aG0-Jc-m2L">
                                         <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -404,14 +396,14 @@
                                         </subviews>
                                     </customView>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="1Fq-V2-7hQ">
-                                        <rect key="frame" x="0.0" y="34" width="746" height="471"/>
+                                        <rect key="frame" x="0.0" y="34" width="746" height="473"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="g1u-6c-yVp">
-                                            <rect key="frame" x="0.0" y="0.0" width="746" height="471"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="746" height="473"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view translatesAutoresizingMaskIntoConstraints="NO" id="PWQ-Za-AOp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="471"/>
+                                                    <rect key="frame" x="0.0" y="2" width="746" height="403"/>
                                                 </view>
                                             </subviews>
                                             <constraints>
