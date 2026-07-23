@@ -89,7 +89,7 @@
                             </button>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drI-fn-g6I">
                                 <rect key="frame" x="18" y="367" width="674" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" id="5AQ-xo-1Iv">
                                     <font key="font" metaFont="system" size="11"/>
                                     <string key="title">Drag an image into the center view for each component of the clock. Select the component with the radio buttons. The clock will not draw properly without all three images. Clear the image by pressing the clear button for the selected type.</string>

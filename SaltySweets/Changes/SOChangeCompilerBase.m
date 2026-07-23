@@ -92,6 +92,9 @@
     [rootDict enumerateKeysAndObjectsUsingBlock:^(NSString * key,
                                                    NSString * obj,
                                                    BOOL * stop) {
+        if (![obj isKindOfClass:NSString.class])
+            return;
+        
         if ([obj isEqualToString:baselineValue])
             countOfBaseline++;
     }];
