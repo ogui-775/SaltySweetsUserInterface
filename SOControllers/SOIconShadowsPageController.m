@@ -28,6 +28,7 @@ const SOEncodedKeyPath tHeight = {
     float width = [[self getBaselineForEncodedKeypath:&tWidth] floatValue];
     float radius = [[self getBaselineForEncodedKey:&kSODockTileShadowBlurRadius] floatValue];
     float opacity = [[self getBaselineForEncodedKey:&kSODockTileShadowOpacity] floatValue];
+    BOOL perspective = [[self getBaselineForEncodedKey:&kSODockTilePerspectiveShadowEnabled] boolValue];
     
     self.heightSlider.floatValue = height;
     self.heightTextbox.floatValue = height;
@@ -37,6 +38,7 @@ const SOEncodedKeyPath tHeight = {
     self.radiusTextbox.floatValue = radius;
     self.opacitySlider.floatValue = opacity;
     self.opacityTextbox.floatValue = opacity;
+    self.perspectiveShadowCheckbox.state = perspective ? NSControlStateValueOn : NSControlStateValueOff;
     
     [self adjustShadowRepresentationWithIndex:0 value:height];
     [self adjustShadowRepresentationWithIndex:1 value:width];
@@ -90,6 +92,15 @@ const SOEncodedKeyPath tHeight = {
     [self setPendingChangeForKey:&kSODockTileShadowOpacity
                            value:@(newOpacity)
                             note:[NSString stringWithFormat:@"Set tile shadow opacity to %f", newOpacity]];
+}
+
+- (IBAction)perspectiveChanged:(NSButton *)sender{
+    BOOL perspective = sender.state == NSControlStateValueOn;
+    
+    [self setPendingChangeForKey:&kSODockTilePerspectiveShadowEnabled
+                           value:@(perspective)
+                            note:[NSString stringWithFormat:@"Set tile perspective shadow to %i",
+                                  perspective]];
 }
 
 - (void)adjustShadowRepresentationWithIndex:(int)index value:(float)value{

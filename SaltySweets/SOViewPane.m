@@ -6,10 +6,8 @@ static SOViewPane * _instance = nil;
 
 @interface SOViewPane()  <SOConfigurableContentDelegate>
 @property (nonatomic, strong) IBOutlet NSButton * applyButton;
-@property (nonatomic, strong) IBOutlet NSButton * previewButton;
 
 @property (nonatomic, strong) NSViewController * currentPage;
-@property (nonatomic, strong) IBOutlet NSScrollView * internalScrollView;
 
 @property (atomic, assign) BOOL containsDockChanges;
 @property (atomic, assign) BOOL containsIconChanges;
@@ -32,20 +30,78 @@ static SOViewPane * _instance = nil;
     return _instance;
 }
 
+- (void)addFooterView:(NSViewController *)controller {
+    [self addChildViewController:controller];
+    [self.infoView setSubviews:@[controller.view]];
+}
+
 - (void)requestPageChangeTo:(NSViewController *)page {
     if (![self.childViewControllers containsObject:page])
         [self addChildViewController:page];
-        
-    [self.internalScrollView setDocumentView:page.view];
     
-    [page.view setFrame:self.internalScrollView.contentView.bounds];
-    
+    page.view.frame = self.topView.bounds;
+    [self.topView setSubviews:@[page.view]];
+
     self.currentPage = page;
-    
+
     if ([page conformsToProtocol:@protocol(SOConfigurableContent)]) {
-        id<SOConfigurableContent> configurablePage = (id<SOConfigurableContent>)page;
-        configurablePage.changeDelegate = self;
+        ((id<SOConfigurableContent>)page).changeDelegate = self;
     }
+}
+
+- (IBAction)expandOrContractInfoView:(NSButton *)sender{
+    if (!self.infoView){
+        NSView *info = [[NSView alloc] initWithFrame:CGRectMake(0,
+                                                                34,
+                                                                self.topView.bounds.size.width,
+                                                                NSApp.mainWindow.frame.size.height - 34)];
+        [info setWantsLayer:YES];
+        [info.layer setBackgroundColor:NSColor.darkGrayColor.CGColor];
+        [self.view addSubview:info];
+        self.infoView = info;
+    }
+    if (self.infoViewExpanded){
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            context.duration = 0.3;
+            context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            [[self.topView animator] setContentFilters:@[]];
+            [[self.infoView animator] setHidden:YES];
+            [[self.splitBarView animator] setFrame:CGRectMake(0,
+                                                              34,
+                                                              self.topView.bounds.size.width,
+                                                              34)];
+        } completionHandler:^{
+            self.infoViewExpanded = NO;
+        }];
+        return;
+    }
+
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        context.duration = 0.3;
+        context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        int halfWindowHeight = NSApp.mainWindow.frame.size.height * 0.75;
+        static CIFilter *filter = nil;
+        if (!filter){
+            filter = CIFilter.gaussianBlurFilter;
+            [filter setDefaults];
+            [filter setValue:@(5) forKey:@"radius"];
+            [self.infoView setWantsLayer:YES];
+            self.infoView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+        }
+        [[self.topView animator] setContentFilters:@[filter]];
+        [[self.infoView animator] setHidden:NO];
+        [[self.infoView animator] setFrame:CGRectMake(0,
+                                                      0,
+                                                      self.topView.bounds.size.width,
+                                                      halfWindowHeight)];
+        
+        [[self.splitBarView animator] setFrame:CGRectMake(0,
+                                                          halfWindowHeight,
+                                                          self.topView.bounds.size.width,
+                                                          self.splitBarView.bounds.size.height)];
+    } completionHandler:^{
+        self.infoViewExpanded = YES;
+    }];
 }
 
 - (void)contentDidChangeState:(id<SOConfigurableContent>)content{

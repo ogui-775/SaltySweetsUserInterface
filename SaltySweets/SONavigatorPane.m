@@ -33,8 +33,13 @@ NSString * const pageControllerClass  = @"pageControllerClass";
     for (id category in self.rootCategories) {
         [self.submenuChooser expandItem:category];
     }
-    
-    [self internalSetContentPane:nil withInitBypass:YES];
+}
+
+- (void)viewDidAppear{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self internalSetContentPane:nil withInitBypass:YES];
+    });
 }
 
 #pragma mark - NSOutlineViewDataSource Methods
@@ -121,6 +126,12 @@ NSString * const pageControllerClass  = @"pageControllerClass";
     }
 
     [self.viewPaneController requestPageChangeTo:vc];
+    
+    if (bypass){
+        SOCollectionPageController *collVc = [SOCollectionPageController new];
+        self.controllerClassToInstance[[SOCollectionPageController className]] = collVc;
+        [self.viewPaneController addFooterView:collVc];
+    }
 }
 
 #pragma mark - Menu data
@@ -156,7 +167,7 @@ NSString * const pageControllerClass  = @"pageControllerClass";
         @{image:@"gear.circle", text:@"System Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class},
         @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volumes", pageControllerClass:SOVolumeIconReplacementPageController.class},
         @{image:@"clock.circle", text:@"Dock Clock", pageControllerClass:SOClockDockTileReplacementPageController.class},
-        @{image:@"calendar", text:@"Dock Calendar"}
+        @{image:@"calendar", text:@"Dock Calendar", pageControllerClass:SOCalendarDockTileReplacementPageController.class}
     ];
 }
 @end

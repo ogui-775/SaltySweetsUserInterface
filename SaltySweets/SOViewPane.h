@@ -1,6 +1,8 @@
 //Created by Salty on 2/6/26.
 #import <Cocoa/Cocoa.h>
 #import <notify.h>
+#import <CoreImage/CoreImage.h>
+#import <CoreImage/CIFilterBuiltins.h>
 
 #import "Services/SOAtomicAccessPoint.h"
 #import "Changes/SOConfigurableContent.h"
@@ -11,5 +13,11 @@
 
 @interface SOViewPane : NSViewController
 - (void)requestPageChangeTo:(NSViewController *)controller;
+- (void)addFooterView:(NSViewController *)controller;
 + (instancetype)defaultInstance;
+
+@property (strong, nonatomic) IBOutlet NSView *topView;
+@property (strong, nonatomic) NSView *infoView;
+@property (weak, nonatomic) IBOutlet NSView *splitBarView;
+@property (assign) BOOL infoViewExpanded;
 @end

@@ -463,7 +463,7 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
 @implementation SOClockDisplayView
 - (void)awakeFromNib{
     [super awakeFromNib];
-    self.imageView = [[SODragAwareImageView alloc] initWithFrame:self.frame];
+    self.imageView = [[SODragAwareImageView alloc] initWithFrame:self.bounds];
     
     [self addSubview:self.imageView];
 }

@@ -12,6 +12,7 @@
                 <outlet property="iconHostingView" destination="tE2-dD-QTQ" id="wED-Il-9fF"/>
                 <outlet property="opacitySlider" destination="cXy-5a-wxn" id="145-Kr-Ecy"/>
                 <outlet property="opacityTextbox" destination="09j-ed-kmZ" id="qcE-da-Gt6"/>
+                <outlet property="perspectiveShadowCheckbox" destination="Sve-Uj-kSN" id="nUy-OI-UGa"/>
                 <outlet property="radiusSlider" destination="i9W-YS-0Ko" id="Udv-1O-Olt"/>
                 <outlet property="radiusTextbox" destination="mTQ-wf-Itm" id="i7j-HC-fLH"/>
                 <outlet property="view" destination="c22-O7-iKe" id="WDQ-OK-L6d"/>
@@ -231,6 +232,17 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sve-Uj-kSN">
+                                <rect key="frame" x="20" y="19" width="145" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="check" title="Perspective Shadow" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Y9q-nq-DAr">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="perspectiveChanged:" target="-2" id="OV4-TP-mw7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="PEe-i9-Wfz" secondAttribute="trailing" constant="20" id="3Vv-2p-Mk1"/>

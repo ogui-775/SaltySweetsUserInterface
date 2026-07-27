@@ -13,5 +13,7 @@
 @property (strong, nonatomic) IBOutlet NSSlider * radiusSlider;
 @property (strong, nonatomic) IBOutlet NSTextField * radiusTextbox;
 @property (strong, nonatomic) IBOutlet NSTextField * opacityTextbox;
-@property (strong, nonatomic) IBOutlet NSSlider * opacitySlider; 
+@property (strong, nonatomic) IBOutlet NSSlider * opacitySlider;
+
+@property (strong, nonatomic) IBOutlet NSButton *perspectiveShadowCheckbox;
 @end

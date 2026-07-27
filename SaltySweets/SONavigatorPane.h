@@ -25,8 +25,10 @@
 #import "../SOControllers/IconReplacement/SOSystemSettingsIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOVolumeIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOClockDockTileReplacementPageController.h"
+#import "../SOControllers/IconReplacement/SOCalendarDockTileReplacementPageController.h"
+#import "../SOControllers/Base/SOCollectionPageController.h"
 
-@interface SONavigatorPane : NSObject <NSToolbarDelegate, NSSplitViewDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource>
+@interface SONavigatorPane : NSViewController <NSToolbarDelegate, NSSplitViewDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource>
 @property (strong) IBOutlet NSSplitView * contentSplitView;
 @property (strong) IBOutlet NSOutlineView * submenuChooser;
 @property (assign) IBOutlet SOViewPane * viewPaneController;

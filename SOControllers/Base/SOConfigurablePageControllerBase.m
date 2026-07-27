@@ -218,7 +218,7 @@
                                                            valueReplacement:newBaselineValue
                                                                     lastTag:_lastCreatedChangeTag];
     
-    [self eraseChangeWithTagIfPresent:_lastCreatedChangeTag - 1 ];
+    [self eraseChangeWithTagIfPresent:_lastCreatedChangeTag - 1];
     
     [self.pendingChangeArray addObject:keyChange];
     

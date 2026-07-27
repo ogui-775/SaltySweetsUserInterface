@@ -6,8 +6,7 @@
 
 - (void)awakeFromNib{
     [super awakeFromNib];
-    [self.view setWantsLayer:YES];
-    [self.view.layer setBackgroundColor:NSColor.separatorColor.CGColor];
+
     [self refreshOrLoadBaseline];
 }
 
