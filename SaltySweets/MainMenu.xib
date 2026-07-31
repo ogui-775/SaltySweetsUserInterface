@@ -39,6 +39,7 @@
                 <outlet property="applyButton" destination="H1L-Si-eIu" id="Ald-9W-hbb"/>
                 <outlet property="splitBarView" destination="RMH-hg-F72" id="qCn-FJ-2Bt"/>
                 <outlet property="topView" destination="xA9-zC-FRl" id="igG-gn-r1S"/>
+                <outlet property="view" destination="KUN-Hn-jVs" id="Zd3-za-LVD"/>
             </connections>
         </customObject>
         <customObject id="qvk-NZ-xfX" customClass="SOBundleSwapper"/>

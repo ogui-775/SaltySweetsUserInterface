@@ -49,31 +49,35 @@ static SOViewPane * _instance = nil;
     }
 }
 
-- (IBAction)expandOrContractInfoView:(NSButton *)sender{
+- (IBAction)expandOrContractInfoView:(NSButton *)sender {
     [self.infoView.window makeFirstResponder:nil];
     
-    if (!self.infoView){
+    CGFloat expandedHeight = 400.0;
+    CGFloat collapsedHeight = 34.0;
+    CGFloat viewWidth = self.topView.bounds.size.width;
+    
+    if (!self.infoView) {
         self.infoViewController = [NSClassFromString(@"SOCollectionPageController") new];
         
-        [self.infoViewController.view setFrame:CGRectMake(0,
-                                                         0,
-                                                         self.topView.bounds.size.width,
-                                                         50)];
-        [self.splitBarView addSubview:self.infoViewController.view];
+        [self.infoViewController.view setFrame:CGRectMake(0, 0, viewWidth, expandedHeight)];
+        
+        [self.view addSubview:self.infoViewController.view
+                    positioned:NSWindowBelow
+                    relativeTo:self.splitBarView];
+        
         self.infoView = self.infoViewController.view;
+        self.infoView.autoresizingMask = NSViewWidthSizable;
         [self.infoView setHidden:YES];
-        
-        
     }
-    if (self.infoViewExpanded){
+    
+    if (self.infoViewExpanded) {
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
             context.duration = 0.3;
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            
             [[self.topView animator] setContentFilters:@[]];
-            [[self.splitBarView animator] setFrame:CGRectMake(0,
-                                                              34,
-                                                              self.topView.bounds.size.width,
-                                                              34)];
+            
+            [[self.splitBarView animator] setFrame:CGRectMake(0, collapsedHeight, viewWidth, collapsedHeight)];
             [[self.infoView animator] setHidden:YES];
         } completionHandler:^{
             self.infoViewExpanded = NO;
@@ -84,9 +88,9 @@ static SOViewPane * _instance = nil;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
         context.duration = 0.3;
         context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        int halfWindowHeight = 400;
+        
         static CIFilter *filter = nil;
-        if (!filter){
+        if (!filter) {
             filter = CIFilter.gaussianBlurFilter;
             [filter setDefaults];
             [filter setValue:@(5) forKey:@"radius"];
@@ -94,20 +98,16 @@ static SOViewPane * _instance = nil;
             self.infoView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
         }
         [[self.topView animator] setContentFilters:@[filter]];
-        [[self.infoView animator] setFrame:CGRectMake(0,
-                                                      -(halfWindowHeight),
-                                                      self.topView.bounds.size.width,
-                                                      halfWindowHeight)];
         
-        [[self.splitBarView animator] setFrame:CGRectMake(0,
-                                                          halfWindowHeight,
-                                                          self.topView.bounds.size.width,
-                                                          self.splitBarView.bounds.size.height)];
+        [[self.infoView animator] setHidden:NO];
+        
+        [[self.splitBarView animator] setFrame:CGRectMake(0, expandedHeight, viewWidth, collapsedHeight)];
+        
     } completionHandler:^{
         self.infoViewExpanded = YES;
-        [[self.infoView animator] setHidden:NO];
     }];
 }
+
 
 - (void)contentDidChangeState:(id<SOConfigurableContent>)content{
     if (!self.pendingChangesCache)

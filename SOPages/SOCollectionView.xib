@@ -49,6 +49,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="infoWasPressed:" target="-2" id="Zwd-wc-jgH"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RuT-V6-Pz6">
                     <rect key="frame" x="667" y="344" width="59" height="24"/>
