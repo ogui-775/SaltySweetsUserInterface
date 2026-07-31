@@ -3,5 +3,6 @@
 #import "SOConfigurablePageControllerBase.h"
 
 @interface SOCollectionPageController : SOConfigurablePageControllerBase
-
+@property (strong, nonatomic) IBOutlet NSTextField *authorNameLabel;
+@property (strong, nonatomic) IBOutlet NSTextField *collectionNameLabel;
 @end

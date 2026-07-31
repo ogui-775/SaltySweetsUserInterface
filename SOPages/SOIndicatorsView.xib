@@ -7,9 +7,15 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SOIndicatorsPageController">
             <connections>
+                <outlet property="heightLabel" destination="WAT-ZU-eOG" id="zYf-jw-b8G"/>
+                <outlet property="heightMultiplierStepper" destination="n5X-YH-gkP" id="DqB-Gz-Qd3"/>
+                <outlet property="scale1xGravityComboBox" destination="Fdh-iN-VOd" id="dBP-1V-L8L"/>
                 <outlet property="scale1xImageWell" destination="BQW-Gf-YMi" id="0nt-IA-bVs"/>
+                <outlet property="scale2xGravityComboBox" destination="2QM-CC-zTf" id="Acj-Wb-pjv"/>
                 <outlet property="scale2xImageWell" destination="cKM-rF-MsP" id="9QC-8c-BSL"/>
                 <outlet property="view" destination="c22-O7-iKe" id="FZ2-Q8-OXr"/>
+                <outlet property="widthLabel" destination="HGG-45-rGf" id="FA7-GW-4Em"/>
+                <outlet property="widthMultiplierStepper" destination="HtA-db-QTo" id="Yfd-XV-mnm"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -60,14 +66,105 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPP-Mm-5jp">
-                                <rect key="frame" x="18" y="364" width="670" height="14"/>
+                                <rect key="frame" x="18" y="350" width="670" height="28"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" alignment="center" title="Provide an indicator image, one per scale, by dragging and dropping the image into their respective wells." id="q5F-3X-g8N">
+                                <textFieldCell key="cell" selectable="YES" alignment="center" id="q5F-3X-g8N">
                                     <font key="font" metaFont="smallSystem"/>
+                                    <string key="title">Provide an indicator image, one per scale, by dragging and dropping the image into their respective wells. Set the contents gravity per scale with the combo boxes, as well as the height and width multipliers.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <comboBox identifier="c2x" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QM-CC-zTf">
+                                <rect key="frame" x="546" y="89" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="LjA-A9-wfJ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="contentsGravityDidChange:" target="-2" id="NfI-5t-uAK"/>
+                                    <outlet property="dataSource" destination="-2" id="bzF-OK-LLF"/>
+                                    <outlet property="delegate" destination="-2" id="pKj-gj-3VB"/>
+                                </connections>
+                            </comboBox>
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fdh-iN-VOd">
+                                <rect key="frame" x="20" y="89" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="a2k-Fd-Tbn">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="contentsGravityDidChange:" target="-2" id="BCl-zt-NX4"/>
+                                    <outlet property="dataSource" destination="-2" id="PlE-E4-hLG"/>
+                                    <outlet property="delegate" destination="-2" id="QkH-ij-hOj"/>
+                                </connections>
+                            </comboBox>
+                            <box fixedFrame="YES" title="Height/Width Multiplier" translatesAutoresizingMaskIntoConstraints="NO" id="9v4-Lw-QNq">
+                                <rect key="frame" x="265" y="21" width="177" height="114"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="iW8-MC-ZH8">
+                                    <rect key="frame" x="0.0" y="0.0" width="177" height="102"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n5X-YH-gkP">
+                                            <rect key="frame" x="59" y="39" width="20" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <stepperCell key="cell" continuous="YES" alignment="left" increment="0.050000000000000003" maxValue="2" id="WNh-zm-lB8"/>
+                                            <connections>
+                                                <action selector="heightDidStep:" target="-2" id="gKw-A8-pZn"/>
+                                            </connections>
+                                        </stepper>
+                                        <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HtA-db-QTo">
+                                            <rect key="frame" x="137" y="39" width="20" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <stepperCell key="cell" continuous="YES" alignment="left" increment="0.050000000000000003" maxValue="2" id="I6v-tN-6ck"/>
+                                            <connections>
+                                                <action selector="widthDidStep:" target="-2" id="qbV-4R-ez9"/>
+                                            </connections>
+                                        </stepper>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WAT-ZU-eOG">
+                                            <rect key="frame" x="18" y="43" width="30" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="1.00" id="oLX-5M-SYh">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGG-45-rGf">
+                                            <rect key="frame" x="101" y="43" width="30" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="1.00" id="Ax8-zD-e8e">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajD-XD-s8V">
+                                            <rect key="frame" x="113" y="15" width="40" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Width" id="AtB-ws-je2">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EWt-Y8-KR4">
+                                            <rect key="frame" x="30" y="15" width="45" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Height" id="c5s-Kh-f2s">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </box>
                         </subviews>
                     </view>
                     <font key="titleFont" metaFont="system"/>

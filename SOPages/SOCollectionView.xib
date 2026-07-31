@@ -7,17 +7,19 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SOCollectionPageController">
             <connections>
+                <outlet property="authorNameLabel" destination="9LL-ZD-Dt4" id="quY-O7-wGp"/>
+                <outlet property="collectionNameLabel" destination="PUc-ZN-8wl" id="v1C-xb-3kW"/>
                 <outlet property="view" destination="c22-O7-iKe" id="txf-tc-UPa"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="746" height="233"/>
+            <rect key="frame" x="0.0" y="0.0" width="746" height="400"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUc-ZN-8wl">
-                    <rect key="frame" x="18" y="188" width="584" height="26"/>
+                    <rect key="frame" x="18" y="355" width="584" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" allowsUndo="NO" title="CollectionName" usesSingleLineMode="YES" id="CcQ-fz-2yo">
                         <font key="font" metaFont="system" size="21"/>
@@ -29,7 +31,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9LL-ZD-Dt4">
-                    <rect key="frame" x="18" y="160" width="584" height="26"/>
+                    <rect key="frame" x="18" y="327" width="584" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" allowsUndo="NO" title="Author Name" usesSingleLineMode="YES" id="VDP-AY-0bF">
                         <font key="font" metaFont="system" size="18"/>
@@ -41,7 +43,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r1V-ns-eIr">
-                    <rect key="frame" x="608" y="177" width="47" height="24"/>
+                    <rect key="frame" x="608" y="344" width="47" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Info" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="coZ-bs-05G">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -49,7 +51,7 @@
                     </buttonCell>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RuT-V6-Pz6">
-                    <rect key="frame" x="667" y="177" width="59" height="24"/>
+                    <rect key="frame" x="667" y="344" width="59" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IlA-6i-EbK">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

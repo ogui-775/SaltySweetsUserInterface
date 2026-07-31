@@ -17,6 +17,7 @@
 + (instancetype)defaultInstance;
 
 @property (strong, nonatomic) IBOutlet NSView *topView;
+@property (strong, nonatomic) NSViewController *infoViewController;
 @property (strong, nonatomic) NSView *infoView;
 @property (weak, nonatomic) IBOutlet NSView *splitBarView;
 @property (assign) BOOL infoViewExpanded;

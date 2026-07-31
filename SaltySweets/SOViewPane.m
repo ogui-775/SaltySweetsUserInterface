@@ -50,26 +50,31 @@ static SOViewPane * _instance = nil;
 }
 
 - (IBAction)expandOrContractInfoView:(NSButton *)sender{
+    [self.infoView.window makeFirstResponder:nil];
+    
     if (!self.infoView){
-        NSView *info = [[NSView alloc] initWithFrame:CGRectMake(0,
-                                                                34,
-                                                                self.topView.bounds.size.width,
-                                                                NSApp.mainWindow.frame.size.height - 34)];
-        [info setWantsLayer:YES];
-        [info.layer setBackgroundColor:NSColor.darkGrayColor.CGColor];
-        [self.view addSubview:info];
-        self.infoView = info;
+        self.infoViewController = [NSClassFromString(@"SOCollectionPageController") new];
+        
+        [self.infoViewController.view setFrame:CGRectMake(0,
+                                                         0,
+                                                         self.topView.bounds.size.width,
+                                                         50)];
+        [self.splitBarView addSubview:self.infoViewController.view];
+        self.infoView = self.infoViewController.view;
+        [self.infoView setHidden:YES];
+        
+        
     }
     if (self.infoViewExpanded){
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
             context.duration = 0.3;
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
             [[self.topView animator] setContentFilters:@[]];
-            [[self.infoView animator] setHidden:YES];
             [[self.splitBarView animator] setFrame:CGRectMake(0,
                                                               34,
                                                               self.topView.bounds.size.width,
                                                               34)];
+            [[self.infoView animator] setHidden:YES];
         } completionHandler:^{
             self.infoViewExpanded = NO;
         }];
@@ -79,7 +84,7 @@ static SOViewPane * _instance = nil;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
         context.duration = 0.3;
         context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        int halfWindowHeight = NSApp.mainWindow.frame.size.height * 0.75;
+        int halfWindowHeight = 400;
         static CIFilter *filter = nil;
         if (!filter){
             filter = CIFilter.gaussianBlurFilter;
@@ -89,9 +94,8 @@ static SOViewPane * _instance = nil;
             self.infoView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
         }
         [[self.topView animator] setContentFilters:@[filter]];
-        [[self.infoView animator] setHidden:NO];
         [[self.infoView animator] setFrame:CGRectMake(0,
-                                                      0,
+                                                      -(halfWindowHeight),
                                                       self.topView.bounds.size.width,
                                                       halfWindowHeight)];
         
@@ -101,6 +105,7 @@ static SOViewPane * _instance = nil;
                                                           self.splitBarView.bounds.size.height)];
     } completionHandler:^{
         self.infoViewExpanded = YES;
+        [[self.infoView animator] setHidden:NO];
     }];
 }
 

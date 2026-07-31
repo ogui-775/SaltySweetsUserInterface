@@ -10,6 +10,6 @@
 }
 
 - (void)refreshOrLoadBaseline{
-    
+    self.authorNameLabel.stringValue = @"test";
 }
 @end

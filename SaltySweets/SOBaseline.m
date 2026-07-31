@@ -11,7 +11,7 @@
     if ([currentThemeBundle isEqualToString:kSODockResourceNotProvided]){
         for (int i = 0; i < kSODockAllKeysCount; i++){
             SOEncodedKey key = kSODockAllKeys[i];
-            NSString * keyName = key.key;
+            NSString *keyName = key.key;
 
             if (key.valueEncoding == SOValueEncodingNSDictionary &&
                 ![key.key isEqualToString:kSODockResourceHashToFilename.key]) {
@@ -26,16 +26,18 @@
         NSMutableDictionary * themePlist =
             [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] themePlist];
         NSMutableDictionary * resourceBom =
-        [   [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] resourceBomPlist];
+            [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] resourceBomPlist];
         
         if (!themePlist || !resourceBom)
             [SOBaseline bailout];
 
         for (int i = 0; i < kSODockAllKeysCount; i++){
             SOEncodedKey key = kSODockAllKeys[i];
-            NSString * keyName = key.key;
+            NSString *keyName = key.key;
             
-            if (key.destinationFlags == SODestinationTheme){
+            if (key.destinationFlags == SODestinationTheme && key.valueEncoding == SOValueEncodingNSDictionary){
+                nonfinal[keyName] = themePlist[keyName] ?: [self baselineFromEncodedKey:key];
+            } else if (key.destinationFlags == SODestinationTheme){
                 nonfinal[keyName] = themePlist[keyName] ?: key.defaultValue;
             } else {
                 nonfinal[keyName] = resourceBom[keyName] ?: key.defaultValue;
