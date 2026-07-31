@@ -4,6 +4,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "SOViewPane.h"
+#import "SONavigatorBar.h"
 
 #import "../SOControllers/SOPoofPageController.h"
 #import "../SOControllers/SODockPositionPageController.h"
@@ -32,6 +33,7 @@
 @property (strong) IBOutlet NSSplitView * contentSplitView;
 @property (strong) IBOutlet NSOutlineView * submenuChooser;
 @property (assign) IBOutlet SOViewPane * viewPaneController;
+@property (strong) IBOutlet SONavigatorBar *navBarController;
 
 @property (strong) NSArray * selectedSupermenu;
 @property (nonatomic, strong) NSArray * homeTabMenuItems;

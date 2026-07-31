@@ -99,12 +99,11 @@ static SOViewPane * _instance = nil;
         }
         [[self.topView animator] setContentFilters:@[filter]];
         
-        [[self.infoView animator] setHidden:NO];
-        
         [[self.splitBarView animator] setFrame:CGRectMake(0, expandedHeight, viewWidth, collapsedHeight)];
         
     } completionHandler:^{
         self.infoViewExpanded = YES;
+        [[self.infoView animator] setHidden:NO];
     }];
 }
 
@@ -158,9 +157,11 @@ static SOViewPane * _instance = nil;
         SOSiconPackBundle *iconPack = [[SOAtomicAccessPoint sharedInstance] currentIconPackBundle];
         if (!iconPack.bundleIdentifier){
             [iconCompiler createNewPackWithCompletionHandler:^(BOOL success) {
-                if (!success)
+                if (!success){
+                    dispatch_group_leave(group);
                     return;
-                
+                }
+
                 [iconCompiler overwriteCurrentPackWithChanges:changesFlat
                                                      baseline:[baseline mutableCopy]
                                             completionHandler:^(BOOL success) {
@@ -183,8 +184,10 @@ static SOViewPane * _instance = nil;
         SODockThemeBundle *dockTheme = [[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle];
         if (!dockTheme.bundleIdentifier){
             [dockCompiler createNewThemeWithCompletionHandler:^(BOOL success) {
-                if (!success)
+                if (!success){
+                    dispatch_group_leave(group);
                     return;
+                }
                 
                 [dockCompiler overwriteCurrentThemeWithChanges:changesFlat
                                                       baseline:[baseline mutableCopy]

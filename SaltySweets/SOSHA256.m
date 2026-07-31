@@ -28,7 +28,7 @@
 
     NSMutableData *input = [NSMutableData data];
 
-    NSData * keyData = [key->key dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *keyData = [key->key dataUsingEncoding:NSUTF8StringEncoding];
     uint32_t keyLength = (uint32_t)keyData.length;
     [input appendBytes:&keyLength length:sizeof(uint32_t)];
     [input appendData:keyData];

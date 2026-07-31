@@ -38,7 +38,8 @@ NSString * const pageControllerClass  = @"pageControllerClass";
 - (void)viewDidAppear{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self internalSetContentPane:nil withInitBypass:YES];
+        //[self internalSetContentPane:nil withInitBypass:YES];
+        [self.navBarController finishInitWithOptions:[self homeNavigationOptions]];
     });
 }
 
@@ -169,5 +170,42 @@ NSString * const pageControllerClass  = @"pageControllerClass";
         @{image:@"clock.circle", text:@"Dock Clock", pageControllerClass:SOClockDockTileReplacementPageController.class},
         @{image:@"calendar", text:@"Dock Calendar", pageControllerClass:SOCalendarDockTileReplacementPageController.class}
     ];
+}
+
+- (NSArray<SONavigatorBarItem *> *)homeNavigationOptions{
+    return [self navOptionsWithArray:[self homeTableRowData]];
+}
+
+- (NSArray<SONavigatorBarItem *> *)dockNavigationOptions{
+    return [self navOptionsWithArray:[self dockTableRowData]];
+}
+
+- (NSArray<SONavigatorBarItem *> *)iconNavigationOptions{
+    return [self navOptionsWithArray:[self iconTableRowData]];
+}
+
+- (NSArray<SONavigatorBarItem *> *)navOptionsWithArray:(NSArray *)array{
+    NSMutableArray *ret = [NSMutableArray array];
+    
+    for (NSDictionary *tableDict in array){
+        Class cc = [tableDict objectForKey:pageControllerClass];
+        
+        if (!cc)
+            continue;
+        
+        NSViewController *vc = self.controllerClassToInstance[[cc className]];
+        if (!vc) {
+            vc = [cc new];
+            self.controllerClassToInstance[[cc className]] = vc;
+        }
+        
+        SONavigatorBarItem *item = [[SONavigatorBarItem alloc] initWithSymbolName:[tableDict objectForKey:image]
+                                                                            title:[tableDict objectForKey:text]
+                                                                       controller:vc];
+        
+        [ret addObject:item];
+    }
+    
+    return ret;
 }
 @end

@@ -13,6 +13,13 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="YiH-Pt-kZ1" customClass="SONavigatorBar">
+            <connections>
+                <outlet property="navigationCollectionView" destination="7as-CE-hHr" id="Iwj-XG-uWc"/>
+                <outlet property="view" destination="kF5-C9-tdK" id="RyN-x8-qDQ"/>
+                <outlet property="viewer" destination="xA9-zC-FRl" id="uHh-Ss-Mb7"/>
+            </connections>
+        </customObject>
         <customObject id="dgZ-Dh-6R7" customClass="SOHorizontalSplitPageController">
             <connections>
                 <outlet property="disclosureButton" destination="B41-vj-NDG" id="EdB-vz-Lay"/>
@@ -29,6 +36,7 @@
         <customObject id="oka-dI-nh6" customClass="SONavigatorPane">
             <connections>
                 <outlet property="contentSplitView" destination="t21-bE-7nj" id="cD4-EU-gjv"/>
+                <outlet property="navBarController" destination="YiH-Pt-kZ1" id="1fP-lQ-8HX"/>
                 <outlet property="submenuChooser" destination="tJB-vC-E3O" id="dlY-2P-7Bd"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="cV7-OX-9LT"/>
                 <outlet property="viewPaneController" destination="ctj-Kk-6V3" id="pM4-LN-jJO"/>
@@ -50,7 +58,6 @@
                 <outlet property="view" destination="aG0-Jc-m2L" id="jRC-rl-3wS"/>
             </connections>
         </customObject>
-        <customObject id="lVn-2W-brw" customClass="SOHeaderPageController"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="SaltySweets" id="1Xt-HY-uBw">
@@ -161,16 +168,6 @@
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
-                                <connections>
-                                    <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
-                                <connections>
-                                    <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -220,7 +217,7 @@
                 </menuItem>
                 <menuItem title="Sicon" id="42h-kQ-Tcg">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" id="bDF-T4-XHD">
+                    <menu key="submenu" title="Sicon" id="bDF-T4-XHD">
                         <items>
                             <menuItem title="Studio" secondaryImage="NSIconViewTemplate" id="V9I-xP-xoL">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -275,34 +272,34 @@
         <window title="SaltySweets" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" toolbarStyle="compact" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="383" y="293" width="952" height="534"/>
+            <rect key="contentRect" x="383" y="293" width="952" height="598"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
-            <value key="minSize" type="size" width="952" height="534"/>
+            <value key="minSize" type="size" width="952" height="598"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="952" height="534"/>
+                <rect key="frame" x="0.0" y="0.0" width="952" height="598"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <visualEffectView fixedFrame="YES" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="g9z-yo-gHn">
-                        <rect key="frame" x="0.0" y="0.0" width="206" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="206" height="632"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                     </visualEffectView>
                     <splitView dividerStyle="thin" vertical="YES" id="t21-bE-7nj">
-                        <rect key="frame" x="0.0" y="0.0" width="952" height="534"/>
+                        <rect key="frame" x="0.0" y="0.0" width="952" height="598"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView focusRingType="none" id="6EO-GU-Blv">
-                                <rect key="frame" x="0.0" y="0.0" width="205" height="534"/>
+                                <rect key="frame" x="0.0" y="0.0" width="205" height="598"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                 <subviews>
                                     <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="YiC-K7-TSI">
-                                        <rect key="frame" x="0.0" y="0.0" width="205" height="534"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="205" height="598"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="j6K-bL-cPj">
-                                            <rect key="frame" x="0.0" y="0.0" width="205" height="534"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="205" height="598"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" indentationPerLevel="16" autosaveExpandedItems="YES" outlineTableColumn="V7K-pX-pue" id="tJB-vC-E3O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="534"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="598"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -343,26 +340,9 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="205" id="YC5-Pl-PB0"/>
                                 </constraints>
-                                <backgroundFilters>
-                                    <ciFilter name="CIGlassLozenge">
-                                        <configuration>
-                                            <null key="inputImage"/>
-                                            <ciVector key="inputPoint0">
-                                                <real value="150"/>
-                                                <real value="150"/>
-                                            </ciVector>
-                                            <ciVector key="inputPoint1">
-                                                <real value="350"/>
-                                                <real value="150"/>
-                                            </ciVector>
-                                            <real key="inputRadius" value="100"/>
-                                            <real key="inputRefraction" value="1.7"/>
-                                        </configuration>
-                                    </ciFilter>
-                                </backgroundFilters>
                             </customView>
                             <customView fixedFrame="YES" id="KUN-Hn-jVs">
-                                <rect key="frame" x="206" y="0.0" width="746" height="534"/>
+                                <rect key="frame" x="206" y="0.0" width="746" height="598"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aG0-Jc-m2L">
@@ -436,6 +416,42 @@
                                                     <action selector="expandOrContractInfoView:" target="ctj-Kk-6V3" id="bN8-jr-jXj"/>
                                                 </connections>
                                             </button>
+                                        </subviews>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kF5-C9-tdK">
+                                        <rect key="frame" x="0.0" y="533" width="746" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <subviews>
+                                            <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cHj-uj-ecu">
+                                                <rect key="frame" x="0.0" y="0.0" width="746" height="64"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                <clipView key="contentView" id="LYU-I3-28w">
+                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="64"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <collectionView selectable="YES" allowsEmptySelection="NO" id="7as-CE-hHr">
+                                                            <rect key="frame" x="0.0" y="0.0" width="746" height="158"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" scrollDirection="horizontal" id="bt7-DF-rgz">
+                                                                <size key="itemSize" width="50" height="50"/>
+                                                            </collectionViewFlowLayout>
+                                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <connections>
+                                                                <outlet property="dataSource" destination="YiH-Pt-kZ1" id="qff-hH-VMT"/>
+                                                                <outlet property="delegate" destination="YiH-Pt-kZ1" id="Wwc-Ze-EfC"/>
+                                                            </connections>
+                                                        </collectionView>
+                                                    </subviews>
+                                                </clipView>
+                                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Xa2-0h-vi3">
+                                                    <rect key="frame" x="1" y="85" width="189" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Ai1-0S-dPW">
+                                                    <rect key="frame" x="729" y="0.0" width="17" height="64"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
                                         </subviews>
                                     </customView>
                                 </subviews>

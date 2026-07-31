@@ -10,10 +10,10 @@
 }
 
 - (void)refreshOrLoadBaseline{
-    self.authorNameLabel.stringValue = @"test";
+    
 }
 
 - (IBAction)infoWasPressed:(NSButton *)sender{
-    NSLog(@"Info");
+    
 }
 @end
