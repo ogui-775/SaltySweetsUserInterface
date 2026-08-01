@@ -23,7 +23,6 @@
             <connections>
                 <outlet property="navigationCollectionView" destination="7as-CE-hHr" id="Iwj-XG-uWc"/>
                 <outlet property="view" destination="kF5-C9-tdK" id="RyN-x8-qDQ"/>
-                <outlet property="viewer" destination="xA9-zC-FRl" id="uHh-Ss-Mb7"/>
             </connections>
         </customObject>
         <customObject id="dgZ-Dh-6R7" customClass="SOHorizontalSplitPageController">
@@ -51,7 +50,9 @@
         <customObject id="ctj-Kk-6V3" customClass="SOViewPane">
             <connections>
                 <outlet property="applyButton" destination="H1L-Si-eIu" id="Ald-9W-hbb"/>
+                <outlet property="masterNavView" destination="Atl-ne-q3h" id="B73-mt-hu0"/>
                 <outlet property="splitBarView" destination="RMH-hg-F72" id="qCn-FJ-2Bt"/>
+                <outlet property="subNavView" destination="kF5-C9-tdK" id="HU7-20-Jcc"/>
                 <outlet property="topView" destination="xA9-zC-FRl" id="igG-gn-r1S"/>
                 <outlet property="view" destination="KUN-Hn-jVs" id="Zd3-za-LVD"/>
             </connections>
@@ -459,9 +460,9 @@
                                             </scrollView>
                                         </subviews>
                                     </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Atl-ne-q3h" customClass="SONavigatorBarStretchyView">
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Atl-ne-q3h">
                                         <rect key="frame" x="0.0" y="564" width="746" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     </customView>
                                 </subviews>
                             </customView>

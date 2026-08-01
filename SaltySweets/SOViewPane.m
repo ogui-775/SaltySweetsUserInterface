@@ -52,7 +52,7 @@ static SOViewPane * _instance = nil;
 - (IBAction)expandOrContractInfoView:(NSButton *)sender {
     [self.infoView.window makeFirstResponder:nil];
     
-    CGFloat expandedHeight = 400.0;
+    CGFloat expandedHeight = 500.0;
     CGFloat collapsedHeight = 34.0;
     CGFloat viewWidth = self.topView.bounds.size.width;
     
@@ -75,7 +75,9 @@ static SOViewPane * _instance = nil;
             context.duration = 0.3;
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
             
-            [[self.topView animator] setContentFilters:@[]];
+            for (NSView *view in @[self.topView, self.masterNavView, self.subNavView]){
+                [[view animator] setContentFilters:@[]];
+            };
             
             [[self.splitBarView animator] setFrame:CGRectMake(0, collapsedHeight, viewWidth, collapsedHeight)];
             [[self.infoView animator] setHidden:YES];
@@ -93,11 +95,14 @@ static SOViewPane * _instance = nil;
         if (!filter) {
             filter = CIFilter.gaussianBlurFilter;
             [filter setDefaults];
-            [filter setValue:@(5) forKey:@"radius"];
+            [filter setValue:@(3) forKey:@"radius"];
             [self.infoView setWantsLayer:YES];
             self.infoView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
         }
-        [[self.topView animator] setContentFilters:@[filter]];
+        
+        for (NSView *view in @[self.topView, self.masterNavView, self.subNavView]){
+            [[view animator] setContentFilters:@[filter]];
+        };
         
         [[self.splitBarView animator] setFrame:CGRectMake(0, expandedHeight, viewWidth, collapsedHeight)];
         

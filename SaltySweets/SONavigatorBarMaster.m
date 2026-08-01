@@ -42,12 +42,11 @@ const NSString *pageControllerClass  = @"pageControllerClass";
 - (void)awakeFromNib{
     [super awakeFromNib];
     self.controllerClassToInstance = [NSMutableDictionary dictionary];
-    [(SONavigatorBarStretchyView *)self.view setInnerView:self];
     
     CGRect midFrame = CGRectMake(CGRectGetMidX(self.view.bounds) - 200,
-                                 CGRectGetMidY(self.view.bounds) - 15,
+                                 CGRectGetMidY(self.view.bounds) - 17,
                                  400,
-                                 40);
+                                 35);
     
     self.tabControl = [[SOMasterTab alloc] initWithFrame:midFrame];
     [self.tabControl setSegmentCount:3];
@@ -79,6 +78,8 @@ const NSString *pageControllerClass  = @"pageControllerClass";
     [self.tabControl setSelectedSegment:0];
     
     [self.view addSubview:self.tabControl];
+    
+    self.tabControl.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin;
     
     [self.tabControl setAction:@selector(didChangeTab:)];
     [self.tabControl setTarget:self];
@@ -134,7 +135,7 @@ const NSString *pageControllerClass  = @"pageControllerClass";
 
 - (NSArray *)iconTableRowData{
     return @[
-        @{image:@"app.translucent", text:@"Apps", pageControllerClass:SOIconReplacementPageController.class},
+        @{image:@"app.translucent", text:@"Applications", pageControllerClass:SOIconReplacementPageController.class},
         @{image:@"folder", text:@"Folders", pageControllerClass:SOFolderReplacementPageController.class},
         @{image:@"filemenu.and.pointer.arrow", text:@"File Extensions", pageControllerClass:SOSystemIconReplacementPageController.class},
         @{image:@"sidebar.left", text:@"Sidebar", pageControllerClass:SOSidebarIconReplacementPageController.class},

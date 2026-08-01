@@ -20,5 +20,7 @@
 @property (strong, nonatomic) NSViewController *infoViewController;
 @property (strong, nonatomic) NSView *infoView;
 @property (weak, nonatomic) IBOutlet NSView *splitBarView;
+@property (weak, nonatomic) IBOutlet NSView *masterNavView;
+@property (weak, nonatomic) IBOutlet NSView *subNavView;
 @property (assign) BOOL infoViewExpanded;
 @end
