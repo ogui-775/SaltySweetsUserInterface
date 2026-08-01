@@ -13,15 +13,17 @@
 }
 
 - (void)refreshOrLoadBaseline{
-    self.currentIconPackDisplay.stringValue = [[self.accessPoint currentIconPackBundleName] stringByReplacingOccurrencesOfString:@".siconpack" withString:@""];
-    self.currentThemeDisplay.stringValue = [[self.accessPoint currentDockThemeBundleName] stringByReplacingOccurrencesOfString:@".bundle" withString:@""];
-    self.currentThemeAuthorNameDisplay.stringValue = [self getBaselineForEncodedKey:&kSODockThemePlainAuthorName];
+    self.currentIconPackDisplay.stringValue = [[self.accessPoint currentIconPackBundleName] stringByReplacingOccurrencesOfString:@".siconpack"
+                                                                                                                       withString:@""];
+    self.currentThemeDisplay.stringValue = [[[self.accessPoint currentDockThemeBundleName] stringByReplacingOccurrencesOfString:@".bundle" withString:@""]
+                                            stringByAppendingFormat:@" by %@", [self getBaselineForEncodedKey:&kSODockThemePlainAuthorName]
+                                            ?: @"UNKNOWN"];
     
-    NSString * currentTheme = [self.accessPoint currentDockThemeBundleName];
+    NSString *currentTheme = [self.accessPoint currentDockThemeBundleName];
     
-    if (![currentTheme isEqualToString:@""]){
+    if (![currentTheme isEqualToString:kSODockResourceNotProvided]){
         
-        NSBundle * currentThemeBundle = [self.accessPoint currentDockThemeBundle];
+        NSBundle *currentThemeBundle = [self.accessPoint currentDockThemeBundle];
         
         BOOL verified = [SOSignatures verifyThemeAuthorship:currentThemeBundle];
         

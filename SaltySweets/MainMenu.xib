@@ -13,6 +13,12 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="fxu-d5-jk1" customClass="SONavigatorBarMaster">
+            <connections>
+                <outlet property="pageNavigatorBar" destination="YiH-Pt-kZ1" id="rgx-Rj-fvH"/>
+                <outlet property="view" destination="Atl-ne-q3h" id="7Ek-gD-hmR"/>
+            </connections>
+        </customObject>
         <customObject id="YiH-Pt-kZ1" customClass="SONavigatorBar">
             <connections>
                 <outlet property="navigationCollectionView" destination="7as-CE-hHr" id="Iwj-XG-uWc"/>
@@ -279,7 +285,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="952" height="598"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <visualEffectView fixedFrame="YES" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="g9z-yo-gHn">
+                    <visualEffectView fixedFrame="YES" blendingMode="behindWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="g9z-yo-gHn">
                         <rect key="frame" x="0.0" y="0.0" width="206" height="632"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                     </visualEffectView>
@@ -319,7 +325,6 @@
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <action selector="setContentPane:" target="oka-dI-nh6" id="gcU-io-9DF"/>
                                                         <outlet property="dataSource" destination="oka-dI-nh6" id="aNZ-hE-oIu"/>
                                                         <outlet property="delegate" destination="oka-dI-nh6" id="L04-JF-zmE"/>
                                                     </connections>
@@ -418,20 +423,20 @@
                                             </button>
                                         </subviews>
                                     </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kF5-C9-tdK">
-                                        <rect key="frame" x="0.0" y="533" width="746" height="64"/>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kF5-C9-tdK" customClass="SONavigatorBarStretchyView">
+                                        <rect key="frame" x="0.0" y="533" width="746" height="34"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cHj-uj-ecu">
-                                                <rect key="frame" x="0.0" y="0.0" width="746" height="64"/>
+                                            <scrollView wantsLayer="YES" focusRingType="exterior" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cHj-uj-ecu">
+                                                <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <clipView key="contentView" id="LYU-I3-28w">
-                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="64"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <collectionView selectable="YES" allowsEmptySelection="NO" id="7as-CE-hHr">
-                                                            <rect key="frame" x="0.0" y="0.0" width="746" height="158"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
+                                                            <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" scrollDirection="horizontal" id="bt7-DF-rgz">
                                                                 <size key="itemSize" width="50" height="50"/>
                                                             </collectionViewFlowLayout>
@@ -447,12 +452,16 @@
                                                     <rect key="frame" x="1" y="85" width="189" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
-                                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Ai1-0S-dPW">
-                                                    <rect key="frame" x="729" y="0.0" width="17" height="64"/>
+                                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Ai1-0S-dPW">
+                                                    <rect key="frame" x="-100" y="-100" width="17" height="64"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
                                         </subviews>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Atl-ne-q3h" customClass="SONavigatorBarStretchyView">
+                                        <rect key="frame" x="0.0" y="564" width="746" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
                                 </subviews>
                             </customView>

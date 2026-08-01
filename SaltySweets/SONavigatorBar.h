@@ -3,10 +3,14 @@
 #import <AppKit/AppKit.h>
 
 #import "SONavigatorBarItem.h"
+#import "SOViewPane.h"
 
 @interface SONavigatorBar : NSViewController <NSCollectionViewDataSource, NSCollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet NSCollectionView *navigationCollectionView;
-@property (strong, nonatomic) IBOutlet NSView *viewer;
 - (void)finishInitWithOptions:(NSArray<SONavigatorBarItem *> *)itemArray;
 - (void)replaceCurrentOptionsWithArray:(NSArray<SONavigatorBarItem *> *)itemArray;
+@end
+
+@interface SONavigatorBarStretchyView : NSView
+@property (weak) NSViewController *innerView;
 @end

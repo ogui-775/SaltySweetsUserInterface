@@ -6,42 +6,9 @@
 #import "SOViewPane.h"
 #import "SONavigatorBar.h"
 
-#import "../SOControllers/SOPoofPageController.h"
-#import "../SOControllers/SODockPositionPageController.h"
-#import "../SOControllers/SOWelcomePageController.h"
-#import "../SOControllers/SOAppSettingsPageController.h"
-#import "../SOControllers/SORetinaDisplayPageController.h"
-#import "../SOControllers/SOAttributionsPageController.h"
-#import "../SOControllers/SOSeparatorsPageController.h"
-#import "../SOControllers/SOBackgroundPageController.h"
-#import "../SOControllers/SOIconHeightPageController.h"
-#import "../SOControllers/SOIconShadowsPageController.h"
-#import "../SOControllers/SOIndicatorsPageController.h"
-#import "../SOControllers/SOReflectionsPageController.h"
-
-#import "../SOControllers/IconReplacement/SOIconReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOFolderReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOSystemIconReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOSidebarIconReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOSystemSettingsIconReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOVolumeIconReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOClockDockTileReplacementPageController.h"
-#import "../SOControllers/IconReplacement/SOCalendarDockTileReplacementPageController.h"
-#import "../SOControllers/Base/SOCollectionPageController.h"
-
-@interface SONavigatorPane : NSViewController <NSToolbarDelegate, NSSplitViewDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource>
-@property (strong) IBOutlet NSSplitView * contentSplitView;
-@property (strong) IBOutlet NSOutlineView * submenuChooser;
-@property (assign) IBOutlet SOViewPane * viewPaneController;
+@interface SONavigatorPane : NSViewController <NSSplitViewDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource>
+@property (strong) IBOutlet NSSplitView *contentSplitView;
+@property (strong) IBOutlet NSOutlineView *submenuChooser;
+@property (assign) IBOutlet SOViewPane *viewPaneController;
 @property (strong) IBOutlet SONavigatorBar *navBarController;
-
-@property (strong) NSArray * selectedSupermenu;
-@property (nonatomic, strong) NSArray * homeTabMenuItems;
-@property (nonatomic, strong) NSArray * dockTabMenuItems;
-@property (nonatomic, strong) NSArray * iconTabMenuItems;
-@property (nonatomic, strong) NSArray * miscTabMenuItems;
-
-@property (nonatomic, strong) NSMutableDictionary * controllerClassToInstance;
-
-- (IBAction)setContentPane:(id)sender;
 @end
