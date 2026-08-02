@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25084" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25084"/>
+        <capability name="NSView safe area layout guides" minToolsVersion="12.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application">
+            <connections>
+                <outlet property="delegate" destination="5sB-SQ-gEA" id="Pv4-NP-Seu"/>
+            </connections>
+        </customObject>
+        <window title="SaltySweets 1.5" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="mainAutosave" animationBehavior="default" titlebarAppearsTransparent="YES" toolbarStyle="unified" titleVisibility="hidden" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="952" height="658"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1205"/>
+            <value key="minSize" type="size" width="952" height="658"/>
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="952" height="658"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rDw-Eb-8wQ">
+                        <rect key="frame" x="0.0" y="0.0" width="952" height="658"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView fixedFrame="YES" id="I7g-PZ-YgA">
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="658"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </customView>
+                            <customView fixedFrame="YES" id="1yw-fA-V8f">
+                                <rect key="frame" x="480" y="0.0" width="472" height="658"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="safeArea" id="wUS-m1-LNe"/>
+                                <viewLayoutGuide key="layoutMargins" id="Ywq-8p-tqB"/>
+                            </customView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="250"/>
+                        </holdingPriorities>
+                    </splitView>
+                </subviews>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="49081434-2C65-4000-84DE-907A71FD9150" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="cLq-Qk-urd">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="5Z3-ir-l0O"/>
+                    <toolbarItem implicitItemIdentifier="558BB3EB-0879-4193-8E47-92897702642C" explicitItemIdentifier="nav" label="" paletteLabel="Custom View" tag="-1" bordered="YES" sizingBehavior="auto" id="I0O-Yo-eI0">
+                        <nil key="toolTip"/>
+                        <customView key="view" id="rGy-OB-efV" customClass="SONavigatorBarStretchyView">
+                            <rect key="frame" x="0.0" y="14" width="400" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        </customView>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems/>
+            </toolbar>
+            <connections>
+                <outlet property="menu" destination="V8D-Rn-qID" id="xmD-Ex-YDZ"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="142"/>
+        </window>
+        <menu title="Main Menu" systemMenu="main" id="V8D-Rn-qID">
+            <items>
+                <menuItem title="SaltySweets" id="0L9-fb-6D9">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="SaltySweets" systemMenu="apple" id="lPW-13-Nlq">
+                        <items>
+                            <menuItem title="About SaltySweets" id="36D-w2-W11">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="orderFrontStandardAboutPanel:" target="-1" id="JPT-Hd-gR9"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="xDa-Wp-vha"/>
+                            <menuItem title="Hide SaltySweets" keyEquivalent="h" id="Gg1-TD-mVh">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="ibH-yK-D9W"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="HhE-aB-PQe">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="RWV-wj-fpL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="DL7-tJ-bqI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="J5R-Xn-JqE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="6Hz-Vx-2q6"/>
+                            <menuItem title="Quit SaltySweets" keyEquivalent="q" id="ouG-sz-dSQ">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="OiE-T5-K6B"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="File" id="H8B-at-b9e">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="File" id="que-pn-1sb">
+                        <items>
+                            <menuItem title="New Dock Theme" secondaryImage="NSAddTemplate" keyEquivalent="n" id="I95-J0-Vd1">
+                                <connections>
+                                    <action selector="createNewTheme:" target="16f-07-rBH" id="YBc-xv-UTA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Open Dock Theme…" secondaryImage="folder" catalog="system" keyEquivalent="o" id="Mbt-19-IAe">
+                                <connections>
+                                    <action selector="swapTheme:" target="16f-07-rBH" id="1uh-IZ-soC"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Unload Dock Theme" id="D2m-De-ieT">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="unloadDockTheme:" target="16f-07-rBH" id="0YA-aO-FSm"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Pdv-3y-1Nc"/>
+                            <menuItem title="Restart Dock" secondaryImage="restart" catalog="system" id="nQo-fR-yw2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="killDock:" target="16f-07-rBH" id="nnu-R6-tGe"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="hQ1-32-jz5"/>
+                            <menuItem title="New Icon Pack" secondaryImage="plus" catalog="system" keyEquivalent="n" id="GEX-ZR-5aM">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="createNewIconPack:" target="16f-07-rBH" id="CWP-cf-9X9"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Open Icon Pack..." secondaryImage="folder" catalog="system" keyEquivalent="o" id="Lt9-aq-t5a">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="swapIconPack:" target="16f-07-rBH" id="Yh2-Dy-Jb6"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Unload Icon Pack" id="ZqM-bt-iqX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="unloadIconPack:" target="16f-07-rBH" id="2gb-Zw-CK4"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zOf-bq-9WR"/>
+                            <menuItem title="Restart Icon Server" secondaryImage="restart" catalog="system" id="yIx-6M-gph">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="killIconServer:" target="16f-07-rBH" id="ifH-Ld-0cb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Restart Finder" secondaryImage="finder" catalog="system" id="x8F-GT-Nkb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="killFinder:" target="16f-07-rBH" id="qsn-9Z-ddS"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Clear Icon Caches" secondaryImage="NSTouchBarDeleteTemplate" id="dz2-SX-7jX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="clearCaches:" target="16f-07-rBH" id="tzt-qj-qwx"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vua-Ka-pZV"/>
+                            <menuItem title="Close" keyEquivalent="w" id="3sm-Sv-eaK">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="c3P-RU-qg8"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" id="jyY-1J-HH4">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="Azz-Cl-YiH">
+                        <items>
+                            <menuItem title="Undo" keyEquivalent="z" id="xsQ-cm-Zyl">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="2pP-o0-Ycc"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="Bca-V4-T68">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="WWS-yV-84e"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="U5e-aY-l8d"/>
+                            <menuItem title="Cut" keyEquivalent="x" id="wPa-w4-FZf">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="v6B-t4-fGH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="SMq-yi-Tzt">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="8jJ-C7-fDF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="eFj-a5-MAk">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="Mxw-Ls-Ohd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete" id="mZr-fz-EEM">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="delete:" target="-1" id="cHX-8x-r3L"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="4RO-FY-4uS">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="2MF-ca-Tid"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Sicon" id="eRe-Aw-aDU">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Sicon" id="92b-NI-mwk">
+                        <items>
+                            <menuItem title="Studio" secondaryImage="NSIconViewTemplate" id="6zj-LA-Dzp">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="siconStudioMenuWasClicked:" target="l0m-Z5-d3k" id="BpX-oX-IP7"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" id="WTd-3b-PRY">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Window" systemMenu="window" id="4f7-Je-1eR">
+                        <items>
+                            <menuItem title="Minimize" keyEquivalent="m" id="nyO-3h-mFG">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="ugC-ML-4jj"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom" id="4Pg-AB-ofK">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="5kP-kH-e2O"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="mjY-Mx-ftt"/>
+                            <menuItem isSeparatorItem="YES" id="SSe-Mc-qIs"/>
+                            <menuItem title="Bring All to Front" id="nha-HM-d6M">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="vOG-Cf-qGc"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="Oc9-k9-t2D">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="8XZ-e7-p8p">
+                        <items>
+                            <menuItem title="SaltySweets Help" keyEquivalent="?" id="R74-IX-15y">
+                                <connections>
+                                    <action selector="showHelp:" target="-1" id="kW0-ZS-eHK"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="5sB-SQ-gEA" id="92o-Ow-E1y"/>
+            </connections>
+            <point key="canvasLocation" x="-147" y="-285"/>
+        </menu>
+        <customObject id="5sB-SQ-gEA" customClass="AppDelegate">
+            <connections>
+                <outlet property="mainMenu" destination="V8D-Rn-qID" id="zqa-Eo-6vj"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="cbr-nF-N1W"/>
+            </connections>
+        </customObject>
+        <customObject id="gRH-se-yZE" customClass="SOSplitViewController">
+            <connections>
+                <outlet property="splitView" destination="rDw-Eb-8wQ" id="ZHZ-Ai-72t"/>
+                <outlet property="view" destination="rDw-Eb-8wQ" id="LFF-9c-7cg"/>
+            </connections>
+        </customObject>
+        <customObject id="16f-07-rBH" customClass="SOBundleSwapper"/>
+        <customObject id="l0m-Z5-d3k" customClass="AppDelegate"/>
+        <customObject id="PJN-fh-qWL" customClass="SONavigatorBarMaster">
+            <connections>
+                <outlet property="view" destination="rGy-OB-efV" id="Sao-rV-XEr"/>
+            </connections>
+        </customObject>
+    </objects>
+    <resources>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSIconViewTemplate" width="19" height="18"/>
+        <image name="NSTouchBarDeleteTemplate" width="19" height="22"/>
+        <image name="finder" catalog="system" width="16" height="15"/>
+        <image name="folder" catalog="system" width="18" height="14"/>
+        <image name="plus" catalog="system" width="14" height="13"/>
+        <image name="restart" catalog="system" width="12" height="13"/>
+    </resources>
+</document>

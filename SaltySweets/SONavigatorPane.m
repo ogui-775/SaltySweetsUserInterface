@@ -26,32 +26,7 @@
     [super awakeFromNib];
     self.collectionArray = [NSMutableArray array];
     
-    NSArray *dockItems = [self dockThemeInventory];
-    
-    SONavigatorPaneObject *dockObjects = [[SONavigatorPaneObject alloc] initWithTitle:@"Dock Themes"
-                                                                               bundle:nil
-                                                                     containsChildren:dockItems.count > 0];
-    
-    for (SONavigatorPaneObject *obj in dockItems){
-        obj.title = [obj.title stringByDeletingPathExtension];
-        [dockObjects.children addObject:obj];
-    }
-    
-    NSArray *iconItems = [self iconPackInventory];
-    
-    SONavigatorPaneObject *iconObjects = [[SONavigatorPaneObject alloc] initWithTitle:@"Icon Packs"
-                                                                               bundle:nil
-                                                                     containsChildren:iconItems.count > 0];
-    
-    for (SONavigatorPaneObject *obj in iconItems){
-        obj.title = [obj.title stringByDeletingPathExtension];
-        [iconObjects.children addObject:obj];
-    }
-    
-    [self.collectionArray addObject:dockObjects];
-    [self.collectionArray addObject:iconObjects];
-
-    [self.outlineView reloadData];
+    [self reload:nil];
 }
 - (id)outlineView:(NSOutlineView *)outlineView
             child:(NSInteger)index
@@ -131,5 +106,38 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
                                                    error:nil];
     
     return ret;
+}
+
+- (IBAction)reload:(id)sender{
+    NSArray *dockItems = [self dockThemeInventory];
+    
+    SONavigatorPaneObject *dockObjects = [[SONavigatorPaneObject alloc] initWithTitle:@"Dock Themes"
+                                                                               bundle:nil
+                                                                     containsChildren:dockItems.count > 0];
+    
+    for (SONavigatorPaneObject *obj in dockItems){
+        obj.title = [obj.title stringByDeletingPathExtension];
+        [dockObjects.children addObject:obj];
+    }
+    
+    NSArray *iconItems = [self iconPackInventory];
+    
+    SONavigatorPaneObject *iconObjects = [[SONavigatorPaneObject alloc] initWithTitle:@"Icon Packs"
+                                                                               bundle:nil
+                                                                     containsChildren:iconItems.count > 0];
+    
+    for (SONavigatorPaneObject *obj in iconItems){
+        obj.title = [obj.title stringByDeletingPathExtension];
+        [iconObjects.children addObject:obj];
+    }
+    
+    [self.collectionArray removeAllObjects];
+    [self.collectionArray addObject:dockObjects];
+    [self.collectionArray addObject:iconObjects];
+
+    [self.outlineView reloadData];
+    
+    [self.outlineView expandItem:dockObjects];
+    [self.outlineView expandItem:iconObjects];
 }
 @end

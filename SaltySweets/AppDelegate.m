@@ -11,8 +11,8 @@ static __strong AppDelegate *_instance;
 @end
 
 @implementation AppDelegate
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification{
 }
 
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
@@ -45,6 +45,16 @@ static __strong AppDelegate *_instance;
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
+    return NO;
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender
+                    hasVisibleWindows:(BOOL)flag
+{
+    if (!flag) {
+        [self.window makeKeyAndOrderFront:nil];
+    }
+
     return YES;
 }
 
@@ -55,24 +65,4 @@ static __strong AppDelegate *_instance;
 
     [self.creationStudioController.window makeKeyAndOrderFront:nil];
 }
-
-- (IBAction)newSiconWasClicked:(id)sender{
-    if (!self.creationStudioController)
-        self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
-    
-    [self.creationStudioController.window makeKeyAndOrderFront:nil];
-    
-    [(SONSWindowAuxSiconCreationController *)self.creationStudioController.contentViewController newSiconWasClicked:sender];
-}
-
-- (IBAction)openSiconWasClicked:(id)sender{
-    if (!self.creationStudioController)
-        self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
-    
-
-    [self.creationStudioController.window makeKeyAndOrderFront:nil];
-    
-    [(SONSWindowAuxSiconCreationController *)self.creationStudioController.contentViewController openSiconWasClicked:sender];
-}
-
 @end

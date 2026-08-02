@@ -6,6 +6,8 @@ const NSString *image = @"image";
 const NSString *text  = @"text";
 const NSString *pageControllerClass  = @"pageControllerClass";
 
+static SONavigatorBarMaster *_instance = nil;
+
 #pragma mark - Tab Buttons
 @interface SOMasterTab : NSSegmentedControl
 @property (strong) NSMutableDictionary<NSNumber *, NSArray<SONavigatorBarItem *> *> *pagesPerSegment;
@@ -39,18 +41,28 @@ const NSString *pageControllerClass  = @"pageControllerClass";
 @end
 
 @implementation SONavigatorBarMaster
++ (instancetype)sharedInstance{
+    return _instance;
+}
+
 - (void)awakeFromNib{
     [super awakeFromNib];
+    _instance = self;
+    
     self.controllerClassToInstance = [NSMutableDictionary dictionary];
     
-    CGRect midFrame = CGRectMake(CGRectGetMidX(self.view.bounds) - 200,
-                                 CGRectGetMidY(self.view.bounds) - 17,
-                                 400,
-                                 35);
+    CGRect midFrame = CGRectMake(0,
+                                 0,
+                                 self.view.bounds.size.width,
+                                 self.view.bounds.size.height);
     
     self.tabControl = [[SOMasterTab alloc] initWithFrame:midFrame];
     [self.tabControl setSegmentCount:3];
-    [self.tabControl setSegmentStyle:NSSegmentStyleRoundRect];
+    [self.tabControl setSegmentStyle:NSSegmentStyleAutomatic];
+    if (@available(macOS 26.0, *)) {
+        [self.tabControl setBorderShape:NSControlBorderShapeCapsule];
+    }
+    [self.tabControl setControlSize:NSControlSizeLarge];
     
     [self.tabControl setImage:[NSImage imageWithSystemSymbolName:@"house" accessibilityDescription:nil]
                    forSegment:0];
@@ -85,19 +97,12 @@ const NSString *pageControllerClass  = @"pageControllerClass";
     [self.tabControl setTarget:self];
 }
 
-- (void)viewDidAppear{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [super viewDidAppear];
-        [self initializePageNavigatorBar];
-    });
-}
-
 - (void)initializePageNavigatorBar{
     if (!self.pageNavigatorBar)
         return;
     
-    [self.pageNavigatorBar finishInitWithOptions:[self homeNavigationOptions]];
+    [self.pageNavigatorBar performSelector:@selector(finishInitWithOptions:)
+                                withObject:[self homeNavigationOptions]];
 }
 
 - (void)didChangeTab:(SOMasterTab *)sender{
@@ -106,7 +111,8 @@ const NSString *pageControllerClass  = @"pageControllerClass";
     if (!boundPagesFromSender)
         return;
     
-    [self.pageNavigatorBar replaceCurrentOptionsWithArray:boundPagesFromSender];
+    [self.pageNavigatorBar performSelector:@selector(replaceCurrentOptionsWithArray:)
+                                withObject:boundPagesFromSender];
 }
 
 #pragma mark - Menu data

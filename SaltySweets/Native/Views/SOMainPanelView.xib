@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25084" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25084"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SOMainPanelController">
+            <connections>
+                <outlet property="navigatorBar" destination="3sT-ty-Z8k" id="AWV-4Z-1VS"/>
+                <outlet property="view" destination="c22-O7-iKe" id="9gH-qk-iOJ"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="746" height="658"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y6U-SC-4iC">
+                    <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geA-xa-ENj">
+                            <rect key="frame" x="660" y="3" width="68" height="26"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Apply" bezelStyle="texturedRounded" image="checkmark.circle.dotted" catalog="system" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h6v-t0-fyp">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="doApplyAction:" target="zez-5z-Xo4" id="p5s-Bb-VOB"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wfh-no-XPP">
+                            <rect key="frame" x="19" y="5" width="127" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Create New..." bezelStyle="texturedRounded" image="plus" catalog="system" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fqz-YL-xC6">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="createNewWasPressed:" target="WYy-OQ-IC6" id="vXU-9H-eqR"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m8A-C7-vVM">
+                            <rect key="frame" x="152" y="5" width="127" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Import" bezelStyle="texturedRounded" image="NSTouchBarNewFolderTemplate" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3N4-9Q-Ib7">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="importWasPressed:" target="WYy-OQ-IC6" id="2BS-VZ-XJ7"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </customView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FXf-w1-Tal">
+                    <rect key="frame" x="0.0" y="68" width="746" height="466"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </customView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q68-uH-cLF">
+                    <rect key="frame" x="0.0" y="34" width="746" height="34"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nay-x3-ICH">
+                            <rect key="frame" x="522" y="9" width="174" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Show/Hide Theme/Pack Info" id="Hbg-BQ-cLB">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="upu-MV-YiP">
+                            <rect key="frame" x="702" y="5" width="24" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <buttonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" imagePosition="only" alignment="left" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="Tku-ze-qh2">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                <font key="font" metaFont="system" size="20"/>
+                            </buttonCell>
+                            <color key="bezelColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="expandOrContractInfoView:" target="zez-5z-Xo4" id="Q6V-n2-aKZ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </customView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y1T-7J-IMc" customClass="SONavigatorBarStretchyView">
+                    <rect key="frame" x="0.0" y="530" width="746" height="64"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <scrollView wantsLayer="YES" focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" verticalScrollElasticity="none" id="DlE-Px-qLI">
+                            <rect key="frame" x="0.0" y="-2" width="746" height="64"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <clipView key="contentView" drawsBackground="NO" id="2WR-Aq-nxq">
+                                <rect key="frame" x="0.0" y="0.0" width="746" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <collectionView selectable="YES" allowsEmptySelection="NO" id="g0i-z3-UsZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="746" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" scrollDirection="horizontal" id="fgj-ww-ugK">
+                                            <size key="itemSize" width="50" height="50"/>
+                                        </collectionViewFlowLayout>
+                                        <color key="primaryBackgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="3sT-ty-Z8k" id="dqe-aN-cJh"/>
+                                            <outlet property="delegate" destination="3sT-ty-Z8k" id="m3E-Na-33S"/>
+                                        </connections>
+                                    </collectionView>
+                                </subviews>
+                            </clipView>
+                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bjM-Vu-K3O">
+                                <rect key="frame" x="0.0" y="25" width="741" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="VY6-3f-J2W">
+                                <rect key="frame" x="-100" y="-100" width="17" height="64"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                        </scrollView>
+                    </subviews>
+                </customView>
+            </subviews>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+        <customObject id="3sT-ty-Z8k" customClass="SONavigatorBar">
+            <connections>
+                <outlet property="navigationCollectionView" destination="g0i-z3-UsZ" id="2Ee-Hp-hQp"/>
+                <outlet property="view" destination="y1T-7J-IMc" id="F2K-TN-Rz0"/>
+            </connections>
+        </customObject>
+        <customObject id="bcB-3d-PJe" customClass="SOHorizontalSplitPageController">
+            <connections>
+                <outlet property="disclosureButton" destination="upu-MV-YiP" id="JOy-YZ-73M"/>
+                <outlet property="label" destination="Nay-x3-ICH" id="llV-wL-CYp"/>
+                <outlet property="view" destination="Q68-uH-cLF" id="12E-vg-ioc"/>
+            </connections>
+        </customObject>
+        <customObject id="zez-5z-Xo4" customClass="SOViewPane">
+            <connections>
+                <outlet property="applyButton" destination="geA-xa-ENj" id="knk-DR-jRi"/>
+                <outlet property="splitBarView" destination="Q68-uH-cLF" id="rCf-0T-CwC"/>
+                <outlet property="subNavView" destination="y1T-7J-IMc" id="YXf-ax-V5l"/>
+                <outlet property="topView" destination="FXf-w1-Tal" id="elw-c3-PQZ"/>
+                <outlet property="view" destination="c22-O7-iKe" id="N8m-fZ-9N5"/>
+            </connections>
+        </customObject>
+        <customObject id="WYy-OQ-IC6" customClass="SOFooterPageController">
+            <connections>
+                <outlet property="createNewButton" destination="Wfh-no-XPP" id="Itd-ks-bHF"/>
+                <outlet property="importButton" destination="m8A-C7-vVM" id="0U6-R4-xG4"/>
+                <outlet property="view" destination="y6U-SC-4iC" id="e4f-jq-bDV"/>
+            </connections>
+        </customObject>
+    </objects>
+    <resources>
+        <image name="NSTouchBarNewFolderTemplate" width="25" height="20"/>
+        <image name="checkmark.circle.dotted" catalog="system" width="15" height="15"/>
+        <image name="plus" catalog="system" width="14" height="13"/>
+    </resources>
+</document>

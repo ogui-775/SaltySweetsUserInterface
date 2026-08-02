@@ -75,7 +75,7 @@ static SOViewPane * _instance = nil;
             context.duration = 0.3;
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
             
-            for (NSView *view in @[self.topView, self.masterNavView, self.subNavView]){
+            for (NSView *view in @[self.topView, self.subNavView]){
                 [[view animator] setContentFilters:@[]];
             };
             
@@ -100,7 +100,7 @@ static SOViewPane * _instance = nil;
             self.infoView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
         }
         
-        for (NSView *view in @[self.topView, self.masterNavView, self.subNavView]){
+        for (NSView *view in @[self.topView, self.subNavView]){
             [[view animator] setContentFilters:@[filter]];
         };
         

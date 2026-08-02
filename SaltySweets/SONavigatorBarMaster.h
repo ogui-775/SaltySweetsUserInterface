@@ -2,8 +2,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SONavigatorBar.h"
-
 #import "../SOControllers/SOPoofPageController.h"
 #import "../SOControllers/SODockPositionPageController.h"
 #import "../SOControllers/SOWelcomePageController.h"
@@ -27,6 +25,8 @@
 #import "../SOControllers/IconReplacement/SOCalendarDockTileReplacementPageController.h"
 #import "../SOControllers/Base/SOCollectionPageController.h"
 
+#import "SONavigatorBarItem.h"
+
 @interface SONavigatorBarMaster : NSViewController
-@property (weak, nonatomic) IBOutlet SONavigatorBar *pageNavigatorBar;
+@property (weak, nonatomic) IBOutlet id pageNavigatorBar;
 @end

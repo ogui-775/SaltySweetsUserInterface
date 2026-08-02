@@ -4,6 +4,7 @@
 
 #import "SONavigatorBarItem.h"
 #import "SOViewPane.h"
+#import "SONavigatorBarMaster.h"
 
 @interface SONavigatorBar : NSViewController <NSCollectionViewDataSource, NSCollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet NSCollectionView *navigationCollectionView;
@@ -12,5 +13,5 @@
 @end
 
 @interface SONavigatorBarStretchyView : NSView
-@property (weak) NSViewController *innerView;
+@property (weak) IBOutlet NSViewController *innerView;
 @end
