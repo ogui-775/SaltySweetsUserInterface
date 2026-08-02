@@ -40,11 +40,8 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="oka-dI-nh6" customClass="SONavigatorPane">
             <connections>
-                <outlet property="contentSplitView" destination="t21-bE-7nj" id="cD4-EU-gjv"/>
-                <outlet property="navBarController" destination="YiH-Pt-kZ1" id="1fP-lQ-8HX"/>
-                <outlet property="submenuChooser" destination="tJB-vC-E3O" id="dlY-2P-7Bd"/>
-                <outlet property="view" destination="EiT-Mj-1SZ" id="cV7-OX-9LT"/>
-                <outlet property="viewPaneController" destination="ctj-Kk-6V3" id="pM4-LN-jJO"/>
+                <outlet property="outlineView" destination="tJB-vC-E3O" id="gwj-cf-q8I"/>
+                <outlet property="view" destination="6EO-GU-Blv" id="KhL-xV-JZ5"/>
             </connections>
         </customObject>
         <customObject id="ctj-Kk-6V3" customClass="SOViewPane">
@@ -276,7 +273,7 @@
             </items>
             <point key="canvasLocation" x="106" y="-44"/>
         </menu>
-        <window title="SaltySweets" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" toolbarStyle="compact" id="QvC-M9-y7g">
+        <window title="SaltySweets" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" toolbarStyle="compact" titleVisibility="hidden" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="383" y="293" width="952" height="598"/>
@@ -326,8 +323,7 @@
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <outlet property="dataSource" destination="oka-dI-nh6" id="aNZ-hE-oIu"/>
-                                                        <outlet property="delegate" destination="oka-dI-nh6" id="L04-JF-zmE"/>
+                                                        <outlet property="dataSource" destination="oka-dI-nh6" id="yM6-HQ-LM0"/>
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
@@ -471,9 +467,6 @@
                             <real value="490"/>
                             <real value="49"/>
                         </holdingPriorities>
-                        <connections>
-                            <outlet property="delegate" destination="oka-dI-nh6" id="OPC-3v-dRI"/>
-                        </connections>
                     </splitView>
                 </subviews>
             </view>
