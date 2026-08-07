@@ -45,6 +45,8 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
         }
     }];
     
+    [self.currentFolderTypes addObject:[UTType typeWithIdentifier:@"com.apple.application-bundle"]];
+    
     [self refreshOrLoadBaseline];
     [self.folderScrollerCollection setSelectionIndexes:[NSIndexSet indexSetWithIndex:0]];
     [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
@@ -300,7 +302,7 @@ const SOEncodedKeyPath tDefaultFrontFlap = {
     [self folderPaperSegmentedWasSwitched:self.folderPaperSegmented];
     
     if ([sender.assignedType.identifier containsString:@"trash"] || [sender.assignedType.identifier containsString:@"com.apple.icon-package"] ||
-        [sender.assignedType.identifier containsString:@"com.apple.icon-decoration"])
+        [sender.assignedType.identifier containsString:@"com.apple.icon-decoration"] || [sender.assignedType.identifier containsString:@"com.apple.application-bundle"])
         [self setFlapsHidden:YES];
     else
         [self setFlapsHidden:NO];

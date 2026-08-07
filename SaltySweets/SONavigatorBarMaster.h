@@ -27,6 +27,6 @@
 
 #import "SONavigatorBarItem.h"
 
-@interface SONavigatorBarMaster : NSViewController
-@property (weak, nonatomic) IBOutlet id pageNavigatorBar;
+@interface SONavigatorBarMaster : NSViewController <NSTabViewDelegate>
+@property (weak, nonatomic) IBOutlet NSTabView *navigationTabView;
 @end

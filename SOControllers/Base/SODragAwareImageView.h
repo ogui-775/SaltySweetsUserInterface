@@ -4,5 +4,5 @@
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 @interface SODragAwareImageView : NSImageView
-@property (strong) NSURL * draggedFileURL;
+@property (strong) NSURL *draggedFileURL;
 @end

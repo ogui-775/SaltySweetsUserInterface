@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25084" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25094"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -120,7 +120,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vi2-he-eca">
-                                <rect key="frame" x="475" y="320" width="48" height="16"/>
+                                <rect key="frame" x="501" y="320" width="48" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="FEg-6x-xma"/>
                                     <constraint firstAttribute="width" constant="44" id="FzN-lh-HlF"/>
@@ -153,7 +153,7 @@
                             <constraint firstItem="G7k-bv-MIC" firstAttribute="top" secondItem="mwD-uA-F3e" secondAttribute="bottom" constant="7" id="eoX-yz-4Zj"/>
                             <constraint firstItem="Yte-e7-xjZ" firstAttribute="top" secondItem="C9w-ox-RBt" secondAttribute="bottom" constant="8" symbolic="YES" id="g5p-2R-QsW"/>
                             <constraint firstItem="ut4-Rd-YGg" firstAttribute="top" secondItem="mwD-uA-F3e" secondAttribute="bottom" constant="8" symbolic="YES" id="hby-9R-E5M"/>
-                            <constraint firstAttribute="trailing" secondItem="Vi2-he-eca" secondAttribute="trailing" constant="185" id="kP9-cg-cIc"/>
+                            <constraint firstAttribute="trailing" secondItem="Vi2-he-eca" secondAttribute="trailing" constant="159" id="kP9-cg-cIc"/>
                             <constraint firstItem="WIf-VT-jQq" firstAttribute="leading" secondItem="4w6-yd-fhI" secondAttribute="trailing" constant="34" id="kpN-yt-loj"/>
                             <constraint firstItem="C9w-ox-RBt" firstAttribute="baseline" secondItem="JOV-QK-5mV" secondAttribute="baseline" id="ocv-gn-A8s"/>
                             <constraint firstItem="JOV-QK-5mV" firstAttribute="centerX" secondItem="teg-4M-b4T" secondAttribute="centerX" id="qXa-ef-JJU"/>

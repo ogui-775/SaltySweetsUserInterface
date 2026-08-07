@@ -11,10 +11,6 @@ static __strong AppDelegate *_instance;
 @end
 
 @implementation AppDelegate
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
-
-}
-
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
     if (!self.urlToAuxController)
         self.urlToAuxController = [NSMutableDictionary dictionary];
@@ -36,10 +32,6 @@ static __strong AppDelegate *_instance;
     }
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    
-}
-
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
     return YES;
 }
@@ -49,8 +41,7 @@ static __strong AppDelegate *_instance;
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender
-                    hasVisibleWindows:(BOOL)flag
-{
+                    hasVisibleWindows:(BOOL)flag{
     if (!flag) {
         [self.window makeKeyAndOrderFront:nil];
     }

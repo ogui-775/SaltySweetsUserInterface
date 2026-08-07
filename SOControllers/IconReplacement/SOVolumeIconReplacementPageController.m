@@ -20,7 +20,9 @@
         @"savedSearch",
         @"srvr",
         @"asif",
-        @"External"
+        @"External",
+        @"Removable",
+        @"bmrk"
     ];
     
     [self refreshOrLoadBaseline];

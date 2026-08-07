@@ -8,10 +8,10 @@
                         controller:(NSViewController *)controller{
     self = [super init];
     if (self){
-        _title = title;
-        _image = [NSImage imageWithSystemSymbolName:symbolName
+        self.image = [NSImage imageWithSystemSymbolName:symbolName
                            accessibilityDescription:nil];
-        _boundController = controller;
+        self.viewController = controller;
+        self.label = title;
     }
     return self;
 }

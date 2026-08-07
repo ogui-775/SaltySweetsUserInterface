@@ -7,8 +7,6 @@ static SOViewPane * _instance = nil;
 @interface SOViewPane()  <SOConfigurableContentDelegate>
 @property (nonatomic, strong) IBOutlet NSButton * applyButton;
 
-@property (nonatomic, strong) NSViewController * currentPage;
-
 @property (atomic, assign) BOOL containsDockChanges;
 @property (atomic, assign) BOOL containsIconChanges;
 @end
@@ -30,88 +28,11 @@ static SOViewPane * _instance = nil;
     return _instance;
 }
 
-- (void)addFooterView:(NSViewController *)controller {
-    [self addChildViewController:controller];
-    [self.infoView setSubviews:@[controller.view]];
-}
-
 - (void)requestPageChangeTo:(NSViewController *)page {
-    if (![self.childViewControllers containsObject:page])
-        [self addChildViewController:page];
-    
-    page.view.frame = self.topView.bounds;
-    [self.topView setSubviews:@[page.view]];
-
-    self.currentPage = page;
-
     if ([page conformsToProtocol:@protocol(SOConfigurableContent)]) {
         ((id<SOConfigurableContent>)page).changeDelegate = self;
     }
 }
-
-- (IBAction)expandOrContractInfoView:(NSButton *)sender {
-    [self.infoView.window makeFirstResponder:nil];
-    
-    CGFloat expandedHeight = 500.0;
-    CGFloat collapsedHeight = 34.0;
-    CGFloat viewWidth = self.topView.bounds.size.width;
-    
-    if (!self.infoView) {
-        self.infoViewController = [NSClassFromString(@"SOCollectionPageController") new];
-        
-        [self.infoViewController.view setFrame:CGRectMake(0, 0, viewWidth, expandedHeight)];
-        
-        [self.view addSubview:self.infoViewController.view
-                    positioned:NSWindowBelow
-                    relativeTo:self.splitBarView];
-        
-        self.infoView = self.infoViewController.view;
-        self.infoView.autoresizingMask = NSViewWidthSizable;
-        [self.infoView setHidden:YES];
-    }
-    
-    if (self.infoViewExpanded) {
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-            context.duration = 0.3;
-            context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-            
-            for (NSView *view in @[self.topView, self.subNavView]){
-                [[view animator] setContentFilters:@[]];
-            };
-            
-            [[self.splitBarView animator] setFrame:CGRectMake(0, collapsedHeight, viewWidth, collapsedHeight)];
-            [[self.infoView animator] setHidden:YES];
-        } completionHandler:^{
-            self.infoViewExpanded = NO;
-        }];
-        return;
-    }
-
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        context.duration = 0.3;
-        context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        
-        static CIFilter *filter = nil;
-        if (!filter) {
-            filter = CIFilter.gaussianBlurFilter;
-            [filter setDefaults];
-            [filter setValue:@(3) forKey:@"radius"];
-            [self.infoView setWantsLayer:YES];
-            self.infoView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
-        }
-        
-        for (NSView *view in @[self.topView, self.subNavView]){
-            [[view animator] setContentFilters:@[filter]];
-        };
-        
-        [[self.splitBarView animator] setFrame:CGRectMake(0, expandedHeight, viewWidth, collapsedHeight)];
-        
-    } completionHandler:^{
-        self.infoViewExpanded = YES;
-        [[self.infoView animator] setHidden:NO];
-    }];
-}
-
 
 - (void)contentDidChangeState:(id<SOConfigurableContent>)content{
     if (!self.pendingChangesCache)

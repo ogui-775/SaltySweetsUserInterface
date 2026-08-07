@@ -6,8 +6,6 @@ const NSString *image = @"image";
 const NSString *text  = @"text";
 const NSString *pageControllerClass  = @"pageControllerClass";
 
-static SONavigatorBarMaster *_instance = nil;
-
 #pragma mark - Tab Buttons
 @interface SOMasterTab : NSSegmentedControl
 @property (strong) NSMutableDictionary<NSNumber *, NSArray<SONavigatorBarItem *> *> *pagesPerSegment;
@@ -41,13 +39,8 @@ static SONavigatorBarMaster *_instance = nil;
 @end
 
 @implementation SONavigatorBarMaster
-+ (instancetype)sharedInstance{
-    return _instance;
-}
-
 - (void)awakeFromNib{
     [super awakeFromNib];
-    _instance = self;
     
     self.controllerClassToInstance = [NSMutableDictionary dictionary];
     
@@ -93,26 +86,35 @@ static SONavigatorBarMaster *_instance = nil;
     
     self.tabControl.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin;
     
-    [self.tabControl setAction:@selector(didChangeTab:)];
+    [self.tabControl setAction:@selector(masterTabSelectionChange:)];
     [self.tabControl setTarget:self];
+    
+    [self initializePageNavigatorBar];
 }
 
 - (void)initializePageNavigatorBar{
-    if (!self.pageNavigatorBar)
+    if (!self.navigationTabView)
         return;
     
-    [self.pageNavigatorBar performSelector:@selector(finishInitWithOptions:)
-                                withObject:[self homeNavigationOptions]];
+    for (SONavigatorBarItem *item in [self homeNavigationOptions]){
+        [self.navigationTabView addTabViewItem:item];
+    }
 }
 
-- (void)didChangeTab:(SOMasterTab *)sender{
-    NSArray<SONavigatorBarItem *> *boundPagesFromSender = [self.tabControl boundPagesForSegment:sender.selectedSegment];
+- (void)masterTabSelectionChange:(SOMasterTab *)sender{
+    NSArray *currentItems = [self.navigationTabView tabViewItems];
+    for (SONavigatorBarItem *item in currentItems){
+        [self.navigationTabView removeTabViewItem:item];
+    }
     
-    if (!boundPagesFromSender)
-        return;
-    
-    [self.pageNavigatorBar performSelector:@selector(replaceCurrentOptionsWithArray:)
-                                withObject:boundPagesFromSender];
+    for (SONavigatorBarItem *item in [sender boundPagesForSegment:sender.selectedSegment]){
+        [self.navigationTabView addTabViewItem:item];
+    }
+}
+
+- (void)tabView:(NSTabView *)tabView
+didSelectTabViewItem:(SONavigatorBarItem *)tabViewItem{
+    [[SOViewPane defaultInstance] requestPageChangeTo:tabViewItem.viewController];
 }
 
 #pragma mark - Menu data
