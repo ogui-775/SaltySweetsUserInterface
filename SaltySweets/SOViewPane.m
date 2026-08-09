@@ -29,6 +29,12 @@ static SOViewPane * _instance = nil;
 }
 
 - (void)requestPageChangeTo:(NSViewController *)page {
+    if (![self.childViewControllers containsObject:page])
+        [self addChildViewController:page];
+    
+    [page.view setFrame:self.displayView.bounds];
+    [self.displayView setSubviews:@[page.view]];
+    
     if ([page conformsToProtocol:@protocol(SOConfigurableContent)]) {
         ((id<SOConfigurableContent>)page).changeDelegate = self;
     }

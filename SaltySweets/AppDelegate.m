@@ -11,6 +11,10 @@ static __strong AppDelegate *_instance;
 @end
 
 @implementation AppDelegate
+- (void)applicationDidFinishLaunching:(NSNotification *)notification{
+    self.window.title = @"SaltySweets";
+}
+
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
     if (!self.urlToAuxController)
         self.urlToAuxController = [NSMutableDictionary dictionary];

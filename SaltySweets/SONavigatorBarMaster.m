@@ -5,37 +5,11 @@
 const NSString *image = @"image";
 const NSString *text  = @"text";
 const NSString *pageControllerClass  = @"pageControllerClass";
-
-#pragma mark - Tab Buttons
-@interface SOMasterTab : NSSegmentedControl
-@property (strong) NSMutableDictionary<NSNumber *, NSArray<SONavigatorBarItem *> *> *pagesPerSegment;
-- (void)setBoundPages:(NSArray<SONavigatorBarItem *> *)boundPages
-           forSegment:(NSInteger)segment;
-@end
-
-@implementation SOMasterTab
-- (void)setBoundPages:(NSArray<SONavigatorBarItem *> *)boundPages
-           forSegment:(NSInteger)segment {
-    if (!_pagesPerSegment)
-        _pagesPerSegment = [NSMutableDictionary dictionary];
-    
-    if (boundPages) {
-        self.pagesPerSegment[@(segment)] = boundPages;
-    } else {
-        [self.pagesPerSegment removeObjectForKey:@(segment)];
-    }
-}
-
-- (NSArray<SONavigatorBarItem *> *)boundPagesForSegment:(NSInteger)segment {
-    return self.pagesPerSegment[@(segment)] ?: @[];
-}
-@end
+const NSString *preferenceImage = @"preferenceImage";
 
 #pragma mark - Controller
-
 @interface SONavigatorBarMaster ()
 @property (strong, nonatomic) NSMutableDictionary *controllerClassToInstance;
-@property (strong, nonatomic) SOMasterTab *tabControl;
 @end
 
 @implementation SONavigatorBarMaster
@@ -43,78 +17,73 @@ const NSString *pageControllerClass  = @"pageControllerClass";
     [super awakeFromNib];
     
     self.controllerClassToInstance = [NSMutableDictionary dictionary];
+    self.mainMenuController = [[SOMainMenuView alloc] initWithNibName:@"SOMainMenuPage"
+                                                               bundle:nil];
     
-    CGRect midFrame = CGRectMake(0,
-                                 0,
-                                 self.view.bounds.size.width,
-                                 self.view.bounds.size.height);
-    
-    self.tabControl = [[SOMasterTab alloc] initWithFrame:midFrame];
-    [self.tabControl setSegmentCount:3];
-    [self.tabControl setSegmentStyle:NSSegmentStyleAutomatic];
-    if (@available(macOS 26.0, *)) {
-        [self.tabControl setBorderShape:NSControlBorderShapeCapsule];
-    }
-    [self.tabControl setControlSize:NSControlSizeLarge];
-    
-    [self.tabControl setImage:[NSImage imageWithSystemSymbolName:@"house" accessibilityDescription:nil]
-                   forSegment:0];
-    [self.tabControl setLabel:@"Home"
-                   forSegment:0];
-    [self.tabControl setBoundPages:[self homeNavigationOptions]
-                        forSegment:0];
-    
-    [self.tabControl setImage:[NSImage imageWithSystemSymbolName:@"dock.rectangle"
-                                        accessibilityDescription:nil]
-                   forSegment:1];
-    [self.tabControl setLabel:@"Dock"
-                   forSegment:1];
-    [self.tabControl setBoundPages:[self dockNavigationOptions]
-                        forSegment:1];
-    
-    [self.tabControl setImage:[NSImage imageWithSystemSymbolName:@"app.translucent"
-                                        accessibilityDescription:nil]
-                   forSegment:2];
-    [self.tabControl setLabel:@"Icons"
-                   forSegment:2];
-    [self.tabControl setBoundPages:[self iconNavigationOptions]
-                        forSegment:2];
-    
-    [self.tabControl setSelectedSegment:0];
-    
-    [self.view addSubview:self.tabControl];
-    
-    self.tabControl.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin;
-    
-    [self.tabControl setAction:@selector(masterTabSelectionChange:)];
-    [self.tabControl setTarget:self];
-    
-    [self initializePageNavigatorBar];
+    [self initializePageMenu];
 }
 
-- (void)initializePageNavigatorBar{
-    if (!self.navigationTabView)
+- (void)initializePageMenu{
+    if (!self.mainMenuController)
         return;
     
-    for (SONavigatorBarItem *item in [self homeNavigationOptions]){
-        [self.navigationTabView addTabViewItem:item];
-    }
+    [self returnToMainMenu:nil];
+    [self.mainMenuController finishInitWithItemDictionary:@{
+        @(0) : [self homeNavigationOptions],
+        @(1) : [self dockNavigationOptions],
+        @(2) : [self iconNavigationOptions]
+    }];
+    self.mainMenuController.delegate = self;
+    self.mainMenuController.action = @selector(itemWasSelectedInMenu:);
 }
 
-- (void)masterTabSelectionChange:(SOMasterTab *)sender{
-    NSArray *currentItems = [self.navigationTabView tabViewItems];
-    for (SONavigatorBarItem *item in currentItems){
-        [self.navigationTabView removeTabViewItem:item];
-    }
+- (void)itemWasSelectedInMenu:(SOMainMenuView *)sender{
+    NSSet<NSIndexPath *> *indicies = [sender.collectionView selectionIndexPaths];
+    NSInteger section = indicies.allObjects.firstObject.section;
+    NSInteger index   = indicies.allObjects.firstObject.item;
     
-    for (SONavigatorBarItem *item in [sender boundPagesForSegment:sender.selectedSegment]){
-        [self.navigationTabView addTabViewItem:item];
-    }
+    NSArray<SONavigatorBarItem *> *sectionItems = [self itemArrayForSection:section];
+    SONavigatorBarItem *selectedItem = sectionItems[index];
+    
+    if (!selectedItem)
+        return;
+    
+    NSViewController *c = [selectedItem viewController];
+    
+    [[SOViewPane defaultInstance] requestPageChangeTo:c];
+    [[NSApp mainWindow] setTitle:[selectedItem label]];
+    [self.mainMenuController.collectionView deselectAll:nil];
+    NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
+    [window setStyleMask:NSWindowStyleMaskClosable
+     | NSWindowStyleMaskTitled
+     | NSWindowStyleMaskMiniaturizable
+     | NSWindowStyleMaskResizable];
+    [self setWindow:window
+               size:CGSizeMake(746, 600)
+            animate:YES];
+    [window setMinSize:CGSizeMake(746, 600)];
 }
 
-- (void)tabView:(NSTabView *)tabView
-didSelectTabViewItem:(SONavigatorBarItem *)tabViewItem{
-    [[SOViewPane defaultInstance] requestPageChangeTo:tabViewItem.viewController];
+- (IBAction)returnToMainMenu:(NSButton *)sender{
+    [[SOViewPane defaultInstance] requestPageChangeTo:self.mainMenuController];
+    [[NSApp mainWindow] setTitle:@"SaltySweets"];
+    [self.mainMenuController.collectionView deselectAll:nil];
+    NSWindow *window = [[SOViewPane defaultInstance].displayView window];
+    [window setStyleMask:NSWindowStyleMaskClosable
+     | NSWindowStyleMaskTitled
+     | NSWindowStyleMaskMiniaturizable];
+    [self setWindow:window
+               size:CGSizeMake(746, 350)
+            animate:YES];
+}
+
+- (NSArray<SONavigatorBarItem *> *)itemArrayForSection:(NSInteger)section{
+    if (section == 0)
+        return [self homeNavigationOptions];
+    else if (section == 1)
+        return [self dockNavigationOptions];
+    else
+        return [self iconNavigationOptions];
 }
 
 #pragma mark - Menu data
@@ -130,14 +99,14 @@ didSelectTabViewItem:(SONavigatorBarItem *)tabViewItem{
 
 - (NSArray *)dockTableRowData{
     return @[
-        @{image:@"smoke", text:@"Poof", pageControllerClass:SOPoofPageController.class},
-        @{image:@"dock.rectangle", text:@"Dock Frame", pageControllerClass:SODockPositionPageController.class},
-        @{image:@"square.fill.and.line.vertical.and.square.fill", text:@"Separators", pageControllerClass:SOSeparatorsPageController.class},
-        @{image:@"photo.on.rectangle.angled", text:@"Background", pageControllerClass:SOBackgroundPageController.class},
-        @{image:@"square.and.arrow.up", text:@"Icon Height", pageControllerClass:SOIconHeightPageController.class},
-        @{image:@"app.shadow", text:@"Icon Shadows", pageControllerClass:SOIconShadowsPageController.class},
-        @{image:@"arrowtriangle.up.fill", text:@"Indicators", pageControllerClass:SOIndicatorsPageController.class},
-        @{image:@"macwindow.stack", text:@"Reflections", pageControllerClass:SOReflectionsPageController.class}
+        @{image:@"smoke", text:@"Poof", pageControllerClass:SOPoofPageController.class, preferenceImage:@"i_poof"},
+        @{image:@"dock.rectangle", text:@"Dock Frame", pageControllerClass:SODockPositionPageController.class, preferenceImage:@"i_frame"},
+        @{image:@"square.fill.and.line.vertical.and.square.fill", text:@"Separators", pageControllerClass:SOSeparatorsPageController.class, preferenceImage:@"i_separator"},
+        @{image:@"photo.on.rectangle.angled", text:@"Background", pageControllerClass:SOBackgroundPageController.class, preferenceImage:@"i_background"},
+        @{image:@"square.and.arrow.up", text:@"Icon Height", pageControllerClass:SOIconHeightPageController.class, preferenceImage:@"i_height"},
+        @{image:@"app.shadow", text:@"Icon Shadows", pageControllerClass:SOIconShadowsPageController.class, preferenceImage:@"i_shadow"},
+        @{image:@"arrowtriangle.up.fill", text:@"Indicators", pageControllerClass:SOIndicatorsPageController.class, preferenceImage:@"i_indicator"},
+        @{image:@"macwindow.stack", text:@"Reflections", pageControllerClass:SOReflectionsPageController.class, preferenceImage:@"i_reflection"}
     ];
 }
 
@@ -181,13 +150,28 @@ didSelectTabViewItem:(SONavigatorBarItem *)tabViewItem{
             self.controllerClassToInstance[[cc className]] = vc;
         }
         
-        SONavigatorBarItem *item = [[SONavigatorBarItem alloc] initWithSymbolName:[tableDict objectForKey:image]
-                                                                            title:[tableDict objectForKey:text]
-                                                                       controller:vc];
+        SONavigatorBarItem *item = [[SONavigatorBarItem alloc] initWithFallbackSymbolName:[tableDict objectForKey:image]
+                                                                      preferredImageNamed:[tableDict objectForKey:preferenceImage]
+                                                                                    title:[tableDict objectForKey:text]
+                                                                               controller:vc];
         
         [ret addObject:item];
     }
     
     return ret;
+}
+
+- (void)setWindow:(NSWindow *)window
+             size:(NSSize)size
+          animate:(BOOL)animate{
+    NSRect frame = window.frame;
+    
+    frame.origin.y += frame.size.height - size.height;
+
+    frame.size = size;
+
+    [window setFrame:frame
+             display:YES
+             animate:animate];
 }
 @end

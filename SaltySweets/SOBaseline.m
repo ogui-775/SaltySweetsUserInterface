@@ -27,9 +27,6 @@
             [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] themePlist];
         NSMutableDictionary * resourceBom =
             [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] resourceBomPlist];
-        
-        if (!themePlist || !resourceBom)
-            [SOBaseline bailout];
 
         for (int i = 0; i < kSODockAllKeysCount; i++){
             SOEncodedKey key = kSODockAllKeys[i];
@@ -62,9 +59,6 @@
         NSMutableDictionary *iconSettingsPlist =
             [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] iconSettingsPlist];
 
-        if (!iconSettingsPlist)
-            [SOBaseline bailout];
-
         for (int i = 0; i < kSOIconAllKeysCount; i++){
             SOEncodedKey key = kSOIconAllKeys[i];
             NSString * keyName = key.key;
@@ -88,20 +82,5 @@
     } else {
         return key.defaultValue ?: [NSNull null];
     }
-}
-
-+ (void)bailout{
-    dispatch_async(dispatch_get_main_queue(), ^void{
-        NSAlert * alert = [[NSAlert alloc] init];
-        alert.messageText = @"Could not load theme.plist and/or resourcebom.plist from theme.\n\nCurrent theme will be cleared and the application will terminate.";
-        alert.alertStyle = NSAlertStyleCritical;
-        [alert addButtonWithTitle:@"Ok"];
-        alert.buttons[0].keyEquivalent = @"\r";
-        NSModalResponse response = [alert runModal];
-        if (response == NSAlertFirstButtonReturn) {
-            [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:@""];
-            [[NSApplication sharedApplication] terminate:self];
-        }
-    });
 }
 @end

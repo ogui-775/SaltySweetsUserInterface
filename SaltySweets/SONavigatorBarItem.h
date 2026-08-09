@@ -7,7 +7,8 @@
 #import "../SOControllers/Base/SOPageControllerBase.h"
 
 @interface SONavigatorBarItem : NSTabViewItem
-- (instancetype)initWithSymbolName:(NSString *)symbolName
-                             title:(NSString *)title
-                        controller:(NSViewController *)controller;
+- (instancetype)initWithFallbackSymbolName:(NSString *)symbolName
+                       preferredImageNamed:(NSString *)assetImage
+                                     title:(NSString *)title
+                                controller:(NSViewController *)controller;
 @end

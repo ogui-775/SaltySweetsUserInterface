@@ -23,10 +23,10 @@
 #import "../SOControllers/IconReplacement/SOVolumeIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOClockDockTileReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOCalendarDockTileReplacementPageController.h"
-#import "../SOControllers/Base/SOCollectionPageController.h"
+#import "Native/Controllers/SOMainMenuView.h"
 
 #import "SONavigatorBarItem.h"
 
 @interface SONavigatorBarMaster : NSViewController <NSTabViewDelegate>
-@property (weak, nonatomic) IBOutlet NSTabView *navigationTabView;
+@property (strong, nonatomic) SOMainMenuView *mainMenuController;
 @end
