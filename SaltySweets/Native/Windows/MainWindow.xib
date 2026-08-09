@@ -77,10 +77,10 @@
                     <toolbarItem implicitItemIdentifier="BE84BC36-B43A-4886-A66F-4BFD1315017F" label="Main Menu" paletteLabel="Custom View" sizingBehavior="auto" autovalidates="NO" selectable="YES" navigational="YES" id="dvt-YA-3b4">
                         <nil key="toolTip"/>
                         <imageReference key="image" image="rectangle.grid.3x3" catalog="system" symbolScale="large"/>
-                        <button key="view" verticalHuggingPriority="750" id="bvs-d4-npk">
-                            <rect key="frame" x="14" y="14" width="49" height="24"/>
+                        <button key="view" id="bvs-d4-npk">
+                            <rect key="frame" x="22" y="14" width="33" height="25"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="push" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qtO-ju-aov">
+                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qtO-ju-aov">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <imageReference key="image" image="rectangle.grid.3x3" catalog="system" symbolScale="large"/>

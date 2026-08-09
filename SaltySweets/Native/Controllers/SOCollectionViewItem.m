@@ -66,8 +66,10 @@
         textField.drawsBackground = NO;
         textField.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
         textField.alignment = NSTextAlignmentCenter;
+        [textField setClipsToBounds:NO];
 
         item.textField = textField;
+        [item.view setClipsToBounds:NO];
         [item.view addSubview:textField];
     }
 
