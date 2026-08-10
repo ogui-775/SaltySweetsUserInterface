@@ -82,19 +82,9 @@ const NSString *preferenceImage = @"preferenceImage";
 }
 
 - (IBAction)goToDocumentation:(id)sender{
-    [[SOViewPane defaultInstance] clearDisplayView];
-    [[NSApp mainWindow] setTitle:@"Documentation"];
-    [self.mainMenuController.collectionView deselectAll:nil];
-    NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
-    [window setStyleMask:NSWindowStyleMaskClosable
-     | NSWindowStyleMaskTitled
-     | NSWindowStyleMaskMiniaturizable
-     | NSWindowStyleMaskResizable];
-    [self setWindow:window
-               size:CGSizeMake(746, 600)
-            animate:YES];
-    [window setMinSize:CGSizeMake(746, 600)];
-    [[SOViewPane defaultInstance] requestPageChangeTo:self.controllerClassToInstance[@"SODocumentationPageController"]];
+    NSViewController *c = self.controllerClassToInstance[@"SODocumentationPageController"];
+    
+    [self navigateToViewController:c withTitle:@"Documentation"];
 }
 
 - (NSArray<SONavigatorBarItem *> *)itemArrayForSection:(NSInteger)section{
@@ -180,15 +170,6 @@ const NSString *preferenceImage = @"preferenceImage";
         
         [ret addObject:item];
     }
-    
-    return ret;
-}
-
-- (NSArray<SONavigatorBarItem *> *)requestListingForMenu{
-    NSMutableArray<SONavigatorBarItem *> *ret = [NSMutableArray array];
-    [ret addObjectsFromArray:[self homeNavigationOptions]];
-    [ret addObjectsFromArray:[self iconNavigationOptions]];
-    [ret addObjectsFromArray:[self dockNavigationOptions]];
     
     return ret;
 }
