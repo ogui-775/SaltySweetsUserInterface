@@ -14,6 +14,7 @@
 #import "../SOControllers/SOIconShadowsPageController.h"
 #import "../SOControllers/SOIndicatorsPageController.h"
 #import "../SOControllers/SOReflectionsPageController.h"
+#import "../SOControllers/SODocumentationPageController.h"
 
 #import "../SOControllers/IconReplacement/SOIconReplacementPageController.h"
 #import "../SOControllers/IconReplacement/SOFolderReplacementPageController.h"

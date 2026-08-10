@@ -28,6 +28,10 @@ static SOViewPane * _instance = nil;
     return _instance;
 }
 
+- (void)clearDisplayView{
+    [self.displayView setSubviews:@[]];
+}
+
 - (void)requestPageChangeTo:(NSViewController *)page {
     if (![self.childViewControllers containsObject:page])
         [self addChildViewController:page];

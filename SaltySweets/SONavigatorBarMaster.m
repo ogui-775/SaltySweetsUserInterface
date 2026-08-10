@@ -40,7 +40,7 @@ const NSString *preferenceImage = @"preferenceImage";
 - (void)itemWasSelectedInMenu:(SOCollectionViewItemButton *)sender{
     NSViewController *c = [sender.delegate boundController];
     
-    [[SOViewPane defaultInstance] requestPageChangeTo:c];
+    [[SOViewPane defaultInstance] clearDisplayView];
     [[NSApp mainWindow] setTitle:[sender title]];
     [self.mainMenuController.collectionView deselectAll:nil];
     NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
@@ -52,10 +52,11 @@ const NSString *preferenceImage = @"preferenceImage";
                size:CGSizeMake(746, 600)
             animate:YES];
     [window setMinSize:CGSizeMake(746, 600)];
+    [[SOViewPane defaultInstance] requestPageChangeTo:c];
 }
 
 - (IBAction)returnToMainMenu:(NSButton *)sender{
-    [[SOViewPane defaultInstance] requestPageChangeTo:self.mainMenuController];
+    [[SOViewPane defaultInstance] clearDisplayView];
     [[NSApp mainWindow] setTitle:@"SaltySweets"];
     [self.mainMenuController.collectionView deselectAll:nil];
     NSWindow *window = [[SOViewPane defaultInstance].displayView window];
@@ -65,6 +66,23 @@ const NSString *preferenceImage = @"preferenceImage";
     [self setWindow:window
                size:CGSizeMake(746, 350)
             animate:YES];
+    [[SOViewPane defaultInstance] requestPageChangeTo:self.mainMenuController];
+}
+
+- (IBAction)goToDocumentation:(id)sender{
+    [[SOViewPane defaultInstance] clearDisplayView];
+    [[NSApp mainWindow] setTitle:@"Documentation"];
+    [self.mainMenuController.collectionView deselectAll:nil];
+    NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
+    [window setStyleMask:NSWindowStyleMaskClosable
+     | NSWindowStyleMaskTitled
+     | NSWindowStyleMaskMiniaturizable
+     | NSWindowStyleMaskResizable];
+    [self setWindow:window
+               size:CGSizeMake(746, 600)
+            animate:YES];
+    [window setMinSize:CGSizeMake(746, 600)];
+    [[SOViewPane defaultInstance] requestPageChangeTo:self.controllerClassToInstance[@"SODocumentationPageController"]];
 }
 
 - (NSArray<SONavigatorBarItem *> *)itemArrayForSection:(NSInteger)section{
@@ -82,7 +100,7 @@ const NSString *preferenceImage = @"preferenceImage";
     return @[
         @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class},
         @{image:@"long.text.page.and.pencil", text:@"Credits", pageControllerClass:SOAttributionsPageController.class},
-        @{image:@"book.and.wrench", text:@"Docs"},
+        @{image:@"book.and.wrench", text:@"Documentation", pageControllerClass:SODocumentationPageController.class},
         @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:NSImageNameAdvanced}
     ];
 }

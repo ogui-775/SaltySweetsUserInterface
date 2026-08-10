@@ -14,6 +14,7 @@
 
 @interface SOViewPane : NSViewController
 - (void)requestPageChangeTo:(NSViewController *)controller;
+- (void)clearDisplayView;
 @property (weak, nonatomic) IBOutlet NSView *displayView;
 + (instancetype)defaultInstance;
 @end
