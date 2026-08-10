@@ -2,6 +2,10 @@
 
 #import "SOAppSettingsPageController.h"
 
+@interface SOAppSettingsPageController ()
+@property (strong, nonatomic) SOHealthCheckPageController *healthCheckController;
+@end
+
 @implementation SOAppSettingsPageController
 
 static void callback(ConstFSEventStreamRef streamRef
@@ -47,6 +51,11 @@ static void releaseCallback(const void *info) {
 
         FSEventStreamStart(self.keyDirMonitorStream);
     }
+    
+    self.healthCheckController = [[SOHealthCheckPageController alloc] init];
+    [self.healthCheckScrollView setDocumentView:self.healthCheckController.view];
+    [self.healthCheckScrollView.contentView scrollToPoint:CGPointMake(0, self.healthCheckController.view.bounds.size.height
+                                                                      - self.healthCheckScrollView.contentView.bounds.size.height)];
 }
 
 - (void)refreshOrLoadBaseline{

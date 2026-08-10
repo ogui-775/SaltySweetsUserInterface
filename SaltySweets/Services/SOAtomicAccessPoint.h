@@ -29,5 +29,4 @@
 - (NSArray *)applicationFolderPaths;
 - (void)setApplicationFolderPaths:(NSArray *)paths;
 @property (strong, nonatomic, readonly) NSXPCConnection *appIconServerConnection;
-@property (weak) id navigatorBarBridge;
 @end

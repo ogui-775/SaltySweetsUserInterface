@@ -10,7 +10,7 @@
 }
 
 - (NSString *)attributesText{
-    return @"Special thanks to:\n\n\nDavi for testing, theme support, and icons.\n\nschm1dt for testing and feedback on design.\n\nbedtime for ammonia, PluginPlayground, and guidance.\n\n♡﹒ Joke_Bamb﹒♡ for application icons and GUI elements.";
+    return @"Special thanks to:\n\n\nDavi for testing, theme support, GUI elements, and icons.\n\nschm1dt for testing and feedback on design.\n\nbedtime for ammonia, PluginPlayground, and guidance.\n\n♡﹒ Joke_Bamb﹒♡ for application icons and GUI elements.";
 }
 
 @end

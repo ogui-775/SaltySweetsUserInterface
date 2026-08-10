@@ -5,6 +5,8 @@
 #import "../SaltySweets/Services/SOSignatures.h"
 #import "../SaltySweets/Services/SOAtomicAccessPoint.h"
 
+#import "SOHealthCheckPageController.h"
+
 @interface SOAppSettingsPageController : SOConfigurablePageControllerBase
 @property (strong, nonatomic) IBOutlet NSButton * openFinderToThemesButton;
 @property (strong, nonatomic) IBOutlet NSTextField * appAuthorNameField;
@@ -12,4 +14,6 @@
 @property (strong, nonatomic) IBOutlet NSTextField * keyStatusTextLabel;
 
 @property (nonatomic) FSEventStreamRef keyDirMonitorStream;
+
+@property (weak, nonatomic) IBOutlet NSScrollView *healthCheckScrollView;
 @end

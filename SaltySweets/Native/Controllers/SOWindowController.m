@@ -3,5 +3,8 @@
 #import "SOWindowController.h"
 
 @implementation SOWindowController
-
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self.window.toolbar setAllowsDisplayModeCustomization:NO];
+}
 @end

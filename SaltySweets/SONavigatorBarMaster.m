@@ -37,21 +37,11 @@ const NSString *preferenceImage = @"preferenceImage";
     self.mainMenuController.action = @selector(itemWasSelectedInMenu:);
 }
 
-- (void)itemWasSelectedInMenu:(SOMainMenuView *)sender{
-    NSSet<NSIndexPath *> *indicies = [sender.collectionView selectionIndexPaths];
-    NSInteger section = indicies.allObjects.firstObject.section;
-    NSInteger index   = indicies.allObjects.firstObject.item;
-    
-    NSArray<SONavigatorBarItem *> *sectionItems = [self itemArrayForSection:section];
-    SONavigatorBarItem *selectedItem = sectionItems[index];
-    
-    if (!selectedItem)
-        return;
-    
-    NSViewController *c = [selectedItem viewController];
+- (void)itemWasSelectedInMenu:(SOCollectionViewItemButton *)sender{
+    NSViewController *c = [sender.delegate boundController];
     
     [[SOViewPane defaultInstance] requestPageChangeTo:c];
-    [[NSApp mainWindow] setTitle:[selectedItem label]];
+    [[NSApp mainWindow] setTitle:[sender title]];
     [self.mainMenuController.collectionView deselectAll:nil];
     NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
     [window setStyleMask:NSWindowStyleMaskClosable
@@ -93,7 +83,7 @@ const NSString *preferenceImage = @"preferenceImage";
         @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class},
         @{image:@"long.text.page.and.pencil", text:@"Credits", pageControllerClass:SOAttributionsPageController.class},
         @{image:@"book.and.wrench", text:@"Docs"},
-        @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class}
+        @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:NSImageNameAdvanced}
     ];
 }
 

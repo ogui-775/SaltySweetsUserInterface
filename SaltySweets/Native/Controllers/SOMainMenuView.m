@@ -24,7 +24,7 @@
 
 - (SOCollectionViewItem *)collectionView:(NSCollectionView *)collectionView
      itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    SOCollectionViewItem *item = [[SOCollectionViewItem alloc] init];
+    SOCollectionViewItem *item = [SOCollectionViewItem new];
     
     NSInteger section = indexPath.section;
     NSInteger index   = indexPath.item;
@@ -32,9 +32,12 @@
     NSArray<SONavigatorBarItem *> *sourceItems = [self.itemsBySectionIndex objectForKey:@(section)];
     
     SONavigatorBarItem *sourceItem = sourceItems[index];
-    item.imageView.image       = sourceItem.image;
-    item.textField.stringValue = sourceItem.label;
-    item.boundController       = sourceItem.viewController;
+    item.innerButton.image          = sourceItem.image;
+    item.innerButton.title          = sourceItem.label;
+    item.innerButton.action         = self.action;
+    item.innerButton.target         = self.delegate;
+    item.innerButton.collectionView = self.collectionView;
+    item.boundController            = sourceItem.viewController;
     
     return item;
 }
@@ -45,14 +48,6 @@
         return 0;
     
     return [[self.itemsBySectionIndex objectForKey:@(section)] count];
-}
-
-- (void)collectionView:(NSCollectionView *)collectionView
-didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths{
-    [NSApp sendAction:self.action
-                   to:self.delegate
-                 from:self];
-    [self.collectionView deselectAll:nil];
 }
 
 - (NSView *)collectionView:(NSCollectionView *)collectionView

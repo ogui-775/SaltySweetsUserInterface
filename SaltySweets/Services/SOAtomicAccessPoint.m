@@ -14,7 +14,7 @@ static SOAtomicAccessPoint *_instance = nil;
     if (!_instance){
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[SOAtomicAccessPoint alloc] init];
+            _instance = [SOAtomicAccessPoint new];
             [_instance setUndoManagers:[NSMutableSet set]];
         });
     }

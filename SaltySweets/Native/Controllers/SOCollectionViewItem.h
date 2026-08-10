@@ -3,7 +3,14 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
+@class SOCollectionViewItemButton;
+
 @interface SOCollectionViewItem : NSCollectionViewItem
+@property (strong) SOCollectionViewItemButton *innerButton;
 @property (weak) NSViewController *boundController;
-@property (assign) BOOL underlined;
+@end
+
+@interface SOCollectionViewItemButton : NSButton
+@property (weak) NSCollectionView *collectionView;
+@property (weak) SOCollectionViewItem *delegate;
 @end
