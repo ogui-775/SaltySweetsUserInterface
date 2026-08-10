@@ -2,6 +2,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SOWindowController : NSWindowController <NSWindowDelegate>
+@class SONavigatorBarMaster;
 
+@interface SOWindowController : NSWindowController <NSWindowDelegate, NSToolbarDelegate>
+@property (weak) IBOutlet SONavigatorBarMaster *navigatorBarMaster;
+@property (weak) IBOutlet NSMenuItem *viewMenu;
 @end

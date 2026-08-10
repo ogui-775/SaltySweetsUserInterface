@@ -1,6 +1,7 @@
 //Created by Salty on 8/1/26.
 
 #import <Cocoa/Cocoa.h>
+#import <Carbon/Carbon.h>
 
 #import "../SOControllers/SOPoofPageController.h"
 #import "../SOControllers/SODockPositionPageController.h"
@@ -28,6 +29,17 @@
 
 #import "SONavigatorBarItem.h"
 
+@class SONavigationalMenuItem;
+
 @interface SONavigatorBarMaster : NSViewController <NSTabViewDelegate>
 @property (strong, nonatomic) SOMainMenuView *mainMenuController;
+- (IBAction)returnToMainMenu:(id)sender;
+- (NSArray<SONavigatorBarItem *> *)homeNavigationOptions;
+- (NSArray<SONavigatorBarItem *> *)dockNavigationOptions;
+- (NSArray<SONavigatorBarItem *> *)iconNavigationOptions;
+- (void)externalNavigationRequestToPageForItem:(SONavigationalMenuItem *)item;
+@end
+
+@interface SONavigationalMenuItem : NSMenuItem
+@property (weak) NSViewController *boundController;
 @end

@@ -16,7 +16,9 @@ const NSString *preferenceImage = @"preferenceImage";
 - (void)awakeFromNib{
     [super awakeFromNib];
     
-    self.controllerClassToInstance = [NSMutableDictionary dictionary];
+    if (!self.controllerClassToInstance)
+        self.controllerClassToInstance = [NSMutableDictionary dictionary];
+    
     self.mainMenuController = [[SOMainMenuView alloc] initWithNibName:@"SOMainMenuPage"
                                                                bundle:nil];
     
@@ -37,11 +39,21 @@ const NSString *preferenceImage = @"preferenceImage";
     self.mainMenuController.action = @selector(itemWasSelectedInMenu:);
 }
 
+- (void)externalNavigationRequestToPageForItem:(SONavigationalMenuItem *)item{
+    NSViewController *c = item.boundController;
+    
+    [self navigateToViewController:c withTitle:[item title]];
+}
+
 - (void)itemWasSelectedInMenu:(SOCollectionViewItemButton *)sender{
     NSViewController *c = [sender.delegate boundController];
     
+    [self navigateToViewController:c withTitle:[sender title]];
+}
+
+- (void)navigateToViewController:(NSViewController *)c withTitle:(NSString *)title{
     [[SOViewPane defaultInstance] clearDisplayView];
-    [[NSApp mainWindow] setTitle:[sender title]];
+    [[NSApp mainWindow] setTitle:title];
     [self.mainMenuController.collectionView deselectAll:nil];
     NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
     [window setStyleMask:NSWindowStyleMaskClosable
@@ -144,6 +156,9 @@ const NSString *preferenceImage = @"preferenceImage";
 }
 
 - (NSArray<SONavigatorBarItem *> *)navOptionsWithArray:(NSArray *)array{
+    if (!self.controllerClassToInstance)
+        self.controllerClassToInstance = [NSMutableDictionary dictionary];
+    
     NSMutableArray *ret = [NSMutableArray array];
     
     for (NSDictionary *tableDict in array){
@@ -169,6 +184,15 @@ const NSString *preferenceImage = @"preferenceImage";
     return ret;
 }
 
+- (NSArray<SONavigatorBarItem *> *)requestListingForMenu{
+    NSMutableArray<SONavigatorBarItem *> *ret = [NSMutableArray array];
+    [ret addObjectsFromArray:[self homeNavigationOptions]];
+    [ret addObjectsFromArray:[self iconNavigationOptions]];
+    [ret addObjectsFromArray:[self dockNavigationOptions]];
+    
+    return ret;
+}
+
 - (void)setWindow:(NSWindow *)window
              size:(NSSize)size
           animate:(BOOL)animate{
@@ -183,3 +207,5 @@ const NSString *preferenceImage = @"preferenceImage";
              animate:animate];
 }
 @end
+
+@implementation SONavigationalMenuItem @end

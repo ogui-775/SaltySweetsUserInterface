@@ -1,10 +1,83 @@
 //Created by Salty on 8/2/26.
 
 #import "SOWindowController.h"
+#import "../../SONavigatorBarMaster.h"
+
+const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
 
 @implementation SOWindowController
 - (void)awakeFromNib{
     [super awakeFromNib];
     [self.window.toolbar setAllowsDisplayModeCustomization:NO];
+    [self.window.toolbar setDelegate:self];
+    
+    [self.window.toolbar insertItemWithItemIdentifier:itemId
+                                              atIndex:0];
+}
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag{
+    if ([itemIdentifier isEqualToString:itemId]){
+        NSMenuToolbarItem *menuItem = [[NSMenuToolbarItem alloc] initWithItemIdentifier:itemId];
+        
+        menuItem.image = [NSImage imageWithSystemSymbolName:@"square.grid.3x3.fill"
+                                   accessibilityDescription:nil];
+        
+        menuItem.showsIndicator = NO;
+        menuItem.navigational = YES;
+        menuItem.target = self.navigatorBarMaster;
+        menuItem.action = @selector(returnToMainMenu:);
+        
+        NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Navigation"];
+        NSMenu *viewMenu = [[NSMenu alloc] initWithTitle:@"View"];
+        
+        [self populateMenu:menu];
+        [self populateMenu:viewMenu];
+        
+        [self.viewMenu setSubmenu:viewMenu];
+
+        menuItem.menu = menu;
+        
+        return menuItem;
+    }
+    return nil;
+}
+
+- (void)populateMenu:(NSMenu *)menu{
+    NSArray *homeItems = [self.navigatorBarMaster homeNavigationOptions];
+    NSMenuItem *homeHeader = [NSMenuItem sectionHeaderWithTitle:@"Home"];
+    [menu addItem:homeHeader];
+    [self addItems:homeItems toMenu:menu];
+    
+    NSArray *dockItems = [self.navigatorBarMaster dockNavigationOptions];
+    NSMenuItem *dockHeader = [NSMenuItem sectionHeaderWithTitle:@"Dock"];
+    [menu addItem:dockHeader];
+    [self addItems:dockItems toMenu:menu];
+    
+    NSArray *iconItems = [self.navigatorBarMaster iconNavigationOptions];
+    NSMenuItem *iconHeader = [NSMenuItem sectionHeaderWithTitle:@"Icons"];
+    [menu addItem:iconHeader];
+    [self addItems:iconItems toMenu:menu];
+}
+
+- (void)addItems:(NSArray<SONavigatorBarItem *> *)items toMenu:(NSMenu *)menu{
+    for (SONavigatorBarItem *item in items){
+        SONavigationalMenuItem *menuItem = [[SONavigationalMenuItem alloc] init];
+        menuItem.title = item.label;
+        menuItem.boundController = item.viewController;
+        menuItem.action = @selector(externalNavigationRequestToPageForItem:);
+        menuItem.target = self.navigatorBarMaster;
+        menuItem.enabled = YES;
+        NSImage *itemImage = item.image;
+        
+        [itemImage setSize:CGSizeMake(16, 16)];
+        
+        menuItem.image = itemImage;
+        
+        if (@available(macOS 27.0, *)) {
+            menuItem.preferredImageVisibility = NSMenuItemImageVisibilityVisible;
+        }
+        
+        [menu addItem:menuItem];
+    }
 }
 @end

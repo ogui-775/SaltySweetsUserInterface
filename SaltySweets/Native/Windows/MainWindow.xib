@@ -73,9 +73,9 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="49081434-2C65-4000-84DE-907A71FD9150" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="cLq-Qk-urd">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="BE84BC36-B43A-4886-A66F-4BFD1315017F" label="Main Menu" paletteLabel="Custom View" image="square.grid.3x3.fill" catalog="system" sizingBehavior="auto" navigational="YES" id="dvt-YA-3b4">
+                    <toolbarItem implicitItemIdentifier="BE84BC36-B43A-4886-A66F-4BFD1315017F" label="Main Menu" paletteLabel="Custom View" image="square.grid.3x3.fill" catalog="system" sizingBehavior="auto" navigational="YES" id="dvt-YA-3b4" customClass="SOToolbarItem">
                         <nil key="toolTip"/>
-                        <button key="view" verticalHuggingPriority="750" id="bvs-d4-npk">
+                        <button key="view" verticalHuggingPriority="750" id="bvs-d4-npk" customClass="SOControlClickOptionsButton">
                             <rect key="frame" x="24" y="14" width="28" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="square.grid.3x3.fill" catalog="system" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qtO-ju-aov">
@@ -87,13 +87,8 @@
                             </connections>
                         </button>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="5Z3-ir-l0O"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="PP2-xn-1GA"/>
                 </allowedToolbarItems>
-                <defaultToolbarItems>
-                    <toolbarItem reference="dvt-YA-3b4"/>
-                    <toolbarItem reference="PP2-xn-1GA"/>
-                </defaultToolbarItems>
+                <defaultToolbarItems/>
             </toolbar>
             <connections>
                 <outlet property="menu" destination="V8D-Rn-qID" id="xmD-Ex-YDZ"/>
@@ -296,6 +291,9 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="View" state="on" preferredImageVisibility="visible" id="aOo-Jm-DBo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem title="Help" id="Oc9-k9-t2D">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="8XZ-e7-p8p">
@@ -322,6 +320,8 @@
         </customObject>
         <customObject id="4nq-Iq-wik" customClass="SOWindowController">
             <connections>
+                <outlet property="navigatorBarMaster" destination="PJN-fh-qWL" id="Fia-Zo-SYO"/>
+                <outlet property="viewMenu" destination="aOo-Jm-DBo" id="cej-g4-oGi"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="FlW-qg-sYc"/>
             </connections>
         </customObject>
