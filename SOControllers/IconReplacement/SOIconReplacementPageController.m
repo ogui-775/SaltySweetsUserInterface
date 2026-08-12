@@ -133,7 +133,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
     
     if (baseline){
         if ([[baseline pathExtension] isEqualToString:@"sicon"]){
-            SOSiconBundle *bundle = [[SOSiconBundle alloc] initWithURL:[[[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] resourceURL] URLByAppendingPathComponent:baseline]];
+            SOSicon *bundle = [[SOSicon alloc] initWithURL:[[[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] resourceURL] URLByAppendingPathComponent:baseline]];
             CGImageRef img = [bundle CGImageForSize:CGSizeMake(128, 128)
                                            isRetina:self.view.window.backingScaleFactor > 1 ? YES : NO
                                              isDark:[NSApp.effectiveAppearance.name containsString:@"Dark"]
@@ -188,7 +188,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
         NSData  *resourceData = nil;
         
         if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-            sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
+            sender.image = [SOSicon NSImageOrNilForURL:sender.draggedFileURL];
         }
         
         resourceData = [NSData dataWithContentsOfURL:sender.draggedFileURL

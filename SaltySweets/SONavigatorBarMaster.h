@@ -33,6 +33,7 @@
 
 @interface SONavigatorBarMaster : NSViewController <NSTabViewDelegate>
 @property (strong, nonatomic) SOMainMenuView *mainMenuController;
+@property (weak) IBOutlet AppDelegate *appDelegate;
 - (IBAction)returnToMainMenu:(id)sender;
 - (NSArray<SONavigatorBarItem *> *)homeNavigationOptions;
 - (NSArray<SONavigatorBarItem *> *)dockNavigationOptions;

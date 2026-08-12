@@ -10,7 +10,7 @@
 
 @interface SONSWindowAuxSiconController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource>
 @property (strong) NSMutableDictionary<NSNumber *, SOSiconObj *> *imageDict;
-@property (strong) SOSiconBundle * bundle;
+@property (strong) SOSicon* bundle;
 @property (strong) IBOutlet NSCollectionView * interiorCollectionView;
 @property (strong) IBOutlet NSTextField * labelField;
 @property (weak) SONSWindowAuxContextSicon * context;

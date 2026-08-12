@@ -19,8 +19,8 @@
 @implementation SONSWindowAuxContextSicon
 - (instancetype)initWithURL:(NSURL *)url{
     if (self = [super init]){
-        SOSiconBundle *siconBundle =
-            [[SOSiconBundle alloc] initWithURL:url];
+        SOSicon *siconBundle =
+            [[SOSicon alloc] initWithURL:url];
         
         if (!siconBundle)
             return nil;

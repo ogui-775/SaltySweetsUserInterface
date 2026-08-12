@@ -14,11 +14,11 @@
 @end
 
 @interface SONSWindowAuxContextSicon : SONSWindowAuxContext
-@property (strong) SOSiconBundle *loadedSicon;
+@property (strong) SOSicon *loadedSicon;
 @property (assign) size_t loadedSiconImageCount;
 @property (strong) NSData *loadedSiconBlob;
 @end
 
 @interface SONSWindowAuxContextSiconCreation : SONSWindowAuxContext
-@property (strong) SOSiconBundle *loadedSicon;
+@property (strong) SOSicon *loadedSicon;
 @end

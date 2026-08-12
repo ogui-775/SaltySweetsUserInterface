@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Indicator.png",
+      "filename" : "Frame 4@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Indicator@2x.png",
+      "filename" : "Frame 4@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

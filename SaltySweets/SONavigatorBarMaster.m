@@ -40,6 +40,9 @@ const NSString *preferenceImage = @"preferenceImage";
 }
 
 - (void)externalNavigationRequestToPageForItem:(SONavigationalMenuItem *)item{
+    if (![self.appDelegate.window isVisible])
+        [self.appDelegate.window makeKeyAndOrderFront:nil];
+    
     NSViewController *c = item.boundController;
     
     [self navigateToViewController:c withTitle:[item title]];
@@ -122,14 +125,14 @@ const NSString *preferenceImage = @"preferenceImage";
 
 - (NSArray *)iconTableRowData{
     return @[
-        @{image:@"app.translucent", text:@"Applications", pageControllerClass:SOIconReplacementPageController.class},
-        @{image:@"folder", text:@"Folders", pageControllerClass:SOFolderReplacementPageController.class},
-        @{image:@"filemenu.and.pointer.arrow", text:@"File Extensions", pageControllerClass:SOSystemIconReplacementPageController.class},
-        @{image:@"sidebar.left", text:@"Sidebar", pageControllerClass:SOSidebarIconReplacementPageController.class},
-        @{image:@"gear.circle", text:@"Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class},
-        @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volumes", pageControllerClass:SOVolumeIconReplacementPageController.class},
-        @{image:@"clock.circle", text:@"Dock Clock", pageControllerClass:SOClockDockTileReplacementPageController.class},
-        @{image:@"calendar", text:@"Dock Calendar", pageControllerClass:SOCalendarDockTileReplacementPageController.class}
+        @{image:@"app.translucent", text:@"Applications", pageControllerClass:SOIconReplacementPageController.class, preferenceImage:@"i_app"},
+        @{image:@"folder", text:@"Folders", pageControllerClass:SOFolderReplacementPageController.class, preferenceImage:@"i_folder"},
+        @{image:@"filemenu.and.pointer.arrow", text:@"File Extensions", pageControllerClass:SOSystemIconReplacementPageController.class, preferenceImage:@"i_document"},
+        @{image:@"sidebar.left", text:@"Sidebar", pageControllerClass:SOSidebarIconReplacementPageController.class, preferenceImage:@"i_sidebar"},
+        @{image:@"gear.circle", text:@"Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class, preferenceImage:@"i_pref"},
+        @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volumes", pageControllerClass:SOVolumeIconReplacementPageController.class, preferenceImage:@"i_volume"},
+        @{image:@"clock.circle", text:@"Dock Clock", pageControllerClass:SOClockDockTileReplacementPageController.class, preferenceImage:@"i_clock"},
+        @{image:@"calendar", text:@"Dock Calendar", pageControllerClass:SOCalendarDockTileReplacementPageController.class, preferenceImage:@"i_calendar"}
     ];
 }
 

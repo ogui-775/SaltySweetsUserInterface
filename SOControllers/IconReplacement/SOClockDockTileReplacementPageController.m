@@ -110,7 +110,7 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
 
 - (IBAction)imageWellWasInteractedWith:(SODragAwareImageView *)sender{
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
+        sender.image = [SOSicon NSImageOrNilForURL:sender.draggedFileURL];
     }
     
     if (!sender.image)

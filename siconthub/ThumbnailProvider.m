@@ -12,7 +12,7 @@
         
         CGContextSetAlpha(context, 1.0);
         
-        SOSiconBundle *sicon = [[SOSiconBundle alloc] initWithURL:request.fileURL];
+        SOSicon *sicon = [[SOSicon alloc] initWithURL:request.fileURL];
         CGImageRef img = [sicon CGImageForSize:targetSize
                                       isRetina:request.scale > 1
                                         isDark:[NSApp.effectiveAppearance.name containsString:@"Dark"]

@@ -3,7 +3,7 @@
 #import "SOCompositeImageProducer.h"
 
 @implementation SOCompositeImageProducer
-+ (CGImageRef)requestIOSurfaceCompositeForCompositeKey:(NSString *)key{
-    return [SOSharedIOSurfaceUtils copyImageForComposite:key connection:[[SOAtomicAccessPoint sharedInstance] appIconServerConnection]];
++ (CGImageRef)requestIOSurfaceCompositeForToken:(SOIconIOSurfaceRequestToken *)token{
+    return [SOSharedIOSurfaceUtils copyImageForToken:token connection:[[SOAtomicAccessPoint sharedInstance] appIconServerConnection]];
 }
 @end

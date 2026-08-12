@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Poof.png",
+      "filename" : "Frame@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Poof@2x.png",
+      "filename" : "Frame@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

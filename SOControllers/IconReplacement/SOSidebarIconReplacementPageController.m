@@ -24,7 +24,7 @@
             return self;
         
         if ([[url pathExtension] isEqualToString:@"sicon"]){
-            SOSiconBundle *siconRef = [[SOSiconBundle alloc] initWithURL:url];
+            SOSicon *siconRef = [[SOSicon alloc] initWithURL:url];
             CGImageRef cgImg = [siconRef CGImageForIndex:0];
             NSImage *nsImg = [[NSImage alloc] initWithCGImage:cgImg size:CGSizeMake(0, 0)];
             CGImageRelease(cgImg);
@@ -40,7 +40,7 @@
     _sourceFileURL = sourceFileURL;
     
     if ([[sourceFileURL pathExtension] isEqualToString:@"sicon"]){
-        SOSiconBundle *siconRef = [[SOSiconBundle alloc] initWithURL:sourceFileURL];
+        SOSicon *siconRef = [[SOSicon alloc] initWithURL:sourceFileURL];
         CGImageRef cgImg = [siconRef CGImageForIndex:0];
         NSImage *nsImg = [[NSImage alloc] initWithCGImage:cgImg size:CGSizeMake(0, 0)];
         CGImageRelease(cgImg);
@@ -161,7 +161,7 @@
     }
     
     if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
+        sender.image = [SOSicon NSImageOrNilForURL:sender.draggedFileURL];
     }
     
     SOEncodedKeyPath tNewPath = {

@@ -7,5 +7,5 @@
 #import "../../SaltySweets/AppDelegate.h"
 
 @interface SOCompositeImageProducer : NSObject
-+ (CGImageRef)requestIOSurfaceCompositeForCompositeKey:(NSString *)key;
++ (CGImageRef)requestIOSurfaceCompositeForToken:(SOIconIOSurfaceRequestToken *)token;
 @end

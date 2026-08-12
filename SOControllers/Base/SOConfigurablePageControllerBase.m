@@ -393,7 +393,7 @@
         NSURL *siconURL = [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] URLForResource:baseline
                                                                  withExtension:@""];
         
-        SOSiconBundle *sicon = [[SOSiconBundle alloc] initWithURL:siconURL];
+        SOSicon *sicon = [[SOSicon alloc] initWithURL:siconURL];
         
         if (!sicon)
             return nil;

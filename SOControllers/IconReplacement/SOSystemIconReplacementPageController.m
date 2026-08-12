@@ -170,7 +170,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     [self.currentExtensions setObject:newFilename forKey:str];
     
     if ([[newFilename pathExtension] isEqualToString:@"sicon"]){
-        sender.image = [SOSiconBundle NSImageOrNilForURL:sender.draggedFileURL];
+        sender.image = [SOSicon NSImageOrNilForURL:sender.draggedFileURL];
     }
     
     [self.loadedImages setObject:sender.image forKey:str];

@@ -80,7 +80,7 @@
         return;
     
     if (!sender.image && [[itemURL pathExtension] isEqualToString:@"sicon"]){
-        sender.image = [SOSiconBundle NSImageOrNilForURL:itemURL];
+        sender.image = [SOSicon NSImageOrNilForURL:itemURL];
     }
     
     const SOEncodedKeyPath tPrefKey = {

@@ -338,7 +338,11 @@
                 <outlet property="window" destination="QvC-M9-y7g" id="GbS-Gg-dVQ"/>
             </connections>
         </customObject>
-        <customObject id="PJN-fh-qWL" customClass="SONavigatorBarMaster"/>
+        <customObject id="PJN-fh-qWL" customClass="SONavigatorBarMaster">
+            <connections>
+                <outlet property="appDelegate" destination="5sB-SQ-gEA" id="pyg-y1-qk6"/>
+            </connections>
+        </customObject>
         <customObject id="wR0-LY-bJX" customClass="SOViewPane">
             <connections>
                 <outlet property="applyButton" destination="Ej3-Lv-qHV" id="jdm-48-1db"/>

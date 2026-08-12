@@ -70,7 +70,7 @@
     if (!selectedItem) return;
     
     if (!sender.image && [[draggedURL pathExtension] isEqualToString:@"sicon"]){
-        sender.image = [SOSiconBundle NSImageOrNilForURL:draggedURL];
+        sender.image = [SOSicon NSImageOrNilForURL:draggedURL];
     }
     
     const SOEncodedKeyPath tReplace = {
