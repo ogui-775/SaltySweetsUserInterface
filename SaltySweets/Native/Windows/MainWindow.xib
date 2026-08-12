@@ -262,6 +262,9 @@
                                     <action selector="siconStudioMenuWasClicked:" target="5sB-SQ-gEA" id="sds-Gp-r69"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Convert from ICNS..." id="sei-NG-oGG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

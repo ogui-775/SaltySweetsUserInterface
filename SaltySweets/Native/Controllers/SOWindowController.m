@@ -2,8 +2,10 @@
 
 #import "SOWindowController.h"
 #import "../../SONavigatorBarMaster.h"
+#import "SOPackViewController.h"
 
 const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
+const NSToolbarItemIdentifier drawerButton = @"drawerControl";
 
 @implementation SOWindowController
 - (void)awakeFromNib{
@@ -13,6 +15,9 @@ const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
     
     [self.window.toolbar insertItemWithItemIdentifier:itemId
                                               atIndex:0];
+    
+    [self.window.toolbar insertItemWithItemIdentifier:drawerButton
+                                              atIndex:1];
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag{
@@ -38,6 +43,22 @@ const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
         menuItem.menu = menu;
         
         return menuItem;
+    }
+    
+    if ([itemIdentifier isEqualToString:drawerButton]){
+        NSToolbarItem *buttonItem = [[NSToolbarItem alloc] initWithItemIdentifier:drawerButton];
+        buttonItem.image = [NSImage imageWithSystemSymbolName:@"sidebar.squares.trailing"
+                                     accessibilityDescription:nil];
+        
+        buttonItem.action = @selector(showDrawer:);
+        
+        if (!self.packViewController)
+            self.packViewController = [[SOPackViewController alloc] initWithParentWindowController:self];
+        
+        buttonItem.target = self.packViewController;
+        buttonItem.toolTip = @"Show/Hide Icon Packs";
+        
+        return buttonItem;
     }
     return nil;
 }
