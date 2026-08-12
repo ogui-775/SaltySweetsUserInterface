@@ -124,6 +124,6 @@
 
 - (void)setCurrentOrientation:(SOCalendarDisplayLayerOrientation *)currentOrientation{
     _currentOrientation = currentOrientation;
-    
+    //do transform
 }
 @end

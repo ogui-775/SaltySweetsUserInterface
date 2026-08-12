@@ -67,7 +67,7 @@ const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
         menuItem.action = @selector(externalNavigationRequestToPageForItem:);
         menuItem.target = self.navigatorBarMaster;
         menuItem.enabled = YES;
-        NSImage *itemImage = item.image;
+        NSImage *itemImage = [item.image copy];
         
         [itemImage setSize:CGSizeMake(16, 16)];
         

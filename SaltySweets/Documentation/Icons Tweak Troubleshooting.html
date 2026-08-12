@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                font-size: 15px;
+            }
+            
+            ul, ol {
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Icons Tweak Troubleshooting</h1>
+        <p>Review this section for a potential fix to issues experienced with the Icons changing tweak.</p>
+        
+        <ul>
+            <li><h3><i>Icon pack (siconpack) isn't loading even though it was set as active in the File menu? (File -> Open Icon Pack...)</i></h3>
+                <ul>
+                    <li>If you did not add the siconpack using the "Import" button on the bottom left of the app window, make sure that the .siconpack bundle is inside your SaltySweets Application Support Icons folder. <ul><li>To verify, go to the Settings page in the Home section, and click "Open Icons Directory..." which will take you to ~/Library/Application Support/SaltySweets/Icons/. If it is not there, you can manually copy the siconpack into the folder.</li></ul></li>
+                    <li>
+                        If you did use the "Import" button in app, make sure that the siconpack is in the folder, that the appsettings.plist value for key "kSOIconsCurrentPack" matches the name of the pack exactly (ex. "example.siconpack") and that the pack contains icons and a iconsettings.plist file within the Resources directory.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>
+                    <i>
+                        Icons aren't showing up in the Dock?
+                    </i>
+                </h3>
+                <ul>
+                    <li>
+                        If you are using a pre-made icon pack, you may need to clear the system cache by going to the app's File menu, and clicking "Clear Icon Caches." Your administrator password is required as this erases files in protected, hidden (non-System) directories.
+                        </li>
+                    <li>The Dock keeps icons within a separate cache from other system applications. After clicking "Apply" and "Confirm" after making Icon changes to your pack, make sure you clear the Icon Cache in the app's File menu (password required). This is required if you uncheck "Clear cache on complete" in the Confirm Changes screen.</li>
+                </ul>
+            </li>
+            <li>
+                <h3>
+                    <i>
+                        Icons aren't showing up in other apps?
+                    </i>
+                </h3>
+                <ul>
+                    <li>
+                        Verify tweak injection status in the app's Settings page by choosing the problematic app's Bundle Id in the combo box. If it is not injected, check your injector (Ammonia/PP) is running without errors.
+                        <ul>
+                            <li>
+                                It's possible the tweak doesn't "hook" the type of icon you're seeing keep the original version. Report this in the "SaltySweets-Issue-Tracker" repo on GitHub. Detailed information (no personally identifying information, please.. these issues are public on the internet) is required or the issue will be closed without comment. Screenshots are highly encouraged in addition to information.
+                                </li>
+                            </ul>
+                    </li>
+                    <li>
+                        You may need to "killall" (aka restart) the application where the icons are not displaying the changed version. Additionally, you may need to restart the Icon Server. This is done via the File menu (File -> Restart Icon Server).
+                        <ul>
+                            <li>When in doubt, a full system restart never hurts! Ensure you apply any changes that are pending in the app if desired, as they will be lost when SaltySweets quits if not applied.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        
+
+    </body>
+</html>
