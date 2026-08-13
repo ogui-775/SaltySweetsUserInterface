@@ -64,9 +64,8 @@ const NSString *preferenceImage = @"preferenceImage";
      | NSWindowStyleMaskMiniaturizable
      | NSWindowStyleMaskResizable];
     [self setWindow:window
-               size:CGSizeMake(746, 600)
+        contentSize:CGSizeMake(746, 466)
             animate:YES];
-    [window setMinSize:CGSizeMake(746, 600)];
     [[SOViewPane defaultInstance] requestPageChangeTo:c];
 }
 
@@ -79,7 +78,7 @@ const NSString *preferenceImage = @"preferenceImage";
      | NSWindowStyleMaskTitled
      | NSWindowStyleMaskMiniaturizable];
     [self setWindow:window
-               size:CGSizeMake(746, 350)
+        contentSize:CGSizeMake(746, 270)
             animate:YES];
     [[SOViewPane defaultInstance] requestPageChangeTo:self.mainMenuController];
 }
@@ -178,17 +177,19 @@ const NSString *preferenceImage = @"preferenceImage";
 }
 
 - (void)setWindow:(NSWindow *)window
-             size:(NSSize)size
+      contentSize:(NSSize)size
           animate:(BOOL)animate{
     NSRect frame = window.frame;
-    
-    frame.origin.y += frame.size.height - size.height;
-
     frame.size = size;
 
+    frame = [window frameRectForContentRect:frame];
+    frame.origin.y = frame.origin.y - (frame.size.height - window.frame.size.height);
+    
     [window setFrame:frame
              display:YES
              animate:animate];
+    
+    [window setContentMinSize:size];
 }
 @end
 
