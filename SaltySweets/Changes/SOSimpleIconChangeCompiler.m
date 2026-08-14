@@ -50,19 +50,32 @@
             return;
         }
         
-        [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:newPackURL.lastPathComponent];
-        
-        [[NSNotificationCenter defaultCenter]
-            postNotificationName:SONotificationBaseClassUpdateBaseline
-                          object:self];
-        
         dispatch_sync(dispatch_get_main_queue(), ^{
-            for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
-                if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                    [page refreshOrLoadBaseline];
-
-                if ([page respondsToSelector:@selector(purgePendingChanges)])
-                    [page purgePendingChanges];
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"OK"];
+            [alert.buttons[0] setKeyEquivalent:@"\r"];
+            [alert addButtonWithTitle:@"No"];
+            alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Icon Pack?",
+                                 newPackURL.lastPathComponent];
+            
+            NSModalResponse response = [alert runModal];
+            
+            if (response == NSAlertSecondButtonReturn){
+                [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:newPackURL.lastPathComponent];
+                
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:SONotificationBaseClassUpdateBaseline
+                 object:self];
+                
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+                        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                            [page refreshOrLoadBaseline];
+                        
+                        if ([page respondsToSelector:@selector(purgePendingChanges)])
+                            [page purgePendingChanges];
+                    }
+                });
             }
         });
     }];

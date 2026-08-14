@@ -99,6 +99,7 @@
         [_scroller setDocumentView:_collectionView];
         [_scroller addSubview:_drawerBannerBar];
         [_drawer.contentView addSubview:_packDisplayLabel];
+        [[SOAtomicAccessPoint sharedInstance] setPackViewController:self];
         
         self.view = _drawer.contentView;
         [_collectionView reloadData];
@@ -111,6 +112,32 @@
         [self.drawer close];
     else
         [self.drawer open];
+}
+
+- (void)updateContents{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *packURL = [NSURL fileURLWithPath:[SOAtomicAccessPoint sharedInstance].iconPackBundleDirectory
+                                isDirectory:YES];
+    
+    [_packs removeAllObjects];
+    
+    NSArray<NSURL *> *packDirURLS = [fm contentsOfDirectoryAtURL:packURL
+                                      includingPropertiesForKeys:nil
+                                                         options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                           error:nil];
+    
+    for (NSURL *url in packDirURLS){
+        if (![[url pathExtension] isEqualToString:@"siconpack"])
+            continue;
+        
+        [_packs addObject:[[SOSiconPackBundle alloc] initWithURL:url]];
+    }
+    
+    self.currentlyViewedPack = nil;
+    [self.collectionView reloadData];
+    self.backButton.enabled = NO;
+    self.packDisplayLabel.stringValue = @"";
+    self.packDisplayLabel.hidden = YES;
 }
 
 - (void)doubleClicked:(NSClickGestureRecognizer *)gesture {
@@ -143,7 +170,7 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView
-             itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
+     itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger idx = indexPath.item;
     
     if (self.currentlyViewedPack){
@@ -200,13 +227,12 @@ canDragItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
     if (!item)
         return nil;
     
-    
     NSPasteboardItem *pb = [[NSPasteboardItem alloc] init];
     
     if (item.URL)
         [pb setString:item.URL.absoluteString forType:NSPasteboardTypeURL];
     
-    if (item.imageView.image) {
+    if (item.imageView.image){
         NSData *tiffData = [item.imageView.image TIFFRepresentation];
         if (tiffData)
             [pb setData:tiffData forType:NSPasteboardTypeTIFF];

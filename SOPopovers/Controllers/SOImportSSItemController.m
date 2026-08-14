@@ -47,6 +47,8 @@
                             toURL:[iconsDirURL URLByAppendingPathComponent:itemURL.lastPathComponent]
                             error:nil];
                 
+                [[[SOAtomicAccessPoint sharedInstance] packViewController] updateContents];
+                
                 alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Icon Pack?",
                                      [itemURL.lastPathComponent stringByDeletingPathExtension]];
                 alert.alertStyle = NSAlertStyleInformational;
@@ -171,6 +173,8 @@
             [fm copyItemAtURL:itemURL
                         toURL:[iconsDirURL URLByAppendingPathComponent:itemURL.lastPathComponent]
                         error:nil];
+            
+            [[[SOAtomicAccessPoint sharedInstance] packViewController] updateContents];
             
             alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Icon Pack?",
                                  [itemURL.lastPathComponent stringByDeletingPathExtension]];

@@ -10,4 +10,5 @@
 @interface SOPackViewController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource>
 - (instancetype)initWithParentWindowController:(NSWindowController *)wc;
 - (IBAction)showDrawer:(id)sender;
+- (void)updateContents;
 @end
