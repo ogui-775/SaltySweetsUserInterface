@@ -256,14 +256,11 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Sicon" id="92b-NI-mwk">
                         <items>
-                            <menuItem title="Studio" secondaryImage="NSIconViewTemplate" id="6zj-LA-Dzp">
+                            <menuItem title="Open Studio" secondaryImage="NSIconViewTemplate" id="6zj-LA-Dzp">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="siconStudioMenuWasClicked:" target="5sB-SQ-gEA" id="sds-Gp-r69"/>
                                 </connections>
-                            </menuItem>
-                            <menuItem title="Convert from ICNS..." id="sei-NG-oGG">
-                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                         </items>
                     </menu>

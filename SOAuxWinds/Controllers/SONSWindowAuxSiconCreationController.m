@@ -14,6 +14,7 @@ typedef enum : NSUInteger {
 @property (strong) NSString *key;
 @property (strong) NSImage  *displayImage;
 @property (strong) NSURL    *originalFileURL;
+@property (strong) NSData   *icnsData;
 @end
 
 @implementation SOCreationHolder
@@ -127,22 +128,22 @@ typedef enum : NSUInteger {
     CGSize   size = CGSizeZero;
     switch(self.sizeSelector.selectedSegment){
         case 0:
-            size = CGSizeMake(16 * scale, 16 * scale);
+            size = CGSizeMake(16, 16);
             break;
         case 1:
-            size = CGSizeMake(32 * scale, 32 * scale);
+            size = CGSizeMake(32, 32);
             break;
         case 2:
-            size = CGSizeMake(128 * scale, 128 * scale);
+            size = CGSizeMake(128, 128);
             break;
         case 3:
-            size = CGSizeMake(256 * scale, 256 * scale);
+            size = CGSizeMake(256, 256);
             break;
         case 4:
-            size = CGSizeMake(512 * scale, 512 * scale);
+            size = CGSizeMake(512, 512);
             break;
         default:
-            size = CGSizeMake(512 * scale, 512 * scale);
+            size = CGSizeMake(512, 512);
             break;
     };
     
@@ -163,8 +164,72 @@ typedef enum : NSUInteger {
         well.image = nil;
 }
 
-- (IBAction)openSiconWasClicked:(NSMenuItem *)sender{
+- (IBAction)convertFromICNS:(NSButton *)sender{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    openPanel.canChooseDirectories = NO;
+    openPanel.canChooseFiles = YES;
+    openPanel.allowedContentTypes = @[[UTType typeWithFilenameExtension:@"icns"]];
+    [openPanel beginWithCompletionHandler:^(NSModalResponse result) {
+        if (result != NSModalResponseOK)
+            return;
+        
+        NSURL *url = openPanel.URLs.firstObject;
+        
+        if (!url)
+            return;
+        
+        ISIcns *icns = [NSClassFromString(@"ISIcns") icnsWithContentsOfURL:url];
+        
+        if (!icns)
+            return;
+        
+        [self processICNS:icns];
+        
+        NSArray<ISIcns *> *variants = [icns variants];
+        
+        for (ISIcns *item in variants)
+            [self processICNS:item];
+    }];
+}
+
+- (void)processICNS:(ISIcns *)icns{
+    NSString *name = [icns name];
     
+    NSMutableDictionary *indexes = [NSMutableDictionary dictionary];
+    
+    for (NSNumber *scale in @[@(1), @(2)]){
+        NSMutableDictionary *inner = [NSMutableDictionary dictionary];
+        [indexes setObject:inner forKey:scale];
+        for (NSNumber *size in @[@(16), @(32), @(128), @(256), @(512)]){
+            NSInteger idx = [icns iconIndexForSize:CGSizeMake(size.longValue, size.longValue)
+                                             scale:scale.longValue];
+            [inner setObject:@(idx) forKey:size];
+            
+            WellType type = [name isEqualToString:@"dark"] ? Dark : [name isEqualToString:@"selected"] ? Selected : Light;
+            CGSize   size = [icns sizeAtIndex:idx];
+            long    scale = [icns scaleAtIndex:idx];
+            NSString *key = [SOCreationHolder keyForWellType:type scale:(uint)scale size:size];
+            NSData *data  = [icns dataAtIndex:idx];
+            
+            SOCreationHolder *holder = [SOCreationHolder new];
+            holder.key = key;
+            CGImageSourceRef src = CGImageSourceCreateWithData(((__bridge CFDataRef)data), NULL);
+            CGImageRef img = CGImageSourceCreateImageAtIndex(src, 0, NULL);
+            if (img){
+                NSImage *image = [[NSImage alloc] initWithCGImage:img size:size];
+                holder.displayImage = image;
+                CGImageRelease(img);
+                CFRelease(src);
+            }
+            holder.icnsData = data;
+            
+            [self willChangeValueForKey:@"keyToCreationHolder"];
+            [self.keyToCreationHolder setObject:holder forKey:key];
+            [self didChangeValueForKey:@"keyToCreationHolder"];
+        }
+    }
+    
+    [self updateWells];
 }
 
 - (IBAction)wellWasInteractedWith:(SODragAwareImageView *)well{
@@ -276,7 +341,7 @@ typedef enum : NSUInteger {
             SOSiconDef   *def   = [SOSiconDef new];
             
             if (eligibleForJXL && compressToJXL){
-                NSData *imageData = [NSData dataWithContentsOfURL:holder.originalFileURL];
+                NSData *imageData = [NSData dataWithContentsOfURL:holder.originalFileURL] ?: holder.icnsData;
                 
                 if (!imageData)
                     continue;
@@ -284,14 +349,14 @@ typedef enum : NSUInteger {
                 data = [SOJXLEncoder encodeImageDataToJXL:imageData error:nil];
                 def.isJXL = YES;
             } else {
-                data = [NSData dataWithContentsOfURL:holder.originalFileURL];
+                data = [NSData dataWithContentsOfURL:holder.originalFileURL] ?: holder.icnsData;
             }
             
             if (!data)
                 continue;
             
             def.size = holder.displayImage.size;
-            def.filename = holder.originalFileURL.lastPathComponent;
+            def.filename = holder.originalFileURL.lastPathComponent ?: [NSString stringWithFormat:@"%lu", [holder.icnsData hash]];
             NSArray *components = [holder.key componentsSeparatedByString:@"|"];
             def.isRetina = [components[1] isEqualToString:@"1"] ? NO : YES;
             def.variantKey = [components[0] isEqualToString:@"0"] ? &kSOSiconLight : [components[0] isEqualToString:@"1"] ? &kSOSiconDark : &kSOSiconSelected;

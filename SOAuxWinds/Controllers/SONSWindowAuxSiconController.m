@@ -36,7 +36,14 @@
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath{
     SOSiconCollectionViewItem *item =
-        [collectionView makeItemWithIdentifier:@"SiconItem" forIndexPath:indexPath];
+        [SOSiconCollectionViewItem new];
+    
+    item.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    NSImageView *imageView = [[NSImageView alloc] initWithFrame:CGRectMake(10, 10, 180, 180)];
+    imageView.imageScaling = NSImageScaleProportionallyUpOrDown;
+    imageView.editable = NO;
+    item.imageView = imageView;
+    [item.view addSubview:imageView];
     
     item.parentController = self;
     NSUInteger idx = indexPath.item;
@@ -44,9 +51,10 @@
     CGImageRef interiorImg = [self.imageDict objectForKey:@(idx)].image;
     const SOSiconDescriptor *desc = [self.imageDict objectForKey:@(idx)].desc;
     
-    item.imageView.image = [[NSImage alloc] initWithCGImage:interiorImg size:CGSizeZero];
-    CGImageRelease(interiorImg);
-    
+    if (interiorImg){
+        item.imageView.image = [[NSImage alloc] initWithCGImage:interiorImg size:CGSizeZero];
+    }
+
     item.descriptor = [NSString stringWithFormat:@"%lu - %ix%i - %lukb%@ - %@",
                        (unsigned long)idx,
                        (int)item.imageView.image.size.width,
@@ -60,15 +68,6 @@
 @end
 
 @implementation SOSiconCollectionViewItem
-- (void)loadView{
-    self.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-    NSImageView * imageView = [[NSImageView alloc] initWithFrame:CGRectMake(10, 10, 180, 180)];
-    imageView.imageScaling = NSImageScaleProportionallyUpOrDown;
-    imageView.editable = NO;
-    self.imageView = imageView;
-    [self.view addSubview:imageView];
-}
-
 - (void)setSelected:(BOOL)selected{
     if (selected){
         self.parentController.labelField.stringValue = self.descriptor;

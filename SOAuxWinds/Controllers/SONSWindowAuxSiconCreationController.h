@@ -3,6 +3,7 @@
 #import <AppKit/AppKit.h>
 #import <SharedBundles/SharedBundles.h>
 #import <SharedKeys/SharedKeys.h>
+#import <SharedClasses/SharedClasses.h>
 
 #import "../Services/SONSWindowAuxContext.h"
 #import "../../SOControllers/Base/SODragAwareImageView.h"
@@ -14,9 +15,6 @@
 
 @interface SONSWindowAuxSiconCreationController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
 - (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil context:(SONSWindowAuxContextSiconCreation *)ctx;
-
-- (IBAction)newSiconWasClicked:(NSMenuItem *)sender;
-- (IBAction)openSiconWasClicked:(NSMenuItem *)sender;
 
 @property (weak) SONSWindowAuxContextSiconCreation *context;
 @property (strong, nonatomic) NSMutableDictionary<NSString *, SOCreationHolder *> *keyToCreationHolder;
