@@ -73,7 +73,7 @@ const NSString *preferenceImage = @"preferenceImage";
     [[SOViewPane defaultInstance] clearDisplayView];
     [[NSApp mainWindow] setTitle:@"SaltySweets"];
     [self.mainMenuController.collectionView deselectAll:nil];
-    NSWindow *window = [[SOViewPane defaultInstance].displayView window];
+    NSWindow *window = [[[SOViewPane defaultInstance] displayView] window];
     [window setStyleMask:NSWindowStyleMaskClosable
      | NSWindowStyleMaskTitled
      | NSWindowStyleMaskMiniaturizable];
