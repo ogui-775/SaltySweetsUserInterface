@@ -13,8 +13,7 @@
 }
 
 - (void)refreshOrLoadBaseline{
-    self.currentIconPackDisplay.stringValue = [[self.accessPoint currentIconPackBundleName] stringByReplacingOccurrencesOfString:@".siconpack"
-                                                                                                                       withString:@""];
+    self.currentIconPackDisplay.stringValue = [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] packNameAndAuthor];
     self.currentThemeDisplay.stringValue = [[[self.accessPoint currentDockThemeBundleName] stringByReplacingOccurrencesOfString:@".bundle" withString:@""]
                                             stringByAppendingFormat:@" by %@", [self getBaselineForEncodedKey:&kSODockThemePlainAuthorName]
                                             ?: @"UNKNOWN"];

@@ -15,6 +15,7 @@
 @property (strong) NSScrollView *scroller;
 @property (strong) NSButton *backButton;
 @property (strong) NSView *drawerBannerBar;
+@property (strong) NSTextField *packDisplayLabel;
 @end
 
 @implementation SOPackViewController
@@ -64,7 +65,7 @@
         
         [_collectionView addGestureRecognizer:doubleClicker];
         NSCollectionViewFlowLayout *cvl = [[NSCollectionViewFlowLayout alloc] init];
-        cvl.sectionInset = NSEdgeInsetsMake(5, 5, 5, 5);
+        cvl.sectionInset = NSEdgeInsetsMake(5, 5, 35, 5);
         cvl.itemSize = CGSizeMake(100, 80);
         _collectionView.collectionViewLayout = cvl;
         _collectionView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
@@ -84,9 +85,20 @@
         _drawerBannerBar.autoresizingMask = NSViewWidthSizable;
         [_drawerBannerBar addSubview:_backButton];
         
+        _packDisplayLabel = [[NSTextField alloc] initWithFrame:CGRectMake(10, 10, 380, 20)];
+        _packDisplayLabel.editable = NO;
+        _packDisplayLabel.drawsBackground = YES;
+        _packDisplayLabel.bordered = NO;
+        _packDisplayLabel.alignment = NSCenterTextAlignment;
+        _packDisplayLabel.hidden = YES;
+        _packDisplayLabel.bezeled = YES;
+        _packDisplayLabel.bezelStyle = NSTextFieldRoundedBezel;
+        _packDisplayLabel.autoresizingMask = NSViewWidthSizable;
+        
         [_drawer.contentView addSubview:_scroller];
         [_scroller setDocumentView:_collectionView];
         [_scroller addSubview:_drawerBannerBar];
+        [_drawer.contentView addSubview:_packDisplayLabel];
         
         self.view = _drawer.contentView;
         [_collectionView reloadData];
@@ -112,8 +124,13 @@
         self.currentlyViewedPack = self.packs[idx];
         [self.collectionView reloadData];
         
-        if (self.currentlyViewedPack)
+        if (self.currentlyViewedPack){
             self.backButton.enabled = YES;
+            
+            self.packDisplayLabel.stringValue = [self.currentlyViewedPack packNameAndAuthor];
+            
+            self.packDisplayLabel.hidden = NO;
+        }
     }
 }
 
@@ -121,6 +138,8 @@
     self.currentlyViewedPack = nil;
     [self.collectionView reloadData];
     self.backButton.enabled = NO;
+    self.packDisplayLabel.stringValue = @"";
+    self.packDisplayLabel.hidden = YES;
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView

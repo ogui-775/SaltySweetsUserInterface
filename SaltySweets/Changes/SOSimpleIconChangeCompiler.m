@@ -197,6 +197,10 @@
     if (freshBaseline.count < kSOIconAllKeysCount)
         return NO;
     
+    if (![[[SOAtomicAccessPoint sharedInstance] appSetAuthorName] isEqualToString:kSODockResourceNotProvided]){
+        [freshBaseline setObject:[SOAtomicAccessPoint sharedInstance].appSetAuthorName forKey:kSOIconsAuthorName.key];
+    }
+    
     NSError *error = nil;
     [pack writeToIconSettingsPlist:freshBaseline
                          withError:&error];

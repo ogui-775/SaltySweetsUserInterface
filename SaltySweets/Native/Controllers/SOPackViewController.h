@@ -2,6 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <SharedBundles/SharedBundles.h>
+#import <CoreImage/CIFilterBuiltins.h>
 
 #import "SOPackViewItem.h"
 #import "../../Services/SOAtomicAccessPoint.h"
