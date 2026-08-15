@@ -19,6 +19,11 @@
 		188350992F953D4E00C2D6EC /* SharedBundles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188350982F953D4E00C2D6EC /* SharedBundles.framework */; };
 		1883509A2F953D5300C2D6EC /* SharedBundles.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 188350982F953D4E00C2D6EC /* SharedBundles.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1899D8A92FA61F1A0043E3CB /* SharedClasses.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1899D8A82FA61F1A0043E3CB /* SharedClasses.framework */; };
+		18EDEE833030DE67001E73B4 /* SaltySweetsHelp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EDEE7F3030DCDA001E73B4 /* SaltySweetsHelp-Info.plist */; };
+		18EDEE863030DF13001E73B4 /* SaltySweetsHelp.help in Resources */ = {isa = PBXBuildFile; fileRef = 18EDEE7B3030DCA3001E73B4 /* SaltySweetsHelp.help */; };
+		18EDEE8A3030E17C001E73B4 /* Readme.html in Resources */ = {isa = PBXBuildFile; fileRef = 18EDEE893030E17C001E73B4 /* Readme.html */; };
+		18EDEE8F3030E198001E73B4 /* Icons Tweak Troubleshooting.html in Resources */ = {isa = PBXBuildFile; fileRef = 18EDEE8E3030E198001E73B4 /* Icons Tweak Troubleshooting.html */; };
+		18EDEE923030E19E001E73B4 /* Dock Tweak Troubleshooting.html in Resources */ = {isa = PBXBuildFile; fileRef = 18EDEE913030E19E001E73B4 /* Dock Tweak Troubleshooting.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +33,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1829F4432FA5725A002BFEF8;
 			remoteInfo = siconthub;
+		};
+		18EDEE803030DDB6001E73B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18BC573E2F2EA9D80075DC08 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18EDEE7A3030DCA3001E73B4;
+			remoteInfo = SaltySweetsHelp;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -66,6 +78,11 @@
 		1899D8A82FA61F1A0043E3CB /* SharedClasses.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedClasses.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B0B6B52F9330D10089D498 /* SharedToolkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedToolkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BC57462F2EA9D80075DC08 /* SaltySweets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaltySweets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18EDEE7B3030DCA3001E73B4 /* SaltySweetsHelp.help */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaltySweetsHelp.help; sourceTree = BUILT_PRODUCTS_DIR; };
+		18EDEE7F3030DCDA001E73B4 /* SaltySweetsHelp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SaltySweetsHelp-Info.plist"; sourceTree = "<group>"; };
+		18EDEE8C3030E188001E73B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/Readme.html; sourceTree = "<group>"; };
+		18EDEE8D3030E198001E73B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = "en.lproj/Icons Tweak Troubleshooting.html"; sourceTree = "<group>"; };
+		18EDEE903030E19E001E73B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = "en.lproj/Dock Tweak Troubleshooting.html"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -153,6 +170,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		18EDEE783030DCA3001E73B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -172,6 +196,7 @@
 		18BC573D2F2EA9D80075DC08 = {
 			isa = PBXGroup;
 			children = (
+				18EDEE853030DED4001E73B4 /* SaltySweetsHelp */,
 				18FE4E57300EE07400531BB2 /* SOPopovers */,
 				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
 				18F3D70B2F495C03003B3369 /* SOSheets */,
@@ -189,8 +214,28 @@
 			children = (
 				18BC57462F2EA9D80075DC08 /* SaltySweets.app */,
 				1829F4442FA5725A002BFEF8 /* siconthub.appex */,
+				18EDEE7B3030DCA3001E73B4 /* SaltySweetsHelp.help */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18EDEE853030DED4001E73B4 /* SaltySweetsHelp */ = {
+			isa = PBXGroup;
+			children = (
+				18EDEE873030DFD4001E73B4 /* Resources */,
+				18EDEE7F3030DCDA001E73B4 /* SaltySweetsHelp-Info.plist */,
+			);
+			path = SaltySweetsHelp;
+			sourceTree = "<group>";
+		};
+		18EDEE873030DFD4001E73B4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				18EDEE913030E19E001E73B4 /* Dock Tweak Troubleshooting.html */,
+				18EDEE8E3030E198001E73B4 /* Icons Tweak Troubleshooting.html */,
+				18EDEE893030E17C001E73B4 /* Readme.html */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +276,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				18EDEE813030DDB6001E73B4 /* PBXTargetDependency */,
 				1829F44E2FA5725A002BFEF8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -252,6 +298,25 @@
 			productReference = 18BC57462F2EA9D80075DC08 /* SaltySweets.app */;
 			productType = "com.apple.product-type.application";
 		};
+		18EDEE7A3030DCA3001E73B4 /* SaltySweetsHelp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18EDEE7E3030DCA3001E73B4 /* Build configuration list for PBXNativeTarget "SaltySweetsHelp" */;
+			buildPhases = (
+				18EDEE773030DCA3001E73B4 /* Sources */,
+				18EDEE783030DCA3001E73B4 /* Frameworks */,
+				18EDEE793030DCA3001E73B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SaltySweetsHelp;
+			packageProductDependencies = (
+			);
+			productName = SaltySweetsHelp;
+			productReference = 18EDEE7B3030DCA3001E73B4 /* SaltySweetsHelp.help */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -267,6 +332,9 @@
 					18BC57452F2EA9D80075DC08 = {
 						CreatedOnToolsVersion = 26.2;
 						LastSwiftMigration = 2700;
+					};
+					18EDEE7A3030DCA3001E73B4 = {
+						CreatedOnToolsVersion = 27.0;
 					};
 				};
 			};
@@ -289,6 +357,7 @@
 			targets = (
 				18BC57452F2EA9D80075DC08 /* SaltySweets */,
 				1829F4432FA5725A002BFEF8 /* siconthub */,
+				18EDEE7A3030DCA3001E73B4 /* SaltySweetsHelp */,
 			);
 		};
 /* End PBXProject section */
@@ -305,6 +374,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18EDEE863030DF13001E73B4 /* SaltySweetsHelp.help in Resources */,
+				18EDEE923030E19E001E73B4 /* Dock Tweak Troubleshooting.html in Resources */,
+				18EDEE8F3030E198001E73B4 /* Icons Tweak Troubleshooting.html in Resources */,
+				18EDEE8A3030E17C001E73B4 /* Readme.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18EDEE793030DCA3001E73B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18EDEE833030DE67001E73B4 /* SaltySweetsHelp-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +406,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		18EDEE773030DCA3001E73B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -333,7 +421,39 @@
 			target = 1829F4432FA5725A002BFEF8 /* siconthub */;
 			targetProxy = 1829F44D2FA5725A002BFEF8 /* PBXContainerItemProxy */;
 		};
+		18EDEE813030DDB6001E73B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18EDEE7A3030DCA3001E73B4 /* SaltySweetsHelp */;
+			targetProxy = 18EDEE803030DDB6001E73B4 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		18EDEE893030E17C001E73B4 /* Readme.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18EDEE8C3030E188001E73B4 /* en */,
+			);
+			name = Readme.html;
+			sourceTree = "<group>";
+		};
+		18EDEE8E3030E198001E73B4 /* Icons Tweak Troubleshooting.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18EDEE8D3030E198001E73B4 /* en */,
+			);
+			name = "Icons Tweak Troubleshooting.html";
+			sourceTree = "<group>";
+		};
+		18EDEE913030E19E001E73B4 /* Dock Tweak Troubleshooting.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18EDEE903030E19E001E73B4 /* en */,
+			);
+			name = "Dock Tweak Troubleshooting.html";
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1829F4512FA5725A002BFEF8 /* Debug */ = {
@@ -345,8 +465,7 @@
 				);
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_APP_SANDBOX = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = siconthub/Info.plist;
@@ -359,7 +478,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SaltySoft.SaltySweets.siconthub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltysoft.SaltySweets.siconthub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -376,8 +495,7 @@
 				);
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_APP_SANDBOX = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = siconthub/Info.plist;
@@ -390,7 +508,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SaltySoft.SaltySweets.siconthub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltysoft.SaltySweets.siconthub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -547,7 +665,7 @@
 				);
 				MARKETING_VERSION = 1.5.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = SaltySoft.SaltySweets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltysoft.SaltySweets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -585,12 +703,56 @@
 				);
 				MARKETING_VERSION = 1.5.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = SaltySoft.SaltySweets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltysoft.SaltySweets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		18EDEE7C3030DCA3001E73B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SaltySweetsHelp/SaltySweetsHelp-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltysoft.SaltySweetsHelp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = help;
+			};
+			name = Debug;
+		};
+		18EDEE7D3030DCA3001E73B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SaltySweetsHelp/SaltySweetsHelp-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltysoft.SaltySweetsHelp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = help;
 			};
 			name = Release;
 		};
@@ -620,6 +782,15 @@
 			buildConfigurations = (
 				18BC57562F2EA9D90075DC08 /* Debug */,
 				18BC57572F2EA9D90075DC08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18EDEE7E3030DCA3001E73B4 /* Build configuration list for PBXNativeTarget "SaltySweetsHelp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18EDEE7C3030DCA3001E73B4 /* Debug */,
+				18EDEE7D3030DCA3001E73B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

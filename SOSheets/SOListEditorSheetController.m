@@ -25,7 +25,7 @@
    viewForTableColumn:(NSTableColumn *)tableColumn
                   row:(NSInteger)row {
     
-    NSTextField * cell = [[NSTextField alloc] initWithFrame:tableView.frame];
+    NSTextField *cell = [[NSTextField alloc] initWithFrame:tableView.frame];
     cell.bordered = NO;
     cell.drawsBackground = NO;
     cell.editable = YES;
@@ -36,11 +36,11 @@
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
-    NSTextField * sender = obj.object;
+    NSTextField *sender = obj.object;
     NSInteger row = [self.listTableView rowForView:sender];
     
     if (row != -1 && row < self.listContents.count) {
-        NSString * newValue = sender.stringValue;
+        NSString *newValue = sender.stringValue;
         
         if (newValue.length == 0) {
             [self.listContents removeObjectAtIndex:row];
@@ -69,7 +69,7 @@
 
 - (IBAction)plusWasPressed:(NSButton *)sender {
     BOOL hasEmptyRow = NO;
-    for (NSString * str in self.listContents) {
+    for (NSString *str in self.listContents) {
         if (str.length == 0) {
             hasEmptyRow = YES;
             break;

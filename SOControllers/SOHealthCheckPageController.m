@@ -5,6 +5,7 @@
 @interface SOHealthCheckPageController ()
 @property (strong) NSString *injectorName;
 @property (strong) NSMutableArray<NSRunningApplication *> *runningApps;
+@property (strong) NSArray<NSString *> *serverKeys;
 @end
 
 @implementation SOHealthCheckPageController
@@ -12,13 +13,54 @@
 - (void)awakeFromNib{
     [super awakeFromNib];
     
-    [self pulseCheckInjector];
-    [self populateRunningApps];
+    [self refreshAllInformation:nil];
 }
 
 - (IBAction)refreshAllInformation:(NSButton *)sender{
     [self pulseCheckInjector];
     [self populateRunningApps];
+    [self populateIconServerKeys];
+}
+
+- (void)populateIconServerKeys{
+    NSXPCConnection *xpc = [[SOAtomicAccessPoint sharedInstance] appIconServerConnection];
+    
+    if (!xpc)
+        return;
+    
+    id proxy = [xpc synchronousRemoteObjectProxyWithErrorHandler:^(NSError *error) {
+    }];
+    
+    [proxy getSurfaceKeyListWithReply:^(NSArray<NSString *> *keys) {
+       if (keys){
+           self.serverKeys = [keys copy];
+       }
+    }];
+    
+    [self.iconServerIconKeyComboBox reloadData];
+}
+
+- (IBAction)checkServerImage:(NSComboBox *)sender{
+    NSXPCConnection *xpc = [[SOAtomicAccessPoint sharedInstance] appIconServerConnection];
+    
+    if (!xpc)
+        return;
+    
+    id proxy = [xpc synchronousRemoteObjectProxyWithErrorHandler:^(NSError *error) {
+    }];
+    
+    SOIconIOSurfaceRequestToken *token = [SOIconIOSurfaceRequestToken tokenFromKey:sender.stringValue];
+    
+    [proxy getSurfaceRefForToken:token withReply:^(IOSurface *surface){
+        if (!surface)
+            return;
+        
+        CIImage *image = [CIImage imageWithIOSurface:(__bridge IOSurfaceRef)surface];
+        NSCIImageRep *rep = [NSCIImageRep imageRepWithCIImage:image];
+        NSImage *nsImage = [[NSImage alloc] initWithSize:[rep size]];
+        [nsImage addRepresentation:rep];
+        self.iconServerIconImageView.image = nsImage;
+    }];
 }
 
 - (IBAction)checkTweakInjected:(NSComboBox *)sender{
@@ -55,6 +97,10 @@
 }
 
 - (NSInteger)numberOfItemsInComboBox:(NSComboBox *)comboBox{
+    if ([[comboBox identifier] isEqualToString:@"ram"]){
+        return [self.serverKeys count];
+    }
+    
     if (self.runningApps)
         return [self.runningApps count];
     
@@ -62,6 +108,10 @@
 }
 
 - (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index{
+    if ([[comboBox identifier] isEqualToString:@"ram"]){
+        return [self.serverKeys objectAtIndex:index];
+    }
+    
     if (self.runningApps)
         return [self.runningApps objectAtIndex:index].bundleIdentifier ?: nil;
     

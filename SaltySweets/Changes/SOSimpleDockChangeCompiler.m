@@ -174,22 +174,20 @@
             
             NSModalResponse response = [alert runModal];
             
-            if (response == NSAlertSecondButtonReturn){
+            if (response == NSAlertFirstButtonReturn){
                 [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:newThemeURL.lastPathComponent];
                 
                 [[NSNotificationCenter defaultCenter]
                     postNotificationName:SONotificationBaseClassUpdateBaseline
                                   object:self];
                 
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
-                        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                            [page refreshOrLoadBaseline];
+                for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+                    if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                        [page refreshOrLoadBaseline];
 
-                        if ([page respondsToSelector:@selector(purgePendingChanges)])
-                            [page purgePendingChanges];
-                    }
-                });
+                    if ([page respondsToSelector:@selector(purgePendingChanges)])
+                        [page purgePendingChanges];
+                }
             }
         });
     }];

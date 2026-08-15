@@ -6,6 +6,7 @@ const NSString *image = @"image";
 const NSString *text  = @"text";
 const NSString *pageControllerClass  = @"pageControllerClass";
 const NSString *preferenceImage = @"preferenceImage";
+const NSString *shouldDisplay = @"shouldDisplay";
 
 #pragma mark - Controller
 @interface SONavigatorBarMaster ()
@@ -83,12 +84,6 @@ const NSString *preferenceImage = @"preferenceImage";
     [[SOViewPane defaultInstance] requestPageChangeTo:self.mainMenuController];
 }
 
-- (IBAction)goToDocumentation:(id)sender{
-    NSViewController *c = self.controllerClassToInstance[@"SODocumentationPageController"];
-    
-    [self navigateToViewController:c withTitle:@"Documentation"];
-}
-
 - (NSArray<SONavigatorBarItem *> *)itemArrayForSection:(NSInteger)section{
     if (section == 0)
         return [self homeNavigationOptions];
@@ -102,10 +97,9 @@ const NSString *preferenceImage = @"preferenceImage";
 
 - (NSArray *)homeTableRowData{
     return @[
-        @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class},
-        @{image:@"long.text.page.and.pencil", text:@"Credits", pageControllerClass:SOAttributionsPageController.class},
-        @{image:@"book.and.wrench", text:@"Documentation", pageControllerClass:SODocumentationPageController.class},
-        @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:NSImageNameAdvanced}
+        @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class, shouldDisplay:@NO},
+        @{image:@"long.text.page.and.pencil", text:@"Credits", pageControllerClass:SOAttributionsPageController.class, shouldDisplay:@NO},
+        @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:@"i_gear"}
     ];
 }
 
@@ -165,6 +159,11 @@ const NSString *preferenceImage = @"preferenceImage";
             self.controllerClassToInstance[[cc className]] = vc;
         }
         
+        if ([tableDict objectForKey:shouldDisplay]){
+            if (![[tableDict objectForKey:shouldDisplay] boolValue])
+                continue;
+        }
+
         SONavigatorBarItem *item = [[SONavigatorBarItem alloc] initWithFallbackSymbolName:[tableDict objectForKey:image]
                                                                       preferredImageNamed:[tableDict objectForKey:preferenceImage]
                                                                                     title:[tableDict objectForKey:text]

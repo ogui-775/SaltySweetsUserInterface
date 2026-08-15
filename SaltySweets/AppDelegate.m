@@ -5,7 +5,7 @@
 static __strong AppDelegate *_instance;
 
 @interface AppDelegate ()
-@property (strong) NSMutableDictionary<NSURL *, SONSWindowAuxController *> * urlToAuxController;
+@property (strong) NSMutableDictionary<NSURL *, SONSWindowAuxController *> *urlToAuxController;
 @property (strong) SONSWindowAuxController *creationStudioController;
 @property (strong) IBOutlet NSMenu *mainMenu;
 @end
@@ -19,9 +19,9 @@ static __strong AppDelegate *_instance;
     if (!self.urlToAuxController)
         self.urlToAuxController = [NSMutableDictionary dictionary];
     
-    for (NSURL * url in urls){
+    for (NSURL *url in urls){
         if ([[url pathExtension] isEqualToString:@"sicon"]){
-            SONSWindowAuxController * controller = nil;
+            SONSWindowAuxController *controller = nil;
             if (![self.urlToAuxController objectForKey:url])
                 controller = [[SONSWindowAuxController alloc] initControllerForSiconContextWithURL:url];
             

@@ -133,7 +133,7 @@
 }
 
 - (IBAction)swapIconPack:(id)sender{
-    NSOpenPanel * panel = [NSOpenPanel openPanel];
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
     panel.allowedContentTypes = @[[UTType typeWithIdentifier:@"com.saltysoft.siconpack"]];
     panel.allowsMultipleSelection = NO;
     panel.directoryURL = [NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory]];
@@ -145,8 +145,8 @@
         if (result != NSModalResponseOK)
             return;
 
-        NSURL * fileURL = panel.URL;
-        NSString * fileName = [fileURL lastPathComponent];
+        NSURL *fileURL = panel.URL;
+        NSString *fileName = [fileURL lastPathComponent];
         
         [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:fileName];
         

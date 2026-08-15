@@ -36,7 +36,7 @@ static void releaseCallback(const void *info) {
         context.info = (__bridge_retained void *)self;
         context.release = releaseCallback;
 
-        NSArray * paths = @[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory]];
+        NSArray *paths = @[[[SOAtomicAccessPoint sharedInstance] cryptographicKeyDirectory]];
 
         self.keyDirMonitorStream =
             FSEventStreamCreate(kCFAllocatorDefault,

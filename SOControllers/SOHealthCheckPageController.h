@@ -11,4 +11,7 @@
 @property (weak, nonatomic) IBOutlet NSComboBox *runningProcessesComboBox;
 @property (weak, nonatomic) IBOutlet NSImageView *runningProcessesImageView;
 @property (weak, nonatomic) IBOutlet NSTextField *runningProcessesTextField;
+
+@property (weak, nonatomic) IBOutlet NSImageView *iconServerIconImageView;
+@property (weak, nonatomic) IBOutlet NSComboBox *iconServerIconKeyComboBox;
 @end

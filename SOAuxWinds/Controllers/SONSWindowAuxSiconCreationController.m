@@ -124,7 +124,6 @@ typedef enum : NSUInteger {
 }
 
 - (CGSize)getSizeForSelectedSegment{
-    long    scale = self.scaleSelector.selectedSegment + 1;
     CGSize   size = CGSizeZero;
     switch(self.sizeSelector.selectedSegment){
         case 0:
@@ -285,12 +284,16 @@ typedef enum : NSUInteger {
                                        forKey:NSURLFileSizeKey
                                         error:nil];
         
+        if (!value && holder.icnsData)
+            value = [NSNumber numberWithUnsignedInteger:holder.icnsData.length];
+        
         label.stringValue = [NSString stringWithFormat:@"Size: %ix%i - %@",
                              (int)well.image.size.width,
                              (int)well.image.size.height,
                              [formatter stringFromByteCount:(value != nil ? (long)value.unsignedLongValue : 0)]];
         
-        [SOCreationHolder setDictionaryToLatest:self.loadedSiconDataDict fromCreationHolder:self.keyToCreationHolder];
+        [SOCreationHolder setDictionaryToLatest:self.loadedSiconDataDict
+                             fromCreationHolder:self.keyToCreationHolder];
     }
 }
 
@@ -333,7 +336,7 @@ typedef enum : NSUInteger {
                     [progress.progressLabel setFrame:progress.progressLabel.frame];
                 });
                 [progress.progressLabel  animateFieldToShow:[NSString stringWithFormat:@"Writing %@...",
-                                                      holder.originalFileURL.lastPathComponent]];
+                                                             holder.originalFileURL.lastPathComponent ?: [NSString stringWithFormat:@"%lu", [holder.icnsData hash]]]];
             });
             
             NSData *data = nil;

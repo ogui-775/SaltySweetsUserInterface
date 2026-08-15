@@ -300,7 +300,7 @@
                         <items>
                             <menuItem title="SaltySweets Help" keyEquivalent="?" id="R74-IX-15y">
                                 <connections>
-                                    <action selector="goToDocumentation:" target="PJN-fh-qWL" id="jGJ-6a-t5C"/>
+                                    <action selector="showHelp:" target="-1" id="QGo-Ye-xKK"/>
                                 </connections>
                             </menuItem>
                         </items>

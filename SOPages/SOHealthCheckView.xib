@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SOHealthCheckPageController">
             <connections>
+                <outlet property="iconServerIconImageView" destination="NxR-kC-dei" id="boc-5C-Kek"/>
+                <outlet property="iconServerIconKeyComboBox" destination="PIo-O6-J8q" id="HlI-ds-8NR"/>
                 <outlet property="injectorStatusBox" destination="Cqf-i5-lBn" id="JyF-9H-58u"/>
                 <outlet property="injectorStatusImageView" destination="jSI-XT-sFa" id="m8N-QW-rS6"/>
                 <outlet property="injectorStatusTextField" destination="o8J-9q-wzh" id="eA1-ha-Ee1"/>
@@ -19,11 +21,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="437" height="285"/>
+            <rect key="frame" x="0.0" y="0.0" width="437" height="518"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NEn-YX-nIZ">
-                    <rect key="frame" x="346" y="261" width="71" height="24"/>
+                    <rect key="frame" x="346" y="494" width="71" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Refresh" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VsM-EE-Yfw">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -34,7 +36,7 @@
                     </connections>
                 </button>
                 <box fixedFrame="YES" title="Tweak(s) Injection Status" translatesAutoresizingMaskIntoConstraints="NO" id="I3E-KR-Wgi">
-                    <rect key="frame" x="20" y="20" width="397" height="148"/>
+                    <rect key="frame" x="20" y="253" width="397" height="148"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="hFY-MJ-ZB7">
                         <rect key="frame" x="0.0" y="0.0" width="397" height="136"/>
@@ -80,7 +82,7 @@
                     </view>
                 </box>
                 <box title="Injector Status" id="Cqf-i5-lBn">
-                    <rect key="frame" x="20" y="176" width="397" height="89"/>
+                    <rect key="frame" x="20" y="409" width="397" height="89"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <view key="contentView" id="ZSW-Mo-JMd">
                         <rect key="frame" x="0.0" y="0.0" width="397" height="77"/>
@@ -103,8 +105,37 @@
                         </subviews>
                     </view>
                 </box>
+                <box fixedFrame="YES" title="Icon Server RAM Usage" translatesAutoresizingMaskIntoConstraints="NO" id="jLc-oL-bQq">
+                    <rect key="frame" x="20" y="20" width="397" height="225"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="jhf-H3-qsO">
+                        <rect key="frame" x="0.0" y="0.0" width="397" height="213"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <comboBox identifier="ram" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PIo-O6-J8q">
+                                <rect key="frame" x="20" y="169" width="357" height="24"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="5Y3-kv-abC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="checkServerImage:" target="-2" id="A6Y-C6-DKn"/>
+                                    <outlet property="dataSource" destination="-2" id="wmZ-RJ-aDu"/>
+                                    <outlet property="delegate" destination="-2" id="V7D-1e-XlC"/>
+                                </connections>
+                            </comboBox>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NxR-kC-dei">
+                                <rect key="frame" x="137" y="20" width="122" height="122"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="LDf-3b-RvV"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </box>
             </subviews>
-            <point key="canvasLocation" x="138.5" y="229.5"/>
+            <point key="canvasLocation" x="138.5" y="346"/>
         </customView>
     </objects>
     <resources>

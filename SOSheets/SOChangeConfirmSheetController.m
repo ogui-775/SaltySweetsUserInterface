@@ -21,14 +21,14 @@
     NSInteger idx = [tableColumn.identifier isEqualToString:@"ApplyColumn"] ? 0 : 1;
     
     if (idx == 0) {
-        NSTableCellView * cell =
+        NSTableCellView *cell =
             [tableView makeViewWithIdentifier:@"ApplyCell" owner:self];
 
         if (!cell) {
             cell = [[NSTableCellView alloc] init];
             cell.identifier = @"ApplyCell";
 
-            NSButton * button = [[NSButton alloc] init];
+            NSButton *button = [[NSButton alloc] init];
             button.buttonType = NSButtonTypeSwitch;
             button.title = @"";
             button.target = self;
@@ -49,7 +49,7 @@
 
         return cell;
     } else if (idx == 1){
-        NSTextField * text = [[NSTextField alloc] init];
+        NSTextField *text = [[NSTextField alloc] init];
         text.drawsBackground = NO;
         [text setBezeled:NO];
         text.stringValue = [self.internalChangeArray objectAtIndex:row].changeNote;
@@ -65,7 +65,7 @@
 - (IBAction)applyToggleClicked:(NSButton *)sender {
     BOOL anyOn = NO;
 
-    for (NSButton * b in self.applyToChange.objectEnumerator) {
+    for (NSButton *b in self.applyToChange.objectEnumerator) {
         if (b.state == NSControlStateValueOn) {
             anyOn = YES;
             break;
@@ -81,9 +81,9 @@
 }
 
 - (IBAction)confirmClicked:(id)sender{
-    NSMutableIndexSet * results = [[NSMutableIndexSet alloc] init];
+    NSMutableIndexSet *results = [[NSMutableIndexSet alloc] init];
     
-    for (NSNumber * i in self.applyToChange){
+    for (NSNumber *i in self.applyToChange){
         if ([[self.applyToChange objectForKey:i] state] == NSControlStateValueOn){
             [results addIndex:i.unsignedIntValue];
         }

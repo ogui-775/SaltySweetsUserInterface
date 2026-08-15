@@ -7,7 +7,7 @@
     if (self = [super init]){
         self.window = [SONSWindowAuxSpawner spawnAuxWindowForSiconWithURL:url];
         if (self.window){
-            SONSWindowAuxContextSicon * ctx = (SONSWindowAuxContextSicon *)[(SONSWindowAux *)self.window auxiliaryContext];
+            SONSWindowAuxContextSicon *ctx = (SONSWindowAuxContextSicon *)[(SONSWindowAux *)self.window auxiliaryContext];
             self.window.contentViewController = [[SONSWindowAuxSiconController alloc] initWithNibName:@"SONSWindowAuxSiconView" bundle:nil context:ctx];
             self.window.title = @"Viewer";
             self.window.titlebarAppearsTransparent = YES;

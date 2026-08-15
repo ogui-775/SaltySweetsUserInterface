@@ -56,7 +56,7 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
             self.packViewController = [[SOPackViewController alloc] initWithParentWindowController:self];
         
         buttonItem.target = self.packViewController;
-        buttonItem.toolTip = @"Show/Hide Icon Packs";
+        buttonItem.toolTip = @"Show/Hide Collections";
         
         return buttonItem;
     }
