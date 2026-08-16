@@ -8,7 +8,6 @@
 #import "../SOControllers/SOWelcomePageController.h"
 #import "../SOControllers/SOAppSettingsPageController.h"
 #import "../SOControllers/SORetinaDisplayPageController.h"
-#import "../SOControllers/SOAttributionsPageController.h"
 #import "../SOControllers/SOSeparatorsPageController.h"
 #import "../SOControllers/SOBackgroundPageController.h"
 #import "../SOControllers/SOIconHeightPageController.h"

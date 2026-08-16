@@ -63,21 +63,28 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
     return nil;
 }
 
+- (IBAction)showAbout:(id)sender{
+    if (!self.aboutController)
+        self.aboutController = [[SOAboutController alloc] initWithWindowNibName:@"AboutPanel"];
+    
+    [self.aboutController showWindow:self];
+}
+
 - (void)populateMenu:(NSMenu *)menu{
-    NSArray *homeItems = [self.navigatorBarMaster homeNavigationOptions];
-    NSMenuItem *homeHeader = [NSMenuItem sectionHeaderWithTitle:@"Home"];
-    [menu addItem:homeHeader];
-    [self addItems:homeItems toMenu:menu];
+    NSArray *iconItems = [self.navigatorBarMaster iconNavigationOptions];
+    NSMenuItem *iconHeader = [NSMenuItem sectionHeaderWithTitle:@"Icons"];
+    [menu addItem:iconHeader];
+    [self addItems:iconItems toMenu:menu];
     
     NSArray *dockItems = [self.navigatorBarMaster dockNavigationOptions];
     NSMenuItem *dockHeader = [NSMenuItem sectionHeaderWithTitle:@"Dock"];
     [menu addItem:dockHeader];
     [self addItems:dockItems toMenu:menu];
-    
-    NSArray *iconItems = [self.navigatorBarMaster iconNavigationOptions];
-    NSMenuItem *iconHeader = [NSMenuItem sectionHeaderWithTitle:@"Icons"];
-    [menu addItem:iconHeader];
-    [self addItems:iconItems toMenu:menu];
+
+    NSArray *homeItems = [self.navigatorBarMaster homeNavigationOptions];
+    NSMenuItem *homeHeader = [NSMenuItem sectionHeaderWithTitle:@"SaltySweets"];
+    [menu addItem:homeHeader];
+    [self addItems:homeItems toMenu:menu];
 }
 
 - (void)addItems:(NSArray<SONavigatorBarItem *> *)items toMenu:(NSMenu *)menu{

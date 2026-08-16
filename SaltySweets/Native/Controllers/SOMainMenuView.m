@@ -60,7 +60,7 @@
 
     switch (indexPath.section) {
         case 0:
-            header.title = @"Home";
+            header.title = @"Icons";
             break;
 
         case 1:
@@ -68,7 +68,7 @@
             break;
 
         case 2:
-            header.title = @"Icons";
+            header.title = @"SaltySweets";
             break;
     }
 

@@ -3,6 +3,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "SOPackViewController.h"
+#import "SOAboutController.h"
 
 @class SONavigatorBarMaster;
 
@@ -10,4 +11,5 @@
 @property (weak) IBOutlet SONavigatorBarMaster *navigatorBarMaster;
 @property (weak) IBOutlet NSMenuItem *viewMenu;
 @property (strong) SOPackViewController *packViewController;
+@property (strong) SOAboutController *aboutController;
 @end

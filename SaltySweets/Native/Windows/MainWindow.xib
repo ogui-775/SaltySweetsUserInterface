@@ -75,7 +75,7 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="BE84BC36-B43A-4886-A66F-4BFD1315017F" label="Main Menu" paletteLabel="Custom View" image="square.grid.3x3.fill" catalog="system" sizingBehavior="auto" navigational="YES" id="dvt-YA-3b4" customClass="SOToolbarItem">
                         <nil key="toolTip"/>
-                        <button key="view" verticalHuggingPriority="750" id="bvs-d4-npk" customClass="SOControlClickOptionsButton">
+                        <button key="view" verticalHuggingPriority="750" id="bvs-d4-npk">
                             <rect key="frame" x="24" y="14" width="28" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="square.grid.3x3.fill" catalog="system" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qtO-ju-aov">
@@ -104,7 +104,7 @@
                             <menuItem title="About SaltySweets" id="36D-w2-W11">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="-1" id="JPT-Hd-gR9"/>
+                                    <action selector="showAbout:" target="4nq-Iq-wik" id="491-0J-GZC"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="xDa-Wp-vha"/>

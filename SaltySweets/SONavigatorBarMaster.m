@@ -32,9 +32,9 @@ const NSString *shouldDisplay = @"shouldDisplay";
     
     [self returnToMainMenu:nil];
     [self.mainMenuController finishInitWithItemDictionary:@{
-        @(0) : [self homeNavigationOptions],
+        @(0) : [self iconNavigationOptions],
         @(1) : [self dockNavigationOptions],
-        @(2) : [self iconNavigationOptions]
+        @(2) : [self homeNavigationOptions]
     }];
     self.mainMenuController.delegate = self;
     self.mainMenuController.action = @selector(itemWasSelectedInMenu:);
@@ -86,11 +86,11 @@ const NSString *shouldDisplay = @"shouldDisplay";
 
 - (NSArray<SONavigatorBarItem *> *)itemArrayForSection:(NSInteger)section{
     if (section == 0)
-        return [self homeNavigationOptions];
-    else if (section == 1)
         return [self dockNavigationOptions];
-    else
+    else if (section == 1)
         return [self iconNavigationOptions];
+    else
+        return [self homeNavigationOptions];
 }
 
 #pragma mark - Menu data
@@ -98,7 +98,6 @@ const NSString *shouldDisplay = @"shouldDisplay";
 - (NSArray *)homeTableRowData{
     return @[
         @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class, shouldDisplay:@NO},
-        @{image:@"long.text.page.and.pencil", text:@"Credits", pageControllerClass:SOAttributionsPageController.class, shouldDisplay:@NO},
         @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:@"i_gear"}
     ];
 }
