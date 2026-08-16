@@ -70,8 +70,8 @@
     return [nonfinal mutableCopy];
 }
 
-+ (NSDictionary *)baselineFromEncodedKey:(SOEncodedKey)key {
-    NSMutableDictionary * dict = [NSMutableDictionary new];
++ (NSMutableDictionary *)baselineFromEncodedKey:(SOEncodedKey)key {
+    NSMutableDictionary *dict = [NSMutableDictionary new];
 
     if (key.valueEncoding == SOValueEncodingNSDictionary && key.dictionaryKeyCount > 0) {
         for (NSUInteger i = 0; i < key.dictionaryKeyCount; i++) {
@@ -79,6 +79,8 @@
             dict[subKey.key] = [self baselineFromEncodedKey:subKey];
         }
         return [dict mutableCopy];
+    } else if (key.valueEncoding == SOValueEncodingNSDictionary && key.dictionaryKeyCount == 0){
+        return [key.defaultValue mutableCopy] ?: [NSNull null];
     } else {
         return key.defaultValue ?: [NSNull null];
     }

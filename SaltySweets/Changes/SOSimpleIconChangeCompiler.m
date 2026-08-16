@@ -123,7 +123,7 @@
             });
             
             SOSiconPackBundle *currentPack = [[SOAtomicAccessPoint sharedInstance] currentIconPackBundle];
-            NSMutableArray<NSString *> * purgeCollection = [NSMutableArray new];
+            NSMutableArray<NSString *> *purgeCollection = [NSMutableArray new];
             
             for (NSUInteger i = 0; i < kSOIconAllKeysCount; i++){
                 NSString *key = kSOIconAllKeys[i].key;
