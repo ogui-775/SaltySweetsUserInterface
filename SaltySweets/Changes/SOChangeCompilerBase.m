@@ -39,7 +39,7 @@
     }
     
     if (!change.plistKeyPath){
-        NSString * baselineValue = [dict objectForKey:change.plistKey->key];
+        NSString *baselineValue = [dict objectForKey:change.plistKey->key];
         
         if (change.plistValue){
             [dict setObject:change.plistValue forKey:change.plistKey->key];
@@ -146,7 +146,7 @@
 - (void)listChangesToIconBundle:(SOSiconPackBundle *)bundle
                         changes:(NSArray<SOChange *> *)changes
                      completion:(void (^)(NSModalResponse response, NSArray<SOChange *> *approvedChanges))completion{
-    NSWindow * parentWindow = NSApp.mainWindow;
+    NSWindow *parentWindow = NSApp.mainWindow;
     self.iconThemeConfirmSheet = [[SOChangeConfirmSheetController alloc] init];
     [self.iconThemeConfirmSheet window];
     

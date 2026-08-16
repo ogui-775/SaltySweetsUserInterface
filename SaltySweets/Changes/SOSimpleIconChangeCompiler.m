@@ -79,7 +79,9 @@
     }];
     
     [opQueue addBarrierBlock:^{
-        completion(YES);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            completion(YES);
+        });
     }];
 }
 

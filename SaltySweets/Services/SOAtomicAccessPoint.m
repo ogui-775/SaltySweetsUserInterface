@@ -214,7 +214,8 @@ static SOAtomicAccessPoint *_instance = nil;
                 @"~/Applications/",
                 @"/System/Applications/",
                 @"/Applications/",
-                @"/System/Library/CoreServices/"
+                @"/System/Library/CoreServices/",
+                @"/System/Applications/Utilities/"
             ],
             @"kSOIconsCurrentPack" : @""
         };
