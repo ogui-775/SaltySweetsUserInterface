@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SOCalendarDockTileReplacementPageController">
             <connections>
+                <outlet property="compositionView" destination="FpC-Io-T70" id="aM4-do-qIQ"/>
                 <outlet property="view" destination="c22-O7-iKe" id="zrY-pd-6xQ"/>
             </connections>
         </customObject>
@@ -16,15 +17,10 @@
             <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <box fixedFrame="YES" title="Dock (and Spotlight) Calendar Icon" translatesAutoresizingMaskIntoConstraints="NO" id="10I-Lj-m38">
-                    <rect key="frame" x="20" y="20" width="706" height="426"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <view key="contentView" id="9IU-2o-Seh">
-                        <rect key="frame" x="0.0" y="0.0" width="706" height="412"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FpC-Io-T70">
+                    <rect key="frame" x="0.0" y="41" width="425" height="425"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                </customView>
             </subviews>
             <point key="canvasLocation" x="139" y="154"/>
         </customView>

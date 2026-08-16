@@ -1,11 +1,10 @@
 //Created by Salty on 7/23/26.
 
 #import "../Base/SOConfigurablePageControllerBase.h"
-
-@class SOCalendarDisplayView;
+#import <SharedClasses/SharedClasses.h>
 
 @interface SOCalendarDockTileReplacementPageController : SOConfigurablePageControllerBase
-@property (weak, nonatomic) IBOutlet SOCalendarDisplayView *compositionView;
+@property (weak, nonatomic) IBOutlet NSView *compositionView;
 
 @property (weak, nonatomic) IBOutlet NSSlider *dayRotationDial;
 @property (weak, nonatomic) IBOutlet NSStepper *dayWidthStepper;
