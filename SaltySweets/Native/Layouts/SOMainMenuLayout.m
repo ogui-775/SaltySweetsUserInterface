@@ -58,7 +58,7 @@ static NSString * const SOMainMenuBackgroundKindB = @"SOMainMenuBackgroundB";
     path.lineWidth = 0.5;
     [path stroke];
     path =
-        [NSBezierPath bezierPathWithRect:CGRectMake(0, self.bounds.size.height - 0.5, self.bounds.size.width, 0.5)];
+        [NSBezierPath bezierPathWithRect:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 0.5)];
     [path stroke];
 }
 @end

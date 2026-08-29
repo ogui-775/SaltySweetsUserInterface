@@ -77,4 +77,7 @@
 
 - (NSString *)getRelativePathForHash:(NSString *)hash;
 
+- (void)setPendingIconChangeForKeypath:(const SOEncodedKeyPath *)key
+                                 value:(id)value
+                                  note:(NSString *)note;
 @end

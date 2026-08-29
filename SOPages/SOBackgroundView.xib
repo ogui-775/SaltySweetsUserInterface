@@ -144,53 +144,101 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VHw-y3-c4O">
-                                        <rect key="frame" x="65" y="204" width="410" height="28"/>
+                                        <rect key="frame" x="49" y="204" width="410" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" selectable="YES" title="Adjust background contents center rect with the drag handles." id="uIi-Ev-Qsh">
+                                        <textFieldCell key="cell" selectable="YES" title="Adjust background contents center rect with the drag handles or text boxes." id="uIi-Ev-Qsh">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykT-kI-zQn">
-                                        <rect key="frame" x="20" y="20" width="469" height="198"/>
+                                        <rect key="frame" x="20" y="29" width="469" height="180"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </customView>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vbg-3C-A2h">
-                                        <rect key="frame" x="18" y="6" width="83" height="16"/>
+                                    <textField identifier="xtf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vbg-3C-A2h">
+                                        <rect key="frame" x="41" y="4" width="83" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="X: 0.00" id="Kb4-sW-2vb">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="border" placeholderString="0.00" usesSingleLineMode="YES" id="Kb4-sW-2vb">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="updateContentsCenterFromTextField:" target="-2" id="6GJ-m7-ZVB"/>
+                                        </connections>
+                                    </textField>
+                                    <textField identifier="ytf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ewY-7B-V5G">
+                                        <rect key="frame" x="152" y="4" width="83" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="border" placeholderString="0.00" id="Ufe-2Y-lUB">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="updateContentsCenterFromTextField:" target="-2" id="cSz-mx-iuk"/>
+                                        </connections>
+                                    </textField>
+                                    <textField identifier="wtf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DTg-K9-d35">
+                                        <rect key="frame" x="267" y="4" width="83" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="border" placeholderString="0.00" id="RS5-ox-HUP">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="updateContentsCenterFromTextField:" target="-2" id="3ab-oI-eFm"/>
+                                        </connections>
+                                    </textField>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yNz-VU-2gM">
+                                        <rect key="frame" x="18" y="6" width="17" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="X:" id="89e-uP-HCQ">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ewY-7B-V5G">
-                                        <rect key="frame" x="100" y="6" width="83" height="16"/>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zfu-0P-5Fq">
+                                        <rect key="frame" x="130" y="6" width="16" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="Y: 0.00" id="Ufe-2Y-lUB">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Y:" id="yHl-6m-BwD">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DTg-K9-d35">
-                                        <rect key="frame" x="187" y="6" width="91" height="16"/>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hg8-0O-2oM">
+                                        <rect key="frame" x="241" y="6" width="20" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="W: 0.00" id="RS5-ox-HUP">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="W:" id="gh7-ej-w1e">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K3c-9P-1yY">
-                                        <rect key="frame" x="282" y="6" width="98" height="16"/>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2o-bN-ejt">
+                                        <rect key="frame" x="356" y="6" width="18" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="H: 0.00" id="Lth-sq-j3i">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="H:" id="snw-yb-8pi">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                    </textField>
+                                    <textField identifier="htf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K3c-9P-1yY">
+                                        <rect key="frame" x="380" y="4" width="83" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="border" placeholderString="0.00" id="Lth-sq-j3i">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="updateContentsCenterFromTextField:" target="-2" id="B5z-RV-L7f"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </view>

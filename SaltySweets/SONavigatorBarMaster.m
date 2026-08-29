@@ -121,8 +121,8 @@ const NSString *shouldDisplay = @"shouldDisplay";
         @{image:@"folder", text:@"Folders", pageControllerClass:SOFolderReplacementPageController.class, preferenceImage:@"i_folder"},
         @{image:@"filemenu.and.pointer.arrow", text:@"File Extensions", pageControllerClass:SOSystemIconReplacementPageController.class, preferenceImage:@"i_document"},
         @{image:@"sidebar.left", text:@"Sidebar", pageControllerClass:SOSidebarIconReplacementPageController.class, preferenceImage:@"i_sidebar"},
-        @{image:@"gear.circle", text:@"Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class, preferenceImage:@"i_pref"},
         @{image:@"clock.arrow.trianglehead.counterclockwise.rotate.90", text:@"Volumes", pageControllerClass:SOVolumeIconReplacementPageController.class, preferenceImage:@"i_volume"},
+        @{image:@"gear.circle", text:@"Settings Icons", pageControllerClass:SOSystemSettingsIconReplacementPageController.class, preferenceImage:@"i_pref"},
         @{image:@"clock.circle", text:@"Dock Clock", pageControllerClass:SOClockDockTileReplacementPageController.class, preferenceImage:@"i_clock"},
         @{image:@"calendar", text:@"Dock Calendar", pageControllerClass:SOCalendarDockTileReplacementPageController.class, preferenceImage:@"i_calendar"}
     ];

@@ -115,10 +115,10 @@
                                    [centerDict[@"width"] doubleValue],
                                    [centerDict[@"height"] doubleValue]);
     
-    self.contentsCenterX.stringValue = [NSString stringWithFormat:@"X: %f", centerRect.origin.x];
-    self.contentsCenterY.stringValue = [NSString stringWithFormat:@"Y: %f", centerRect.origin.y];
-    self.contentsCenterWidth.stringValue = [NSString stringWithFormat:@"W: %f", centerRect.size.width];
-    self.contentsCenterHeight.stringValue = [NSString stringWithFormat:@"H: %f", centerRect.size.height];
+    self.contentsCenterX.doubleValue = centerRect.origin.x;
+    self.contentsCenterY.doubleValue = centerRect.origin.y;
+    self.contentsCenterWidth.doubleValue = centerRect.size.width;
+    self.contentsCenterHeight.doubleValue = centerRect.size.height;
 
     CGFloat w = self.backgroundLayer.bounds.size.width;
     CGFloat h = self.backgroundLayer.bounds.size.height;
@@ -545,10 +545,10 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
                                       stringWithFormat:@"Set contents center value for Height for dock background to %f", r.size.height]
     ];
     
-    self.contentsCenterX.stringValue = [NSString stringWithFormat:@"X: %f", r.origin.x];
-    self.contentsCenterY.stringValue = [NSString stringWithFormat:@"Y: %f", r.origin.y];
-    self.contentsCenterWidth.stringValue = [NSString stringWithFormat:@"W: %f", r.size.width];
-    self.contentsCenterHeight.stringValue = [NSString stringWithFormat:@"H: %f", r.size.height];
+    self.contentsCenterX.doubleValue = r.origin.x;
+    self.contentsCenterY.doubleValue = r.origin.y;
+    self.contentsCenterWidth.doubleValue = r.size.width;
+    self.contentsCenterHeight.doubleValue = r.size.height;
 }
 
 - (IBAction)blurRadiusDidChange:(NSTextField *)sender{
@@ -559,6 +559,109 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
                            value:@(sender.doubleValue)
                             note:[NSString stringWithFormat:@"Set background blur radius to %f",
                                   sender.doubleValue]];
+}
+
+- (IBAction)updateContentsCenterFromTextField:(NSTextField *)sender {
+    CGFloat value = sender.doubleValue;
+
+    value = CLAMP(0, value, 1);
+    value = ROUND_DP(value, 4);
+
+    CGRect r = self.backgroundLayer.contentsCenter;
+
+    NSString *identifier = sender.identifier;
+
+    if ([identifier isEqualToString:@"xtf"]) {
+        CGFloat maxX = 1.0 - r.size.width;
+        r.origin.x = MIN(value, maxX);
+    }
+    else if ([identifier isEqualToString:@"ytf"]) {
+        CGFloat maxY = 1.0 - r.size.height;
+        r.origin.y = MIN(value, maxY);
+    }
+    else if ([identifier isEqualToString:@"wtf"]) {
+        r.size.width = MIN(value, 1.0 - r.origin.x);
+    }
+    else if ([identifier isEqualToString:@"htf"]) {
+        r.size.height = MIN(value, 1.0 - r.origin.y);
+    }
+    else {
+        return;
+    }
+
+    self.backgroundLayer.contentsCenter = r;
+
+    SOEncodedKeyPath xPath = {
+        .rootKey = &kSODockBackgroundContentsCenter,
+        .components = @[@"x"]
+    };
+
+    SOEncodedKeyPath yPath = {
+        .rootKey = &kSODockBackgroundContentsCenter,
+        .components = @[@"y"]
+    };
+
+    SOEncodedKeyPath widthPath = {
+        .rootKey = &kSODockBackgroundContentsCenter,
+        .components = @[@"width"]
+    };
+
+    SOEncodedKeyPath heightPath = {
+        .rootKey = &kSODockBackgroundContentsCenter,
+        .components = @[@"height"]
+    };
+
+    [self setPendingChangeForKeypath:&xPath
+                               value:@(r.origin.x)
+                                note:[NSString stringWithFormat:
+                                      @"Set contents center value for X for dock background to %f",
+                                      r.origin.x]];
+
+    [self setPendingChangeForKeypath:&yPath
+                               value:@(r.origin.y)
+                                note:[NSString stringWithFormat:
+                                      @"Set contents center value for Y for dock background to %f",
+                                      r.origin.y]];
+
+    [self setPendingChangeForKeypath:&widthPath
+                               value:@(r.size.width)
+                                note:[NSString stringWithFormat:
+                                      @"Set contents center value for Width for dock background to %f",
+                                      r.size.width]];
+
+    [self setPendingChangeForKeypath:&heightPath
+                               value:@(r.size.height)
+                                note:[NSString stringWithFormat:
+                                      @"Set contents center value for Height for dock background to %f",
+                                      r.size.height]];
+
+    self.contentsCenterX.doubleValue = r.origin.x;
+    self.contentsCenterY.doubleValue = r.origin.y;
+    self.contentsCenterWidth.doubleValue = r.size.width;
+    self.contentsCenterHeight.doubleValue = r.size.height;
+
+    CGFloat w = self.backgroundLayer.bounds.size.width;
+    CGFloat h = self.backgroundLayer.bounds.size.height;
+
+    CGFloat leftX   = r.origin.x * w;
+    CGFloat rightX  = (r.origin.x + r.size.width) * w;
+    CGFloat bottomY = r.origin.y * h;
+    CGFloat topY    = (r.origin.y + r.size.height) * h;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+
+    self.lLine.position = CGPointMake(leftX, 0);
+    self.rLine.position = CGPointMake(rightX, 0);
+    self.bLine.position = CGPointMake(0, bottomY);
+    self.tLine.position = CGPointMake(0, topY);
+
+    self.lLabel.position = CGPointMake(leftX, h - 12);
+    self.rLabel.position = CGPointMake(rightX, 12);
+    self.tLabel.position = CGPointMake(w - 12, topY);
+    self.bLabel.position = CGPointMake(12, bottomY);
+
+    [CATransaction commit];
 }
 
 @end

@@ -3,22 +3,21 @@
 #import "../Base/SOConfigurablePageControllerBase.h"
 #import <SharedClasses/SharedClasses.h>
 
-@interface SOCalendarDockTileReplacementPageController : SOConfigurablePageControllerBase
-@property (weak, nonatomic) IBOutlet NSView *compositionView;
+@interface SOCalendarPositioningView : NSView
 
-@property (weak, nonatomic) IBOutlet NSSlider *dayRotationDial;
-@property (weak, nonatomic) IBOutlet NSStepper *dayWidthStepper;
-@property (weak, nonatomic) IBOutlet NSStepper *dayHeightStepper;
-@property (weak, nonatomic) IBOutlet NSStepper *dayXStepper;
-@property (weak, nonatomic) IBOutlet NSStepper *dayYStepper;
-@property (strong, nonatomic) NSFontPanel *dayFontPanel;
-@property (strong, nonatomic) NSColorPanel *dayColorPanel;
+@end
 
-@property (weak, nonatomic) IBOutlet NSSlider *monthRotationDial;
-@property (weak, nonatomic) IBOutlet NSStepper *monthWidthStepper;
-@property (weak, nonatomic) IBOutlet NSStepper *monthHeightStepper;
-@property (weak, nonatomic) IBOutlet NSStepper *monthXStepper;
-@property (weak, nonatomic) IBOutlet NSStepper *monthYStepper;
-@property (strong, nonatomic) NSColorPanel *monthColorPanel;
-@property (strong, nonatomic) NSFontPanel *monthFontPanel;
+@interface SOCalendarDockTileReplacementPageController : SOConfigurablePageControllerBase <NSComboBoxDataSource>
+@property (weak, nonatomic) IBOutlet SOCalendarPositioningView *compositionView;
+@property (weak, nonatomic) IBOutlet SODragAwareImageView *baseImageWell;
+
+@property (strong, nonatomic) IBOutlet NSColorWell *dayColorPanel;
+
+@property (strong, nonatomic) IBOutlet NSColorWell *monthColorPanel;
+
+@property (weak, nonatomic) IBOutlet NSTextField *fontNameTextField;
+@property (weak, nonatomic) IBOutlet NSComboBox *dayFontSizeComboBox;
+@property (weak, nonatomic) IBOutlet NSComboBox *monthFontSizeComboBox;
+@property (weak, nonatomic) IBOutlet NSButton *dayBoldCheckbox;
+@property (weak, nonatomic) IBOutlet NSButton *monthBoldCheckbox;
 @end

@@ -7,7 +7,15 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SOCalendarDockTileReplacementPageController">
             <connections>
+                <outlet property="baseImageWell" destination="wzB-Oa-jVA" id="4Jo-qU-aUJ"/>
                 <outlet property="compositionView" destination="FpC-Io-T70" id="aM4-do-qIQ"/>
+                <outlet property="dayBoldCheckbox" destination="LNh-9m-uSL" id="AFb-kV-Puv"/>
+                <outlet property="dayColorPanel" destination="L4V-hT-eY8" id="uJ1-ZY-8P6"/>
+                <outlet property="dayFontSizeComboBox" destination="bZ5-Jv-psn" id="wr9-4t-Omc"/>
+                <outlet property="fontNameTextField" destination="g4E-qT-NSO" id="jys-mh-eI1"/>
+                <outlet property="monthBoldCheckbox" destination="o8r-3J-lcg" id="t5q-xq-2NW"/>
+                <outlet property="monthColorPanel" destination="sEj-KB-LCA" id="5pH-o1-RGr"/>
+                <outlet property="monthFontSizeComboBox" destination="fdF-HN-atF" id="5Bt-7u-2Ah"/>
                 <outlet property="view" destination="c22-O7-iKe" id="zrY-pd-6xQ"/>
             </connections>
         </customObject>
@@ -17,10 +25,170 @@
             <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FpC-Io-T70">
-                    <rect key="frame" x="0.0" y="41" width="425" height="425"/>
+                <box fixedFrame="YES" title="Base Calendar Image" translatesAutoresizingMaskIntoConstraints="NO" id="yNA-sl-8Tg">
+                    <rect key="frame" x="396" y="332" width="330" height="114"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="p1a-1p-BEb">
+                        <rect key="frame" x="0.0" y="0.0" width="330" height="102"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wzB-Oa-jVA" customClass="SODragAwareImageView">
+                                <rect key="frame" x="122" y="7" width="87" height="87"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="TvB-wE-kvI"/>
+                                <connections>
+                                    <action selector="modifyBaseCalendarImage:" target="-2" id="z2H-Eg-Jzk"/>
+                                </connections>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="Text" translatesAutoresizingMaskIntoConstraints="NO" id="Qg7-Rh-GeE">
+                    <rect key="frame" x="396" y="106" width="330" height="218"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="O98-aq-hCe">
+                        <rect key="frame" x="0.0" y="0.0" width="330" height="206"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <colorWell identifier="monthcw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEj-KB-LCA">
+                                <rect key="frame" x="33" y="63" width="48" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="updateColor:" target="-2" id="LpH-Zv-h74"/>
+                                </connections>
+                            </colorWell>
+                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g4E-qT-NSO">
+                                <rect key="frame" x="194" y="147" width="130" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" usesSingleLineMode="YES" bezelStyle="round" id="xbf-JL-5K6">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="fontNameUpdate:" target="-2" id="gsl-Dl-AoR"/>
+                                </connections>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rdy-fX-HSY">
+                                <rect key="frame" x="114" y="151" width="74" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Font Name:" id="4tk-4v-bZ1">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZ5-Jv-psn">
+                                <rect key="frame" x="234" y="63" width="69" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="3XX-V3-Nhn">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="fontSizeChange:" target="-2" id="hja-x8-pPd"/>
+                                    <outlet property="dataSource" destination="-2" id="htx-K1-xmK"/>
+                                </connections>
+                            </comboBox>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1wi-5N-GCv">
+                                <rect key="frame" x="225" y="95" width="87" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Day Font Size" id="Xb0-5R-ANJ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <comboBox identifier="monthFontSizeBox" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdF-HN-atF">
+                                <rect key="frame" x="124" y="59" width="69" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="WJ2-ZK-az2">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="fontSizeChange:" target="-2" id="CfJ-HK-ldS"/>
+                                    <outlet property="dataSource" destination="-2" id="LdH-9g-Cjw"/>
+                                </connections>
+                            </comboBox>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qq3-4g-WNp">
+                                <rect key="frame" x="107" y="95" width="103" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Month Font Size" id="2TX-zx-0MJ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNh-9m-uSL">
+                                <rect key="frame" x="243" y="20" width="50" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Bold" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Lis-FS-KZR">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="boldChanged:" target="-2" id="xpW-0Y-M1l"/>
+                                </connections>
+                            </button>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUc-h7-btD">
+                                <rect key="frame" x="18" y="95" width="79" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Month Color" id="0tY-jP-Uil">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <colorWell identifier="daycw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4V-hT-eY8">
+                                <rect key="frame" x="33" y="119" width="48" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="updateColor:" target="-2" id="OXz-00-3Zi"/>
+                                </connections>
+                            </colorWell>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sW-F8-KxL">
+                                <rect key="frame" x="25" y="151" width="64" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Day Color" id="gJZ-fc-PEe">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button identifier="monthBold" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o8r-3J-lcg">
+                                <rect key="frame" x="133" y="20" width="50" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Bold" bezelStyle="regularSquare" imagePosition="left" inset="2" id="26k-ZL-tf4">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="boldChanged:" target="-2" id="Epm-Ej-xTR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                </box>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FpC-Io-T70" customClass="SOCalendarPositioningView">
+                    <rect key="frame" x="20" y="58" width="350" height="350"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </customView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gdM-tW-jjs">
+                    <rect key="frame" x="526" y="58" width="70" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Redraw" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dYT-3V-uHJ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doRedraw:" target="-2" id="DIN-hd-Sca"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="139" y="154"/>
         </customView>

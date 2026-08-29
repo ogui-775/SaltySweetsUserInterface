@@ -21,86 +21,75 @@
             <rect key="frame" x="0.0" y="0.0" width="746" height="466"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <box fixedFrame="YES" title="Dock Clock Icon" translatesAutoresizingMaskIntoConstraints="NO" id="GY6-2g-T9U">
-                    <rect key="frame" x="20" y="20" width="706" height="426"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <view key="contentView" id="QGA-fo-gSW">
-                        <rect key="frame" x="0.0" y="0.0" width="706" height="412"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rSc-Qr-reo" customClass="SOClockDisplayView">
-                                <rect key="frame" x="182" y="54" width="344" height="304"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                            </customView>
-                            <button identifier="f" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kho-5O-5ge">
-                                <rect key="frame" x="20" y="20" width="51" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="radio" title="Face" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="RRC-Py-Dw8">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="radioWasPressed:" target="-2" id="Uyh-Ja-dwg"/>
-                                </connections>
-                            </button>
-                            <button identifier="m" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3wv-MJ-IxD">
-                                <rect key="frame" x="79" y="20" width="100" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="radio" title="Minute Hand" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="D5W-PG-WLl">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="radioWasPressed:" target="-2" id="PFC-hG-15k"/>
-                                </connections>
-                            </button>
-                            <button identifier="h" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UVB-PY-nqr">
-                                <rect key="frame" x="187" y="20" width="88" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="radio" title="Hour Hand" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="KS7-B5-PV2">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="radioWasPressed:" target="-2" id="Xtd-Ym-IBW"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-al-oUF">
-                                <rect key="frame" x="308" y="16" width="97" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Clear Image" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zi5-0e-v9c">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="clearButtonWasPressed:" target="-2" id="SHY-UL-JmL"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFo-vW-p1G">
-                                <rect key="frame" x="588" y="20" width="98" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" title="Center Point" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gCw-64-8Ad">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="centerPointIsDesired:" target="-2" id="uvq-37-EgX"/>
-                                </connections>
-                            </button>
-                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drI-fn-g6I">
-                                <rect key="frame" x="18" y="367" width="670" height="32"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" id="5AQ-xo-1Iv">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <string key="title">Drag an image into the center view for each component of the clock. Select the component with the radio buttons. The clock will not draw properly without all three images. Clear the image by pressing the clear button for the selected type.</string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                    </view>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
+                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drI-fn-g6I">
+                    <rect key="frame" x="44" y="414" width="670" height="32"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" id="5AQ-xo-1Iv">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Drag an image into the center view for each component of the clock. Select the component with the radio buttons. The clock will not draw properly without all three images. Clear the image by pressing the clear button for the selected type.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rSc-Qr-reo" customClass="SOClockDisplayView">
+                    <rect key="frame" x="207" y="81" width="344" height="304"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                </customView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFo-vW-p1G">
+                    <rect key="frame" x="628" y="20" width="98" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="check" title="Center Point" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gCw-64-8Ad">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="centerPointIsDesired:" target="-2" id="uvq-37-EgX"/>
+                    </connections>
+                </button>
+                <button identifier="f" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kho-5O-5ge">
+                    <rect key="frame" x="20" y="20" width="51" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Face" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="RRC-Py-Dw8">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="radioWasPressed:" target="-2" id="Uyh-Ja-dwg"/>
+                    </connections>
+                </button>
+                <button identifier="m" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3wv-MJ-IxD">
+                    <rect key="frame" x="79" y="20" width="100" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Minute Hand" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="D5W-PG-WLl">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="radioWasPressed:" target="-2" id="PFC-hG-15k"/>
+                    </connections>
+                </button>
+                <button identifier="h" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UVB-PY-nqr">
+                    <rect key="frame" x="187" y="20" width="88" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Hour Hand" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="KS7-B5-PV2">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="radioWasPressed:" target="-2" id="Xtd-Ym-IBW"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-al-oUF">
+                    <rect key="frame" x="283" y="16" width="97" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="push" title="Clear Image" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zi5-0e-v9c">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clearButtonWasPressed:" target="-2" id="SHY-UL-JmL"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="138" y="154"/>
         </customView>

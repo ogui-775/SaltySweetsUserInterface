@@ -72,9 +72,10 @@
         return;
     
     if (change.plistValue){
-        for (NSString *component in change.plistKeyPath->components){
-            rootDict = rootDict[component];
-        }
+        if (![change.plistKey->key isEqualToString:kSOIconsDockTilePluginDict.key])
+            for (NSString *component in change.plistKeyPath->components){
+                rootDict = rootDict[component];
+            }
         
         [rootDict setObject:change.plistValue forKey:change.plistKeyPath->components.lastObject];
         return;

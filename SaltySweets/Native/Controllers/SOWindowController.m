@@ -20,6 +20,13 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
                                               atIndex:1];
 }
 
+- (void)windowDidLoad{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NSFontPanel sharedFontPanel] close];
+    });
+}
+
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag{
     if ([itemIdentifier isEqualToString:itemId]){
         NSMenuToolbarItem *menuItem = [[NSMenuToolbarItem alloc] initWithItemIdentifier:itemId];

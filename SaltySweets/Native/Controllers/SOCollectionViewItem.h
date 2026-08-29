@@ -2,6 +2,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
+#import <CoreImage/CIFilterBuiltins.h>
 
 @class SOCollectionViewItemButton;
 

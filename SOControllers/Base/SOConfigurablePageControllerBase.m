@@ -210,6 +210,26 @@
     [self.changeDelegate contentDidChangeState:self];
 }
 
+- (void)setPendingIconChangeForKeypath:(const SOEncodedKeyPath *)key
+                                 value:(id)value
+                                  note:(NSString *)note{
+    if (!self.baselineState) return;
+    
+    NSString *baselineValue = [self getBaselineForEncodedKeypath:key];
+    
+    if ((baselineValue == nil && value) || ![baselineValue isEqualTo:value]) {
+        SOChange * change = [SOChange iconPlistChangeWithEncodedKeypath:key
+                                                                  value:value
+                                                                   note:note];
+        
+        [self setChangeObject:change forEncodedKeypath:key];
+    } else {
+        [self setChangeObject:nil forEncodedKeypath:key];
+    }
+    
+    [self.changeDelegate contentDidChangeState:self];
+}
+
 - (NSUInteger)setPendingKeyStringChangeForKeypath:(const SOEncodedKeyPath *)key
                            withReplacementKeypath:(const SOEncodedKeyPath *)replacementKey
                       andOptionalValueReplacement:(NSString *)newBaselineValue{
