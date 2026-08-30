@@ -133,9 +133,11 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     
     self.monthFontSizeComboBox.intValue = (int)self.config.monthFontSize;
     
-    self.dayBoldCheckbox.state = [self getBaselineForEncodedKeypath:&tDayBold] ? NSControlStateValueOn : NSControlStateValueOff;
+    self.dayBoldCheckbox.state = [self getBaselineForEncodedKeypath:&tDayBold]
+                                    ? NSControlStateValueOn : NSControlStateValueOff;
     
-    self.monthBoldCheckbox.state = [self getBaselineForEncodedKeypath:&tMonthBold] ? NSControlStateValueOn : NSControlStateValueOff;
+    self.monthBoldCheckbox.state = [self getBaselineForEncodedKeypath:&tMonthBold]
+                                        ? NSControlStateValueOn : NSControlStateValueOff;
     
     CGFloat scaleX = self.compositionView.layer.bounds.size.width / 128.0;
     CGFloat scaleY = self.compositionView.layer.bounds.size.height / 128.0;
@@ -184,7 +186,9 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     
     self.monthOriginHandle.position = CGPointMake(-5, -5);
     
-    [self drawCalendar];
+    self.datePicker.dateValue = [NSDate now];
+    
+    [self drawCalendarWithDate:[NSDate now]];
 }
 
 - (IBAction)modifyBaseCalendarImage:(SODragAwareImageView *)sender{
@@ -203,7 +207,6 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
 
     if (!sender.image){
         [self.undoManager setActionName:@"Clear Calendar"];
-
         [self setPendingIconResourceChangeForKeypath:&tCal
                                             resource:nil
                                             filename:nil
@@ -213,12 +216,16 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     }
 
     [self.undoManager setActionName:@"Set Calendar"];
-
     [self setPendingIconResourceChangeForKeypath:&tCal
                                         resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
                                         filename:sender.draggedFileURL.lastPathComponent
                                             note:[NSString stringWithFormat:@"Set Calendar Base Image to %@",
                                                   sender.draggedFileURL.lastPathComponent]];
+}
+
+- (IBAction)moveToCenter:(NSButton *)sender{
+    self.monthRect.frame = CGRectMake(5, 25, 30, 30);
+    self.dayRect.frame   = CGRectMake(5, 5, 30, 30);
 }
 
 - (IBAction)updateColor:(NSColorWell *)sender{
@@ -387,7 +394,7 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
 }
 
 - (IBAction)doRedraw:(id)sender{
-    [self drawCalendar];
+    [self drawCalendarWithDate:[self.datePicker dateValue]];
 }
 
 - (void)mouseDown:(NSEvent *)event{
@@ -516,7 +523,7 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     self.dayOriginHandle.position = CGPointMake(-5, -5);
     self.monthOriginHandle.position = CGPointMake(-5, -5);
 
-    [self drawCalendar];
+    [self drawCalendarWithDate:[self.datePicker dateValue]];
 
     [CATransaction commit];
     
@@ -644,7 +651,7 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     return ret;
 }
 
-- (void)drawCalendar{
+- (void)drawCalendarWithDate:(NSDate *)date{
     NSImage *base = self.baseImageWell.image ?: [self loadImageForEncodedKeypath:&tCal];
 
     if (!base)
@@ -659,7 +666,7 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
 
     CGImageRef outImage = [SOCalendarDrawing drawDateStringsToImage:img
                                                          withConfig:[self config]
-                                                           withDate:[NSDate now]];
+                                                           withDate:date];
 
     if (!outImage)
         return;
@@ -668,6 +675,10 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
                                                  size:CGSizeMake(0, 0)];
 
     [self.compositionView.layer setContents:drawn];
+}
+
+- (IBAction)updateDateForDisplayOnly:(NSDatePicker *)sender{
+    [self drawCalendarWithDate:sender.dateValue];
 }
 @end
 

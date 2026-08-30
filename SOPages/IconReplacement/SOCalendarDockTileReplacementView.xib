@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="baseImageWell" destination="wzB-Oa-jVA" id="4Jo-qU-aUJ"/>
                 <outlet property="compositionView" destination="FpC-Io-T70" id="aM4-do-qIQ"/>
+                <outlet property="datePicker" destination="mGZ-WJ-9jE" id="sEA-TY-w99"/>
                 <outlet property="dayBoldCheckbox" destination="LNh-9m-uSL" id="AFb-kV-Puv"/>
                 <outlet property="dayColorPanel" destination="L4V-hT-eY8" id="uJ1-ZY-8P6"/>
                 <outlet property="dayFontSizeComboBox" destination="bZ5-Jv-psn" id="wr9-4t-Omc"/>
@@ -51,7 +52,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <colorWell identifier="monthcw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEj-KB-LCA">
-                                <rect key="frame" x="33" y="63" width="48" height="24"/>
+                                <rect key="frame" x="23" y="78" width="48" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -59,7 +60,7 @@
                                 </connections>
                             </colorWell>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g4E-qT-NSO">
-                                <rect key="frame" x="194" y="147" width="130" height="24"/>
+                                <rect key="frame" x="184" y="162" width="130" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" usesSingleLineMode="YES" bezelStyle="round" id="xbf-JL-5K6">
                                     <font key="font" metaFont="system"/>
@@ -71,7 +72,7 @@
                                 </connections>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rdy-fX-HSY">
-                                <rect key="frame" x="114" y="151" width="74" height="16"/>
+                                <rect key="frame" x="104" y="166" width="74" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Font Name:" id="4tk-4v-bZ1">
                                     <font key="font" metaFont="system"/>
@@ -80,7 +81,7 @@
                                 </textFieldCell>
                             </textField>
                             <comboBox focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZ5-Jv-psn">
-                                <rect key="frame" x="234" y="63" width="69" height="24"/>
+                                <rect key="frame" x="234" y="78" width="69" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="3XX-V3-Nhn">
                                     <font key="font" metaFont="system"/>
@@ -93,7 +94,7 @@
                                 </connections>
                             </comboBox>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1wi-5N-GCv">
-                                <rect key="frame" x="225" y="95" width="87" height="16"/>
+                                <rect key="frame" x="225" y="110" width="87" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Day Font Size" id="Xb0-5R-ANJ">
                                     <font key="font" metaFont="system"/>
@@ -102,7 +103,7 @@
                                 </textFieldCell>
                             </textField>
                             <comboBox identifier="monthFontSizeBox" focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdF-HN-atF">
-                                <rect key="frame" x="124" y="59" width="69" height="24"/>
+                                <rect key="frame" x="124" y="78" width="69" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="WJ2-ZK-az2">
                                     <font key="font" metaFont="system"/>
@@ -115,7 +116,7 @@
                                 </connections>
                             </comboBox>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qq3-4g-WNp">
-                                <rect key="frame" x="107" y="95" width="103" height="16"/>
+                                <rect key="frame" x="107" y="110" width="103" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Month Font Size" id="2TX-zx-0MJ">
                                     <font key="font" metaFont="system"/>
@@ -124,7 +125,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNh-9m-uSL">
-                                <rect key="frame" x="243" y="20" width="50" height="16"/>
+                                <rect key="frame" x="243" y="54" width="50" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Bold" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Lis-FS-KZR">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -135,7 +136,7 @@
                                 </connections>
                             </button>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUc-h7-btD">
-                                <rect key="frame" x="18" y="95" width="79" height="16"/>
+                                <rect key="frame" x="8" y="110" width="79" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Month Color" id="0tY-jP-Uil">
                                     <font key="font" metaFont="system"/>
@@ -144,7 +145,7 @@
                                 </textFieldCell>
                             </textField>
                             <colorWell identifier="daycw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4V-hT-eY8">
-                                <rect key="frame" x="33" y="119" width="48" height="24"/>
+                                <rect key="frame" x="23" y="134" width="48" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -152,7 +153,7 @@
                                 </connections>
                             </colorWell>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sW-F8-KxL">
-                                <rect key="frame" x="25" y="151" width="64" height="16"/>
+                                <rect key="frame" x="15" y="166" width="64" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Day Color" id="gJZ-fc-PEe">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -161,7 +162,7 @@
                                 </textFieldCell>
                             </textField>
                             <button identifier="monthBold" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o8r-3J-lcg">
-                                <rect key="frame" x="133" y="20" width="50" height="16"/>
+                                <rect key="frame" x="133" y="54" width="50" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Bold" bezelStyle="regularSquare" imagePosition="left" inset="2" id="26k-ZL-tf4">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -171,15 +172,35 @@
                                     <action selector="boldChanged:" target="-2" id="Epm-Ej-xTR"/>
                                 </connections>
                             </button>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uda-Sm-d1L">
+                                <rect key="frame" x="5" y="54" width="84" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Date Preview" id="ogn-ze-Phh">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mGZ-WJ-9jE">
+                                <rect key="frame" x="7" y="26" width="98" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <datePickerCell key="cell" borderStyle="bezel" alignment="left" useCurrentDate="YES" id="qhO-QY-Rus">
+                                    <font key="font" metaFont="system"/>
+                                    <date key="date" timeIntervalSinceReferenceDate="809742769.67131805">
+                                        <!--2026-08-30 00:32:49 +0000-->
+                                    </date>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                </datePickerCell>
+                                <connections>
+                                    <action selector="updateDateForDisplayOnly:" target="-2" id="exp-2f-t0F"/>
+                                </connections>
+                            </datePicker>
                         </subviews>
                     </view>
                 </box>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FpC-Io-T70" customClass="SOCalendarPositioningView">
-                    <rect key="frame" x="20" y="58" width="350" height="350"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                </customView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gdM-tW-jjs">
-                    <rect key="frame" x="526" y="58" width="70" height="24"/>
+                    <rect key="frame" x="656" y="58" width="70" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Redraw" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dYT-3V-uHJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -187,6 +208,21 @@
                     </buttonCell>
                     <connections>
                         <action selector="doRedraw:" target="-2" id="DIN-hd-Sca"/>
+                    </connections>
+                </button>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FpC-Io-T70" customClass="SOCalendarPositioningView">
+                    <rect key="frame" x="20" y="58" width="350" height="350"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                </customView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YHu-v0-5W6">
+                    <rect key="frame" x="396" y="58" width="145" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Move rects to origin" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ebB-6x-tRO">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="moveToCenter:" target="-2" id="zdD-Ij-9Jh"/>
                     </connections>
                 </button>
             </subviews>

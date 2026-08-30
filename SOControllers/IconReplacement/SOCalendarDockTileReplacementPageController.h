@@ -20,4 +20,6 @@
 @property (weak, nonatomic) IBOutlet NSComboBox *monthFontSizeComboBox;
 @property (weak, nonatomic) IBOutlet NSButton *dayBoldCheckbox;
 @property (weak, nonatomic) IBOutlet NSButton *monthBoldCheckbox;
+
+@property (weak, nonatomic) IBOutlet NSDatePicker *datePicker;
 @end
