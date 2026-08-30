@@ -4,15 +4,11 @@
 @property (strong) SOCalendarConfigHolder *config;
 
 @property (strong) CALayer *monthRect;
-
 @property (strong) CALayer *dayRect;
 
 @property (strong) CAShapeLayer *monthRotateHandle;
-
 @property (strong) CAShapeLayer *dayRotateHandle;
-
 @property (strong) CAShapeLayer *monthOriginHandle;
-
 @property (strong) CAShapeLayer *dayOriginHandle;
 
 @property (weak) CAShapeLayer *activeHandle;
@@ -44,33 +40,24 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     [super awakeFromNib];
 
     [self.compositionView setWantsLayer:YES];
-
     [self.compositionView.layer setBackgroundColor:NSColor.darkGrayColor.CGColor];
 
     [[SOAtomicAccessPoint sharedInstance] registerUndoManagerForClear:self.undoManager withController:self];
 
     self.monthRect = [CALayer layer];
-
     self.dayRect = [CALayer layer];
 
     [self.compositionView.layer addSublayer:self.monthRect];
-
     [self.compositionView.layer addSublayer:self.dayRect];
 
     self.monthRotateHandle = [CAShapeLayer layer];
-
     self.dayRotateHandle = [CAShapeLayer layer];
 
     [self.monthRect addSublayer:self.monthRotateHandle];
-
     [self.dayRect addSublayer:self.dayRotateHandle];
-
     self.monthOriginHandle = [CAShapeLayer layer];
-
     self.dayOriginHandle = [CAShapeLayer layer];
-
     [self.monthRect addSublayer:self.monthOriginHandle];
-
     [self.dayRect addSublayer:self.dayOriginHandle];
 
     NSBezierPath *cir = [NSBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 10, 10)
@@ -80,39 +67,22 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
                                                              yRadius:90];
 
     self.monthRotateHandle.path = [cir CGPath];
-
     self.monthRotateHandle.fillColor = [NSColor whiteColor].CGColor;
-
     self.monthRotateHandle.bounds = CGRectMake(0, 0, 10, 10);
-
     self.monthRotateHandle.anchorPoint = CGPointMake(0, 0);
-
     self.dayRotateHandle.path = [cir CGPath];
-
     self.dayRotateHandle.fillColor = [NSColor whiteColor].CGColor;
-
     self.dayRotateHandle.bounds = CGRectMake(0, 0, 10, 10);
-
     self.dayRotateHandle.anchorPoint = CGPointMake(0, 0);
-
     self.monthOriginHandle.path = [cir CGPath];
-
     self.monthOriginHandle.fillColor = [NSColor whiteColor].CGColor;
-
     self.monthOriginHandle.bounds = CGRectMake(0, 0, 10, 10);
-
     self.monthOriginHandle.anchorPoint = CGPointMake(0, 0);
-
     self.dayOriginHandle.path = [cir CGPath];
-
     self.dayOriginHandle.fillColor = [NSColor whiteColor].CGColor;
-
     self.dayOriginHandle.bounds = CGRectMake(0, 0, 10, 10);
-
     self.dayOriginHandle.anchorPoint = CGPointMake(0, 0);
-
     self.monthRect.anchorPoint = CGPointMake(0, 0);
-
     self.dayRect.anchorPoint = CGPointMake(0, 0);
 
     [self refreshOrLoadBaseline];
