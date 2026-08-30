@@ -6,11 +6,13 @@ const NSString *image = @"image";
 const NSString *text  = @"text";
 const NSString *pageControllerClass  = @"pageControllerClass";
 const NSString *preferenceImage = @"preferenceImage";
+const NSString *opensWindow = @"opensWindow";
 const NSString *shouldDisplay = @"shouldDisplay";
 
 #pragma mark - Controller
 @interface SONavigatorBarMaster ()
 @property (strong, nonatomic) NSMutableDictionary *controllerClassToInstance;
+@property (strong, nonatomic) SONSWindowAuxController *creationStudioController;
 @end
 
 @implementation SONavigatorBarMaster
@@ -50,12 +52,22 @@ const NSString *shouldDisplay = @"shouldDisplay";
 }
 
 - (void)itemWasSelectedInMenu:(SOCollectionViewItemButton *)sender{
+    if (sender.delegate.isSiconStudioButton){
+        if (!self.creationStudioController)
+            self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
+        
+        [self.creationStudioController.window makeKeyAndOrderFront:nil];
+        return;
+    }
     NSViewController *c = [sender.delegate boundController];
     
     [self navigateToViewController:c withTitle:[sender title]];
 }
 
 - (void)navigateToViewController:(NSViewController *)c withTitle:(NSString *)title{
+    if (!c)
+        return;
+    
     [[SOViewPane defaultInstance] clearDisplayView];
     [[NSApp mainWindow] setTitle:title];
     [self.mainMenuController.collectionView deselectAll:nil];
@@ -98,7 +110,8 @@ const NSString *shouldDisplay = @"shouldDisplay";
 - (NSArray *)homeTableRowData{
     return @[
         @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class, shouldDisplay:@NO},
-        @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:@"i_gear"}
+        @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:@"i_gear"},
+        @{image:@"box", text:@"Sicon Studio", preferenceImage:@"i_studio", opensWindow:@YES}
     ];
 }
 
@@ -147,26 +160,38 @@ const NSString *shouldDisplay = @"shouldDisplay";
     NSMutableArray *ret = [NSMutableArray array];
     
     for (NSDictionary *tableDict in array){
-        Class cc = [tableDict objectForKey:pageControllerClass];
+        SONavigatorBarItem *item = nil;
         
-        if (!cc)
-            continue;
-        
-        NSViewController *vc = self.controllerClassToInstance[[cc className]];
-        if (!vc) {
-            vc = [cc new];
-            self.controllerClassToInstance[[cc className]] = vc;
-        }
-        
-        if ([tableDict objectForKey:shouldDisplay]){
-            if (![[tableDict objectForKey:shouldDisplay] boolValue])
+        if ([tableDict objectForKey:opensWindow]){
+            if ([[tableDict objectForKey:opensWindow] boolValue]){
+                item = [[SONavigatorBarItem alloc] initWithFallbackSymbolName:[tableDict objectForKey:image]
+                                                          preferredImageNamed:[tableDict objectForKey:preferenceImage]
+                                                                        title:[tableDict objectForKey:text]
+                                                                   controller:nil];
+                [item setIdentifier:@"siconstudio"];
+            }
+        } else {
+            Class cc = [tableDict objectForKey:pageControllerClass];
+            
+            if (!cc)
                 continue;
+            
+            NSViewController *vc = self.controllerClassToInstance[[cc className]];
+            if (!vc) {
+                vc = [cc new];
+                self.controllerClassToInstance[[cc className]] = vc;
+            }
+            
+            if ([tableDict objectForKey:shouldDisplay]){
+                if (![[tableDict objectForKey:shouldDisplay] boolValue])
+                    continue;
+            }
+            
+            item = [[SONavigatorBarItem alloc] initWithFallbackSymbolName:[tableDict objectForKey:image]
+                                                      preferredImageNamed:[tableDict objectForKey:preferenceImage]
+                                                                    title:[tableDict objectForKey:text]
+                                                               controller:vc];
         }
-
-        SONavigatorBarItem *item = [[SONavigatorBarItem alloc] initWithFallbackSymbolName:[tableDict objectForKey:image]
-                                                                      preferredImageNamed:[tableDict objectForKey:preferenceImage]
-                                                                                    title:[tableDict objectForKey:text]
-                                                                               controller:vc];
         
         [ret addObject:item];
     }

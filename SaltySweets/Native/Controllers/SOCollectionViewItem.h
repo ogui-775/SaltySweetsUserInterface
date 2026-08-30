@@ -10,6 +10,7 @@
 @interface SOCollectionViewItem : NSCollectionViewItem
 @property (strong) SOCollectionViewItemButton *innerButton;
 @property (weak) NSViewController *boundController;
+@property (assign) BOOL isSiconStudioButton;
 @end
 
 @interface SOCollectionViewItemButton : NSButton

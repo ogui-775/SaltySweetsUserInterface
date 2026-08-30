@@ -1,9 +1,11 @@
 //Created by Salty on 8/7/26.
 
 #import "SOMainMenuView.h"
+#import "SODisplayCurrentsPageController.h"
 
 @interface SOMainMenuView ()
 @property (strong) NSDictionary<NSNumber *, NSArray *> *itemsBySectionIndex;
+@property (strong) SODisplayCurrentsPageController *contentsController;
 @end
 
 @implementation SOMainMenuView
@@ -16,6 +18,24 @@
     self.collectionView.collectionViewLayout = [[SOMainMenuLayout alloc] initCustom];
     
     [self.collectionView reloadData];
+    
+    [self.view addSubview:self.contentsController.view
+               positioned:NSWindowAbove
+               relativeTo:self.collectionView];
+    
+    NSUInteger viewWidth = [[self view] bounds].size.width;
+    NSUInteger contentWidth = [[[self contentsController] view] bounds].size.width;
+    NSUInteger contentHeight = [[[self contentsController] view] bounds].size.height;
+    
+    [self.contentsController.view setFrame:CGRectMake(viewWidth - contentWidth - 5,
+                                                      10,
+                                                      contentWidth,
+                                                      contentHeight)];
+}
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    self.contentsController = [[SODisplayCurrentsPageController alloc] init];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView{
@@ -38,6 +58,9 @@
     item.innerButton.target         = self.delegate;
     item.innerButton.collectionView = self.collectionView;
     item.boundController            = sourceItem.viewController;
+    
+    if ([[sourceItem identifier] isEqualToString:@"siconstudio"])
+        item.isSiconStudioButton = YES;
     
     return item;
 }

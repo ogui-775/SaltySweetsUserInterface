@@ -19,22 +19,14 @@
 @end
 
 @implementation SOCalendarDockTileReplacementPageController
-const SOEncodedKeyPath tCal = {
-    .rootKey = &kSOIconsDockTilePluginDict,
-    .components = @[@"calendar.base"]
-};
-
-const SOEncodedKeyPath tDayCol = {
-    .rootKey = &kSOIconsDockTilePluginDict,
-    .components = @[@"calendar.day.font.color"]
-};
-
+const SOEncodedKeyPath tCal = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.base"]};
+const SOEncodedKeyPath tDayCol = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.day.font.color"]};
 const SOEncodedKeyPath tMonthCol = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.month.font.color"] };
 const SOEncodedKeyPath tFontName = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.font.typeface"] };
-const SOEncodedKeyPath tFontSizeMonth = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.day.font.size"] };
+const SOEncodedKeyPath tFontSizeMonth = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.month.font.size"] };
 const SOEncodedKeyPath tFontSizeDay = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.day.font.size"] };
 const SOEncodedKeyPath tDayBold = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.day.font.bold"] };
-const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.day.month.bold"] };
+const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .components = @[@"calendar.month.font.bold"] };
 
 - (void)awakeFromNib{
     [super awakeFromNib];

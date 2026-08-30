@@ -186,8 +186,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" useCurrentDate="YES" id="qhO-QY-Rus">
                                     <font key="font" metaFont="system"/>
-                                    <date key="date" timeIntervalSinceReferenceDate="809742769.67131805">
-                                        <!--2026-08-30 00:32:49 +0000-->
+                                    <date key="date" timeIntervalSinceReferenceDate="809785519.63321102">
+                                        <!--2026-08-30 12:25:19 +0000-->
                                     </date>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>

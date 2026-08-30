@@ -52,12 +52,4 @@ static __strong AppDelegate *_instance;
 
     return YES;
 }
-
-- (IBAction)siconStudioMenuWasClicked:(NSMenuItem *)sender{
-    if (!self.creationStudioController)
-        self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
-    
-
-    [self.creationStudioController.window makeKeyAndOrderFront:nil];
-}
 @end

@@ -44,6 +44,11 @@ static SOViewPane * _instance = nil;
     }
 }
 
+- (void)registerConfigurablePageControllerForBaselineUpdates:(id<SOConfigurableContent>)configurableController{
+    if (![self.childViewControllers containsObject:(NSViewController *)configurableController])
+        [self addChildViewController:(NSViewController *)configurableController];
+}
+
 - (void)contentDidChangeState:(id<SOConfigurableContent>)content{
     if (!self.pendingChangesCache)
         self.pendingChangesCache = [NSMapTable strongToStrongObjectsMapTable];

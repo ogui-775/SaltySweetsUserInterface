@@ -3,17 +3,7 @@
 #import "SOCollectionViewItem.h"
 
 @implementation SOCollectionViewItemButton
-- (void)drawRect:(NSRect)dirtyRect{
-    [super drawRect:dirtyRect];
-    
-    if (self.highlighted){
-        CIFilter *darkenFilter = [CIFilter filterWithName:@"CIColorControls"];
-        [darkenFilter setValue:@(-0.20) forKey:kCIInputBrightnessKey];
-        self.layer.filters = @[darkenFilter];
-    } else {
-        self.layer.filters = @[];
-    }
-}
+
 @end
 
 @implementation SOCollectionViewItem

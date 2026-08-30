@@ -252,19 +252,6 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Sicon" id="eRe-Aw-aDU">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Sicon" id="92b-NI-mwk">
-                        <items>
-                            <menuItem title="Open Studio" secondaryImage="NSIconViewTemplate" id="6zj-LA-Dzp">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="siconStudioMenuWasClicked:" target="5sB-SQ-gEA" id="sds-Gp-r69"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
                 <menuItem title="Window" id="WTd-3b-PRY">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="4f7-Je-1eR">
@@ -352,7 +339,6 @@
     </objects>
     <resources>
         <image name="NSAddTemplate" width="18" height="17"/>
-        <image name="NSIconViewTemplate" width="19" height="18"/>
         <image name="NSTouchBarDeleteTemplate" width="19" height="22"/>
         <image name="finder" catalog="system" width="16" height="15"/>
         <image name="folder" catalog="system" width="18" height="14"/>

@@ -111,7 +111,7 @@ FOUNDATION_EXPORT NSString * SONotificationBaseClassUpdateBaseline;
 @end
 
 @protocol SOConfigurableContentDelegate <NSObject>
-@property (nonatomic, strong) NSMapTable<id<SOConfigurableContent>, NSArray<SOChange *> *> * pendingChangesCache;
+@property (nonatomic, strong) NSMapTable<id<SOConfigurableContent>, NSArray<SOChange *> *> *pendingChangesCache;
 
 - (void)contentDidChangeState:(id<SOConfigurableContent>)content;
 @end
