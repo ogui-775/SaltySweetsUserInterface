@@ -3,7 +3,13 @@
 #import "SOCollectionViewItem.h"
 
 @implementation SOCollectionViewItemButton
+- (instancetype)initWithFrame:(NSRect)frameRect{
+    self = [super initWithFrame:frameRect];
+    if (self){
 
+    }
+    return self;
+}
 @end
 
 @implementation SOCollectionViewItem

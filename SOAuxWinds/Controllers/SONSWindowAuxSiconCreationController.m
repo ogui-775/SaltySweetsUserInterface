@@ -40,7 +40,6 @@ typedef enum : NSUInteger {
 - (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil context:(SONSWindowAuxContextSiconCreation *)ctx{
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]){
         self.context = ctx;
-        self.loadedSiconDataDict = [self defaultTableValues];
         self.keyToCreationHolder = [NSMutableDictionary dictionary];
     }
     return self;
@@ -62,65 +61,6 @@ typedef enum : NSUInteger {
     }
     
     [self updateWells];
-}
-
-- (NSMutableDictionary *)defaultTableValues{
-    NSArray *keys = [self tableSetKeys];
-    return [NSMutableDictionary dictionaryWithDictionary:@{
-        keys[0] : @"SICO",
-        keys[1] : @1,
-        keys[2] : @0,
-        keys[3] : @(sizeof(SOSiconHeader)),
-        keys[4] : @(sizeof(SOSiconHeader) + (sizeof(SOSiconDescriptor) * [[self.loadedSiconDataDict objectForKey:@"Image Count"] intValue])),
-        keys[5] : @0,
-        keys[6] : @"NO",
-        keys[7] : @"NO"
-    }];
-}
-
-- (NSArray *)tableSetKeys{
-    return @[
-        @"Magic",
-        @"Version",
-        @"Image Count",
-        @"Descriptor Offset",
-        @"Data Offset",
-        @"File Size",
-        @"Has Selected Variant",
-        @"Has Dark Variant"
-    ];
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return self.loadedSiconDataDict.count;
-}
-
-- (NSView *)tableView:(NSTableView *)tableView
-    viewForTableColumn:(NSTableColumn *)tableColumn
-                   row:(NSInteger)row
-{
-    NSTextField *cell =
-        [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    
-    if (!cell)
-        cell = [[NSTextField alloc] initWithFrame:tableView.bounds];
-    
-    cell.editable = NO;
-    cell.drawsBackground = NO;
-    cell.bordered = NO;
-
-    NSString *key = [self tableSetKeys][row];
-
-    if ([tableColumn.identifier isEqualToString:@"c0"]) {
-        cell.stringValue = key;
-    } else if ([tableColumn.identifier isEqualToString:@"c1"]) {
-        id value = self.loadedSiconDataDict[key];
-        cell.stringValue = [value description];
-    }
-
-    cell.font = [NSFont fontWithName:@"Helvetica" size:10];
-    
-    return cell;
 }
 
 - (CGSize)getSizeForSelectedSegment{
@@ -154,7 +94,6 @@ typedef enum : NSUInteger {
 - (IBAction)newSiconWasClicked:(NSMenuItem *)sender{
     self.context = [SONSWindowAuxContextSiconCreation siconCreationContext];
     self.nameField.stringValue = @"";
-    self.loadedSiconDataDict = [self defaultTableValues];
     self.darkVariantFilesize.stringValue = @"";
     self.lightFilesize.stringValue = @"";
     self.selectedVariantFilesize.stringValue = @"";
@@ -193,40 +132,37 @@ typedef enum : NSUInteger {
 
 - (void)processICNS:(ISIcns *)icns{
     NSString *name = [icns name];
-    
-    NSMutableDictionary *indexes = [NSMutableDictionary dictionary];
-    
-    for (NSNumber *scale in @[@(1), @(2)]){
-        NSMutableDictionary *inner = [NSMutableDictionary dictionary];
-        [indexes setObject:inner forKey:scale];
-        for (NSNumber *size in @[@(16), @(32), @(128), @(256), @(512)]){
-            NSInteger idx = [icns iconIndexForSize:CGSizeMake(size.longValue, size.longValue)
-                                             scale:scale.longValue];
-            [inner setObject:@(idx) forKey:size];
+
+    [icns enumerateElementsUsingBlock:^(NSUInteger index, uint32_t type, NSData *data, BOOL *stop) {
+        WellType wtype = [name isEqualToString:@"dark"] ? Dark : [name isEqualToString:@"selected"] ? Selected : Light;
+        CGSize   size  = [icns sizeAtIndex:index];
+        long    scale  = [icns scaleAtIndex:index];
+        NSString *key  = [SOCreationHolder keyForWellType:wtype
+                                                    scale:(uint)scale
+                                                     size:size];
+        
+        SOCreationHolder *holder = [SOCreationHolder new];
+        holder.key = key;
+        holder.displayImage = [[NSImage alloc] initWithData:data];
+        holder.icnsData = data;
+        
+        if (!holder.displayImage){
+            CGImageRef img = [icns copyCGImageWithIndex:index];
             
-            WellType type = [name isEqualToString:@"dark"] ? Dark : [name isEqualToString:@"selected"] ? Selected : Light;
-            CGSize   size = [icns sizeAtIndex:idx];
-            long    scale = [icns scaleAtIndex:idx];
-            NSString *key = [SOCreationHolder keyForWellType:type scale:(uint)scale size:size];
-            NSData *data  = [icns dataAtIndex:idx];
-            
-            SOCreationHolder *holder = [SOCreationHolder new];
-            holder.key = key;
-            CGImageSourceRef src = CGImageSourceCreateWithData(((__bridge CFDataRef)data), NULL);
-            CGImageRef img = CGImageSourceCreateImageAtIndex(src, 0, NULL);
             if (img){
-                NSImage *image = [[NSImage alloc] initWithCGImage:img size:size];
-                holder.displayImage = image;
+                holder.displayImage = [[NSImage alloc] initWithCGImage:img size:size];
+                
+                if (holder.displayImage.TIFFRepresentation)
+                    holder.icnsData = holder.displayImage.TIFFRepresentation;
+                
                 CGImageRelease(img);
-                CFRelease(src);
             }
-            holder.icnsData = data;
-            
-            [self willChangeValueForKey:@"keyToCreationHolder"];
-            [self.keyToCreationHolder setObject:holder forKey:key];
-            [self didChangeValueForKey:@"keyToCreationHolder"];
         }
-    }
+        
+        [self willChangeValueForKey:@"keyToCreationHolder"];
+        [self.keyToCreationHolder setObject:holder forKey:key];
+        [self didChangeValueForKey:@"keyToCreationHolder"];
+    }];
     
     [self updateWells];
 }
@@ -387,5 +323,12 @@ typedef enum : NSUInteger {
             [self.view.window endSheet:progress.window];
         });
     }];
+}
+
+- (IBAction)clearWells:(NSButton *)sender{
+    if (self.keyToCreationHolder)
+        [self.keyToCreationHolder removeAllObjects];
+    
+    [self updateWells];
 }
 @end

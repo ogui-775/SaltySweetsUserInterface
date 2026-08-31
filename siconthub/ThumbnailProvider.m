@@ -5,13 +5,9 @@
 @implementation ThumbnailProvider
 
 - (void)provideThumbnailForFileRequest:(QLFileThumbnailRequest *)request completionHandler:(void (^)(QLThumbnailReply * _Nullable, NSError * _Nullable))handler {
-    __block CGSize targetSize = request.maximumSize;
+    CGSize targetSize = request.maximumSize;
     
-    handler([QLThumbnailReply replyWithContextSize:targetSize drawingBlock:^BOOL(CGContextRef context) {
-        CGContextSetBlendMode(context, kCGBlendModeCopy);
-        
-        CGContextSetAlpha(context, 1.0);
-        
+    handler([QLThumbnailReply replyWithContextSize:targetSize drawingBlock:^BOOL(CGContextRef context) {        
         SOSicon *sicon = [[SOSicon alloc] initWithURL:request.fileURL];
         CGImageRef img = [sicon CGImageForSize:targetSize
                                       isRetina:request.scale > 1
@@ -27,6 +23,23 @@
                                img);
             CGImageRelease(img);
             return YES;
+        } else {
+            NSImage *nsImg = [SOSicon NSImageOrNilForURL:request.fileURL];
+            
+            if (nsImg){
+                img = [nsImg CGImageForProposedRect:nil context:NULL hints:NULL];
+                CGContextDrawImage(context,
+                                   CGRectMake(0,
+                                              0,
+                                              targetSize.width * request.scale,
+                                              targetSize.height * request.scale),
+                                   img);
+                
+                if (img){
+                    CGImageRelease(img);
+                    return YES;
+                }
+            }
         }
         
         return NO;

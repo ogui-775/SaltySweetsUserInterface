@@ -70,6 +70,17 @@
                                     <action selector="convertFromICNS:" target="-2" id="DlZ-Y5-oe0"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ckj-01-81w">
+                                <rect key="frame" x="349" y="14" width="111" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Clear All Wells" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="J8w-Ib-Nkf">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="clearWells:" target="-2" id="fdV-c1-TIT"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                 </box>
