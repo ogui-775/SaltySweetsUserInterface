@@ -133,11 +133,11 @@ typedef enum : NSUInteger {
 - (void)processICNS:(ISIcns *)icns{
     NSString *name = [icns name];
 
-    [icns enumerateElementsUsingBlock:^(NSUInteger index, uint32_t type, NSData *data, BOOL *stop) {
+    [icns enumerateElementsUsingBlock:^(NSUInteger index, OSType type, NSData *data, BOOL *stop) {
         WellType wtype = [name isEqualToString:@"dark"] ? Dark : [name isEqualToString:@"selected"] ? Selected : Light;
-        CGSize   size  = [icns sizeAtIndex:index];
-        long    scale  = [icns scaleAtIndex:index];
-        NSString *key  = [SOCreationHolder keyForWellType:wtype
+        CGSize    size = [icns sizeAtIndex:index];
+        long     scale = [icns scaleAtIndex:index];
+        NSString  *key = [SOCreationHolder keyForWellType:wtype
                                                     scale:(uint)scale
                                                      size:size];
         

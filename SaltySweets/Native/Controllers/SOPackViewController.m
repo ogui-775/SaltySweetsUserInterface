@@ -62,8 +62,8 @@
         NSClickGestureRecognizer *doubleClicker = [[NSClickGestureRecognizer alloc] initWithTarget:self
                                                                                             action:@selector(doubleClicked:)];
         doubleClicker.numberOfClicksRequired = 2;
-        
         [_collectionView addGestureRecognizer:doubleClicker];
+        
         NSCollectionViewFlowLayout *cvl = [[NSCollectionViewFlowLayout alloc] init];
         cvl.sectionInset = NSEdgeInsetsMake(5, 5, 35, 5);
         cvl.itemSize = CGSizeMake(100, 80);
@@ -141,10 +141,6 @@
 }
 
 - (void)doubleClicked:(NSClickGestureRecognizer *)gesture {
-    if (gesture.state != NSGestureRecognizerStateEnded) {
-        return;
-    }
-
     if (!self.currentlyViewedPack){
         NSInteger idx = [self.collectionView selectionIndexes].firstIndex;
         

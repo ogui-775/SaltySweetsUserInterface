@@ -37,14 +37,4 @@
     }
     return self;
 }
-
-- (void)setSelected:(BOOL)selected{
-    [super setSelected:selected];
-    
-    if (selected){
-        [self.view.layer setBorderWidth:2];
-    } else {
-        [self.view.layer setBorderWidth:0];
-    }
-}
 @end
