@@ -43,6 +43,14 @@ const NSString *shouldDisplay = @"shouldDisplay";
 }
 
 - (void)externalNavigationRequestToPageForItem:(SONavigationalMenuItem *)item{
+    if (item.isSiconStudioButton){
+        if (!self.creationStudioController)
+            self.creationStudioController = [[SONSWindowAuxController alloc] initControllerForSiconCreationContext];
+        
+        [self.creationStudioController.window makeKeyAndOrderFront:nil];
+        return;
+    }
+    
     if (![self.appDelegate.window isVisible])
         [self.appDelegate.window makeKeyAndOrderFront:nil];
     

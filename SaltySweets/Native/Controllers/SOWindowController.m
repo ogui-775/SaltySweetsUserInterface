@@ -102,6 +102,10 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
         menuItem.action = @selector(externalNavigationRequestToPageForItem:);
         menuItem.target = self.navigatorBarMaster;
         menuItem.enabled = YES;
+        
+        if ([[item identifier] isEqualToString:@"siconstudio"])
+            menuItem.isSiconStudioButton = YES;
+            
         NSImage *itemImage = [item.image copy];
         
         [itemImage setSize:CGSizeMake(16, 16)];

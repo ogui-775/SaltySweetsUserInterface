@@ -41,4 +41,5 @@
 
 @interface SONavigationalMenuItem : NSMenuItem
 @property (weak) NSViewController *boundController;
+@property (assign) BOOL isSiconStudioButton;
 @end
