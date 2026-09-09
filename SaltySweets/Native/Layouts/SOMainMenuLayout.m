@@ -55,11 +55,10 @@ static NSString * const SOMainMenuBackgroundKindB = @"SOMainMenuBackgroundB";
     [[NSColor colorWithWhite:0.0 alpha:0.1] setStroke];
     NSBezierPath *path =
         [NSBezierPath bezierPathWithRect:CGRectMake(0, 0, self.bounds.size.width, 0.5)];
-    path.lineWidth = 0.5;
     [path stroke];
-    path =
+    NSBezierPath *path2 =
         [NSBezierPath bezierPathWithRect:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 0.5)];
-    [path stroke];
+    [path2 stroke];
 }
 @end
 

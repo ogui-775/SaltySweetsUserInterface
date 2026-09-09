@@ -19,9 +19,6 @@
 @end
 
 @implementation SOPackViewController
-
-@synthesize currentlyViewedPack = _currentlyViewedPack;
-
 - (instancetype)initWithParentWindowController:(NSWindowController *)wc{
     self = [super initWithNibName:@"SOPackViewPage"
                            bundle:nil];
@@ -62,7 +59,7 @@
         NSClickGestureRecognizer *doubleClicker = [[NSClickGestureRecognizer alloc] initWithTarget:self
                                                                                             action:@selector(doubleClicked:)];
         doubleClicker.numberOfClicksRequired = 2;
-        [_collectionView addGestureRecognizer:doubleClicker];
+        [self.collectionView addGestureRecognizer:doubleClicker];
         
         NSCollectionViewFlowLayout *cvl = [[NSCollectionViewFlowLayout alloc] init];
         cvl.sectionInset = NSEdgeInsetsMake(5, 5, 35, 5);
@@ -141,24 +138,35 @@
 }
 
 - (void)doubleClicked:(NSClickGestureRecognizer *)gesture {
-    if (!self.currentlyViewedPack){
-        NSInteger idx = [self.collectionView selectionIndexes].firstIndex;
-        
-        self.currentlyViewedPack = self.packs[idx];
-        [self.collectionView reloadData];
-        
-        if (self.currentlyViewedPack){
-            self.backButton.enabled = YES;
-            
-            self.packDisplayLabel.stringValue = [self.currentlyViewedPack packNameAndAuthor];
-            
-            self.packDisplayLabel.hidden = NO;
-        }
-    }
+    if (self.currentlyViewedPack)
+        return;
+
+    NSPoint point = [gesture locationInView:self.collectionView];
+
+    NSIndexPath *indexPath =
+        [self.collectionView indexPathForItemAtPoint:point];
+
+    if (!indexPath)
+        return;
+
+    if (indexPath.item >= self.packs.count)
+        return;
+
+    self.currentlyViewedPack = self.packs[indexPath.item];
+    self.currnetlyViewedPackContents =
+        self.currentlyViewedPack.iconURLs;
+
+    [self.collectionView reloadData];
+
+    self.backButton.enabled = YES;
+    self.packDisplayLabel.stringValue =
+        self.currentlyViewedPack.packNameAndAuthor;
+    self.packDisplayLabel.hidden = NO;
 }
 
 - (void)goBack:(NSButton *)sender{
     self.currentlyViewedPack = nil;
+    self.currnetlyViewedPackContents = nil;
     [self.collectionView reloadData];
     self.backButton.enabled = NO;
     self.packDisplayLabel.stringValue = @"";
@@ -188,20 +196,6 @@
         return [self.currnetlyViewedPackContents count];
     
     return [self.packs count];
-}
-
-- (void)setCurrentlyViewedPack:(SOSiconPackBundle *)currentlyViewedPack{
-    if (currentlyViewedPack){
-        _currentlyViewedPack = currentlyViewedPack;
-        _currnetlyViewedPackContents = [_currentlyViewedPack iconURLs];
-    } else {
-        _currentlyViewedPack = nil;
-        _currnetlyViewedPackContents = nil;
-    }
-}
-
-- (SOSiconPackBundle *)currentlyViewedPack{
-    return _currentlyViewedPack;
 }
 
 #pragma mark - Pasteboard

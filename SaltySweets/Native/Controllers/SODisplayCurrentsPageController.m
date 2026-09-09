@@ -28,6 +28,10 @@
 - (void)refreshOrLoadBaseline{
     self.dockThemeNameDisplay.stringValue = [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] themeNameAndAuthor];
     
+    if (![SOAtomicAccessPoint sharedInstance].currentDockThemeBundle.authorName ||
+        [[SOAtomicAccessPoint sharedInstance].currentDockThemeBundle.authorName isEqualToString:@""])
+        self.dockThemeSigningInfoButton.enabled = NO;
+    
     self.iconPackNameDisplay.stringValue = [[[SOAtomicAccessPoint sharedInstance] currentIconPackBundle] packNameAndAuthor];
 }
 
