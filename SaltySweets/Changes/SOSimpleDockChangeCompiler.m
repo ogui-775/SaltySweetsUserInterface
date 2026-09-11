@@ -166,9 +166,9 @@
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle:@"OK"];
+            [alert addButtonWithTitle:@"Set Dock Theme"];
             [alert.buttons[0] setKeyEquivalent:@"\r"];
-            [alert addButtonWithTitle:@"No"];
+            [alert addButtonWithTitle:@"Don't Set"];
             alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Dock theme?",
                                  newThemeURL.lastPathComponent];
             
