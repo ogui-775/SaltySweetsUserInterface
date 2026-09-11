@@ -5,8 +5,9 @@
 #import "../../SONavigatorBarItem.h"
 #import "SOCollectionViewItem.h"
 #import "../Layouts/SOMainMenuLayout.h"
+#import "../../../SOControllers/Base/SOConfigurablePageControllerBase.h"
 
-@interface SOMainMenuView : NSViewController <NSCollectionViewDataSource, NSCollectionViewDelegate>
+@interface SOMainMenuView : SOConfigurablePageControllerBase <NSCollectionViewDataSource, NSCollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet NSCollectionView *collectionView;
 @property (weak) id delegate;
 @property (assign) SEL action;

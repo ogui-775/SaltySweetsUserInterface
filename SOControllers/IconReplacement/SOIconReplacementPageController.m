@@ -14,7 +14,7 @@
                  forItemWithIdentifier:@"AppItem"];
 
     [self.folderComboBox setStringValue:@"/Applications/"];
-    NSURL * applicationsURL = [NSURL URLWithString:@"/Applications/"];
+    NSURL *applicationsURL = [NSURL URLWithString:@"/Applications/"];
     self.currentFolderApps = GetAppsForFolderAtURL(applicationsURL);
 
     self.lastSelectedFolder = self.folderComboBox.stringValue;
@@ -290,7 +290,7 @@ NSArray<NSBundle *> * GetAppsForFolderAtURL(NSURL * url){
 - (void)loadView {
     self.view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 100, 120)];
 
-    SOAppItemImageView * imageView = [[SOAppItemImageView alloc] initWithFrame:CGRectMake(20, 30, 60, 60)];
+    SOAppItemImageView *imageView = [[SOAppItemImageView alloc] initWithFrame:CGRectMake(20, 30, 60, 60)];
     NSTextField * textField = [[NSTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
 
     textField.editable = NO;

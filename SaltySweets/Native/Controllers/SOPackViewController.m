@@ -213,22 +213,8 @@ canDragItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
        pasteboardWriterForItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger idx = indexPath.item;
     SOPackViewItem *item = (SOPackViewItem *)[self.collectionView itemAtIndex:idx];
-    
-    if (!item)
-        return nil;
-    
-    NSPasteboardItem *pb = [[NSPasteboardItem alloc] init];
-    
-    if (item.URL)
-        [pb setString:item.URL.absoluteString forType:NSPasteboardTypeURL];
-    
-    if (item.imageView.image){
-        NSData *tiffData = [item.imageView.image TIFFRepresentation];
-        if (tiffData)
-            [pb setData:tiffData forType:NSPasteboardTypeTIFF];
-    }
-    
-    return pb;
+
+    return item;
 }
 @end
 

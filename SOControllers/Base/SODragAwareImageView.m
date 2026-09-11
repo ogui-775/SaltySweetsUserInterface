@@ -31,7 +31,7 @@
             [NSApp sendAction:self.action to:self.target from:self];
     }
     
-    return [super performDragOperation:sender];
+    return YES;
 }
 
 @end

@@ -95,10 +95,10 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
     
     self.monthFontSizeComboBox.intValue = (int)self.config.monthFontSize;
     
-    self.dayBoldCheckbox.state = [self getBaselineForEncodedKeypath:&tDayBold]
+    self.dayBoldCheckbox.state = [[self getBaselineForEncodedKeypath:&tDayBold] boolValue]
                                     ? NSControlStateValueOn : NSControlStateValueOff;
     
-    self.monthBoldCheckbox.state = [self getBaselineForEncodedKeypath:&tMonthBold]
+    self.monthBoldCheckbox.state = [[self getBaselineForEncodedKeypath:&tMonthBold] boolValue]
                                         ? NSControlStateValueOn : NSControlStateValueOff;
     
     CGFloat scaleX = self.compositionView.layer.bounds.size.width / 128.0;
@@ -249,6 +249,8 @@ const SOEncodedKeyPath tMonthBold = { .rootKey = &kSOIconsDockTilePluginDict, .c
         [self.pendingChangeArray removeLastObject];
         [self.changeDelegate contentDidChangeState:self];
     }];
+    
+    self.config.typeface = fontName;
 
     [self setPendingIconChangeForKeypath:&tFontName
                                    value:fontName

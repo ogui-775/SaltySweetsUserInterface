@@ -2,7 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SOPackViewItem : NSCollectionViewItem
+@interface SOPackViewItem : NSCollectionViewItem <NSPasteboardWriting>
 @property (strong) NSURL *URL;
 
 - (instancetype)initWithName:(NSString *)name URL:(NSURL *)URL;

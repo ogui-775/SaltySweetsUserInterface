@@ -10,6 +10,7 @@
 @end
 
 @interface SOClockDisplayView : NSView
+- (void)finishInit;
 @property (strong) NSString *trackedKey;
 @property (strong) SOClockDisplayLayer *clockLayer;
 @property (strong) SODragAwareImageView *imageView;
@@ -21,6 +22,7 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
 
 - (void)awakeFromNib{
     [super awakeFromNib];
+    [self.previewView finishInit];
     [self.previewView setWantsLayer:YES];
     [self.previewView.layer setBackgroundColor:NSColor.darkGrayColor.CGColor];
     
@@ -64,6 +66,7 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
         [hourImage drawInRect:dstRect];
         return YES;
     }];
+    
     NSImage *minsImage = [self loadImageForEncodedKeypath:&minsKey];
     
     [self.previewView.clockLayer setFace:faceImage
@@ -119,6 +122,22 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     CALayer *currentLitLayer = [self layerForViewWithLight];
     NSImage *currentContents = currentLitLayer.contents;
     
+    if ([currentLitLayer isEqual:self.previewView.clockLayer.hourImageLayer]){
+        NSImage *newHourImage = [NSImage imageWithSize:sender.image.size
+                                               flipped:NO
+                                        drawingHandler:^BOOL(NSRect dstRect)
+        {
+            NSAffineTransform *transform = [NSAffineTransform transform];
+            [transform translateXBy:NSMidX(dstRect) yBy:NSMidY(dstRect)];
+            [transform rotateByDegrees:180.0];
+            [transform translateXBy:-NSMidX(dstRect) yBy:-NSMidY(dstRect)];
+            [transform concat];
+            [sender.image drawInRect:dstRect];
+            return YES;
+        }];
+        sender.image = newHourImage;
+    }
+    
     NSURL *litLayerURL = objc_getAssociatedObject(currentLitLayer,
                                                   &kSOAssociatedURL);
     
@@ -148,14 +167,11 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
                                                   self.previewView.trackedKey,
                                                   [sender draggedFileURL].lastPathComponent]];
     
-    [self.previewView setNeedsDisplay:YES];
-    [self.previewView.clockLayer setNeedsDisplay];
-    
     objc_setAssociatedObject(currentLitLayer,
                              &kSOAssociatedURL,
                              [sender draggedFileURL],
                              OBJC_ASSOCIATION_RETAIN);
-    
+        
     sender.image = nil;
 }
 
@@ -241,143 +257,6 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     return faceKey;
 }
 
-#pragma mark - Image Editing
-
-- (IBAction)widthDidChange:(NSButton *)sender{
-    BOOL narrower = [sender.identifier isEqualToString:@"w-"];
-    CALayer *cLayer = [self layerForViewWithLight];
-    NSImage *cImage = [cLayer contents];
-    
-    if (!narrower){
-        NSImage *new = [NSImage imageWithSize:cImage.size
-                                      flipped:NO
-                               drawingHandler:^BOOL(NSRect dstRect) {
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width + 1, dstRect.size.height)];
-            return YES;
-        }];
-        [cLayer setContents:new];
-        return;
-    }
-    NSImage *new = [NSImage imageWithSize:cImage.size
-                                  flipped:NO
-                           drawingHandler:^BOOL(NSRect dstRect) {
-        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-        [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width - 1, dstRect.size.height)];
-        return YES;
-    }];
-    [cLayer setContents:new];
-}
-
-- (IBAction)heightDidChange:(NSButton *)sender{
-    BOOL shorter = [sender.identifier isEqualToString:@"h-"];
-    CALayer *cLayer = [self layerForViewWithLight];
-    NSImage *cImage = [cLayer contents];
-    
-    if (!shorter){
-        NSImage *new = [NSImage imageWithSize:cImage.size
-                                      flipped:NO
-                               drawingHandler:^BOOL(NSRect dstRect) {
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width, dstRect.size.height + 1)];
-            return YES;
-        }];
-        [cLayer setContents:new];
-        return;
-    }
-    NSImage *new = [NSImage imageWithSize:cImage.size
-                                  flipped:NO
-                           drawingHandler:^BOOL(NSRect dstRect) {
-        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-        [cImage drawInRect:CGRectMake(0, 0, dstRect.size.width, dstRect.size.height - 1)];
-        return YES;
-    }];
-    [cLayer setContents:new];
-}
-
-- (IBAction)positionDidChange:(NSButton *)sender{
-    NSString *identifier = [sender identifier];
-    CALayer *cLayer = [self layerForViewWithLight];
-    NSImage *cImage = [cLayer contents];
-    
-    if ([identifier isEqualToString:@"w"]){
-        NSImage *new = [NSImage imageWithSize:cImage.size
-                                      flipped:NO
-                               drawingHandler:^BOOL(NSRect dstRect) {
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [cImage drawInRect:CGRectMake(0, 1, dstRect.size.width, dstRect.size.height)];
-            return YES;
-        }];
-        [cLayer setContents:new];
-    } else if ([identifier isEqualToString:@"a"]){
-        NSImage *new = [NSImage imageWithSize:cImage.size
-                                      flipped:NO
-                               drawingHandler:^BOOL(NSRect dstRect) {
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [cImage drawInRect:CGRectMake(-1, 0, dstRect.size.width, dstRect.size.height)];
-            return YES;
-        }];
-        [cLayer setContents:new];
-    } else if ([identifier isEqualToString:@"s"]){
-        NSImage *new = [NSImage imageWithSize:cImage.size
-                                      flipped:NO
-                               drawingHandler:^BOOL(NSRect dstRect) {
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [cImage drawInRect:CGRectMake(0, -1, dstRect.size.width, dstRect.size.height)];
-            return YES;
-        }];
-        [cLayer setContents:new];
-    } else if ([identifier isEqualToString:@"d"]){
-        NSImage *new = [NSImage imageWithSize:cImage.size
-                                      flipped:NO
-                               drawingHandler:^BOOL(NSRect dstRect) {
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [cImage drawInRect:CGRectMake(1, 0, dstRect.size.width, dstRect.size.height)];
-            return YES;
-        }];
-        [cLayer setContents:new];
-    }
-}
-
-- (IBAction)saveGraphicsState:(NSButton *)sender{
-    NSURL *faceURL = objc_getAssociatedObject(self.previewView.clockLayer.faceImageLayer,
-                                              &kSOAssociatedURL);
-    NSURL *minsURL = objc_getAssociatedObject(self.previewView.clockLayer.minsImageLayer,
-                                              &kSOAssociatedURL);
-    NSURL *hourURL = objc_getAssociatedObject(self.previewView.clockLayer.hourImageLayer,
-                                              &kSOAssociatedURL);
-    
-    NSImage *faceImage = self.previewView.clockLayer.faceImageLayer.contents;
-    NSImage *minsImage = self.previewView.clockLayer.minsImageLayer.contents;
-    NSImage *hourImage = self.previewView.clockLayer.hourImageLayer.contents;
-    
-    const SOEncodedKeyPath faceKey = [self faceKeypath];
-    
-    [self setPendingIconResourceChangeForKeypath:&faceKey
-                                        resource:faceImage
-                                        filename:[[[[faceURL lastPathComponent] stringByDeletingPathExtension]
-                                                   stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned                    long)faceURL.hash]]stringByAppendingPathExtension:@"png"]
-                                            note:@"Set clock.face as modified PNG"];
-    
-    const SOEncodedKeyPath minsKey = [self minsKeypath];
-    
-    [self setPendingIconResourceChangeForKeypath:&minsKey
-                                        resource:minsImage
-                                        filename:[[[[minsURL lastPathComponent] stringByDeletingPathExtension]
-                                                   stringByAppendingString:[NSString stringWithFormat:@"%lu",
-                                                                            (unsigned long)minsURL.hash]]stringByAppendingPathExtension:@"png"]
-                                            note:@"Set clock.minute as modified PNG"];
-
-    const SOEncodedKeyPath hourKey = [self hourKeypath];
-    
-    [self setPendingIconResourceChangeForKeypath:&hourKey
-                                        resource:hourImage
-                                        filename:[[[[hourURL lastPathComponent] stringByDeletingPathExtension]
-                                                   stringByAppendingString:[NSString stringWithFormat:@"%lu",
-                                                                            (unsigned long)hourURL.hash]]stringByAppendingPathExtension:@"png"]
-                                            note:@"Set clock.hour as modified PNG"];
-}
-
 - (IBAction)centerPointIsDesired:(NSButton *)sender{
     BOOL requested = [sender state] == NSControlStateValueOn;
     
@@ -461,11 +340,12 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
 @end
 
 @implementation SOClockDisplayView
-- (void)awakeFromNib{
-    [super awakeFromNib];
+- (void)finishInit{
     self.imageView = [[SODragAwareImageView alloc] initWithFrame:self.bounds];
     
-    [self addSubview:self.imageView];
+    [self addSubview:self.imageView
+          positioned:NSWindowAbove
+          relativeTo:self];
 }
 
 - (void)layout{

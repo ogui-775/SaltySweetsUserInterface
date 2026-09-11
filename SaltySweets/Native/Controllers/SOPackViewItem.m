@@ -37,4 +37,18 @@
     }
     return self;
 }
+
+- (NSArray<NSPasteboardType> *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return @[
+        NSPasteboardTypeURL,
+        NSPasteboardTypeFileURL,
+    ];
+}
+
+- (id)pasteboardPropertyListForType:(NSPasteboardType)type{
+    if ((type == NSPasteboardTypeURL || type == NSPasteboardTypeFileURL) && self.URL)
+        return [self.URL absoluteString];
+    
+    return nil;
+}
 @end
