@@ -2,6 +2,7 @@
 
 #import <AppKit/AppKit.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+#import <Carbon/Carbon.h>
 
 #import "../../SaltySweets/Services/SOAtomicAccessPoint.h"
 #import "../../SaltySweets/SOViewPane.h"

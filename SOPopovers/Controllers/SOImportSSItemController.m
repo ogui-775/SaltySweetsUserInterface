@@ -117,8 +117,6 @@
         }
     }];
 }
-
-
 @end
 
 @implementation SOImportDestinationBox
