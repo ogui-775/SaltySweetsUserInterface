@@ -136,10 +136,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSURL *baseResourceURL = [bundle resourceURL];
     
-    for (NSString *relativePath in purgeFileRelativePathCollection){
-        if ([relativePath isEqualToString:@"/"] || [relativePath isEqualToString:@"Resources"])
-            continue;
-        
+    for (NSString *relativePath in purgeFileRelativePathCollection){        
         NSURL *relativeURL = [baseResourceURL URLByAppendingPathComponent:relativePath];
         [fm removeItemAtURL:relativeURL error:nil];
     }
