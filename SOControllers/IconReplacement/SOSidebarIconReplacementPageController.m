@@ -5,8 +5,11 @@
 @interface SOSidebarItem : NSObject
 @property (strong, nonatomic) NSURL *sourceFileURL;
 @property (strong, nonatomic) NSImage *displayImage;
+@property (strong, nonatomic) NSImage *selectedDisplayImage;
 @property (strong, nonatomic) NSString *itemString;
+@property (assign) BOOL isSelected;
 @property (assign) BOOL isUnsavedItem;
+@property (assign) NSInteger rowNumber;
 
 - (instancetype)initWithURL:(NSURL *)url isNew:(BOOL)isNew;
 @end
@@ -25,10 +28,23 @@
         
         if ([[url pathExtension] isEqualToString:@"sicon"]){
             SOSicon *siconRef = [[SOSicon alloc] initWithURL:url];
-            CGImageRef cgImg = [siconRef CGImageForIndex:0];
+            CGImageRef cgImg = [siconRef CGImageForSize:CGSizeMake(256, 256)
+                                               isRetina:NSApp.mainWindow.backingScaleFactor > 1
+                                                 isDark:[NSApp.appearance.name containsString:@"Dark"]
+                                             isSelected:NO];
+            
             NSImage *nsImg = [[NSImage alloc] initWithCGImage:cgImg size:CGSizeMake(0, 0)];
             CGImageRelease(cgImg);
             self.displayImage = nsImg;
+            
+            CGImageRef selCGImg = [siconRef CGImageForSize:CGSizeMake(256, 256)
+                                               isRetina:NSApp.mainWindow.backingScaleFactor > 1
+                                                 isDark:[NSApp.appearance.name containsString:@"Dark"]
+                                             isSelected:YES];
+            
+            NSImage *selNSImg = [[NSImage alloc] initWithCGImage:selCGImg size:CGSizeMake(0, 0)];
+            CGImageRelease(selCGImg);
+            self.selectedDisplayImage = selNSImg;
         } else {
             self.displayImage = [[NSImage alloc] initWithContentsOfURL:url];
         }
@@ -41,10 +57,24 @@
     
     if ([[sourceFileURL pathExtension] isEqualToString:@"sicon"]){
         SOSicon *siconRef = [[SOSicon alloc] initWithURL:sourceFileURL];
-        CGImageRef cgImg = [siconRef CGImageForIndex:0];
+        CGImageRef cgImg = [siconRef CGImageForSize:CGSizeMake(256, 256)
+                                           isRetina:NSApp.mainWindow.backingScaleFactor > 1
+                                             isDark:[NSApp.appearance.name containsString:@"Dark"]
+                                         isSelected:NO];
+        
         NSImage *nsImg = [[NSImage alloc] initWithCGImage:cgImg size:CGSizeMake(0, 0)];
         CGImageRelease(cgImg);
         _displayImage = nsImg;
+        
+        
+        CGImageRef selCGImg = [siconRef CGImageForSize:CGSizeMake(256, 256)
+                                           isRetina:NSApp.mainWindow.backingScaleFactor > 1
+                                             isDark:[NSApp.appearance.name containsString:@"Dark"]
+                                         isSelected:YES];
+        
+        NSImage *selNSImg = [[NSImage alloc] initWithCGImage:selCGImg size:CGSizeMake(0, 0)];
+        CGImageRelease(selCGImg);
+        _selectedDisplayImage = selNSImg;
     } else {
         _displayImage = [[NSImage alloc] initWithContentsOfURL:sourceFileURL];
     }
@@ -57,6 +87,7 @@
 @interface SOSidebarIconReplacementPageController ()
 @property (strong, nonatomic) SOObservableDictionary *mutableDict;
 @property (strong, nonatomic) NSMutableArray<NSString *> *baselineKeys;
+@property (weak) SOSidebarItem *lastSelectedItem;
 @end
 
 @implementation SOSidebarIconReplacementPageController
@@ -97,15 +128,29 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     SOSidebarItem *item = [self.mutableDict objectForKey:@(row)];
+    item.rowNumber = row;
     if ([[tableColumn identifier] isEqualToString:@"col0"]){
-        return item.displayImage;
+        return item.isSelected ? (item.selectedDisplayImage ?: item.displayImage) : item.displayImage;
     } else {
         return item.itemString;
     }
 }
 
 - (IBAction)tableViewWasClicked:(NSTableView *)sender{
+    if (self.lastSelectedItem)
+        [self.lastSelectedItem setIsSelected:NO];
+    
     SOSidebarItem *item = [self.mutableDict objectForKey:@(sender.selectedRow)];
+    item.isSelected = YES;
+    
+    if (self.lastSelectedItem){
+        [sender reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:sender.selectedRow]
+                          columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+        [sender reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:self.lastSelectedItem.rowNumber]
+                          columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+    }
+    
+    self.lastSelectedItem = item;
     
     self.imageView.image = item.displayImage;
     self.labelView.stringValue = [item.sourceFileURL lastPathComponent];
