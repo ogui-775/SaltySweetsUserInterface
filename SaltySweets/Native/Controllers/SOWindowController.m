@@ -16,8 +16,11 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
     [self.window.toolbar insertItemWithItemIdentifier:itemId
                                               atIndex:0];
     
-    [self.window.toolbar insertItemWithItemIdentifier:drawerButton
+    [self.window.toolbar insertItemWithItemIdentifier:NSToolbarFlexibleSpaceItemIdentifier
                                               atIndex:1];
+    
+    [self.window.toolbar insertItemWithItemIdentifier:drawerButton
+                                              atIndex:2];
 }
 
 - (void)windowDidLoad{
