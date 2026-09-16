@@ -73,7 +73,7 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="49081434-2C65-4000-84DE-907A71FD9150" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="cLq-Qk-urd">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="BE84BC36-B43A-4886-A66F-4BFD1315017F" label="Main Menu" paletteLabel="Custom View" image="square.grid.3x3.fill" catalog="system" sizingBehavior="auto" navigational="YES" id="dvt-YA-3b4" customClass="SOToolbarItem">
+                    <toolbarItem implicitItemIdentifier="BE84BC36-B43A-4886-A66F-4BFD1315017F" label="Main Menu" paletteLabel="Custom View" image="square.grid.3x3.fill" catalog="system" sizingBehavior="auto" navigational="YES" id="dvt-YA-3b4">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="bvs-d4-npk">
                             <rect key="frame" x="24" y="14" width="28" height="23"/>

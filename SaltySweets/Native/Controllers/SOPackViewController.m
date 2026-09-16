@@ -16,6 +16,10 @@
 @property (strong) NSButton *backButton;
 @property (strong) NSView *drawerBannerBar;
 @property (strong) NSTextField *packDisplayLabel;
+@property (strong) NSScrollView *tagsStackEnclosure;
+@property (strong) NSStackView *tagsStack;
+@property (strong) SOTagSourceController *colorSpaceTagsController;
+@property (strong) SOTagSourceController *imagePropertiesTagsController;
 @end
 
 @implementation SOPackViewController
@@ -23,7 +27,7 @@
     self = [super initWithNibName:@"SOPackViewPage"
                            bundle:nil];
     if (self){
-        _drawer = [[NSDrawer alloc] initWithContentSize:CGSizeMake(400,
+        _drawer = [[NSDrawer alloc] initWithContentSize:CGSizeMake(600,
                                                                    400)
                                           preferredEdge:NSMaxXEdge];
         _parentWindowController = wc;
@@ -32,6 +36,7 @@
         _scroller.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         _scroller.hasVerticalScroller = YES;
         _scroller.hasHorizontalScroller = NO;
+        _scroller.drawsBackground = NO;
         
         NSFileManager *fm = [NSFileManager defaultManager];
         NSURL *packURL = [NSURL fileURLWithPath:[SOAtomicAccessPoint sharedInstance].iconPackBundleDirectory
@@ -55,6 +60,7 @@
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         _collectionView.selectable = YES;
+        _collectionView.backgroundColors = @[NSColor.clearColor];
         
         NSClickGestureRecognizer *doubleClicker = [[NSClickGestureRecognizer alloc] initWithTarget:self
                                                                                             action:@selector(doubleClicked:)];
@@ -92,6 +98,51 @@
         _packDisplayLabel.bezelStyle = NSTextFieldRoundedBezel;
         _packDisplayLabel.autoresizingMask = NSViewWidthSizable;
         
+        _tagsStackEnclosure = [[NSScrollView alloc] initWithFrame:CGRectMake(400, 0, 200, 400)];
+        _tagsStackEnclosure.drawsBackground = NO;
+        _tagsStackEnclosure.autoresizingMask = NSViewHeightSizable;
+        
+        _tagsStack = [[NSStackView alloc] initWithFrame:CGRectMake(0, 0, 200, 400)];
+        
+        [_tagsStackEnclosure setDocumentView:_tagsStack];
+        
+        _tagsStack.orientation = NSUserInterfaceLayoutOrientationVertical;
+        _tagsStack.autoresizingMask = NSViewHeightSizable | NSViewMinXMargin;
+        _tagsStack.translatesAutoresizingMaskIntoConstraints = YES;
+        _tagsStack.spacing = 5;
+        _tagsStack.edgeInsets = NSEdgeInsetsMake(5, 5, 5, 5);
+        _tagsStack.distribution = NSStackViewDistributionFillEqually;
+        
+        NSTextField *tagsTitle = [[NSTextField alloc] initWithFrame:CGRectMake(0, 0, 180, 20)];
+        tagsTitle.editable = NO;
+        tagsTitle.selectable = NO;
+        tagsTitle.usesSingleLineMode = YES;
+        tagsTitle.stringValue = @"Item Tags";
+
+        _colorSpaceTagsController = [[SOTagSourceController alloc] initWithTagSourceType:SOTagSourceTypeColorSpace
+                                                                                tagArray:@[
+            @"Display P3",
+            @"sRGB",
+            @"Greyscale",
+            @"B&W"
+        ]];
+
+        _imagePropertiesTagsController = [[SOTagSourceController alloc] initWithTagSourceType:SOTagSourceTypeNSImageProperties
+                                                                                     tagArray:@[
+            @"Template"
+        ]];
+
+        [_tagsStack addView:tagsTitle inGravity:NSStackViewGravityTop];
+        [_tagsStack addView:_colorSpaceTagsController.view inGravity:NSStackViewGravityTop];
+        [_tagsStack addView:_imagePropertiesTagsController.view inGravity:NSStackViewGravityTop];
+
+        [_colorSpaceTagsController.view setContentHuggingPriority:NSLayoutPriorityRequired
+                                                     forOrientation:NSLayoutConstraintOrientationVertical];
+        
+        [_imagePropertiesTagsController.view setContentHuggingPriority:NSLayoutPriorityRequired
+                                                          forOrientation:NSLayoutConstraintOrientationVertical];
+        
+        [_drawer.contentView addSubview:_tagsStackEnclosure];
         [_drawer.contentView addSubview:_scroller];
         [_scroller setDocumentView:_collectionView];
         [_scroller addSubview:_drawerBannerBar];

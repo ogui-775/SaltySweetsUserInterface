@@ -6,6 +6,7 @@
 
 #import "SOPackViewItem.h"
 #import "../../Services/SOAtomicAccessPoint.h"
+#import "SOTagSourceController.h"
 
 @interface SOPackViewController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource>
 - (instancetype)initWithParentWindowController:(NSWindowController *)wc;
