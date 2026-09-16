@@ -31,6 +31,15 @@
     }
     return self;
 }
+
+
+- (id)pasteboardPropertyListForType:(NSPasteboardType)type {
+    return self.boundProperties;
+}
+
+- (NSArray<NSPasteboardType> *)writableTypesForPasteboard:(NSPasteboard *)pasteboard {
+    return @[NSPasteboardTypeString];
+}
 @end
 
 @implementation SOTagSourceController
@@ -48,6 +57,7 @@
 - (void)awakeFromNib{
     [super awakeFromNib];
     self.viewBox.title = GetTitleFromTagSourceType(self.assignedType);
+    self.tagsCollectionView.selectable = YES;
     [self.tagsCollectionView reloadData];
 }
 
@@ -82,4 +92,20 @@ NSString* GetTitleFromTagSourceType(SOTagSourceType type){
     return [self.tagsArray count];
 }
 
+#pragma mark - Pasteboard
+
+- (BOOL)collectionView:(NSCollectionView *)collectionView
+canDragItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+             withEvent:(NSEvent *)event{
+    return YES;
+}
+
+- (id<NSPasteboardWriting>)collectionView:(NSCollectionView *)collectionView
+       pasteboardWriterForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return (id<NSPasteboardWriting>)[collectionView itemAtIndexPath:indexPath];
+}
+
+- (NSDragOperation)draggingSession:(nonnull NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+    return NSDragOperationCopy;
+}
 @end
