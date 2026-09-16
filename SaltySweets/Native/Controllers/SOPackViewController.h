@@ -8,7 +8,7 @@
 #import "../../Services/SOAtomicAccessPoint.h"
 #import "SOTagSourceController.h"
 
-@interface SOPackViewController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource>
+@interface SOPackViewController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource, NSToolbarItemValidation>
 - (instancetype)initWithParentWindowController:(NSWindowController *)wc;
 - (IBAction)showDrawer:(id)sender;
 - (void)updateContents;

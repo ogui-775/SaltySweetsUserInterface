@@ -1,6 +1,8 @@
 //Created by Salty on 8/12/26.
 
 #import "SOPackViewController.h"
+#import "../../SONavigatorBarMaster.h"
+#import "SOWindowController.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -160,6 +162,27 @@
         [self.drawer close];
     else
         [self.drawer open];
+}
+
+- (BOOL)validateToolbarItem:(NSToolbarItem *)item{
+    if ([[item itemIdentifier] isEqualToString:@"drawerControl"]){
+        BOOL shouldShowDrawer = [self shouldShowDrawer];
+        if (!shouldShowDrawer)
+            [self.drawer close];
+        
+        return shouldShowDrawer;
+    }
+    
+    return YES;
+}
+
+- (BOOL)shouldShowDrawer{
+    SOWindowController *wc = (SOWindowController *)self.parentWindowController;
+    if (wc.navigatorBarMaster){
+        return !wc.navigatorBarMaster.isMainMenuShown;
+    }
+    
+    return YES;
 }
 
 - (void)updateContents{

@@ -88,6 +88,7 @@ const NSString *shouldDisplay = @"shouldDisplay";
         contentSize:CGSizeMake(746, 466)
             animate:YES];
     [[SOViewPane defaultInstance] requestPageChangeTo:c];
+    self.isMainMenuShown = NO;
 }
 
 - (IBAction)returnToMainMenu:(NSButton *)sender{
@@ -102,6 +103,7 @@ const NSString *shouldDisplay = @"shouldDisplay";
         contentSize:CGSizeMake(746, 270)
             animate:YES];
     [[SOViewPane defaultInstance] requestPageChangeTo:self.mainMenuController];
+    self.isMainMenuShown = YES;
 }
 
 - (NSArray<SONavigatorBarItem *> *)itemArrayForSection:(NSInteger)section{
