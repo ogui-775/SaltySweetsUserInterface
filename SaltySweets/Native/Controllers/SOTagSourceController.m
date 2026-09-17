@@ -32,13 +32,15 @@
     return self;
 }
 
-
 - (id)pasteboardPropertyListForType:(NSPasteboardType)type {
-    return self.boundProperties;
+    if ([type isEqualToString:@"com.saltysoft.SaltySweets.boundproperties"])
+        return self.boundProperties;
+    
+    return nil;
 }
 
 - (NSArray<NSPasteboardType> *)writableTypesForPasteboard:(NSPasteboard *)pasteboard {
-    return @[NSPasteboardTypeString];
+    return @[@"com.saltysoft.SaltySweets.boundproperties"];
 }
 @end
 
@@ -79,8 +81,9 @@ NSString* GetTitleFromTagSourceType(SOTagSourceType type){
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    SOItemTag *item = [[SOItemTag alloc] initWithString:self.tagsArray[indexPath.item]
-                                        boundProperties:@{}];
+    NSString *tag = [self.tagsArray objectAtIndex:[indexPath item]];
+    SOItemTag *item = [[SOItemTag alloc] initWithString:tag
+                                        boundProperties:[self boundPropertiesForTag:tag]];
 
     return item;
 }
@@ -90,6 +93,32 @@ NSString* GetTitleFromTagSourceType(SOTagSourceType type){
         return 0;
     
     return [self.tagsArray count];
+}
+
+- (NSDictionary<NSString *, id> *)boundPropertiesForTag:(NSString *)tag{
+    if ([tag isEqualToString:@"Display P3"]){
+        return @{
+            (id)kCGImagePropertyNamedColorSpace : (id)kCGColorSpaceDisplayP3
+        };
+    } else if ([tag isEqualToString:@"sRGB"]){
+        return @{
+            (id)kCGImagePropertyNamedColorSpace : (id)kCGColorSpaceSRGB
+        };
+    } else if ([tag isEqualToString:@"Greyscale"]){
+        return @{
+            (id)kCGImagePropertyNamedColorSpace : (id)kCGColorSpaceExtendedGray
+        };
+    } else if ([tag isEqualToString:@"B&W"]){
+        return @{
+            kSOIconServerCommand : kSOIconServerCommandBlackAndWhiteImage
+        };
+    } else if ([tag isEqualToString:@"Template"]){
+        return @{
+            kSOIconServerCommand : kSOIconServerCommandTemplateImage
+        };
+    }
+    
+    return nil;
 }
 
 #pragma mark - Pasteboard

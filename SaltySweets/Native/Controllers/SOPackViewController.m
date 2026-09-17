@@ -102,7 +102,7 @@
         
         _tagsStackEnclosure = [[NSScrollView alloc] initWithFrame:CGRectMake(400, 0, 200, 400)];
         _tagsStackEnclosure.drawsBackground = NO;
-        _tagsStackEnclosure.autoresizingMask = NSViewHeightSizable;
+        _tagsStackEnclosure.autoresizingMask = NSViewHeightSizable | NSViewMinXMargin;
         
         _tagsStack = [[NSStackView alloc] initWithFrame:CGRectMake(0, 0, 200, 400)];
         
@@ -153,6 +153,8 @@
         
         self.view = _drawer.contentView;
         [_collectionView reloadData];
+        
+        [_collectionView registerForDraggedTypes:@[@"com.saltysoft.SaltySweets.boundproperties"]];
     }
     return self;
 }
@@ -289,6 +291,78 @@ canDragItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
     SOPackViewItem *item = (SOPackViewItem *)[self.collectionView itemAtIndex:idx];
 
     return item;
+}
+
+-(NSDragOperation)collectionView:(NSCollectionView *)collectionView
+                    validateDrop:(id<NSDraggingInfo>)draggingInfo
+               proposedIndexPath:(NSIndexPath **)proposedDropIndexPath
+                   dropOperation:(NSCollectionViewDropOperation *)proposedDropOperation{
+    if (!self.currentlyViewedPack)
+        return NSDragOperationNone;
+    
+    NSPasteboard *pb = [draggingInfo draggingPasteboard];
+    
+    if ([pb pasteboardItems]){
+        id item = [pb pasteboardItems].firstObject;
+        
+        if (!item)
+            return NSDragOperationNone;
+        
+        NSDictionary *plist = [item propertyListForType:@"com.saltysoft.SaltySweets.boundproperties"];
+        
+        if (!plist)
+            return NSDragOperationNone;
+        
+        return NSDragOperationLink;
+    }
+    return NSDragOperationNone;
+}
+
+- (BOOL)collectionView:(NSCollectionView *)collectionView
+            acceptDrop:(id<NSDraggingInfo>)draggingInfo
+             indexPath:(NSIndexPath *)indexPath
+         dropOperation:(NSCollectionViewDropOperation)dropOperation{
+    SOPackViewItem *droppedOnItem = (SOPackViewItem *)[self.collectionView itemAtIndexPath:indexPath];
+    
+    if (!droppedOnItem)
+        return NO;
+    
+    NSURL *itemURL = [droppedOnItem URL];
+    
+    if (!itemURL)
+        return NO;
+    
+    NSPasteboard *pb = [draggingInfo draggingPasteboard];
+    NSDictionary *plist = nil;
+    
+    if ([pb pasteboardItems]){
+        id item = [pb pasteboardItems].firstObject;
+        
+        if (!item)
+            return NO;
+        
+         plist = [item propertyListForType:@"com.saltysoft.SaltySweets.boundproperties"];
+        
+        if (!plist)
+            return NO;
+    }
+    
+    SOSiconPackBundle *pack = [[SOSiconPackBundle alloc] initWithURL:self.currentlyViewedPack.bundleURL];
+    
+    NSMutableDictionary *tagsDict = [pack tagsPlist];
+    NSMutableDictionary *iconTags = [tagsDict objectForKey:itemURL.lastPathComponent] ?: [NSMutableDictionary dictionary];
+    
+    [iconTags setObject:plist.allValues[0] forKey:plist.allKeys[0]];
+    [tagsDict setObject:iconTags forKey:itemURL.lastPathComponent];
+    
+    NSError *err = nil;
+    [pack writeToTagsPlist:tagsDict
+                 withError:&err];
+    
+    if (!err)
+        return YES;
+    
+    return NO;
 }
 @end
 

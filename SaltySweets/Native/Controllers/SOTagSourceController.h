@@ -1,6 +1,7 @@
 //Created by Salty on 9/14/26.
 
 #import <Cocoa/Cocoa.h>
+#import <SharedKeys/SharedKeys.h>
 
 typedef enum : NSUInteger {
     SOTagSourceTypeGeneric,
