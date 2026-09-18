@@ -4,9 +4,9 @@
 #import <SharedBundles/SharedBundles.h>
 
 #import "SOViewPane.h"
-#import "../SOAuxWinds/Controllers/SONSWindowAuxController.h"
-#import "../SOAuxWinds/Controllers/SONSWindowAuxSiconCreationController.h"
-#import "Native/Controllers/SOWindowController.h"
+#import "Auxiliary Windows/Controllers/SONSWindowAuxController.h"
+#import "Auxiliary Windows/Controllers/SONSWindowAuxSiconCreationController.h"
+#import "Controllers/SOWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSToolbarDelegate>
 @property (strong) IBOutlet NSWindow *window;

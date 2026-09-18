@@ -3,8 +3,8 @@
 #import <Foundation/Foundation.h>
 
 #import "SOChangeCompilerBase.h"
-#import "../../SOSheets/SOProgressSheetController.h"
-#import "../../SOSheets/SOThemeCreationSheetController.h"
+#import "../Controllers/SOProgressSheetController.h"
+#import "../Controllers/SOThemeCreationSheetController.h"
 #import "../SOViewPane.h"
 
 @interface SOSimpleIconChangeCompiler : SOChangeCompilerBase

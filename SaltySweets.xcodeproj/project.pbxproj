@@ -86,16 +86,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		1803A4582F36E017006EC28C /* SOPages */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SOPages;
-			sourceTree = "<group>";
-		};
-		1803A4612F36EBA8006EC28C /* SOControllers */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SOControllers;
-			sourceTree = "<group>";
-		};
 		1829F4482FA5725A002BFEF8 /* siconthub */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -104,27 +94,12 @@
 			path = siconthub;
 			sourceTree = "<group>";
 		};
-		18B0B6DD2F9406770089D498 /* SOAuxWinds */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SOAuxWinds;
-			sourceTree = "<group>";
-		};
 		18BC57482F2EA9D80075DC08 /* SaltySweets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				182F60612F452ECC0057B582 /* Exceptions for "SaltySweets" folder in "SaltySweets" target */,
 			);
 			path = SaltySweets;
-			sourceTree = "<group>";
-		};
-		18F3D70B2F495C03003B3369 /* SOSheets */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SOSheets;
-			sourceTree = "<group>";
-		};
-		18FE4E57300EE07400531BB2 /* SOPopovers */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SOPopovers;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -172,11 +147,6 @@
 		18BC573D2F2EA9D80075DC08 = {
 			isa = PBXGroup;
 			children = (
-				18FE4E57300EE07400531BB2 /* SOPopovers */,
-				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
-				18F3D70B2F495C03003B3369 /* SOSheets */,
-				1803A4612F36EBA8006EC28C /* SOControllers */,
-				1803A4582F36E017006EC28C /* SOPages */,
 				18BC57482F2EA9D80075DC08 /* SaltySweets */,
 				1829F4482FA5725A002BFEF8 /* siconthub */,
 				185522862F565A3200972E92 /* Frameworks */,
@@ -234,12 +204,7 @@
 				1829F44E2FA5725A002BFEF8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				1803A4582F36E017006EC28C /* SOPages */,
-				1803A4612F36EBA8006EC28C /* SOControllers */,
-				18B0B6DD2F9406770089D498 /* SOAuxWinds */,
 				18BC57482F2EA9D80075DC08 /* SaltySweets */,
-				18F3D70B2F495C03003B3369 /* SOSheets */,
-				18FE4E57300EE07400531BB2 /* SOPopovers */,
 			);
 			name = SaltySweets;
 			packageProductDependencies = (

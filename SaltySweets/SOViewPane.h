@@ -9,7 +9,7 @@
 #import "Changes/SOConfigurableContent.h"
 #import "Changes/SOSimpleIconChangeCompiler.h"
 #import "Changes/SOSimpleDockChangeCompiler.h"
-#import "../SOControllers/Base/SOPageControllerBase.h"
+#import "Controllers/Base/SOPageControllerBase.h"
 #import "../../icon-server/icon-server/SOIconServerXPCProtocol.h"
 
 @interface SOViewPane : NSViewController

@@ -4,7 +4,7 @@
 #import <AppKit/AppKit.h>
 #import <Symbols/Symbols.h>
 
-#import "../SOControllers/Base/SOPageControllerBase.h"
+#import "Controllers/Base/SOPageControllerBase.h"
 
 @interface SONavigatorBarItem : NSTabViewItem
 - (instancetype)initWithFallbackSymbolName:(NSString *)symbolName

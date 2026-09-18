@@ -1,8 +1,8 @@
 //Created by Salty on 7/16/26.
 
 #import "SOChangeCompilerBase.h"
-#import "../../SOSheets/SOThemeCreationSheetController.h"
-#import "../../SOSheets/SOProgressSheetController.h"
+#import "../Controllers/SOThemeCreationSheetController.h"
+#import "../Controllers/SOProgressSheetController.h"
 #import "../SOViewPane.h"
 
 @interface SOSimpleDockChangeCompiler : SOChangeCompilerBase

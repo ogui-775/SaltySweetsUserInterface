@@ -4,7 +4,7 @@
 #import <SharedBundles/SharedBundles.h>
 
 #import "SOConfigurableContent.h"
-#import "../../SOSheets/SOChangeConfirmSheetController.h"
+#import "SOChangeConfirmSheetController.h"
 #import "../Services/SOSignatures.h"
 
 @interface SOChangeCompilerBase : NSObject
