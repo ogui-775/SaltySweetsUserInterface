@@ -2,10 +2,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SOPackViewController.h"
-#import "SOAboutController.h"
-
 @class SONavigatorBarMaster;
+@class SOPackViewController;
+@class SOAboutController;
 
 @interface SOWindowController : NSWindowController <NSWindowDelegate, NSToolbarDelegate>
 @property (weak) IBOutlet SONavigatorBarMaster *navigatorBarMaster;

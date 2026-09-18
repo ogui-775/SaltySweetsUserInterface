@@ -3,6 +3,7 @@
 #import "SOWindowController.h"
 #import "../SONavigatorBarMaster.h"
 #import "SOPackViewController.h"
+#import "SOAboutController.h"
 
 const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
 const NSToolbarItemIdentifier drawerButton = @"drawerControl";

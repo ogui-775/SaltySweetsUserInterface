@@ -1,7 +1,6 @@
 //Created by Salty on 8/10/26.
 
 #import "Base/SOPageControllerBase.h"
-#import <libproc.h>
 
 @interface SOHealthCheckPageController : SOPageControllerBase <NSComboBoxDataSource>
 @property (weak, nonatomic) IBOutlet NSBox *injectorStatusBox;

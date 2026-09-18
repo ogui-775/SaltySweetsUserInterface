@@ -1,6 +1,11 @@
 //Created by Salty on 2/21/26.
 
 #import "SOBackgroundPageController.h"
+#import "../Helpers/SOScaleImageManager.h"
+#import <QuartzCore/CAShapeLayer.h>
+#import <QuartzCore/CATextLayer.h>
+#import <QuartzCore/CATransaction.h>
+#import "../Helpers/SOMath.h"
 
 @interface SOBackgroundPageController ()
 @property (strong) CALayer * backgroundLayer;

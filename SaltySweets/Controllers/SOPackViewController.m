@@ -3,16 +3,19 @@
 #import "SOPackViewController.h"
 #import "../SONavigatorBarMaster.h"
 #import "SOWindowController.h"
+#import "SOPackViewItem.h"
+#import "../Services/SOAtomicAccessPoint.h"
+#import "SOTagSourceController.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 @interface SOPackViewController ()
 @property (strong) NSDrawer *drawer;
-@property (weak) NSWindowController *parentWindowController;
+@property (weak)   NSWindowController *parentWindowController;
 @property (strong) NSMutableArray<SOSiconPackBundle *> *packs;
 @property (strong) NSArray<NSURL *> *currnetlyViewedPackContents;
-@property (weak) SOSiconPackBundle *currentlyViewedPack;
+@property (weak)   SOSiconPackBundle *currentlyViewedPack;
 @property (strong) NSCollectionView *collectionView;
 @property (strong) NSScrollView *scroller;
 @property (strong) NSButton *backButton;

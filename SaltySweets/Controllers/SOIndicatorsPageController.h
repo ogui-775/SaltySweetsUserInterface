@@ -1,8 +1,6 @@
 //Created by Salty on 2/23/26.
 
 #import "Base/SOConfigurablePageControllerBase.h"
-#import "../Helpers/SOScaleImageManager.h"
-#import "../Helpers/SOMath.h"
 
 @interface SOIndicatorsPageController : SOConfigurablePageControllerBase <NSComboBoxDataSource, NSComboBoxDelegate>
 @property (strong, nonatomic) IBOutlet NSImageView * scale1xImageWell;

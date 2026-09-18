@@ -5,7 +5,6 @@
 
 #import "Controllers/SOPoofPageController.h"
 #import "Controllers/SODockPositionPageController.h"
-#import "Controllers/SOWelcomePageController.h"
 #import "Controllers/SOAppSettingsPageController.h"
 #import "Controllers/SORetinaDisplayPageController.h"
 #import "Controllers/SOSeparatorsPageController.h"

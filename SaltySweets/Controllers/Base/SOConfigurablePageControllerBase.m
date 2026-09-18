@@ -460,7 +460,7 @@ BOOL SOEncodedKeyPathEqual(const SOEncodedKeyPath *a,
 
 //Delegate callback
 - (NSArray<SOChange *> *)pendingChanges {
-    return [self.pendingChangeArray copy];
+    return [self.pendingChangeArray copy] ?: [NSArray array];
 }
 
 - (void)purgePendingChanges{

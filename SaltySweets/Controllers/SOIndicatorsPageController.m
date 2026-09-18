@@ -1,6 +1,8 @@
 //Created by Salty on 2/23/26.
 
 #import "SOIndicatorsPageController.h"
+#import "../Helpers/SOScaleImageManager.h"
+#import "../Helpers/SOMath.h"
 
 @implementation SOIndicatorsPageController
 

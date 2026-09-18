@@ -1,6 +1,7 @@
 //Created by Salty on 8/1/26.
 
 #import "SONavigatorBarMaster.h"
+#import "Controllers/SOCollectionViewItem.h"
 
 const NSString *image = @"image";
 const NSString *text  = @"text";
@@ -119,7 +120,6 @@ const NSString *shouldDisplay = @"shouldDisplay";
 
 - (NSArray *)homeTableRowData{
     return @[
-        @{image:@"hand.wave", text:@"Welcome", pageControllerClass:SOWelcomePageController.class, shouldDisplay:@NO},
         @{image:@"gear", text:@"Settings", pageControllerClass:SOAppSettingsPageController.class, preferenceImage:@"i_gear"},
         @{image:@"box", text:@"Sicon Studio", preferenceImage:@"i_studio", opensWindow:@YES}
     ];

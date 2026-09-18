@@ -1,6 +1,9 @@
 //Created by Salty on 2/23/26.
 
 #import "SOReflectionsPageController.h"
+#import "../Helpers/SOScaleImageManager.h"
+#import "../Helpers/SOScaleControlValueManager.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SOReflectionsPageController ()
 @property (strong, nonatomic) CALayer * backgroundLayer;

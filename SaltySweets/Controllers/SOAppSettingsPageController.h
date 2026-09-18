@@ -2,11 +2,6 @@
 
 #import "Base/SOConfigurablePageControllerBase.h"
 
-#import "../Services/SOSignatures.h"
-#import "../Services/SOAtomicAccessPoint.h"
-
-#import "SOHealthCheckPageController.h"
-
 @interface SOAppSettingsPageController : SOConfigurablePageControllerBase
 @property (strong, nonatomic) IBOutlet NSButton * openFinderToThemesButton;
 @property (strong, nonatomic) IBOutlet NSTextField * appAuthorNameField;

@@ -1,6 +1,10 @@
 //Created by Salty on 2/18/26.
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "SOSeparatorsPageController.h"
+#import "../Helpers/SOScaleImageManager.h"
+#import "../Helpers/SOScaleControlValueManager.h"
 
 @interface SOSeparatorsPageController ()
 @property (strong, nonatomic) CALayer * backgroundLayer;

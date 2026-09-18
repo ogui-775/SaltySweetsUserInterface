@@ -1,11 +1,6 @@
 //Created by Salty on 2/21/26.
 
 #import "Base/SOConfigurablePageControllerBase.h"
-#import "../Helpers/SOScaleImageManager.h"
-#import <QuartzCore/CAShapeLayer.h>
-#import <QuartzCore/CATextLayer.h>
-#import <QuartzCore/CATransaction.h>
-#import "../Helpers/SOMath.h"
 
 typedef NS_ENUM(NSUInteger, SODraggingGuide) {
     SODraggingGuideNone,
@@ -15,8 +10,10 @@ typedef NS_ENUM(NSUInteger, SODraggingGuide) {
     SODraggingGuideBottom
 };
 
+@class SOScaleImageManager;
+
 @interface SOBackgroundPageController : SOConfigurablePageControllerBase <NSTextFieldDelegate>
-@property (nonatomic, strong) SOScaleImageManager * scaleMgr;
+@property (nonatomic, strong) SOScaleImageManager *scaleMgr;
 
 //Mixed
 @property (nonatomic, strong) IBOutlet NSImageView * leftImageWell;

@@ -2,6 +2,9 @@
 
 #import "SOMainMenuView.h"
 #import "SODisplayCurrentsPageController.h"
+#import "SONavigatorBarItem.h"
+#import "SOCollectionViewItem.h"
+#import "../Layouts/SOMainMenuLayout.h"
 
 @interface SOMainMenuView ()
 @property (strong) NSDictionary<NSNumber *, NSArray *> *itemsBySectionIndex;

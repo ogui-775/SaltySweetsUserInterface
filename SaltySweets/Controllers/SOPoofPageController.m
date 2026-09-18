@@ -2,6 +2,7 @@
 
 #import "SOPoofPageController.h"
 #import "../Changes/SOConfigurableContent.h"
+#import <SharedKeys/SOSharedKeys.h>
 
 @interface SOPoofPageController ()
 

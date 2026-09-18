@@ -1,9 +1,8 @@
 //Created by Salty on 2/23/26.
 
 #import "Base/SOConfigurablePageControllerBase.h"
-#import "../Helpers/SOScaleImageManager.h"
-#import "../Helpers/SOScaleControlValueManager.h"
-#import <QuartzCore/QuartzCore.h>
+
+@class SOScaleControlValueManager;
 
 @interface SOReflectionsPageController : SOConfigurablePageControllerBase <CALayerDelegate>
 @property (strong, nonatomic) IBOutlet NSTextField * windowReflectionOpacityTextbox;

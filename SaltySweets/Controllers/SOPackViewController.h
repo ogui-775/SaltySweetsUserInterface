@@ -4,10 +4,6 @@
 #import <SharedBundles/SharedBundles.h>
 #import <CoreImage/CIFilterBuiltins.h>
 
-#import "SOPackViewItem.h"
-#import "../Services/SOAtomicAccessPoint.h"
-#import "SOTagSourceController.h"
-
 @interface SOPackViewController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource, NSToolbarItemValidation, NSDraggingDestination>
 - (instancetype)initWithParentWindowController:(NSWindowController *)wc;
 - (IBAction)showDrawer:(id)sender;

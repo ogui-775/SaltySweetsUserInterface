@@ -1,5 +1,7 @@
 //Created by Salty on 8/10/26.
 
+#import <libproc.h>
+
 #import "SOHealthCheckPageController.h"
 
 @interface SOHealthCheckPageController ()

@@ -1,9 +1,6 @@
 //Created by Salty on 2/6/26.
 
-#import "Base/SOPageControllerBase.h"
 #import "Base/SOConfigurablePageControllerBase.h"
-#import "../Changes/SOConfigurableContent.h"
-#import <SharedKeys/SOSharedKeys.h>
 
 @interface SOPoofPageController : SOConfigurablePageControllerBase
 //Settings box

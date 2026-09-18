@@ -1,6 +1,9 @@
 //Created by Salty on 2/16/26.
 
 #import "SOAppSettingsPageController.h"
+#import "../Services/SOSignatures.h"
+#import "../Services/SOAtomicAccessPoint.h"
+#import "SOHealthCheckPageController.h"
 
 @interface SOAppSettingsPageController ()
 @property (strong, nonatomic) SOHealthCheckPageController *healthCheckController;
