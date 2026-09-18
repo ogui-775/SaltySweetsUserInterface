@@ -2,7 +2,7 @@
 
 #import "SOWindowController.h"
 #import "../SONavigatorBarMaster.h"
-#import "SOPackViewController.h"
+#import "SOBundleViewerController.h"
 #import "SOAboutController.h"
 
 const NSToolbarItemIdentifier itemId = @"menuItemToolbar";
@@ -51,16 +51,17 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
     
     if ([itemIdentifier isEqualToString:drawerButton]){
         NSToolbarItem *buttonItem = [[NSToolbarItem alloc] initWithItemIdentifier:drawerButton];
-        buttonItem.image = [NSImage imageWithSystemSymbolName:@"sidebar.squares.trailing"
+        buttonItem.image = [NSImage imageWithSystemSymbolName:@"interface.window"
                                      accessibilityDescription:nil];
         
-        buttonItem.action = @selector(showDrawer:);
+        buttonItem.autovalidates = NO;
+        buttonItem.action = @selector(makeKeyAndOrderFront:);
         
         if (!self.packViewController)
-            self.packViewController = [[SOPackViewController alloc] initWithParentWindowController:self];
+            self.packViewController = [[SOBundleViewerController alloc] init];
         
-        buttonItem.target = self.packViewController;
-        buttonItem.toolTip = @"Show/Hide Collections";
+        buttonItem.target = self.packViewController.window;
+        buttonItem.toolTip = @"Show Stored Sweets";
         
         return buttonItem;
     }

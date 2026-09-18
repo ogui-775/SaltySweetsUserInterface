@@ -6,11 +6,11 @@
 
 #import "../../SaltySweets/Services/SOAtomicAccessPoint.h"
 #import "../../SaltySweets/SOViewPane.h"
-#import "../../SaltySweets/Controllers/SOPackViewController.h"
+#import "../../SaltySweets/Controllers/SOBundleViewerViewController.h"
 
 
 @interface SOImportSSItemController : NSViewController
-@property (weak) IBOutlet SOPackViewController *packViewController;
+@property (weak) IBOutlet SOBundleViewerViewController *packViewController;
 @end
 
 @interface SOImportDestinationBox : NSBox <NSDraggingDestination>

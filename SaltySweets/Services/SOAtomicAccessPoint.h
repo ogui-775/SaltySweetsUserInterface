@@ -7,8 +7,7 @@
 
 #import "../../../icon-server/icon-server/SOIconClientXPCProtocol.h"
 #import "../../../icon-server/icon-server/SOIconServerXPCProtocol.h"
-
-@class SOPackViewController;
+#import "../Controllers/SOBundleViewerViewController.h"
 
 @interface SOAtomicAccessPoint : NSObject
 + (instancetype)sharedInstance;
@@ -31,5 +30,5 @@
 - (NSArray *)applicationFolderPaths;
 - (void)setApplicationFolderPaths:(NSArray *)paths;
 @property (strong, nonatomic, readonly) NSXPCConnection *appIconServerConnection;
-@property (weak) SOPackViewController *packViewController;
+@property (weak) SOBundleViewerViewController *packViewController;
 @end

@@ -3,12 +3,12 @@
 #import <Cocoa/Cocoa.h>
 
 @class SONavigatorBarMaster;
-@class SOPackViewController;
+@class SOBundleViewerController;
 @class SOAboutController;
 
 @interface SOWindowController : NSWindowController <NSWindowDelegate, NSToolbarDelegate>
 @property (weak) IBOutlet SONavigatorBarMaster *navigatorBarMaster;
 @property (weak) IBOutlet NSMenuItem *viewMenu;
-@property (strong) SOPackViewController *packViewController;
+@property (strong) SOBundleViewerController *packViewController;
 @property (strong) SOAboutController *aboutController;
 @end
