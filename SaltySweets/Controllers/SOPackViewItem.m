@@ -57,6 +57,7 @@
         NSImageView *tiv = [[NSImageView alloc] initWithFrame:CGRectMake(75, 55, 20, 20)];
         self.tagImageView = tiv;
         tiv.editable = NO;
+        tiv.toolTip = @"View tags";
         tiv.imageScaling = NSImageScaleProportionallyUpOrDown;
         [self.view addSubview:tiv];
         NSClickGestureRecognizer *clicker = [[NSClickGestureRecognizer alloc] initWithTarget:self

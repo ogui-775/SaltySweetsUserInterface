@@ -165,9 +165,6 @@
                 completion(NO);
                 return;
             }
-            
-            [self purgeFilesIfNeededWithRelativePaths:purgeCollection
-                                           fromBundle:currentPack];
         }];
         
         [opQueue addBarrierBlock:^{
