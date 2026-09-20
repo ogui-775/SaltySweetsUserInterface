@@ -29,5 +29,8 @@
 @property (strong, nonatomic) IBOutlet NSStepper * edgeStepper;
 @property (strong, nonatomic) IBOutlet NSTextField * edgeTextbox;
 
+@property (weak, nonatomic) IBOutlet NSComboBox *windowReflectionsZBox;
+@property (weak, nonatomic) IBOutlet NSComboBox *iconReflectionsZBox;
+
 @property (strong, nonatomic) SOScaleControlValueManager * valueMgr;
 @end

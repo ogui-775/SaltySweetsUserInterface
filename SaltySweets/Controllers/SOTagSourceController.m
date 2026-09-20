@@ -5,6 +5,7 @@
 @interface SOTagSourceController ()
 @property (assign) SOTagSourceType assignedType;
 @property (strong) NSArray<NSString *> *tagsArray;
+@property (weak) NSBox *boundBox;
 @end
 
 @interface SOItemTag ()
@@ -54,6 +55,15 @@
         self.tagsArray = tags;
     }
     return self;
+}
+
++ (instancetype)controllerWithBox:(NSBox *)box
+                       sourceType:(SOTagSourceType)type
+                         tagArray:(NSArray<NSString *> *)tags{
+    SOTagSourceController *ret = [[SOTagSourceController alloc] initWithTagSourceType:type
+                                                                             tagArray:tags];
+    [ret setBoundBox:box];
+    return ret;
 }
 
 - (void)awakeFromNib{

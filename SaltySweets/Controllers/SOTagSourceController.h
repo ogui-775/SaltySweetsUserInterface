@@ -15,8 +15,9 @@ typedef enum : NSUInteger {
 - (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-- (instancetype) initWithTagSourceType:(SOTagSourceType)type
-                              tagArray:(NSArray<NSString *> *)tags;
++ (instancetype)controllerWithBox:(NSBox *)box
+                       sourceType:(SOTagSourceType)type
+                         tagArray:(NSArray<NSString *> *)tags;
 
 @property (weak) IBOutlet NSBox *viewBox;
 @property (weak) IBOutlet NSCollectionView *tagsCollectionView;

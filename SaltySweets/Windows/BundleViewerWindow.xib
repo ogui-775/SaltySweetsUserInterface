@@ -22,7 +22,7 @@
             <value key="maxSize" type="size" width="667" height="612"/>
             <view key="contentView" id="tw7-mh-utp">
                 <rect key="frame" x="0.0" y="0.0" width="667" height="612"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="B4E6F4F3-F88C-452A-97AC-F24ECB2553DA" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="Pw0-GU-BcQ">
                 <allowedToolbarItems>

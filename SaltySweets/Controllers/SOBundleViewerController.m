@@ -9,6 +9,10 @@
     if (self){
         self.contentViewController = [[SOBundleViewerViewController alloc] initWithNibName:@"SOBundleViewerView"
                                                                                     bundle:nil];
+        SOBundleViewerViewController *vc = (SOBundleViewerViewController *)self.contentViewController;
+        vc.backButton = self.window.toolbar.items[0];
+        vc.backButton.autovalidates = NO;
+        vc.backButton.enabled = NO;
     }
     return self;
 }

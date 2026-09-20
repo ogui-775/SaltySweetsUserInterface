@@ -3,10 +3,10 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SOBundleViewerViewController : NSViewController <NSCollectionViewDelegate, NSCollectionViewDataSource>
-@property (weak, nonatomic) IBOutlet NSStackView *tagsStack;
 @property (weak, nonatomic) IBOutlet NSCollectionView *collectionView;
-@property (weak) IBOutlet NSButton *backButton;
-@property (weak) IBOutlet NSTextField *packDisplayLabel;
+@property (weak, nonatomic) IBOutlet NSBox *colorSpaceBox;
+@property (weak, nonatomic) IBOutlet NSBox *itemPropertyBox;
+@property (weak) NSToolbarItem *backButton;
 - (void)updateContents;
 - (void)goBack:(id)sender;
 @end

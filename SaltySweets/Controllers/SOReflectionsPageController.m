@@ -202,6 +202,9 @@ static inline CGRect RotatedContentsCenter(CGRect center, NSUInteger orientation
     self.cached2xRightEdge = [[self getBaselineForEncodedKeypath:&t2xEdgeKeyRight] doubleValue];
     
     [self.backgroundHeightBar setFrame:[self edgeRectForOrientation:self.orientationSelector.indexOfSelectedItem]];
+    
+    [self.windowReflectionsZBox selectItemAtIndex:[[self getBaselineForEncodedKey:&kSODockWindowReflectionAboveBackground] boolValue]];
+    [self.iconReflectionsZBox selectItemAtIndex:[[self getBaselineForEncodedKey:&kSODockIconReflectionAboveBackground] boolValue]];
 }
 
 #pragma mark - General Settings
@@ -229,6 +232,27 @@ static inline CGRect RotatedContentsCenter(CGRect center, NSUInteger orientation
     [self setPendingBoolChangeForKey:&kSODockTileReflectionEnabled
                              enabled:enabled
                                 note:[NSString stringWithFormat:@"Set icon reflections enabled to %i", enabled]];
+}
+
+- (IBAction)reflectionZPosDidChange:(NSComboBox *)sender{
+    if (sender.indexOfSelectedItem > 1 || sender.indexOfSelectedItem < 0)
+        return;
+    
+    BOOL isIconReflections = ([[sender identifier] isEqualToString:@"ir"]);
+    BOOL isAbove = sender.indexOfSelectedItem;
+    
+    if (!isIconReflections){
+        [self setPendingChangeForKey:&kSODockWindowReflectionAboveBackground
+                               value:@(isAbove)
+                                note:[NSString stringWithFormat:@"Set windows reflective above dock to %i",
+                                      isAbove]];
+        return;
+    }
+    
+    [self setPendingChangeForKey:&kSODockIconReflectionAboveBackground
+                           value:@(isAbove)
+                            note:[NSString stringWithFormat:@"Set icons reflective above dock to %i",
+                                  isAbove]];
 }
 
 #pragma mark - Window Reflection Settings

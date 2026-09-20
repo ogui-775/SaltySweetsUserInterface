@@ -30,22 +30,20 @@
     tagsTitle.usesSingleLineMode = YES;
     tagsTitle.stringValue = @"Item Tags";
 
-    _colorSpaceTagsController = [[SOTagSourceController alloc] initWithTagSourceType:SOTagSourceTypeColorSpace
-                                                                            tagArray:@[
+    _colorSpaceTagsController = [SOTagSourceController controllerWithBox:self.colorSpaceBox
+                                                              sourceType:SOTagSourceTypeColorSpace
+                                                                tagArray:@[
         @"Display P3",
         @"sRGB",
         @"Greyscale",
         @"B&W"
     ]];
 
-    _imagePropertiesTagsController = [[SOTagSourceController alloc] initWithTagSourceType:SOTagSourceTypeNSImageProperties
-                                                                                 tagArray:@[
+    _imagePropertiesTagsController = [SOTagSourceController controllerWithBox:self.itemPropertyBox
+                                                                   sourceType:SOTagSourceTypeNSImageProperties
+                                                                     tagArray:@[
         @"Template"
     ]];
-
-    [_tagsStack addView:tagsTitle inGravity:NSStackViewGravityTop];
-    [_tagsStack addView:_colorSpaceTagsController.view inGravity:NSStackViewGravityTop];
-    [_tagsStack addView:_imagePropertiesTagsController.view inGravity:NSStackViewGravityTop];
 
     [_colorSpaceTagsController.view setContentHuggingPriority:NSLayoutPriorityRequired
                                                  forOrientation:NSLayoutConstraintOrientationVertical];
@@ -82,9 +80,8 @@
     [self.collectionView reloadData];
 
     self.backButton.enabled = YES;
-    self.packDisplayLabel.stringValue =
+    self.view.window.title =
         self.currentlyViewedPack.packNameAndAuthor;
-    self.packDisplayLabel.hidden = NO;
 }
 
 - (void)updateContents{
@@ -112,8 +109,7 @@
     self.currentlyViewedPack = nil;
     [self.collectionView reloadData];
     self.backButton.enabled = NO;
-    self.packDisplayLabel.stringValue = @"";
-    self.packDisplayLabel.hidden = YES;
+    self.view.window.title = @"Sweets Viewer";
 }
 
 - (void)goBack:(NSButton *)sender{
@@ -121,8 +117,8 @@
     self.currnetlyViewedPackContents = nil;
     [self.collectionView reloadData];
     self.backButton.enabled = NO;
-    self.packDisplayLabel.stringValue = @"";
-    self.packDisplayLabel.hidden = YES;
+    self.view.window.title = @"Sweets Viewer";
+    self.backButton.enabled = NO;
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView
