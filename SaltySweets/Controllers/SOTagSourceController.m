@@ -5,7 +5,6 @@
 @interface SOTagSourceController ()
 @property (assign) SOTagSourceType assignedType;
 @property (strong) NSArray<NSString *> *tagsArray;
-@property (weak) NSBox *boundBox;
 @end
 
 @interface SOItemTag ()
@@ -19,12 +18,12 @@
     if (self){
         NSView *v = [[NSView alloc] init];
         self.view = v;
-        [v setFrame:CGRectMake(0, 0, 160, 20)];
+        [v setFrame:CGRectMake(0, 0, 100, 20)];
         NSTextField *tf = [[NSTextField alloc] init];
         self.textField = tf;
         tf.stringValue = string;
         [self.view addSubview:tf];
-        [tf setFrame:CGRectMake(0, 0, 160, 20)];
+        [tf setFrame:CGRectMake(0, 0, 100, 20)];
         [tf setAlignment:NSTextAlignmentCenter];
         [tf setEditable:NO];
         
@@ -48,8 +47,7 @@
 @implementation SOTagSourceController
 - (instancetype)initWithTagSourceType:(SOTagSourceType)type
                              tagArray:(NSArray<NSString *> *)tags{
-    self = [super initWithNibName:@"SOTagSourceView"
-                           bundle:nil];
+    self = [super init];
     if (self){
         self.assignedType = type;
         self.tagsArray = tags;
@@ -62,15 +60,15 @@
                          tagArray:(NSArray<NSString *> *)tags{
     SOTagSourceController *ret = [[SOTagSourceController alloc] initWithTagSourceType:type
                                                                              tagArray:tags];
-    [ret setBoundBox:box];
+    [ret setView:box];
+    NSScrollView *innerScrollView = [box.contentView subviews][0];
+    NSCollectionView *innerCollectionView = [innerScrollView documentView];
+    [ret setTagsCollectionView:innerCollectionView];
+    [(NSBox *)ret.view setTitle:GetTitleFromTagSourceType(ret.assignedType)];
+    [[ret tagsCollectionView] setDataSource:(id<NSCollectionViewDataSource>)ret];
+    [[ret tagsCollectionView] setDelegate:(id<NSCollectionViewDelegate>)ret];
+    [ret.tagsCollectionView reloadData];
     return ret;
-}
-
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    self.viewBox.title = GetTitleFromTagSourceType(self.assignedType);
-    self.tagsCollectionView.selectable = YES;
-    [self.tagsCollectionView reloadData];
 }
 
 NSString* GetTitleFromTagSourceType(SOTagSourceType type){

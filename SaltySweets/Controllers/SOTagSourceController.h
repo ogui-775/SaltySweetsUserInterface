@@ -18,8 +18,6 @@ typedef enum : NSUInteger {
 + (instancetype)controllerWithBox:(NSBox *)box
                        sourceType:(SOTagSourceType)type
                          tagArray:(NSArray<NSString *> *)tags;
-
-@property (weak) IBOutlet NSBox *viewBox;
 @property (weak) IBOutlet NSCollectionView *tagsCollectionView;
 @end
 
