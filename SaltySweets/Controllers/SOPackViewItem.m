@@ -27,6 +27,7 @@
         text.bordered = NO;
         text.lineBreakMode = NSLineBreakByWordWrapping;
         text.stringValue = name;
+        self.name = name;
         text.drawsBackground = NO;
         text.alignment = NSTextAlignmentCenter;
         

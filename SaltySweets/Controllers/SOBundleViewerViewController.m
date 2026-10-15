@@ -126,11 +126,15 @@
     NSInteger idx = indexPath.item;
     
     if (self.currentlyViewedPack){
-        NSURL *url = [self.currnetlyViewedPackContents objectAtIndex:idx];
-        SOPackViewItem *item = [[SOPackViewItem alloc] initWithName:[url lastPathComponent]
-                                                                URL:url];
-        item.hasTags = [[self.currentlyViewedPack tagsPlist] objectForKey:[url lastPathComponent]];
-        return item;
+        @try {
+            NSURL *url = [self.currnetlyViewedPackContents objectAtIndex:idx];
+            SOPackViewItem *item = [[SOPackViewItem alloc] initWithName:[url lastPathComponent]
+                                                                    URL:url];
+            item.hasTags = [[self.currentlyViewedPack tagsPlist] objectForKey:[url lastPathComponent]];
+            return item;
+        } @catch (NSException *exception) {
+            NSLog(@"%@", exception);
+        }
     }
     
     SOSiconPackBundle *bundle = [self.packs objectAtIndex:idx];

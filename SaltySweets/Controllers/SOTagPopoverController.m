@@ -13,11 +13,12 @@
                            bundle:nil];
     if (self){
         self.parentItem = item;
+        self.name = item.name;
     }
     return self;
 }
 
-- (void)popoverWillShow:(NSNotification *)notification{
-    self.view.window.level = NSFloatingWindowLevel;
+- (IBAction)closePopover:(id)sender{
+    [self.view.window close];
 }
 @end

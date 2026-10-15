@@ -4,6 +4,9 @@
 
 @class SOPackViewItem;
 
-@interface SOTagPopoverController : NSViewController <NSPopoverDelegate>
+@interface SOTagPopoverController : NSViewController <NSPopoverDelegate, NSCollectionViewDelegate, NSCollectionViewDataSource>
 - (instancetype)initWithSourceItem:(SOPackViewItem *)item;
+
+@property (strong) NSString *name;
+@property (weak) IBOutlet NSCollectionView *tagsView;
 @end

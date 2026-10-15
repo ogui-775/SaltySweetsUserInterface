@@ -51,8 +51,8 @@ const NSToolbarItemIdentifier drawerButton = @"drawerControl";
     
     if ([itemIdentifier isEqualToString:drawerButton]){
         NSToolbarItem *buttonItem = [[NSToolbarItem alloc] initWithItemIdentifier:drawerButton];
-        buttonItem.image = [NSImage imageWithSystemSymbolName:@"interface.window"
-                                     accessibilityDescription:nil];
+        buttonItem.image = [NSImage imageWithSymbolName:@"interface.window"
+                                          variableValue:0];
         
         buttonItem.autovalidates = NO;
         buttonItem.action = @selector(makeKeyAndOrderFront:);
