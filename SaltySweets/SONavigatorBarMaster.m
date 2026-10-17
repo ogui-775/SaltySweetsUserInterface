@@ -130,7 +130,7 @@ const NSString *shouldDisplay = @"shouldDisplay";
         @{image:@"smoke", text:@"Poof", pageControllerClass:SOPoofPageController.class, preferenceImage:@"i_poof"},
         @{image:@"dock.rectangle", text:@"Dock Frame", pageControllerClass:SODockPositionPageController.class, preferenceImage:@"i_frame"},
         @{image:@"square.fill.and.line.vertical.and.square.fill", text:@"Separators", pageControllerClass:SOSeparatorsPageController.class, preferenceImage:@"i_separator"},
-        @{image:@"photo.on.rectangle.angled", text:@"Background", pageControllerClass:SOBackgroundPageController.class, preferenceImage:@"i_background"},
+        @{image:@"photo.on.rectangle.angled", text:@"Background", pageControllerClass:SONewBackgroundPageController.class, preferenceImage:@"i_background"},
         @{image:@"square.and.arrow.up", text:@"Icon Height", pageControllerClass:SOIconHeightPageController.class, preferenceImage:@"i_height"},
         @{image:@"app.shadow", text:@"Icon Shadows", pageControllerClass:SOIconShadowsPageController.class, preferenceImage:@"i_shadow"},
         @{image:@"arrowtriangle.up.fill", text:@"Indicators", pageControllerClass:SOIndicatorsPageController.class, preferenceImage:@"i_indicator"},
