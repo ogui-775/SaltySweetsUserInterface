@@ -58,6 +58,20 @@
                                         scale:[scale isEqualToString:@"1x"] ? 1 : 2];
         }
     }
+    for (SODragAwareImageView *well in @[self.leftPart, self.middlePart, self.rightPart]){
+        NSString *direction = well.identifier;
+        
+        for (NSString *scale in @[@"1x", @"2x"]){
+            NSString *dirKey = [direction isEqualToString:@"lp"] ? @"left" : [direction isEqualToString:@"mp"] ? @"middleOrMain" : @"right";
+            SOEncodedKeyPath tPath = {
+                .rootKey = &kSODockFrontlineAssets,
+                .components = @[dirKey, [NSString stringWithFormat:@"frontline%@", scale]]
+            };
+            [self.scaleMgr registerObject:well
+                       withEncodedKeypath:&tPath
+                                    scale:[scale isEqualToString:@"1x"] ? 1 : 2];
+        }
+    }
 
     if (self.leftImageWell.image){
         self.leftFlipButton.enabled = YES;
@@ -113,7 +127,7 @@
 #pragma mark - Refresh baseline
 
 - (void)refreshOrLoadBaseline {
-    NSDictionary * centerDict = [self getBaselineForEncodedKey:&kSODockBackgroundContentsCenter];
+    NSDictionary *centerDict = [self getBaselineForEncodedKey:&kSODockBackgroundContentsCenter];
 
     CGRect centerRect = CGRectMake([centerDict[@"x"] doubleValue],
                                    [centerDict[@"y"] doubleValue],
@@ -157,14 +171,19 @@
 
     [self checkFlipButton];
     [self.scaleMgr baselineDidRefresh];
-    self.scaleSelector.enabled = [[self getBaselineForEncodedKey:&kSODockUsesRetinaResourcesWhereRequested] boolValue];
+    self.scaleSelector.enabled = YES;
     
-    NSString * tiling = [self getBaselineForEncodedKey:&kSODockBackgroundTiling];
+    NSString *tiling = [self getBaselineForEncodedKey:&kSODockBackgroundTiling];
     [self.backgroundLayer setContentsScaling:tiling];
     if ([tiling isEqualToString:@"repeat"])
         self.backgroundTiling.state = NSControlStateValueOn;
     
     self.blurRadiusTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockBackgroundBlurRadius] doubleValue];
+
+    self.saturationTextbox.intValue = [[self getBaselineForEncodedKey:&kSODockWindowReflectionSaturationAmount] intValue];
+    
+    self.tiltTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockBackgroundTiltAngle] doubleValue];
+    self.slantTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockSidesTiltAngle] doubleValue];
 }
 
 - (IBAction)actionOnWell:(NSImageView *)sender{
@@ -195,6 +214,37 @@
                                 contentScale:self.scaleMgr.currentScale];
     [self.scaleMgr setImage:sender.image forRegisteredObject:sender];
     return;
+}
+
+- (IBAction)actionOnFrontlineWell:(SODragAwareImageView *)sender{
+    NSString *partAndScale = [NSString stringWithFormat:@"frontline%@", self.scaleMgr.currentScale == 1 ? @"1x" : @"2x"];
+    NSString *dirKey = [sender.identifier isEqualToString:@"lp"] ? @"left" : [sender.identifier isEqualToString:@"mp"] ? @"middleOrMain" : @"right";
+    
+    SOEncodedKeyPath key = {
+        .rootKey = &kSODockFrontlineAssets,
+        .components = @[dirKey, partAndScale]
+    };
+    
+    if (!sender.image){
+        [self setPendingResourceChangeForKeypath:&key
+                                        resource:nil
+                                            type:kSOChangeResourceTypeNSImage
+                                        filename:nil
+                                            note:[NSString stringWithFormat:@"Cleared frontline for %@",
+                                                  dirKey]
+                                    contentScale:self.scaleMgr.currentScale];
+        [self.scaleMgr setImage:nil forRegisteredObject:sender];
+        return;
+    }
+    
+    [self setPendingResourceChangeForKeypath:&key
+                                    resource:sender.image
+                                        type:kSOChangeResourceTypeNSImage
+                                    filename:[NSString stringWithFormat:@"%@.png", partAndScale]
+                                        note:[NSString stringWithFormat:@"Set frontline for %@ to %@",
+                                              dirKey, partAndScale]
+                                contentScale:self.scaleMgr.currentScale];
+    [self.scaleMgr setImage:sender.image forRegisteredObject:sender];
 }
 
 - (void)viewDidLayout {
@@ -562,7 +612,28 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
     
     [self setPendingChangeForKey:&kSODockBackgroundBlurRadius
                            value:@(sender.doubleValue)
-                            note:[NSString stringWithFormat:@"Set background blur radius to %f",
+                            note:[NSString stringWithFormat:@"Set background reflection blur radius to %f",
+                                  sender.doubleValue]];
+}
+
+- (IBAction)saturationDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockWindowReflectionSaturationAmount
+                           value:@(sender.intValue)
+                            note:[NSString stringWithFormat:@"Set background reflection saturation amount to %i",
+                                  sender.intValue]];
+}
+
+- (IBAction)tiltDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockBackgroundTiltAngle
+                           value:@(sender.doubleValue)
+                            note:[NSString stringWithFormat:@"Set background tilt angle to %f",
+                                  sender.doubleValue]];
+}
+
+- (IBAction)slantDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockSidesTiltAngle
+                           value:@(sender.doubleValue)
+                            note:[NSString stringWithFormat:@"Set background slant angle to %f",
                                   sender.doubleValue]];
 }
 

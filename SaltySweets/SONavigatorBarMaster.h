@@ -9,7 +9,7 @@
 #import "Controllers/SORetinaDisplayPageController.h"
 #import "Controllers/SOSeparatorsPageController.h"
 #import "Controllers/SOBackgroundPageController.h"
-#import "Controllers/SONewBackgroundPageController.h"
+#import "Controllers/SOBackgroundPageController.h"
 #import "Controllers/SOIconHeightPageController.h"
 #import "Controllers/SOIconShadowsPageController.h"
 #import "Controllers/SOIndicatorsPageController.h"

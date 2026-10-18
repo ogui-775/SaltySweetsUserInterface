@@ -25,6 +25,15 @@ typedef NS_ENUM(NSUInteger, SODraggingGuide) {
 @property (nonatomic, strong) IBOutlet NSButton * leftRotateButton;
 @property (nonatomic, strong) IBOutlet NSButton * rightRotateButton;
 @property (nonatomic, strong) IBOutlet NSTextField * blurRadiusTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *saturationTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tiltTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *slantTextbox;
+
+//Frontline
+@property (nonatomic, weak) IBOutlet SODragAwareImageView *leftPart;
+@property (nonatomic, weak) IBOutlet SODragAwareImageView *middlePart;
+@property (nonatomic, weak) IBOutlet SODragAwareImageView *rightPart;
+
 //Group
 @property (nonatomic, strong) IBOutlet NSTextField * contentsCenterX;
 @property (nonatomic, strong) IBOutlet NSTextField * contentsCenterY;
