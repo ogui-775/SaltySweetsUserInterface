@@ -229,7 +229,7 @@
         [self setPendingResourceChangeForKeypath:&key
                                         resource:nil
                                             type:kSOChangeResourceTypeNSImage
-                                        filename:nil
+                                        filename:[NSString stringWithFormat:@"%@.png", partAndScale]
                                             note:[NSString stringWithFormat:@"Cleared frontline for %@",
                                                   dirKey]
                                     contentScale:self.scaleMgr.currentScale];

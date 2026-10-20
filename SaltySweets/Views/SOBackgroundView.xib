@@ -238,6 +238,9 @@
                                                                     <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                                 </allowedInputSourceLocales>
                                                             </textFieldCell>
+                                                            <connections>
+                                                                <action selector="tiltDidChange:" target="-2" id="EzX-aY-RyT"/>
+                                                            </connections>
                                                         </textField>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="1eX-8b-CBq">
                                                             <rect key="frame" x="78" y="32" width="49" height="16"/>
@@ -261,7 +264,7 @@
                                                                 </allowedInputSourceLocales>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <action selector="saturationDidChange:" target="-2" id="Bex-Xe-92F"/>
+                                                                <action selector="slantDidChange:" target="-2" id="Hfg-3l-rI2"/>
                                                             </connections>
                                                         </textField>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="sRL-ml-aKu">
@@ -377,7 +380,7 @@
                                                             <rect key="frame" x="40" y="46" width="56" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Left Part" id="F4l-aI-lXE">
-                                                                <font key="font" metaFont="system" size="11"/>
+                                                                <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
@@ -386,7 +389,7 @@
                                                             <rect key="frame" x="593" y="46" width="60" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Right Part" id="gkj-ug-Ki4">
-                                                                <font key="font" metaFont="system" size="11"/>
+                                                                <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
@@ -395,7 +398,7 @@
                                                             <rect key="frame" x="282" y="46" width="129" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Middle Part/Single Part" id="e3n-EE-eXQ">
-                                                                <font key="font" metaFont="system" size="11"/>
+                                                                <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
@@ -404,16 +407,25 @@
                                                             <rect key="frame" x="17" y="11" width="103" height="38"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                             <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="Ggw-0r-0FH"/>
+                                                            <connections>
+                                                                <action selector="actionOnFrontlineWell:" target="-2" id="3B0-ie-Rr0"/>
+                                                            </connections>
                                                         </imageView>
                                                         <imageView identifier="mp" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiW-8p-XBR" customClass="SODragAwareImageView">
                                                             <rect key="frame" x="122" y="11" width="448" height="39"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                             <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="oNu-QD-UuB"/>
+                                                            <connections>
+                                                                <action selector="actionOnFrontlineWell:" target="-2" id="3pC-Ne-abp"/>
+                                                            </connections>
                                                         </imageView>
                                                         <imageView identifier="rp" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2T2-Ng-u4B" customClass="SODragAwareImageView">
                                                             <rect key="frame" x="572" y="11" width="103" height="38"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                                             <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="0T3-pU-zdJ"/>
+                                                            <connections>
+                                                                <action selector="actionOnFrontlineWell:" target="-2" id="PYo-Cy-zRd"/>
+                                                            </connections>
                                                         </imageView>
                                                     </subviews>
                                                 </view>

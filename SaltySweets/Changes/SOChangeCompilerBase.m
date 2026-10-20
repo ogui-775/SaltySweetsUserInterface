@@ -294,17 +294,17 @@
                withChanges:(NSArray<SOChange *> *)changes
             purgeCollector:(NSMutableArray<NSString *> *)purgeFileRelativePathCollection{
     
-    NSString * rootKey;
+    NSString *rootKey;
     
     for (SOChange * change in changes){
         rootKey = change.plistKey->key;
-        NSMutableDictionary * sub = dict[rootKey];
+        NSMutableDictionary *sub = dict[rootKey];
         
         if (!sub)
             continue;
         
         if (change.plistKeyPath && change.changeType == kSOChangeTypePlist){
-            NSString * nextKey      = @"";
+            NSString *nextKey      = @"";
             for (int i = 0; i < change.plistKeyPath->components.count; i++){
                 nextKey = change.plistKeyPath->components[i];
                 if (i != change.plistKeyPath->components.count - 1)

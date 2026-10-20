@@ -23,6 +23,8 @@
 @property (strong, nonatomic) IBOutlet NSButton * reflectionsOnLeftEnabledCheckbox;
 @property (strong, nonatomic) IBOutlet NSButton * reflectionsOnRightEnabledCheckbox;
 
+@property (weak, nonatomic) IBOutlet NSButton *dragWindowReflectionsEnabledCheckbox;
+
 @property (strong, nonatomic) IBOutlet NSView * backgroundPositioningView;
 @property (strong, nonatomic) IBOutlet NSSegmentedControl * scaleSelector;
 @property (strong, nonatomic) IBOutlet NSSegmentedControl * orientationSelector;

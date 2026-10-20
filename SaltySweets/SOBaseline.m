@@ -23,9 +23,9 @@
             }
         }
     } else {
-        NSMutableDictionary * themePlist =
+        NSMutableDictionary *themePlist =
             [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] themePlist];
-        NSMutableDictionary * resourceBom =
+        NSMutableDictionary *resourceBom =
             [[[SOAtomicAccessPoint sharedInstance] currentDockThemeBundle] resourceBomPlist];
 
         for (int i = 0; i < kSODockAllKeysCount; i++){
@@ -37,7 +37,7 @@
             } else if (key.destinationFlags == SODestinationTheme){
                 nonfinal[keyName] = themePlist[keyName] ?: key.defaultValue;
             } else {
-                nonfinal[keyName] = resourceBom[keyName] ?: key.defaultValue;
+                nonfinal[keyName] = resourceBom[keyName] ?: key.defaultValue ?: [self baselineFromEncodedKey:key];
             }
         }
     }

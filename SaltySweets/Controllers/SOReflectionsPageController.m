@@ -205,6 +205,9 @@ static inline CGRect RotatedContentsCenter(CGRect center, NSUInteger orientation
     
     [self.windowReflectionsZBox selectItemAtIndex:[[self getBaselineForEncodedKey:&kSODockWindowReflectionAboveBackground] boolValue]];
     [self.iconReflectionsZBox selectItemAtIndex:[[self getBaselineForEncodedKey:&kSODockIconReflectionAboveBackground] boolValue]];
+    
+    [self.dragWindowReflectionsEnabledCheckbox setState:[[self getBaselineForEncodedKey:&kSODockDragWindowReflectionEnabled] boolValue] ?
+                                 NSControlStateValueOn : NSControlStateValueOff];
 }
 
 #pragma mark - General Settings
@@ -278,6 +281,15 @@ static inline CGRect RotatedContentsCenter(CGRect center, NSUInteger orientation
     [self setPendingChangeForKey:&kSODockWindowReflectionInset
                            value:@(sender.intValue)
                             note:[NSString stringWithFormat:@"Set window reflection inset to %i", sender.intValue]];
+}
+
+- (IBAction)dragWindowReflectionEnabledChanged:(NSButton *)sender{
+    BOOL enabled = sender.state == NSControlStateValueOn;
+    
+    [self setPendingChangeForKey:&kSODockDragWindowReflectionEnabled
+                           value:@(enabled)
+                            note:[NSString stringWithFormat:@"Set drag window reflections enabled to %i",
+                                  enabled]];
 }
 
 - (void)compositeInteriorOfImageView{

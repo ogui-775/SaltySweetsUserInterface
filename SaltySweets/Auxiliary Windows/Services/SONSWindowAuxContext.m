@@ -6,6 +6,10 @@
 - (instancetype)initWithURL:(NSURL *)url;
 @end
 
+@interface SONSWindowAuxContextDockCaarCreation (Private)
+- (instancetype)initWithURL:(NSURL *)URL;
+@end
+
 @implementation SONSWindowAuxContext
 + (SONSWindowAuxContextSicon *)siconViewerContextWithURL:(NSURL *)url{
     return [[SONSWindowAuxContextSicon alloc] initWithURL:url];
@@ -13,6 +17,10 @@
 
 + (SONSWindowAuxContextSiconCreation *)siconCreationContext{
     return [[SONSWindowAuxContextSiconCreation alloc] init];
+}
+
++ (SONSWindowAuxContextDockCaarCreation *)dockCaarCreationContextWithURL:(NSURL *)URL{
+    return [[SONSWindowAuxContextDockCaarCreation alloc] initWithURL:URL];
 }
 @end
 
@@ -44,6 +52,16 @@
 - (instancetype)init{
     if (self = [super init]){
         self.loadedSicon = nil;
+    }
+    return self;
+}
+@end
+
+@implementation SONSWindowAuxContextDockCaarCreation
+- (instancetype)initWithURL:(NSURL *)URL{
+    self = [super init];
+    if (self){
+        
     }
     return self;
 }

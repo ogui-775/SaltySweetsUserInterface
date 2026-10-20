@@ -7,10 +7,12 @@
 
 @class SONSWindowAuxContextSicon;
 @class SONSWindowAuxContextSiconCreation;
+@class SONSWindowAuxContextDockCaarCreation;
 
 @interface SONSWindowAuxContext : NSObject
 + (SONSWindowAuxContextSicon *)siconViewerContextWithURL:(NSURL *)url;
 + (SONSWindowAuxContextSiconCreation *)siconCreationContext;
++ (SONSWindowAuxContextDockCaarCreation *)dockCaarCreationContextWithURL:(NSURL *)URL;
 @end
 
 @interface SONSWindowAuxContextSicon : SONSWindowAuxContext
@@ -21,4 +23,8 @@
 
 @interface SONSWindowAuxContextSiconCreation : SONSWindowAuxContext
 @property (strong) SOSicon *loadedSicon;
+@end
+
+@interface SONSWindowAuxContextDockCaarCreation : SONSWindowAuxContext
+@property (strong) NSData *archivedData;
 @end

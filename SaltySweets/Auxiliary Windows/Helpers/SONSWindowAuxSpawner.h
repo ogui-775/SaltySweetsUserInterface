@@ -9,4 +9,5 @@
 @interface SONSWindowAuxSpawner : NSObject
 + (SONSWindowAux *)spawnAuxWindowForSiconWithURL:(NSURL *)url;
 + (SONSWindowAux *)spawnAuxWindowForSiconCreation;
++ (SONSWindowAux *)spawnAuxWindowForDockCaarWithURL:(NSURL *)URL;
 @end
