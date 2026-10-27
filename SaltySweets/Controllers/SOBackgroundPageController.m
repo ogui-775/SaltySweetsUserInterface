@@ -844,8 +844,8 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
     CGFloat w = self.frontlineGuideLayer.bounds.size.width;
     if (w <= 0) return;
 
-    CGFloat left  = CLAMP(0, self.flLine.position.x / w, 1);
-    CGFloat right = CLAMP(left, self.frLine.position.x / w, 1);
+    CGFloat left  = ROUND_DP(CLAMP(0, self.flLine.position.x / w, 1), 2);
+    CGFloat right = ROUND_DP(CLAMP(left, self.frLine.position.x / w, 1), 2);
 
     [self applyFrontlineSlicingLeft:ROUND_DP(left, 3)
                               right:ROUND_DP(right, 3)
@@ -854,8 +854,8 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
 
 // Updates layer, guides, labels and textboxes, and optionally records the pending changes
 - (void)applyFrontlineSlicingLeft:(CGFloat)left right:(CGFloat)right persist:(BOOL)persist {
-    left  = CLAMP(0, left, 1);
-    right = CLAMP(left, right, 1);
+    left  = ROUND_DP(CLAMP(0, left, 1), 2);
+    right = ROUND_DP(CLAMP(left, right, 1), 2);
 
     CGFloat w = self.frontlineGuideLayer.bounds.size.width;
     CGFloat h = self.frontlineGuideLayer.bounds.size.height;
