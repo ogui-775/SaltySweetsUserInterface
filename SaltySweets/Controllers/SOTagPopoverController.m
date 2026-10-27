@@ -21,4 +21,11 @@
 - (IBAction)closePopover:(id)sender{
     [self.view.window close];
 }
+- (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
+    return [NSCollectionViewItem new];
+}
+
+- (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section { 
+    return 0;
+}
 @end

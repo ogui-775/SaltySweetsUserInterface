@@ -17,6 +17,7 @@
                 <outlet property="iconReflectionsZBox" destination="alS-69-TmL" id="SEJ-R9-QgP"/>
                 <outlet property="reflectionsOnLeftEnabledCheckbox" destination="xe1-IL-OcX" id="RUf-LO-DhG"/>
                 <outlet property="reflectionsOnRightEnabledCheckbox" destination="qOw-W6-yUu" id="mrn-Td-4dZ"/>
+                <outlet property="screenshotModeEnabledCheckbox" destination="BkU-kv-t9l" id="gXL-tt-d4p"/>
                 <outlet property="view" destination="c22-O7-iKe" id="oTA-bB-vOm"/>
                 <outlet property="windowReflectionDisabledRadio" destination="NhQ-di-wLG" id="aUh-7Y-Zef"/>
                 <outlet property="windowReflectionEnabledRadio" destination="PkZ-kq-BvI" id="bCb-Pm-HlJ"/>
@@ -360,6 +361,26 @@
                                                 <action selector="dragWindowReflectionEnabledChanged:" target="-2" id="aHW-WW-Htd"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BkU-kv-t9l">
+                                            <rect key="frame" x="20" y="218" width="129" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Screenshot Mode" bezelStyle="regularSquare" imagePosition="left" inset="2" id="VQu-y4-QLr">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="screenshotModeEnabledChanged:" target="-2" id="6r0-Je-xAS"/>
+                                            </connections>
+                                        </button>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ias-f1-niH">
+                                            <rect key="frame" x="40" y="204" width="211" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Enabling will freeze window reflections." id="A5Y-b6-Rac">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="pWE-e8-jkg" firstAttribute="centerX" secondItem="p81-GI-9S7" secondAttribute="centerX" id="4E1-4C-5ub"/>

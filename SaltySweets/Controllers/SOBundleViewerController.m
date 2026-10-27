@@ -10,7 +10,10 @@
         self.contentViewController = [[SOBundleViewerViewController alloc] initWithNibName:@"SOBundleViewerView"
                                                                                     bundle:nil];
         SOBundleViewerViewController *vc = (SOBundleViewerViewController *)self.contentViewController;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
         vc.backButton = self.window.toolbar.items[0];
+#pragma clang diagnostic pop
         vc.backButton.autovalidates = NO;
         vc.backButton.enabled = NO;
     }

@@ -43,7 +43,7 @@
 
     if ((baselineValue == nil && value != nil) || (baselineValue != nil && ![baselineValue isEqual:value])) {
         // value differs, add/update change
-        SOChange * change = [SOChange plistChangeWithEncodedKey:key value:value note:note];
+        SOChange *change = [SOChange plistChangeWithEncodedKey:key value:value note:note];
         [self setChangeObject:change forEncodedKey:key];
     } else {
         // value same as baseline, remove change
@@ -61,7 +61,7 @@
     id baselineValue = [self getBaselineForEncodedKeypath:key];
     
     if ((baselineValue == nil && value != nil) || (baselineValue != nil && ![baselineValue isEqual:value])){
-        SOChange * change = [SOChange plistChangeWithEncodedKeyPath:key value:value note:note];
+        SOChange *change = [SOChange plistChangeWithEncodedKeyPath:key value:value note:note];
         [self setChangeObject:change forEncodedKeypath:key];
     } else {
         [self setChangeObject:nil forEncodedKeypath:key];
@@ -85,9 +85,9 @@
                           contentScale:(CGFloat)scale{
     if (!self.baselineState) return;
     
-    NSData * raw = [self getDataOfResource:resource typed:type];
+    NSData *raw = [self getDataOfResource:resource typed:type];
     //Hash compare the resource bytes to the original (or to nil, if the original was no resource as determined by baseline)
-    NSString * hash;
+    NSString *hash;
     if (!raw){
         hash = kSODockResourceNotProvided;
     } else {
@@ -99,7 +99,7 @@
     //delta of within SOChangeCompiler.m and finalize into the NSBundle
     if ((baselineValue == nil && ![hash isEqualToString:kSODockResourceNotProvided]) ||
         (baselineValue != nil && ![baselineValue isEqualToString:hash])) {
-        SOChange * change = [SOChange resourceChangeWithEncodedKey:key
+        SOChange *change = [SOChange resourceChangeWithEncodedKey:key
                                                               data:raw
                                                           filename:name
                                                       contentScale:scale
@@ -123,9 +123,9 @@
                               contentScale:(CGFloat)scale{
     if (!self.baselineState) return;
     
-    NSData * raw = [self getDataOfResource:resource typed:type];
+    NSData *raw = [self getDataOfResource:resource typed:type];
     
-    NSString * hash;
+    NSString *hash;
     if (!raw){
         hash = kSODockResourceNotProvided;
     } else {
@@ -175,7 +175,7 @@
     if (!self.baselineState) return;
     
     if (resource){
-        SOChange * change = [SOChange iconResourceChangeWithEncodedKey:key
+        SOChange *change = [SOChange iconResourceChangeWithEncodedKey:key
                                                                   data:resource
                                                               filename:name
                                                                   note:note];
@@ -197,7 +197,7 @@
     NSString *baselineValue = [self getBaselineForEncodedKeypath:key];
     
     if ((baselineValue == nil && name) || ![baselineValue isEqualToString:name]) {
-        SOChange * change = [SOChange iconResourceChangeWithEncodedKeypath:key
+        SOChange *change = [SOChange iconResourceChangeWithEncodedKeypath:key
                                                                       data:resource
                                                                   filename:name
                                                                       note:note];
@@ -218,7 +218,7 @@
     NSString *baselineValue = [self getBaselineForEncodedKeypath:key];
     
     if ((baselineValue == nil && value) || ![baselineValue isEqualTo:value]) {
-        SOChange * change = [SOChange iconPlistChangeWithEncodedKeypath:key
+        SOChange *change = [SOChange iconPlistChangeWithEncodedKeypath:key
                                                                   value:value
                                                                    note:note];
         
@@ -289,7 +289,7 @@
 
     if (type == kSOChangeResourceTypeNSImage) {
 
-        NSImage * image = nil;
+        NSImage *image = nil;
 
         if ([resource isKindOfClass:[NSImage class]]) {
             image = resource;
@@ -303,7 +303,7 @@
         if (!cgImage)
             return nil;
 
-        NSMutableData * pngData = [NSMutableData data];
+        NSMutableData *pngData = [NSMutableData data];
 
         CGImageDestinationRef dest =
             CGImageDestinationCreateWithData((__bridge CFMutableDataRef)pngData,
@@ -332,7 +332,7 @@
 - (void)setChangeObject:(SOChange *)change
           forEncodedKey:(const SOEncodedKey *)key
 {
-    NSIndexSet * indexes = [self.pendingChangeArray indexesOfObjectsPassingTest:^BOOL(SOChange * obj, NSUInteger idx, BOOL * stop) {
+    NSIndexSet *indexes = [self.pendingChangeArray indexesOfObjectsPassingTest:^BOOL(SOChange * obj, NSUInteger idx, BOOL * stop) {
         return obj.plistKey && [obj.plistKey->key isEqualToString:key->key];
     }];
 

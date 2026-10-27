@@ -28,11 +28,22 @@ typedef NS_ENUM(NSUInteger, SODraggingGuide) {
 @property (nonatomic, weak) IBOutlet NSTextField *saturationTextbox;
 @property (nonatomic, weak) IBOutlet NSTextField *tiltTextbox;
 @property (nonatomic, weak) IBOutlet NSTextField *slantTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tiltLipPercentage;
+@property (nonatomic, weak) IBOutlet NSTextField *tileSaturationTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tileColorContrastTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tileSigmaXTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tileSigmaYTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tileBlurTextbox;
+@property (nonatomic, weak) IBOutlet NSTextField *tileBrightnessTextbox;
+@property (nonatomic, weak) IBOutlet NSView *frontlineSlicingView;
+@property (nonatomic, weak) IBOutlet NSTextField *frontlineHeightTextbox;
 
 //Frontline
 @property (nonatomic, weak) IBOutlet SODragAwareImageView *leftPart;
 @property (nonatomic, weak) IBOutlet SODragAwareImageView *middlePart;
 @property (nonatomic, weak) IBOutlet SODragAwareImageView *rightPart;
+@property (weak) IBOutlet NSTextField *frontlineLeftTextbox;
+@property (weak) IBOutlet NSTextField *frontlineRightTextbox;
 
 //Group
 @property (nonatomic, strong) IBOutlet NSTextField * contentsCenterX;

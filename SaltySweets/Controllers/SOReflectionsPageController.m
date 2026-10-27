@@ -208,6 +208,9 @@ static inline CGRect RotatedContentsCenter(CGRect center, NSUInteger orientation
     
     [self.dragWindowReflectionsEnabledCheckbox setState:[[self getBaselineForEncodedKey:&kSODockDragWindowReflectionEnabled] boolValue] ?
                                  NSControlStateValueOn : NSControlStateValueOff];
+    
+    [self.screenshotModeEnabledCheckbox setState:[[self getBaselineForEncodedKey:&kSODockScreenshotModeEnabled] boolValue] ?
+                          NSControlStateValueOn : NSControlStateValueOff];
 }
 
 #pragma mark - General Settings
@@ -290,6 +293,14 @@ static inline CGRect RotatedContentsCenter(CGRect center, NSUInteger orientation
                            value:@(enabled)
                             note:[NSString stringWithFormat:@"Set drag window reflections enabled to %i",
                                   enabled]];
+}
+
+- (IBAction)screenshotModeEnabledChanged:(NSButton *)sender{
+    BOOL enabled = sender.state == NSControlStateValueOn;
+    
+    [self setPendingChangeForKey:&kSODockScreenshotModeEnabled
+                           value:@(enabled)
+                            note:[NSString stringWithFormat:@"Set screenshot mode to %i", enabled]];
 }
 
 - (void)compositeInteriorOfImageView{

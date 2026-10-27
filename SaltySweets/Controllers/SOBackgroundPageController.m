@@ -7,8 +7,15 @@
 #import <QuartzCore/CATransaction.h>
 #import "../Helpers/SOMath.h"
 
+typedef NS_ENUM(NSInteger, SOFrontlineGuide) {
+    SOFrontlineGuideNone = 0,
+    SOFrontlineGuideLeft,
+    SOFrontlineGuideRight,
+};
+
 @interface SOBackgroundPageController ()
 @property (strong) CALayer * backgroundLayer;
+@property (strong) CALayer *frontlineLayer;
 @property (strong) CAShapeLayer * lLine;
 @property (strong) CAShapeLayer * bLine;
 @property (strong) CAShapeLayer * rLine;
@@ -19,6 +26,15 @@
 @property (strong) CATextLayer * bLabel;
 
 @property (assign) SODraggingGuide draggingGuide;
+
+// Frontline slicing guides (left/right only)
+@property (strong) CALayer *frontlineGuideLayer;
+@property (strong) CAShapeLayer *flLine;
+@property (strong) CAShapeLayer *frLine;
+@property (strong) CATextLayer *flLabel;
+@property (strong) CATextLayer *frLabel;
+@property (assign) SOFrontlineGuide frontlineDragging;
+
 @end
 
 @interface CALayer (Private)
@@ -32,9 +48,49 @@
 
     self.scaleMgr = [[SOScaleImageManager alloc] initWithOwner:self currentScale:1];
     [self.contentsCenterView setWantsLayer:YES];
+    [self.frontlineSlicingView setWantsLayer:YES];
+
+    // Frontline image layer
+    self.frontlineLayer = [CALayer layer];
     [self.contentsCenterView.layer setNeedsDisplayOnBoundsChange:YES];
-    self.backgroundLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+    self.frontlineLayer.contentsGravity = kCAGravityResize;
+    self.frontlineSlicingView.layer.needsDisplayOnBoundsChange = YES;
+    self.frontlineLayer.autoresizingMask = kCALayerWidthSizable;
+
+    [self.frontlineLayer setFrame:CGRectMake(0,
+                                             self.frontlineSlicingView.bounds.size.height / 2 - 5,
+                                             self.frontlineSlicingView.bounds.size.width - 2,
+                                             self.frontlineSlicingView.bounds.size.height / 3)];
+    [self.frontlineSlicingView.layer addSublayer:self.frontlineLayer];
+
+    // Frontline slicing guides 
+    self.frontlineGuideLayer = [CALayer layer];
+    self.frontlineGuideLayer.frame = self.frontlineSlicingView.layer.bounds;
+    [self.frontlineSlicingView.layer addSublayer:self.frontlineGuideLayer];
+
+    self.flLine = [CAShapeLayer layer];
+    self.frLine = [CAShapeLayer layer];
+    for (CAShapeLayer *line in @[self.flLine, self.frLine]) {
+        line.lineWidth = 2.0;
+        line.strokeColor = [NSColor redColor].CGColor;
+        line.lineDashPhase = 4.0;
+        line.lineDashPattern = @[@10, @5, @5, @5];
+        [self.frontlineGuideLayer addSublayer:line];
+    }
+    self.flLabel = [self labelWithString:@"L"];
+    self.frLabel = [self labelWithString:@"R"];
+    [self.frontlineGuideLayer addSublayer:self.flLabel];
+    [self.frontlineGuideLayer addSublayer:self.frLabel];
+
+    NSNumberFormatter *pf = [[NSNumberFormatter alloc] init];
+    pf.numberStyle = NSNumberFormatterPercentStyle;
+    pf.minimum = @0;
+    pf.maximum = @1;
+    self.frontlineLeftTextbox.formatter = pf;
+    self.frontlineRightTextbox.formatter = pf;
+
     self.backgroundLayer = [CALayer layer];
+    self.backgroundLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
     self.backgroundLayer.contentsGravity = kCAGravityResize;
     
     [self.backgroundLayer setFrame:CGRectMake(1,
@@ -58,7 +114,7 @@
                                         scale:[scale isEqualToString:@"1x"] ? 1 : 2];
         }
     }
-    for (SODragAwareImageView *well in @[self.leftPart, self.middlePart, self.rightPart]){
+    for (SODragAwareImageView *well in @[self.middlePart]){
         NSString *direction = well.identifier;
         
         for (NSString *scale in @[@"1x", @"2x"]){
@@ -68,6 +124,9 @@
                 .components = @[dirKey, [NSString stringWithFormat:@"frontline%@", scale]]
             };
             [self.scaleMgr registerObject:well
+                       withEncodedKeypath:&tPath
+                                    scale:[scale isEqualToString:@"1x"] ? 1 : 2];
+            [self.scaleMgr registerObject:self.frontlineLayer
                        withEncodedKeypath:&tPath
                                     scale:[scale isEqualToString:@"1x"] ? 1 : 2];
         }
@@ -120,6 +179,11 @@
     [self.backgroundLayer insertSublayer:self.rLabel atIndex:11];
     [self.backgroundLayer insertSublayer:self.tLabel atIndex:12];
     [self.backgroundLayer insertSublayer:self.bLabel atIndex:13];
+    
+    NSNumberFormatter *f = (NSNumberFormatter *)self.tiltLipPercentage.formatter;
+    f.maximum = @1;
+    f.minimum = @0;
+    f.format = @"0%";
 
     [self refreshOrLoadBaseline];
 }
@@ -184,6 +248,26 @@
     
     self.tiltTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockBackgroundTiltAngle] doubleValue];
     self.slantTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockSidesTiltAngle] doubleValue];
+    self.tiltLipPercentage.doubleValue = [[self getBaselineForEncodedKey:&kSODockBackgroundTiltLipPercentage] doubleValue];
+    self.tileBlurTextbox.intValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionBlurAmount] intValue];
+    self.tileSigmaXTextbox.intValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionBlurSigmaXAmount] intValue];
+    self.tileSigmaYTextbox.intValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionBlurSigmaYAmount] intValue];
+    self.tileBrightnessTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionBrightnessLevel] doubleValue];
+    self.tileColorContrastTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionColorContrastAmount] doubleValue];
+    self.tileSaturationTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionSaturationAmount] doubleValue];
+    self.frontlineHeightTextbox.intValue = [[self getBaselineForEncodedKey:&kSODockFrontlineHeight] intValue];
+    
+    self.frontlineLayer.frame = CGRectMake(0,
+                                           (self.frontlineSlicingView.layer.bounds.size.height / 2) - (self.frontlineHeightTextbox.intValue),
+                                           self.frontlineSlicingView.layer.bounds.size.width,
+                                           self.frontlineHeightTextbox.intValue);
+    
+    // Frontline left/right slicing (defaults: 0% and 100% when no baseline value exists)
+    NSNumber *fl = [self getBaselineForEncodedKey:&kSODockFrontlineSlicingLeftPercentage];
+    NSNumber *fr = [self getBaselineForEncodedKey:&kSODockFrontlineSlicingRightPercentage];
+    [self applyFrontlineSlicingLeft:fl ? fl.doubleValue : 0.0
+                              right:fr ? fr.doubleValue : 1.0
+                            persist:NO];
 }
 
 - (IBAction)actionOnWell:(NSImageView *)sender{
@@ -257,6 +341,16 @@
                                               self.contentsCenterView.layer.frame.size.height / 3)];
     [self resizeBackgroundLayer:self.backgroundLayer.bounds.size];
     [self updateGuideLinePaths];
+
+    // Keep the frontline overlay and image layer in sync with the slicing view
+    self.frontlineGuideLayer.frame = self.frontlineSlicingView.layer.bounds;
+    self.frontlineLayer.frame = CGRectMake(0,
+                                           self.frontlineLayer.frame.origin.y,
+                                           self.frontlineSlicingView.layer.bounds.size.width,
+                                           self.frontlineLayer.frame.size.height);
+    [self applyFrontlineSlicingLeft:self.frontlineLeftTextbox.doubleValue
+                              right:self.frontlineRightTextbox.doubleValue
+                            persist:NO];
     [CATransaction commit];
 }
 
@@ -485,8 +579,22 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    CGPoint p = [self.backgroundLayer convertPoint:event.locationInWindow fromLayer:nil];
     [self.view.window makeFirstResponder:nil];
+
+    // Frontline guides take priority
+    CGPoint fp = [self.frontlineGuideLayer convertPoint:event.locationInWindow fromLayer:nil];
+    if (CGRectContainsPoint(self.flLabel.frame, fp)) {
+        self.frontlineDragging = SOFrontlineGuideLeft;
+        return;
+    }
+    else if (CGRectContainsPoint(self.frLabel.frame, fp)) {
+        self.frontlineDragging = SOFrontlineGuideRight;
+        return;
+    }
+    self.frontlineDragging = SOFrontlineGuideNone;
+
+    // Background guides
+    CGPoint p = [self.backgroundLayer convertPoint:event.locationInWindow fromLayer:nil];
 
     if (CGRectContainsPoint(self.lLabel.frame, p))
         self.draggingGuide = SODraggingGuideLeft;
@@ -499,6 +607,25 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
 }
 
 - (void)mouseDragged:(NSEvent *)event {
+    // Frontline guides
+    if (self.frontlineDragging != SOFrontlineGuideNone) {
+        CGPoint fp = [self.frontlineGuideLayer convertPoint:event.locationInWindow fromLayer:nil];
+        CGFloat fw = self.frontlineGuideLayer.bounds.size.width;
+        CGFloat x  = CLAMP(0, fp.x, fw);
+
+        [CATransaction begin];
+        [CATransaction setDisableActions:YES];
+        if (self.frontlineDragging == SOFrontlineGuideLeft)
+            self.flLine.position = CGPointMake(MIN(x, self.frLine.position.x), 0);
+        else
+            self.frLine.position = CGPointMake(MAX(x, self.flLine.position.x), 0);
+        [CATransaction commit];
+
+        [self updateFrontlineSlicingFromGuides];
+        return;
+    }
+
+    // Background guides
     CGPoint p = [self.backgroundLayer convertPoint:event.locationInWindow fromLayer:nil];
     CGFloat w = self.backgroundLayer.bounds.size.width;
     CGFloat h = self.backgroundLayer.bounds.size.height;
@@ -524,6 +651,12 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
 
     [self updateContentsCenterFromGuides];
     [CATransaction commit];
+}
+
+- (void)mouseUp:(NSEvent *)event {
+    self.frontlineDragging = SOFrontlineGuideNone;
+
+    self.draggingGuide = (SODraggingGuide)0;
 }
 
 - (void)updateContentsCenterFromGuides {
@@ -635,6 +768,130 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
                            value:@(sender.doubleValue)
                             note:[NSString stringWithFormat:@"Set background slant angle to %f",
                                   sender.doubleValue]];
+}
+
+- (IBAction)tiltLipDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockBackgroundTiltLipPercentage
+                           value:@(ROUND_DP(sender.doubleValue, 3))
+                            note:[NSString stringWithFormat:@"Set tilt bottom lip to %f%%",
+                                  ROUND_DP(sender.doubleValue * 100, 3)]];
+}
+
+- (IBAction)tileBlurDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockTileReflectionBlurAmount
+                           value:@(sender.intValue)
+                            note:[NSString stringWithFormat:@"Set tile reflection blur to %i",
+                                  sender.intValue]];
+}
+
+- (IBAction)tileSigmaXDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockTileReflectionBlurSigmaXAmount
+                           value:@(sender.intValue)
+                            note:[NSString stringWithFormat:@"Set tile reflection sigma X to %i",
+                                  sender.intValue]];
+}
+
+- (IBAction)tileSigmaYDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockTileReflectionBlurSigmaYAmount
+                           value:@(sender.intValue)
+                            note:[NSString stringWithFormat:@"Set tile reflection sigma Y to %i",
+                                  sender.intValue]];
+}
+
+- (IBAction)tileBrightnessDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockTileReflectionBrightnessLevel
+                           value:@(sender.doubleValue)
+                            note:[NSString stringWithFormat:@"Set tile reflection brightness to %f",
+                                  sender.doubleValue]];
+}
+
+- (IBAction)tileColorContrastDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockTileReflectionColorContrastAmount
+                           value:@(sender.doubleValue)
+                            note:[NSString stringWithFormat:@"Set tile reflection color contrast to %f",
+                                  sender.doubleValue]];
+}
+
+- (IBAction)tileSaturationDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockTileReflectionSaturationAmount
+                           value:@(sender.doubleValue)
+                            note:[NSString stringWithFormat:@"Set tile reflection saturation to %f",
+                                  sender.doubleValue]];
+}
+
+- (IBAction)frontlineHeightDidChange:(NSTextField *)sender{
+    [self setPendingChangeForKey:&kSODockFrontlineHeight
+                           value:@(sender.intValue)
+                            note:[NSString stringWithFormat:@"Set frontline height to %i",
+                                  sender.intValue]];
+}
+
+#pragma mark - Frontline slicing
+
+- (IBAction)updateFrontlineSlicingFromTextField:(NSTextField *)sender{
+    CGFloat left  = ROUND_DP(CLAMP(0, self.frontlineLeftTextbox.doubleValue, 1), 3);
+    CGFloat right = ROUND_DP(CLAMP(0, self.frontlineRightTextbox.doubleValue, 1), 3);
+
+    if (sender == self.frontlineLeftTextbox)
+        right = MAX(right, left);
+    else
+        left = MIN(left, right);
+
+    [self applyFrontlineSlicingLeft:left right:right persist:YES];
+}
+
+- (void)updateFrontlineSlicingFromGuides{
+    CGFloat w = self.frontlineGuideLayer.bounds.size.width;
+    if (w <= 0) return;
+
+    CGFloat left  = CLAMP(0, self.flLine.position.x / w, 1);
+    CGFloat right = CLAMP(left, self.frLine.position.x / w, 1);
+
+    [self applyFrontlineSlicingLeft:ROUND_DP(left, 3)
+                              right:ROUND_DP(right, 3)
+                            persist:YES];
+}
+
+// Updates layer, guides, labels and textboxes, and optionally records the pending changes
+- (void)applyFrontlineSlicingLeft:(CGFloat)left right:(CGFloat)right persist:(BOOL)persist {
+    left  = CLAMP(0, left, 1);
+    right = CLAMP(left, right, 1);
+
+    CGFloat w = self.frontlineGuideLayer.bounds.size.width;
+    CGFloat h = self.frontlineGuideLayer.bounds.size.height;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+
+    // Guide line paths (full height of the slicing view)
+    CGMutablePathRef vp = CGPathCreateMutable();
+    CGPathMoveToPoint(vp, NULL, 0, 0);
+    CGPathAddLineToPoint(vp, NULL, 0, h);
+    self.flLine.path = vp;
+    self.frLine.path = vp;
+    CGPathRelease(vp);
+
+    // 3-slice horizontally: full-height center rect
+    self.frontlineLayer.contentsCenter = CGRectMake(left, 0, right - left, 1);
+
+    self.flLine.position  = CGPointMake(left * w, 0);
+    self.frLine.position  = CGPointMake(right * w, 0);
+    self.flLabel.position = CGPointMake(left * w, h - 12);
+    self.frLabel.position = CGPointMake(right * w, 12);
+
+    [CATransaction commit];
+
+    self.frontlineLeftTextbox.doubleValue  = left;
+    self.frontlineRightTextbox.doubleValue = right;
+
+    if (!persist) return;
+
+    [self setPendingChangeForKey:&kSODockFrontlineSlicingLeftPercentage
+                           value:@(left)
+                            note:[NSString stringWithFormat:@"Set frontline left slicing to %f%%", left * 100]];
+    [self setPendingChangeForKey:&kSODockFrontlineSlicingRightPercentage
+                           value:@(right)
+                            note:[NSString stringWithFormat:@"Set frontline right slicing to %f%%", right * 100]];
 }
 
 - (IBAction)updateContentsCenterFromTextField:(NSTextField *)sender {

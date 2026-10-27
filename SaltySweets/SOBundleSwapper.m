@@ -13,7 +13,10 @@
 
 - (IBAction)swapTheme:(id)sender{
     NSOpenPanel * panel = [NSOpenPanel openPanel];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
     panel.allowedFileTypes = @[@"bundle"];
+#pragma clang diagnostic pop
     panel.allowsMultipleSelection = NO;
     panel.directoryURL = [NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] dockThemeBundleDirectory]];
     panel.canCreateDirectories = NO;
