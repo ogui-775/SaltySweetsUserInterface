@@ -80,4 +80,6 @@
 - (void)setPendingIconChangeForKeypath:(const SOEncodedKeyPath *)key
                                  value:(id)value
                                   note:(NSString *)note;
+
+- (void)imageForObject:(id)aObject didChangeTo:(NSImage *)image;
 @end

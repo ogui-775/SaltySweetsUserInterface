@@ -86,10 +86,18 @@
 
     if ([object isKindOfClass:[NSImageView class]]) {
         [(NSImageView *)object setImage:image];
+        [self messageOwnerThatImageChangedInObject:object to:image];
     } else if ([object isKindOfClass:[CALayer class]]) {
         [(CALayer *)object setContents:image];
+        [self messageOwnerThatImageChangedInObject:object to:image];
     } else {
         NSLog(@"[SOScaleImageManager] Unknown registered object type: %@", object);
+    }
+}
+
+- (void)messageOwnerThatImageChangedInObject:(id)aObject to:(NSImage *)image{
+    if ([self.owner respondsToSelector:@selector(imageForObject:didChangeTo:)]){
+        [self.owner imageForObject:aObject didChangeTo:image];
     }
 }
 

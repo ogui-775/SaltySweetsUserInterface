@@ -15,7 +15,6 @@
                 <outlet property="contentsCenterWidth" destination="DTg-K9-d35" id="5ke-Nb-a8R"/>
                 <outlet property="contentsCenterX" destination="Vbg-3C-A2h" id="PKp-jR-qoj"/>
                 <outlet property="contentsCenterY" destination="ewY-7B-V5G" id="7zE-Zb-Hjc"/>
-                <outlet property="frontlineHeightTextbox" destination="DV3-bY-UhP" id="oq0-dn-ES0"/>
                 <outlet property="frontlineLeftTextbox" destination="HkP-0S-A8t" id="ALz-tZ-7xF"/>
                 <outlet property="frontlineRightTextbox" destination="ha0-iy-aWp" id="R0U-1C-Ohb"/>
                 <outlet property="frontlineSlicingView" destination="vN6-fM-dj1" id="f0T-Xx-Mzo"/>
@@ -544,7 +543,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView identifier="mp" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiW-8p-XBR" customClass="SODragAwareImageView">
-                                                            <rect key="frame" x="17" y="94" width="607" height="39"/>
+                                                            <rect key="frame" x="17" y="94" width="658" height="39"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                             <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="oNu-QD-UuB"/>
                                                             <connections>
@@ -603,28 +602,6 @@
                                                             <rect key="frame" x="59" y="73" width="575" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Set the frontline image in the image well above. When applied, edit the slicing if desired below." id="c1j-8E-obi">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DV3-bY-UhP">
-                                                            <rect key="frame" x="634" y="90" width="43" height="24"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="0" drawsBackground="YES" id="QcN-nM-8Xt">
-                                                                <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="b5R-HL-0do"/>
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                            <connections>
-                                                                <action selector="frontlineHeightDidChange:" target="-2" id="Bib-U9-3au"/>
-                                                            </connections>
-                                                        </textField>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="04W-vd-6mg">
-                                                            <rect key="frame" x="633" y="122" width="45" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Height" id="uCX-92-rZh">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -255,12 +255,11 @@ typedef NS_ENUM(NSInteger, SOFrontlineGuide) {
     self.tileBrightnessTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionBrightnessLevel] doubleValue];
     self.tileColorContrastTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionColorContrastAmount] doubleValue];
     self.tileSaturationTextbox.doubleValue = [[self getBaselineForEncodedKey:&kSODockTileReflectionSaturationAmount] doubleValue];
-    self.frontlineHeightTextbox.intValue = [[self getBaselineForEncodedKey:&kSODockFrontlineHeight] intValue];
-    
+
     self.frontlineLayer.frame = CGRectMake(0,
-                                           (self.frontlineSlicingView.layer.bounds.size.height / 2) - (self.frontlineHeightTextbox.intValue),
+                                           (self.frontlineSlicingView.layer.bounds.size.height / 2) - (10),
                                            self.frontlineSlicingView.layer.bounds.size.width,
-                                           self.frontlineHeightTextbox.intValue);
+                                           10);
     
     // Frontline left/right slicing (defaults: 0% and 100% when no baseline value exists)
     NSNumber *fl = [self getBaselineForEncodedKey:&kSODockFrontlineSlicingLeftPercentage];
@@ -819,11 +818,14 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
                                   sender.doubleValue]];
 }
 
-- (IBAction)frontlineHeightDidChange:(NSTextField *)sender{
-    [self setPendingChangeForKey:&kSODockFrontlineHeight
-                           value:@(sender.intValue)
-                            note:[NSString stringWithFormat:@"Set frontline height to %i",
-                                  sender.intValue]];
+- (void)imageForObject:(id)aObject didChangeTo:(NSImage *)image{
+    if (aObject == self.frontlineLayer){
+        size_t h = image.size.height;
+        self.frontlineLayer.frame = CGRectMake(0,
+                                               (self.frontlineSlicingView.layer.bounds.size.height / 2) - (h),
+                                               self.frontlineSlicingView.layer.bounds.size.width,
+                                               h);
+    }
 }
 
 #pragma mark - Frontline slicing

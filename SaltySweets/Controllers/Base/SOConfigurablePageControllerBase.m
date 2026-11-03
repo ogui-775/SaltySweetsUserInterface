@@ -458,6 +458,10 @@ BOOL SOEncodedKeyPathEqual(const SOEncodedKeyPath *a,
     return YES;
 }
 
+- (void)imageForObject:(id)aObject didChangeTo:(NSImage *)image {
+    
+}
+
 //Delegate callback
 - (NSArray<SOChange *> *)pendingChanges {
     return [self.pendingChangeArray copy] ?: [NSArray array];
@@ -466,4 +470,5 @@ BOOL SOEncodedKeyPathEqual(const SOEncodedKeyPath *a,
 - (void)purgePendingChanges{
     [self.pendingChangeArray removeAllObjects];
 }
+
 @end

@@ -36,7 +36,6 @@ typedef NS_ENUM(NSUInteger, SODraggingGuide) {
 @property (nonatomic, weak) IBOutlet NSTextField *tileBlurTextbox;
 @property (nonatomic, weak) IBOutlet NSTextField *tileBrightnessTextbox;
 @property (nonatomic, weak) IBOutlet NSView *frontlineSlicingView;
-@property (nonatomic, weak) IBOutlet NSTextField *frontlineHeightTextbox;
 
 //Frontline
 @property (nonatomic, weak) IBOutlet SODragAwareImageView *leftPart;
