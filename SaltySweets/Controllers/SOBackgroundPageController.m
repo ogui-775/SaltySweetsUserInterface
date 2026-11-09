@@ -267,6 +267,8 @@ typedef NS_ENUM(NSInteger, SOFrontlineGuide) {
     [self applyFrontlineSlicingLeft:fl ? fl.doubleValue : 0.0
                               right:fr ? fr.doubleValue : 1.0
                             persist:NO];
+    
+    self.backgroundShadowEnabledCheckbox.state = [[self getBaselineForEncodedKey:&kSODockFloorShadowEnabled] boolValue] ? NSControlStateValueOn : NSControlStateValueOff;
 }
 
 - (IBAction)actionOnWell:(NSImageView *)sender{
@@ -816,6 +818,14 @@ static NSString * const kCAContentsScalingStretch = @"stretch";
                            value:@(sender.doubleValue)
                             note:[NSString stringWithFormat:@"Set tile reflection saturation to %f",
                                   sender.doubleValue]];
+}
+
+- (IBAction)backgroundShadowDidChangeTo:(NSButton *)sender{
+    BOOL enabled = sender.state == NSControlStateValueOn;
+    [self setPendingChangeForKey:&kSODockFloorShadowEnabled
+                           value:@(enabled)
+                            note:[NSString stringWithFormat:@"Set dock floor shadow to %i",
+                                  enabled]];
 }
 
 - (void)imageForObject:(id)aObject didChangeTo:(NSImage *)image{

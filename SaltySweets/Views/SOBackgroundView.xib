@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25098" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25098"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25408"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SOBackgroundPageController">
             <connections>
+                <outlet property="backgroundShadowEnabledCheckbox" destination="oNC-bk-tU1" id="YhV-eW-Or3"/>
                 <outlet property="backgroundTiling" destination="IVc-Il-oRo" id="3ja-X4-Rol"/>
                 <outlet property="blurRadiusTextbox" destination="nVn-I3-iH5" id="w3x-G7-R7s"/>
                 <outlet property="bottomImageWell" destination="jbl-D9-j7k" id="pdH-R3-diD"/>
@@ -376,14 +377,14 @@
                                                 </textFieldCell>
                                             </textField>
                                             <box fixedFrame="YES" title="Background Angles" translatesAutoresizingMaskIntoConstraints="NO" id="pFd-GM-a5l">
-                                                <rect key="frame" x="518" y="14" width="199" height="196"/>
+                                                <rect key="frame" x="518" y="89" width="199" height="121"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" id="Qq5-Me-Qcp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="199" height="184"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="199" height="109"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="Zp3-zt-1CR">
-                                                            <rect key="frame" x="20" y="160" width="52" height="16"/>
+                                                            <rect key="frame" x="20" y="85" width="52" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="0" drawsBackground="YES" usesSingleLineMode="YES" id="clV-gV-jV8">
                                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="ies-vN-abO"/>
@@ -399,7 +400,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="1eX-8b-CBq">
-                                                            <rect key="frame" x="78" y="160" width="49" height="16"/>
+                                                            <rect key="frame" x="78" y="85" width="49" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Top Tilt" id="COc-uC-2px">
                                                                 <font key="font" metaFont="system"/>
@@ -408,7 +409,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="uLj-mA-mpA">
-                                                            <rect key="frame" x="20" y="136" width="52" height="16"/>
+                                                            <rect key="frame" x="20" y="61" width="52" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="0" drawsBackground="YES" usesSingleLineMode="YES" id="bBr-Zq-S5o">
                                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="e5x-V3-2gD"/>
@@ -424,7 +425,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="sRL-ml-aKu">
-                                                            <rect key="frame" x="78" y="136" width="65" height="16"/>
+                                                            <rect key="frame" x="78" y="61" width="65" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Side Slant" id="QRS-xF-3t2">
                                                                 <font key="font" metaFont="system"/>
@@ -433,7 +434,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="tNN-6u-ahk">
-                                                            <rect key="frame" x="20" y="112" width="52" height="16"/>
+                                                            <rect key="frame" x="20" y="37" width="52" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="0" drawsBackground="YES" usesSingleLineMode="YES" id="qwF-W3-T5T">
                                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Fuj-0E-4Cl"/>
@@ -449,7 +450,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="R6l-Df-NO7">
-                                                            <rect key="frame" x="78" y="112" width="86" height="16"/>
+                                                            <rect key="frame" x="78" y="37" width="86" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Bottom Lip %" id="Jd3-0s-rIj">
                                                                 <font key="font" metaFont="system"/>
@@ -458,7 +459,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" id="IVc-Il-oRo">
-                                                            <rect key="frame" x="20" y="88" width="131" height="16"/>
+                                                            <rect key="frame" x="20" y="13" width="131" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <buttonCell key="cell" type="check" title="Background Tiling" bezelStyle="regularSquare" imagePosition="left" inset="2" id="diT-d6-XOh">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -466,6 +467,27 @@
                                                             </buttonCell>
                                                             <connections>
                                                                 <action selector="backgroundTilingWasSet:" target="-2" id="omU-wN-sCa"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </view>
+                                            </box>
+                                            <box fixedFrame="YES" title="Background Shadows" translatesAutoresizingMaskIntoConstraints="NO" id="hXD-Tv-VRv">
+                                                <rect key="frame" x="518" y="14" width="199" height="67"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" id="BJ6-sR-EqS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="199" height="55"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oNC-bk-tU1">
+                                                            <rect key="frame" x="20" y="19" width="147" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                            <buttonCell key="cell" type="check" title="Background Shadow" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4D4-KO-Pnj">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="backgroundShadowDidChangeTo:" target="-2" id="zk7-fE-oC7"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
