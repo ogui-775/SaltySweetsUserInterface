@@ -65,15 +65,6 @@
     
     self.scale1xGravityComboBox.stringValue = [self getBaselineForEncodedKeypath:&t1xGrav];
     self.scale2xGravityComboBox.stringValue = [self getBaselineForEncodedKeypath:&t2xGrav];
-    
-    double width = [[self getBaselineForEncodedKey:&kSODockIndicatorWidthMultiplier] doubleValue];
-    double height = [[self getBaselineForEncodedKey:&kSODockIndicatorHeightMultiplier] doubleValue];
-    
-    self.widthMultiplierStepper.doubleValue = width;
-    self.heightMultiplierStepper.doubleValue = height;
-    
-    self.heightLabel.stringValue = [[NSNumber numberWithDouble:height] stringValue];
-    self.widthLabel.stringValue = [[NSNumber numberWithDouble:width] stringValue];
 }
 
 - (IBAction)imageDidChange:(NSImageView *)sender{
@@ -115,24 +106,6 @@
                                     note:[NSString stringWithFormat:@"Set gravity for 2x indicator to %@",
                                           sender.stringValue]];
     }
-}
-
-- (IBAction)widthDidStep:(NSStepper *)sender{
-    sender.doubleValue = ROUND_DP(sender.doubleValue, 2);
-    NSNumber *new = [NSNumber numberWithDouble:sender.doubleValue];
-    self.widthLabel.stringValue = [new stringValue];
-    [self setPendingChangeForKey:&kSODockIndicatorWidthMultiplier
-                           value:new
-                            note:[NSString stringWithFormat:@"Set indicator width multiplier to %@", new]];
-}
-
-- (IBAction)heightDidStep:(NSStepper *)sender{
-    sender.doubleValue = ROUND_DP(sender.doubleValue, 2);
-    NSNumber *new = [NSNumber numberWithDouble:sender.doubleValue];
-    self.heightLabel.stringValue = [new stringValue];
-    [self setPendingChangeForKey:&kSODockIndicatorHeightMultiplier
-                           value:new
-                            note:[NSString stringWithFormat:@"Set indicator height multiplier to %@", new]];
 }
 
 - (void)mouseDown:(NSEvent *)event{
