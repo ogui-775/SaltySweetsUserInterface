@@ -2,7 +2,7 @@
 
 #import "SOAboutController.h"
 
-const NSString *attrStr = @"Special thanks to:\n\n\nDavi for testing, theme support, GUI elements, and icons.\n\nschm1dt for testing and feedback on design.\n\nbedtime for ammonia, PluginPlayground, and guidance.\n\n♡﹒ Joke_Bamb﹒♡ for application icons and GUI elements.";
+const NSString *attrStr = @"Special thanks to:\n\n\nDavi for testing, theme support, GUI elements, and icons.\n\nschm1dt for testing and feedback on design.\n\nbedtime for ammonia.\n\n♡﹒ Joke_Bamb﹒♡ for application icons and GUI elements.";
 
 @implementation SOAboutController
 - (void)awakeFromNib{

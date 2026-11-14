@@ -3,7 +3,7 @@
 #import "SOClockDockTileReplacementPageController.h"
 
 @interface SOClockDisplayLayer : CALayer
-- (void)setFace:(id)contents hour:(id)contents mins:(id)contents;
+- (void)setFace:(id)face hour:(id)hour mins:(id)mins;
 @property (strong) CALayer *faceImageLayer;
 @property (strong) CALayer *hourImageLayer;
 @property (strong) CALayer *minsImageLayer;
@@ -46,6 +46,36 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     self.previewView.trackedKey = @"clock.face";
 }
 
+#pragma mark - Helpers
+- (NSImage *)imageRotated180:(NSImage *)image{
+    if (!image)
+        return nil;
+    
+    NSImage *source = image;
+    
+    return [NSImage imageWithSize:source.size
+                          flipped:NO
+                   drawingHandler:^BOOL(NSRect dstRect)
+    {
+        NSAffineTransform *transform = [NSAffineTransform transform];
+        [transform translateXBy:NSMidX(dstRect) yBy:NSMidY(dstRect)];
+        [transform rotateByDegrees:180.0];
+        [transform translateXBy:-NSMidX(dstRect) yBy:-NSMidY(dstRect)];
+        [transform concat];
+        [source drawInRect:dstRect];
+        return YES;
+    }];
+}
+
+- (NSString *)resolvedBaselineFileForKeypath:(const SOEncodedKeyPath *)keyPath{
+    NSString *file = [self getBaselineForEncodedKeypath:keyPath];
+    if (file)
+        file = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:file];
+    return file;
+}
+
+#pragma mark - Loading
+
 - (void)refreshOrLoadBaseline{
     const SOEncodedKeyPath faceKey = [self faceKeypath];
     const SOEncodedKeyPath minsKey = [self minsKeypath];
@@ -53,35 +83,17 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     
     NSImage *faceImage = [self loadImageForEncodedKeypath:&faceKey];
     NSImage *hourImage = [self loadImageForEncodedKeypath:&hourKey];
-
-    NSImage *newHourImage = [NSImage imageWithSize:hourImage.size
-                                           flipped:NO
-                                    drawingHandler:^BOOL(NSRect dstRect)
-    {
-        NSAffineTransform *transform = [NSAffineTransform transform];
-        [transform translateXBy:NSMidX(dstRect) yBy:NSMidY(dstRect)];
-        [transform rotateByDegrees:180.0];
-        [transform translateXBy:-NSMidX(dstRect) yBy:-NSMidY(dstRect)];
-        [transform concat];
-        [hourImage drawInRect:dstRect];
-        return YES;
-    }];
-    
     NSImage *minsImage = [self loadImageForEncodedKeypath:&minsKey];
+    
+    NSImage *newHourImage = [self imageRotated180:hourImage];
     
     [self.previewView.clockLayer setFace:faceImage
                                     hour:newHourImage
                                     mins:minsImage];
     
-    NSString *faceFile = [self getBaselineForEncodedKeypath:&faceKey];
-    if (faceFile)
-        faceFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:faceFile];
-    NSString *minsFile = [self getBaselineForEncodedKeypath:&minsKey];
-    if (minsFile)
-        minsFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:minsFile];
-    NSString *hourFile = [self getBaselineForEncodedKeypath:&hourKey];
-    if (hourFile)
-        hourFile = [[self.accessPoint currentIconPackBundle].resourcePath stringByAppendingPathComponent:hourFile];
+    NSString *faceFile = [self resolvedBaselineFileForKeypath:&faceKey];
+    NSString *minsFile = [self resolvedBaselineFileForKeypath:&minsKey];
+    NSString *hourFile = [self resolvedBaselineFileForKeypath:&hourKey];
     
     if (faceFile)
         objc_setAssociatedObject(self.previewView.clockLayer.faceImageLayer,
@@ -102,6 +114,8 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
                                  OBJC_ASSOCIATION_RETAIN);
 }
 
+#pragma mark - Actions
+
 - (IBAction)radioWasPressed:(NSButton *)sender{
     if ([[sender identifier] isEqualToString:@"f"])
         self.previewView.trackedKey = @"clock.face";
@@ -112,48 +126,40 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
 }
 
 - (IBAction)imageWellWasInteractedWith:(SODragAwareImageView *)sender{
-    if ([[sender.draggedFileURL pathExtension] isEqualToString:@"sicon"]){
-        sender.image = [SOSicon NSImageOrNilForURL:sender.draggedFileURL];
-    }
+    NSURL *droppedURL = sender.draggedFileURL;
+    NSImage *droppedImage = sender.image;
     
-    if (!sender.image)
+    if ([[droppedURL pathExtension] isEqualToString:@"sicon"])
+        droppedImage = [SOSicon NSImageOrNilForURL:droppedURL];
+    
+    if (!droppedImage)
         return;
     
     CALayer *currentLitLayer = [self layerForViewWithLight];
+    if (!currentLitLayer)
+        return;
+    
     NSImage *currentContents = currentLitLayer.contents;
-    
-    if ([currentLitLayer isEqual:self.previewView.clockLayer.hourImageLayer]){
-        NSImage *newHourImage = [NSImage imageWithSize:sender.image.size
-                                               flipped:NO
-                                        drawingHandler:^BOOL(NSRect dstRect)
-        {
-            NSAffineTransform *transform = [NSAffineTransform transform];
-            [transform translateXBy:NSMidX(dstRect) yBy:NSMidY(dstRect)];
-            [transform rotateByDegrees:180.0];
-            [transform translateXBy:-NSMidX(dstRect) yBy:-NSMidY(dstRect)];
-            [transform concat];
-            [sender.image drawInRect:dstRect];
-            return YES;
-        }];
-        sender.image = newHourImage;
-    }
-    
-    NSURL *litLayerURL = objc_getAssociatedObject(currentLitLayer,
+    NSURL *previousURL = objc_getAssociatedObject(currentLitLayer,
                                                   &kSOAssociatedURL);
+    
+    NSImage *imageToApply = droppedImage;
+    if (currentLitLayer == self.previewView.clockLayer.hourImageLayer)
+        imageToApply = [self imageRotated180:droppedImage];
     
     [self.undoManager registerUndoWithTarget:self
                                      handler:^(SOClockDockTileReplacementPageController *s){
         [currentLitLayer setContents:currentContents];
         objc_setAssociatedObject(currentLitLayer,
                                  &kSOAssociatedURL,
-                                 litLayerURL,
+                                 previousURL,
                                  OBJC_ASSOCIATION_RETAIN);
-        [self.pendingChangeArray removeLastObject];
-        [self.changeDelegate contentDidChangeState:self];
+        [s.pendingChangeArray removeLastObject];
+        [s.changeDelegate contentDidChangeState:s];
     }];
     [self.undoManager setActionName:@"Set Image"];
     
-    [currentLitLayer setContents:sender.image];
+    [currentLitLayer setContents:imageToApply];
     
     const SOEncodedKeyPath tLayer = {
         .rootKey = &kSOIconsDockTilePluginDict,
@@ -161,38 +167,38 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     };
     
     [self setPendingIconResourceChangeForKeypath:&tLayer
-                                        resource:[NSData dataWithContentsOfURL:sender.draggedFileURL]
-                                        filename:[sender draggedFileURL].lastPathComponent
+                                        resource:[NSData dataWithContentsOfURL:droppedURL]
+                                        filename:droppedURL.lastPathComponent
                                             note:[NSString stringWithFormat:@"Set %@ to %@",
                                                   self.previewView.trackedKey,
-                                                  [sender draggedFileURL].lastPathComponent]];
+                                                  droppedURL.lastPathComponent]];
     
     objc_setAssociatedObject(currentLitLayer,
                              &kSOAssociatedURL,
-                             [sender draggedFileURL],
+                             droppedURL,
                              OBJC_ASSOCIATION_RETAIN);
-        
+    
     sender.image = nil;
 }
 
 - (IBAction)clearButtonWasPressed:(NSButton *)sender{
-    if (![self layerForViewWithLight].contents)
+    CALayer *currentLayer = [self layerForViewWithLight];
+    if (!currentLayer || !currentLayer.contents)
         return;
     
-    CALayer *currentLayer = [self layerForViewWithLight];
-    NSImage *currentImage = [currentLayer contents];
+    id currentContents = currentLayer.contents;
     NSURL *currentLayerURL = objc_getAssociatedObject(currentLayer,
                                                       &kSOAssociatedURL);
     
     [self.undoManager registerUndoWithTarget:self
                                      handler:^(SOClockDockTileReplacementPageController *c){
-        [currentLayer setContents:currentImage];
+        [currentLayer setContents:currentContents];
         objc_setAssociatedObject(currentLayer,
                                  &kSOAssociatedURL,
                                  currentLayerURL,
                                  OBJC_ASSOCIATION_RETAIN);
-        [self.pendingChangeArray removeLastObject];
-        [self.changeDelegate contentDidChangeState:self];
+        [c.pendingChangeArray removeLastObject];
+        [c.changeDelegate contentDidChangeState:c];
     }];
     [self.undoManager setActionName:@"Cleared Image"];
     
@@ -208,7 +214,7 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
                                                 note:[NSString stringWithFormat:@"Cleared image for %@",
                                                       self.previewView.trackedKey]];
     
-    [[self layerForViewWithLight] setContents:nil];
+    [currentLayer setContents:nil];
     [self.previewView.clockLayer setNeedsDisplay];
     
     objc_setAssociatedObject(currentLayer,
@@ -229,6 +235,8 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     else
         return nil;
 }
+
+#pragma mark - Keypaths
 
 - (const SOEncodedKeyPath)hourKeypath{
     const SOEncodedKeyPath hourKey = {
@@ -257,38 +265,30 @@ const void *kSOAssociatedURL = &kSOAssociatedURL;
     return faceKey;
 }
 
+#pragma mark - Center point
+
 - (IBAction)centerPointIsDesired:(NSButton *)sender{
     BOOL requested = [sender state] == NSControlStateValueOn;
+    BOOL wasFound = NO;
     
-    if (!requested){
-        NSArray<CALayer *> * subs = self.previewView.clockLayer.minsImageLayer.sublayers;
-        for (CALayer *s in subs){
-            if ([s.name isEqualToString:@"centerPoint"])
-                [s setHidden:YES];
+    for (CALayer *s in self.previewView.clockLayer.minsImageLayer.sublayers){
+        if ([s.name isEqualToString:@"centerPoint"]){
+            [s setHidden:!requested];
+            wasFound = YES;
         }
-    } else {
-        BOOL wasFound = NO;
-        NSArray<CALayer *> * subs = self.previewView.clockLayer.minsImageLayer.sublayers;
-        for (CALayer *s in subs){
-            if ([s.name isEqualToString:@"centerPoint"]){
-                [s setHidden:NO];
-                wasFound = YES;
-            }
-        }
+    }
+    
+    if (requested && !wasFound){
+        CALayer *c = [CALayer layer];
+        [c setName:@"centerPoint"];
+        [c setBackgroundColor:NSColor.redColor.CGColor];
         
-        if (!wasFound){
-            CALayer *c = [CALayer layer];
-            [c setName:@"centerPoint"];
-            [c setBackgroundColor:NSColor.redColor.CGColor];
-            
-            CGRect bounds = self.previewView.clockLayer.bounds;
-            CGFloat x = CGRectGetMidX(bounds);
-            CGFloat y = CGRectGetMidY(bounds);
-            CGRect centerRect = CGRectMake(x, y, 0, 0);
-            [c setFrame:centerRect];
-            [c setBounds:CGRectMake(0, 0, 5, 5)];
-            [self.previewView.clockLayer.minsImageLayer addSublayer:c];
-        }
+        CGRect bounds = self.previewView.clockLayer.bounds;
+        CGFloat x = CGRectGetMidX(bounds);
+        CGFloat y = CGRectGetMidY(bounds);
+        [c setFrame:CGRectMake(x, y, 0, 0)];
+        [c setBounds:CGRectMake(0, 0, 5, 5)];
+        [self.previewView.clockLayer.minsImageLayer addSublayer:c];
     }
 }
 @end
