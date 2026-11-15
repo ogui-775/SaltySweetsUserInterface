@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" controlSizeMetrics="compact" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25408"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -71,7 +71,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField identifier="xtf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vbg-3C-A2h">
-                                                            <rect key="frame" x="30" y="18" width="83" height="20"/>
+                                                            <rect key="frame" x="30" y="18" width="83" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="0.00" usesSingleLineMode="YES" bezelStyle="round" id="Kb4-sW-2vb">
                                                                 <font key="font" metaFont="system"/>
@@ -83,7 +83,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField identifier="ytf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ewY-7B-V5G">
-                                                            <rect key="frame" x="141" y="18" width="83" height="20"/>
+                                                            <rect key="frame" x="141" y="18" width="83" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="0.00" bezelStyle="round" id="Ufe-2Y-lUB">
                                                                 <font key="font" metaFont="system"/>
@@ -95,7 +95,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField identifier="wtf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DTg-K9-d35">
-                                                            <rect key="frame" x="256" y="18" width="83" height="20"/>
+                                                            <rect key="frame" x="256" y="18" width="83" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="0.00" bezelStyle="round" id="RS5-ox-HUP">
                                                                 <font key="font" metaFont="system"/>
@@ -143,7 +143,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField identifier="htf" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K3c-9P-1yY">
-                                                            <rect key="frame" x="369" y="18" width="83" height="20"/>
+                                                            <rect key="frame" x="369" y="18" width="83" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="0.00" bezelStyle="round" id="Lth-sq-j3i">
                                                                 <font key="font" metaFont="system"/>
@@ -459,7 +459,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" id="IVc-Il-oRo">
-                                                            <rect key="frame" x="20" y="13" width="131" height="16"/>
+                                                            <rect key="frame" x="22" y="13" width="129" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <buttonCell key="cell" type="check" title="Background Tiling" bezelStyle="regularSquare" imagePosition="left" inset="2" id="diT-d6-XOh">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -480,7 +480,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oNC-bk-tU1">
-                                                            <rect key="frame" x="20" y="19" width="147" height="16"/>
+                                                            <rect key="frame" x="23" y="19" width="144" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <buttonCell key="cell" type="check" title="Background Shadow" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4D4-KO-Pnj">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -510,7 +510,7 @@
                                                 </connections>
                                             </imageView>
                                             <button identifier="leftFlip" verticalHuggingPriority="750" id="lGH-ZK-BHP">
-                                                <rect key="frame" x="17" y="374" width="35" height="19"/>
+                                                <rect key="frame" x="17" y="373" width="35" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="roundRect" title="Flip" bezelStyle="roundedRect" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ocr-sv-171">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -521,7 +521,7 @@
                                                 </connections>
                                             </button>
                                             <button identifier="leftRotate" verticalHuggingPriority="750" id="W51-w6-jqI">
-                                                <rect key="frame" x="62" y="374" width="35" height="19"/>
+                                                <rect key="frame" x="62" y="373" width="35" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="arrow.trianglehead.clockwise.rotate.90" catalog="system" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VWU-GS-VZJ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -633,7 +633,7 @@
                                                 </view>
                                             </box>
                                             <button identifier="rightFlip" verticalHuggingPriority="750" id="Xmx-FN-pQb">
-                                                <rect key="frame" x="629" y="374" width="35" height="19"/>
+                                                <rect key="frame" x="629" y="373" width="35" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="roundRect" title="Flip" bezelStyle="roundedRect" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BCk-hh-3t9">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -644,7 +644,7 @@
                                                 </connections>
                                             </button>
                                             <button identifier="rightRotate" verticalHuggingPriority="750" id="LhX-ol-glQ">
-                                                <rect key="frame" x="674" y="374" width="35" height="19"/>
+                                                <rect key="frame" x="674" y="373" width="35" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="arrow.trianglehead.clockwise.rotate.90" catalog="system" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uLt-ti-oUp">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -693,7 +693,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <segmentedControl verticalHuggingPriority="750" id="Diq-jh-6mL">
-                                        <rect key="frame" x="91" y="6" width="73" height="24"/>
+                                        <rect key="frame" x="91" y="10" width="73" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="xXq-bK-53B">
                                             <font key="font" metaFont="system"/>

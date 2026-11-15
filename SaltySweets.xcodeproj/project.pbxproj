@@ -18,6 +18,7 @@
 		1855228A2F565A5B00972E92 /* SharedKeys.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 185522872F565A3300972E92 /* SharedKeys.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		188350992F953D4E00C2D6EC /* SharedBundles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188350982F953D4E00C2D6EC /* SharedBundles.framework */; };
 		1883509A2F953D5300C2D6EC /* SharedBundles.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 188350982F953D4E00C2D6EC /* SharedBundles.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		188CE69030AA3A14002DD876 /* SaltySweets.icon in Resources */ = {isa = PBXBuildFile; fileRef = 188CE68F30AA3A14002DD876 /* SaltySweets.icon */; };
 		1899D8A92FA61F1A0043E3CB /* SharedClasses.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1899D8A82FA61F1A0043E3CB /* SharedClasses.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		1829F4452FA5725A002BFEF8 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		185522872F565A3300972E92 /* SharedKeys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedKeys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		188350982F953D4E00C2D6EC /* SharedBundles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedBundles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		188CE68F30AA3A14002DD876 /* SaltySweets.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = SaltySweets.icon; sourceTree = "<group>"; };
 		1899D8A82FA61F1A0043E3CB /* SharedClasses.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedClasses.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B0B6B52F9330D10089D498 /* SharedToolkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedToolkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BC57462F2EA9D80075DC08 /* SaltySweets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaltySweets.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +149,7 @@
 		18BC573D2F2EA9D80075DC08 = {
 			isa = PBXGroup;
 			children = (
+				188CE68F30AA3A14002DD876 /* SaltySweets.icon */,
 				18BC57482F2EA9D80075DC08 /* SaltySweets */,
 				1829F4482FA5725A002BFEF8 /* siconthub */,
 				185522862F565A3200972E92 /* Frameworks */,
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188CE69030AA3A14002DD876 /* SaltySweets.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,7 +509,7 @@
 		18BC57562F2EA9D90075DC08 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = SaltySweets;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT = YES;
@@ -543,7 +547,7 @@
 		18BC57572F2EA9D90075DC08 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = SaltySweets;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT = YES;

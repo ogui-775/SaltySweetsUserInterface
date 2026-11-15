@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" controlSizeMetrics="compact" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25094"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25408"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -49,29 +49,31 @@
                 </scrollView>
                 <visualEffectView blendingMode="withinWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="pSk-wh-i3k">
                     <rect key="frame" x="0.0" y="424" width="746" height="43"/>
+                    <subviews>
+                        <comboBox focusRingType="none" verticalHuggingPriority="750" id="VvY-wI-pKX">
+                            <rect key="frame" x="20" y="14" width="199" height="16"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <comboBoxCell key="cell" controlSize="small" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" title="Folder" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="4" id="g1x-QC-EXF">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </comboBoxCell>
+                            <connections>
+                                <action selector="folderSelectionDidChange:" target="-2" id="7C6-Hl-qgE"/>
+                                <outlet property="dataSource" destination="-2" id="A6N-I0-5hH"/>
+                                <outlet property="delegate" destination="-2" id="Ukv-5P-zJb"/>
+                            </connections>
+                        </comboBox>
+                    </subviews>
                     <constraints>
                         <constraint firstAttribute="height" constant="43" id="RTW-D8-lLg"/>
                     </constraints>
                 </visualEffectView>
-                <comboBox focusRingType="none" verticalHuggingPriority="750" id="VvY-wI-pKX">
-                    <rect key="frame" x="20" y="433" width="199" height="24"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <comboBoxCell key="cell" controlSize="small" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" title="Folder" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="4" id="g1x-QC-EXF">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <allowedInputSourceLocales>
-                            <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                        </allowedInputSourceLocales>
-                    </comboBoxCell>
-                    <connections>
-                        <action selector="folderSelectionDidChange:" target="-2" id="7C6-Hl-qgE"/>
-                        <outlet property="dataSource" destination="-2" id="A6N-I0-5hH"/>
-                        <outlet property="delegate" destination="-2" id="Ukv-5P-zJb"/>
-                    </connections>
-                </comboBox>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-MS-xIX">
-                    <rect key="frame" x="231" y="438" width="375" height="14"/>
+                    <rect key="frame" x="236" y="438" width="370" height="14"/>
                     <textFieldCell key="cell" alignment="center" title="Drag icon into App tile to replace. Select and press delete to remove." id="bhd-JB-7sc">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -99,7 +101,6 @@
                 <constraint firstItem="pSk-wh-i3k" firstAttribute="leading" secondItem="EjM-NM-tmC" secondAttribute="leading" id="dRw-TA-9Pi"/>
                 <constraint firstItem="pSk-wh-i3k" firstAttribute="centerY" secondItem="IuZ-Ny-vA2" secondAttribute="centerY" id="e2e-sm-Shw"/>
                 <constraint firstItem="pSk-wh-i3k" firstAttribute="trailing" secondItem="EjM-NM-tmC" secondAttribute="trailing" id="utm-49-bev"/>
-                <constraint firstItem="FS9-MS-xIX" firstAttribute="leading" secondItem="VvY-wI-pKX" secondAttribute="trailing" constant="14" id="vpU-Uj-mAV"/>
                 <constraint firstItem="EjM-NM-tmC" firstAttribute="top" secondItem="pSk-wh-i3k" secondAttribute="bottom" id="zRG-Mz-mTa"/>
             </constraints>
             <point key="canvasLocation" x="139" y="154"/>

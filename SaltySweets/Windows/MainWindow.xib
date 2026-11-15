@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" controlSizeMetrics="compact" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25408"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,18 +27,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="746" height="34"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ej3-Lv-qHV">
-                                <rect key="frame" x="660" y="3" width="68" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" title="Apply" bezelStyle="texturedRounded" image="i_apply" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ys9-Nc-JMr">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                                <connections>
-                                    <action selector="doApplyAction:" target="wR0-LY-bJX" id="M0D-0h-gqD"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="65R-J7-Sha">
                                 <rect key="frame" x="19" y="5" width="127" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -61,6 +49,18 @@
                                 <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
                                     <action selector="importWasPressed:" target="IQE-hu-K5l" id="9dR-bS-bEL"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ej3-Lv-qHV">
+                                <rect key="frame" x="659" y="5" width="68" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="roundTextured" title="Apply" bezelStyle="texturedRounded" image="i_apply" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ys9-Nc-JMr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <color key="bezelColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <action selector="doApplyAction:" target="wR0-LY-bJX" id="M0D-0h-gqD"/>
                                 </connections>
                             </button>
                         </subviews>
