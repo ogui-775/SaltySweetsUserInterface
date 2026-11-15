@@ -89,52 +89,51 @@ static NSString * const SOMainMenuBackgroundKindB = @"SOMainMenuBackgroundB";
 
 @implementation SOMainMenuLayout
 - (instancetype)initCustom {
-    self = [super initWithSectionProvider:^NSCollectionLayoutSection *(NSInteger sectionIndex, id environment) {
+    const CGFloat kHeaderHeight = 25.0;
+    const CGFloat kBottomInset  = 5.0;
+    const NSInteger kSections   = 3;
+    
+    self = [super initWithSectionProvider:^NSCollectionLayoutSection *(NSInteger sectionIndex, id<NSCollectionLayoutEnvironment> environment) {
+        CGFloat containerHeight = environment.container.effectiveContentSize.height;
+        CGFloat sectionHeight   = containerHeight / kSections;
+        
+        CGFloat groupHeight = MAX(sectionHeight - kHeaderHeight - kBottomInset, 35.0);
+        
         NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:
                                             [NSCollectionLayoutDimension fractionalWidthDimension:1.0]
                                                                           heightDimension:
                                             [NSCollectionLayoutDimension absoluteDimension:35]];
-        
         NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
         
         NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:
                                              [NSCollectionLayoutDimension fractionalWidthDimension:1.0]
                                                                            heightDimension:
-                                             [NSCollectionLayoutDimension fractionalHeightDimension:0.20]];
+                                             [NSCollectionLayoutDimension absoluteDimension:groupHeight]];
         
         NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize
                                                                                         subitem:item
                                                                                           count:8];
+        group.interItemSpacing = [NSCollectionLayoutSpacing fixedSpacing:10];
         
         NSCollectionLayoutSection *section = [NSCollectionLayoutSection sectionWithGroup:group];
-        
-        section.contentInsets = NSDirectionalEdgeInsetsMake(0.0, 10.0, 5.0, 10.0);
+        section.contentInsets = NSDirectionalEdgeInsetsMake(0.0, 10.0, kBottomInset, 10.0);
         section.supplementariesFollowContentInsets = NO;
         
-        NSCollectionLayoutSize *headerSize =
-            [NSCollectionLayoutSize
-                sizeWithWidthDimension:
-                    [NSCollectionLayoutDimension fractionalWidthDimension:1.0]
-                heightDimension:
-                    [NSCollectionLayoutDimension absoluteDimension:25.0]];
-
+        NSCollectionLayoutSize *headerSize = [NSCollectionLayoutSize
+            sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0]
+                   heightDimension:[NSCollectionLayoutDimension absoluteDimension:kHeaderHeight]];
+        
         NSCollectionLayoutBoundarySupplementaryItem *header =
             [NSCollectionLayoutBoundarySupplementaryItem
                 boundarySupplementaryItemWithLayoutSize:headerSize
                 elementKind:SOMainMenuSectionHeaderKind
                 alignment:NSRectAlignmentTop];
-
         section.boundarySupplementaryItems = @[header];
         
-        group.interItemSpacing = [NSCollectionLayoutSpacing fixedSpacing:10];
-        
-        NSString *backgroundKind =
-        (sectionIndex % 2 == 0) ? SOMainMenuBackgroundKindA
-                                : SOMainMenuBackgroundKindB;
-        
-        NSCollectionLayoutDecorationItem *background = [NSCollectionLayoutDecorationItem backgroundDecorationItemWithElementKind:backgroundKind];
-        
-        section.decorationItems = @[background];
+        NSString *backgroundKind = (sectionIndex % 2 == 0) ? SOMainMenuBackgroundKindA
+                                                           : SOMainMenuBackgroundKindB;
+        section.decorationItems = @[[NSCollectionLayoutDecorationItem
+                                     backgroundDecorationItemWithElementKind:backgroundKind]];
         
         return section;
     }];
@@ -142,7 +141,6 @@ static NSString * const SOMainMenuBackgroundKindB = @"SOMainMenuBackgroundB";
     if (self) {
         [self registerClass:[SOMainMenuSectionBackgroundA class]
     forDecorationViewOfKind:SOMainMenuBackgroundKindA];
-        
         [self registerClass:[SOMainMenuSectionBackgroundB class]
     forDecorationViewOfKind:SOMainMenuBackgroundKindB];
     }
