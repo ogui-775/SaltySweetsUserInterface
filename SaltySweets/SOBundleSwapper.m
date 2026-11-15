@@ -13,10 +13,7 @@
 
 - (IBAction)swapTheme:(id)sender{
     NSOpenPanel * panel = [NSOpenPanel openPanel];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Weverything"
-    panel.allowedFileTypes = @[@"bundle"];
-#pragma clang diagnostic pop
+    panel.allowedContentTypes = @[[SODockThemeBundle type]];
     panel.allowsMultipleSelection = NO;
     panel.directoryURL = [NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] dockThemeBundleDirectory]];
     panel.canCreateDirectories = NO;
@@ -137,7 +134,7 @@
 
 - (IBAction)swapIconPack:(id)sender{
     NSOpenPanel *panel = [NSOpenPanel openPanel];
-    panel.allowedContentTypes = @[[UTType typeWithIdentifier:@"com.saltysoft.siconpack"]];
+    panel.allowedContentTypes = @[[SOSiconPackBundle type]];
     panel.allowsMultipleSelection = NO;
     panel.directoryURL = [NSURL fileURLWithPath:[[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory]];
     panel.canCreateDirectories = NO;

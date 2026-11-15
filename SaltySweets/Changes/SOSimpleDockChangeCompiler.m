@@ -110,7 +110,7 @@
         return;
     
     NSString *sanitizedNewName = [name stringByReplacingOccurrencesOfString:@"." withString:@""];
-    sanitizedNewName = [name stringByReplacingOccurrencesOfString:@"bundle" withString:@""];
+    sanitizedNewName = [name stringByReplacingOccurrencesOfString:@"docktheme" withString:@""];
     
     NSOperationQueue *opQueue = [[NSOperationQueue alloc] init];
     opQueue.maxConcurrentOperationCount = 1;
@@ -118,13 +118,11 @@
     
     [opQueue addOperationWithBlock:^{
         NSString *path = [[SOAtomicAccessPoint sharedInstance] dockThemeBundleDirectory];
-        NSURL *newThemeURL = [NSURL fileURLWithPath:[[path stringByAppendingPathComponent:sanitizedNewName] stringByAppendingPathExtension:@"bundle"]];
-        NSFileManager *fm = [NSFileManager defaultManager];
+        NSURL *newThemeURL = [NSURL fileURLWithPath:[[path stringByAppendingPathComponent:sanitizedNewName] stringByAppendingPathExtension:@"docktheme"]];
         
         NSError *error = nil;
-        [fm copyItemAtURL:[[NSBundle mainBundle] URLForResource:@"Template" withExtension:@"bundle"]
-                    toURL:newThemeURL
-                    error:&error];
+        [SODockThemeBundle createBundleOnDiskAtURL:newThemeURL
+                                         withError:&error];
         
         if (error){
             completion(NO);

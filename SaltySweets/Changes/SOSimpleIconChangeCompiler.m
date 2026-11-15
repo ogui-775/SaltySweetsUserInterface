@@ -19,12 +19,10 @@
     [opQueue addOperationWithBlock:^{
         NSString *path = [[SOAtomicAccessPoint sharedInstance] iconPackBundleDirectory];
         NSURL *newPackURL = [NSURL fileURLWithPath:[[path stringByAppendingPathComponent:sanitizedNewName] stringByAppendingPathExtension:@"siconpack"]];
-        NSFileManager *fm = [NSFileManager defaultManager];
         
         NSError *error = nil;
-        [fm copyItemAtURL:[[NSBundle mainBundle] URLForResource:@"Template" withExtension:@"siconpack"]
-                    toURL:newPackURL
-                    error:&error];
+        [SOSiconPackBundle createBundleOnDiskAtURL:newPackURL
+                                         withError:&error];
         
         if (error){
             completion(NO);
@@ -251,9 +249,12 @@
         [self createNewPackWithName:newName
                           completionHandler:^(BOOL success){
             if (!success){
-                NSAlert *alert = [[NSAlert alloc] init];
-                alert.messageText = @"Failed to create Icon Pack.";
-                [alert runModal];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSAlert *alert = [[NSAlert alloc] init];
+                    alert.messageText = @"Failed to create Icon Pack.";
+                    [alert runModal];
+                });
+
                 completion(NO);
                 return;
             }

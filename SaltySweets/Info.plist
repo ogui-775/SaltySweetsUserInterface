@@ -23,7 +23,19 @@
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.saltysoft.siconbundle</string>
+				<string>com.saltysoft.siconpack</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Dock Theme</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.saltysoft.docktheme</string>
 			</array>
 		</dict>
 	</array>
@@ -68,6 +80,27 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>siconpack</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Dock Theme</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>com.saltysoft.docktheme</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>docktheme</string>
 				</array>
 			</dict>
 		</dict>

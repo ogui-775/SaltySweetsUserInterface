@@ -24,9 +24,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="spx-Xg-rnM">
-                                <rect key="frame" x="77" y="74" width="286" height="16"/>
+                                <rect key="frame" x="103" y="74" width="235" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" title="Drag .siconpack or Dock theme .bundle here..." usesSingleLineMode="YES" id="WcV-LJ-4Y0">
+                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" title="Drag .siconpack or .docktheme here..." usesSingleLineMode="YES" id="WcV-LJ-4Y0">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -15,7 +15,7 @@
     self.openPanel = [[NSOpenPanel alloc] init];
     self.openPanel.allowedContentTypes = @[
         [UTType typeWithIdentifier:@"com.saltysoft.siconpack"],
-        [UTType typeWithIdentifier:@"com.apple.bundle"]
+        [UTType typeWithIdentifier:@"com.saltysoft.docktheme"]
     ];
     self.openPanel.allowsMultipleSelection = NO;
 
@@ -31,7 +31,7 @@
                 return;
             
             if (![[self.openPanel.URL pathExtension] isEqualToString:@"siconpack"]
-                    && ![[self.openPanel.URL pathExtension] isEqualToString:@"bundle"])
+                    && ![[self.openPanel.URL pathExtension] isEqualToString:@"docktheme"])
                 return;
             
             NSFileManager *fm = [NSFileManager defaultManager];
@@ -136,7 +136,7 @@
             return NSDragOperationNone;
         
         if (![[URL pathExtension] isEqualToString:@"siconpack"]
-                && ![[URL pathExtension] isEqualToString:@"bundle"])
+                && ![[URL pathExtension] isEqualToString:@"docktheme"])
             return NSDragOperationNone;
         
         return NSDragOperationCopy;
@@ -156,7 +156,7 @@
             return NO;
         
         if (![[URL pathExtension] isEqualToString:@"siconpack"]
-            && ![[URL pathExtension] isEqualToString:@"bundle"])
+            && ![[URL pathExtension] isEqualToString:@"docktheme"])
             return NO;
         
         NSFileManager *fm = [NSFileManager defaultManager];
