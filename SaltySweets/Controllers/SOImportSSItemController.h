@@ -11,6 +11,8 @@
 
 @interface SOImportSSItemController : NSViewController
 @property (weak) IBOutlet SOBundleViewerViewController *packViewController;
+
++ (void)performImportWithURL:(NSURL *)URL;
 @end
 
 @interface SOImportDestinationBox : NSBox <NSDraggingDestination>

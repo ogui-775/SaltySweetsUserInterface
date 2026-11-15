@@ -34,88 +34,92 @@
                     && ![[self.openPanel.URL pathExtension] isEqualToString:@"docktheme"])
                 return;
             
-            NSFileManager *fm = [NSFileManager defaultManager];
-            NSAlert *alert = [[NSAlert alloc] init];
-            NSURL *itemURL = [self.openPanel URL];
-            BOOL isIconPack = [[itemURL pathExtension] isEqualToString:@"siconpack"];
-            
-            if (isIconPack){
-                NSURL *iconsDirURL = [NSURL fileURLWithPath:[SOAtomicAccessPoint sharedInstance].iconPackBundleDirectory
-                                                isDirectory:YES];
-                
-                [fm copyItemAtURL:itemURL
-                            toURL:[iconsDirURL URLByAppendingPathComponent:itemURL.lastPathComponent]
-                            error:nil];
-                
-                [[[SOAtomicAccessPoint sharedInstance] packViewController] updateContents];
-                
-                alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Icon Pack?",
-                                     [itemURL.lastPathComponent stringByDeletingPathExtension]];
-                alert.alertStyle = NSAlertStyleInformational;
-                
-                [alert addButtonWithTitle:@"OK"];
-                [alert.buttons[0] setKeyEquivalent:@"\r"];
-                [alert addButtonWithTitle:@"No"];
-                
-                NSModalResponse resp = [alert runModal];
-                
-                if (resp == NSAlertFirstButtonReturn){
-                    [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:itemURL.lastPathComponent];
-                    
-                    [[NSNotificationCenter defaultCenter]
-                        postNotificationName:SONotificationBaseClassUpdateBaseline
-                                      object:self];
-                    
-                    for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
-
-                        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                            [page refreshOrLoadBaseline];
-
-                        if ([page respondsToSelector:@selector(purgePendingChanges)])
-                            [page purgePendingChanges];
-                        
-                        [(id<SOConfigurableContentDelegate>)[SOViewPane defaultInstance] contentDidChangeState:page];
-                    }
-                }
-            } else {
-                NSURL *themeDirURL = [NSURL fileURLWithPath:[SOAtomicAccessPoint sharedInstance].dockThemeBundleDirectory
-                                                isDirectory:YES];
-                
-                [fm copyItemAtURL:itemURL
-                            toURL:[themeDirURL URLByAppendingPathComponent:itemURL.lastPathComponent]
-                            error:nil];
-                
-                alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Dock Theme?",
-                                     [itemURL.lastPathComponent stringByDeletingPathExtension]];
-                alert.alertStyle = NSAlertStyleInformational;
-                
-                [alert addButtonWithTitle:@"OK"];
-                [alert.buttons[0] setKeyEquivalent:@"\r"];
-                [alert addButtonWithTitle:@"No"];
-                
-                NSModalResponse resp = [alert runModal];
-                
-                if (resp == NSAlertFirstButtonReturn){
-                    [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:itemURL.lastPathComponent];
-                    
-                    [[NSNotificationCenter defaultCenter]
-                        postNotificationName:SONotificationBaseClassUpdateBaseline
-                                      object:self];
-                    
-                    for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
-
-                        if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
-                            [page refreshOrLoadBaseline];
-
-                        if ([page respondsToSelector:@selector(purgePendingChanges)])
-                            [page purgePendingChanges];
-                        
-                        [(id<SOConfigurableContentDelegate>)[SOViewPane defaultInstance] contentDidChangeState:page];
-                    }
-                }
-            }
+            [SOImportSSItemController performImportWithURL:self.openPanel.URL];
         }
     }];
+}
+
++ (void)performImportWithURL:(NSURL *)URL{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSAlert *alert = [[NSAlert alloc] init];
+    NSURL *itemURL = URL;
+    BOOL isIconPack = [[itemURL pathExtension] isEqualToString:@"siconpack"];
+    
+    if (isIconPack){
+        NSURL *iconsDirURL = [NSURL fileURLWithPath:[SOAtomicAccessPoint sharedInstance].iconPackBundleDirectory
+                                        isDirectory:YES];
+        
+        [fm copyItemAtURL:itemURL
+                    toURL:[iconsDirURL URLByAppendingPathComponent:itemURL.lastPathComponent]
+                    error:nil];
+        
+        [[[SOAtomicAccessPoint sharedInstance] packViewController] updateContents];
+        
+        alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Icon Pack? The item has been copied to the folder.",
+                             [itemURL.lastPathComponent stringByDeletingPathExtension]];
+        alert.alertStyle = NSAlertStyleInformational;
+        
+        [alert addButtonWithTitle:@"OK"];
+        [alert.buttons[0] setKeyEquivalent:@"\r"];
+        [alert addButtonWithTitle:@"No"];
+        
+        NSModalResponse resp = [alert runModal];
+        
+        if (resp == NSAlertFirstButtonReturn){
+            [[SOAtomicAccessPoint sharedInstance] setCurrentIconPackBundleName:itemURL.lastPathComponent];
+            
+            [[NSNotificationCenter defaultCenter]
+                postNotificationName:SONotificationBaseClassUpdateBaseline
+                              object:self];
+            
+            for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+
+                if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                    [page refreshOrLoadBaseline];
+
+                if ([page respondsToSelector:@selector(purgePendingChanges)])
+                    [page purgePendingChanges];
+                
+                [(id<SOConfigurableContentDelegate>)[SOViewPane defaultInstance] contentDidChangeState:page];
+            }
+        }
+    } else {
+        NSURL *themeDirURL = [NSURL fileURLWithPath:[SOAtomicAccessPoint sharedInstance].dockThemeBundleDirectory
+                                        isDirectory:YES];
+        
+        [fm copyItemAtURL:itemURL
+                    toURL:[themeDirURL URLByAppendingPathComponent:itemURL.lastPathComponent]
+                    error:nil];
+        
+        alert.messageText = [NSString stringWithFormat:@"Set %@ as the current Dock Theme? The item has been copied to the folder.",
+                             [itemURL.lastPathComponent stringByDeletingPathExtension]];
+        alert.alertStyle = NSAlertStyleInformational;
+        
+        [alert addButtonWithTitle:@"OK"];
+        [alert.buttons[0] setKeyEquivalent:@"\r"];
+        [alert addButtonWithTitle:@"No"];
+        
+        NSModalResponse resp = [alert runModal];
+        
+        if (resp == NSAlertFirstButtonReturn){
+            [[SOAtomicAccessPoint sharedInstance] setCurrentDockThemeBundleName:itemURL.lastPathComponent];
+            
+            [[NSNotificationCenter defaultCenter]
+                postNotificationName:SONotificationBaseClassUpdateBaseline
+                              object:self];
+            
+            for (id<SOConfigurableContent> page in [SOViewPane defaultInstance].childViewControllers) {
+
+                if ([page respondsToSelector:@selector(refreshOrLoadBaseline)])
+                    [page refreshOrLoadBaseline];
+
+                if ([page respondsToSelector:@selector(purgePendingChanges)])
+                    [page purgePendingChanges];
+                
+                [(id<SOConfigurableContentDelegate>)[SOViewPane defaultInstance] contentDidChangeState:page];
+            }
+        }
+    }
 }
 @end
 

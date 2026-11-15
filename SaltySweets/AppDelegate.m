@@ -1,6 +1,7 @@
 //Created by Salty on 1/31/26.
 
 #import "AppDelegate.h"
+#import "Controllers/SOImportSSItemController.h"
 
 static __strong AppDelegate *_instance;
 
@@ -32,6 +33,10 @@ static __strong AppDelegate *_instance;
                 controller = [self.urlToAuxController objectForKey:url];
                 [controller.window makeKeyAndOrderFront:nil];
             }
+        }
+        
+        if ([[url pathExtension] isEqualToString:@"docktheme"] || [[url pathExtension] isEqualToString:@"siconpack"]){
+            [SOImportSSItemController performImportWithURL:url];
         }
     }
 }
